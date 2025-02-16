@@ -110,11 +110,6 @@
         padding: 5px;
     }
 
-    /* Show menu on hover */
-    .menu-container:hover .nav-menu {
-        display: inline-flex;
-    }
-
       nav ul {
           list-style: none;
           padding: 0;
@@ -202,7 +197,8 @@
             const menuIcon = document.querySelector(".menu-icon");
             const navMenu = document.querySelector(".nav-menu");
 
-            menuIcon.addEventListener("click", function() {
+            menuIcon.addEventListener("click", function(event) {
+                event.stopPropagation();
                 if (navMenu.style.display === "flex") {
                     navMenu.style.display = "none";
                 } else {
@@ -217,11 +213,21 @@
                 }
             });
 
+            // Prevent menu from hiding when clicking on it
+            navMenu.addEventListener("click", function(event) {
+                event.stopPropagation();
+            });
+
             // Handle touch events for iPhone
             document.addEventListener("touchstart", function(event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
                     navMenu.style.display = "none";
                 }
+            });
+
+            // Prevent menu from hiding when touching on it (for iPhone)
+            navMenu.addEventListener("touchstart", function(event) {
+                event.stopPropagation();
             });
         });
     </script>

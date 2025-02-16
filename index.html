@@ -82,12 +82,13 @@
         padding: 15px;
         border-radius: 8px;
         display: none;
+        flex-direction: column;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .nav-menu ul {
         list-style: none;
-        padding: 15px;
+        padding: 0;
         margin: 0;
     }
 
@@ -110,78 +111,11 @@
         padding: 5px;
     }
 
-      nav ul {
-          list-style: none;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          gap: 5px;
-          margin-top: 20px;
-      }
-      
-      nav ul li {
-        font-size: 0.9em;
-        display: inline;
-      }
-      
-      nav ul li a {
-          text-decoration: none;
-          color: white;
-          font-weight: 600;
-          padding: 8px 10px;
-          border-radius: 5px;
-          transition: 0.3s;
-      }
-      
-      nav ul li a:hover {
-          background: #34495e;
-      }
-      
-      section {
-          padding: 60px 20px;
-          text-align: center;
-      }
-      
-      h2 {
-          font-size: 2em;
-          color: #2c3e50;
-      }
-      
-      p {
-          font-size: 1.1em;
-          max-width: 600px;
-          margin: auto;
-      }
-      
-      .button {
-          display: inline-block;
-          margin-top: 20px;
-          padding: 10px 20px;
-          background: #2c3e50;
-          color: white;
-          text-decoration: none;
-          border-radius: 5px;
-          transition: 0.3s;
-      }
-      
-      .button:hover {
-          background: #34495e;
-      }
-
-        /* Show menu on hover for desktops */
-        @media (min-width: 769px) {
-            .menu-container:hover .nav-menu {
-                display: block;
-            }
-        }
-
-  
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .nav-menu {
             width: 100%;
             height: 100vh;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -213,9 +147,11 @@
                 }
             });
 
-            // Prevent menu from hiding when clicking on it
+            // Hide nav menu when a menu item is clicked
             navMenu.addEventListener("click", function(event) {
-                event.stopPropagation();
+                if (event.target.tagName === "A") {
+                    navMenu.style.display = "none";
+                }
             });
 
             // Handle touch events for iPhone

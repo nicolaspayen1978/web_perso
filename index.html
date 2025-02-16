@@ -209,6 +209,20 @@
                     navMenu.style.display = "flex";
                 }
             });
+
+            // Hide nav menu when clicking outside
+            document.addEventListener("click", function(event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.style.display = "none";
+                }
+            });
+
+            // Handle touch events for iPhone
+            document.addEventListener("touchstart", function(event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.style.display = "none";
+                }
+            });
         });
     </script>
 </head>

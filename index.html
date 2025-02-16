@@ -173,35 +173,29 @@
           background: #34495e;
       }
 
-    /* Show menu on hover for desktops */
+        /* Show menu on hover for desktops */
         @media (min-width: 769px) {
             .menu-container:hover .nav-menu {
                 display: block;
             }
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .nav-menu {
-                width: 100%;
-                right: 0;
-                top: 0;
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .nav-menu ul {
-                width: 100%;
-            }
-
-            .nav-menu ul li {
-                padding: 15px;
-                text-align: center;
-                font-size: 1.2em;
-            }
+  
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .nav-menu {
+            width: 100%;
+            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        .nav-menu ul li {
+            padding: 15px;
+            font-size: 1.2em;
+        }
+    }
 </style>
 <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -209,7 +203,7 @@
             const navMenu = document.querySelector(".nav-menu");
 
             menuIcon.addEventListener("click", function() {
-                if (navMenu.style.display === "block") {
+                if (navMenu.style.display === "flex") {
                     navMenu.style.display = "none";
                 } else {
                     navMenu.style.display = "flex";

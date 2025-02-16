@@ -44,7 +44,75 @@
           font-size: 1.2em;
           margin-top: 10px;
       }
-      
+           /* Fixed menu button */
+        .menu-icon {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            width: 40px;
+            height: 40px;
+            background: #2c3e50;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .menu-icon:hover {
+            background: #34495e;
+        }
+
+        .menu-icon div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 4px 0;
+        }
+
+        /* Hidden menu styling */
+        .nav-menu {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            background: #34495e;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        /* Show menu on hover */
+        .menu-container:hover .nav-menu {
+            display: block;
+        }
       nav ul {
           list-style: none;
           padding: 0;
@@ -113,7 +181,22 @@
 </style>
 </head>
 <body>
-
+     <div class="menu-container">
+        <div class="menu-icon">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#articles">Articles</a></li>
+                <li><a href="#pictures">Photos</a></li>
+                <li><a href="#journey">Career</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
     <header>
         <h1>Nicolas Payen</h1>
         <p>Welcome to my personal space on the web</p>

@@ -53,6 +53,34 @@
           margin-top: 40px;
     }
 
+    header nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 0;
+        flex-wrap: wrap; /* Allows the items to wrap if necessary */
+    }
+    
+    header nav ul li {
+        font-size: 1em; /* Adjusted for better visibility */
+        display: inline;
+    }
+    
+    header nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        padding: 10px 15px; /* Increased padding for better touch area */
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+    
+    header nav ul li a:hover {
+        background: #34495e;
+    }
+
      /* Fixed menu button */
     .menu-icon {
         position: fixed;

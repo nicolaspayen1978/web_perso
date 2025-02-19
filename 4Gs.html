@@ -3,48 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Introduction to the 4Gs project.">
-    <meta name="keywords" content="4Gs project, technology, innovation">
+    <meta name="description" content="Introduction to the 4Gs portfolio. The 4Gs is an actively managed portfolio of listed securities, 4Gs stands for Gray, Green, Generational, Gratification, and Global. This porfolio is managed by Nicolas Payen.">
+    <meta name="keywords" content="4Gs project, portfolio, equity investment, stock picking, value investor, growth investor, investor, 4Gs stands for Gray, Green, Generational, Gratification, and Global.">
     <meta name="author" content="Nicolas Payen">
     <title>4Gs Project | Nicolas Payen</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <style>
-        /* Reusing styles from index.html */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f9f9f9;
-            color: #333;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        header {
-            text-align: center;
-            padding: 50px 20px;
-            background: #2c3e50;
-            color: white;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        header p {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
+            body {
+              font-family: 'Poppins', sans-serif;
+              margin: 0;
+              padding: 0;
+              background: #f9f9f9;
+              color: #333;
+              max-width: 800px;
+              margin: auto;
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          }
+          
+          header {
+              text-align: center;
+              padding: 50px 20px;
+              background: #2c3e50;
+              color: white;
+          }
+          
+          header h1 {
+              margin: 0;
+              font-size: 2.5em;
+          }
+          
+          header p {
+              font-size: 1.2em;
+              margin-top: 10px;
+          }
+        
         footer {
-            text-align: center;
-            padding: 20px;
-            background: #2c3e50;
-            color: white;
-            margin-top: 40px;
+              text-align: center;
+              padding: 20px;
+              background: #2c3e50;
+              color: white;
+              margin-top: 40px;
         }
+
         header nav ul {
             list-style: none;
             padding: 0;
@@ -52,50 +56,246 @@
             justify-content: center;
             margin-top: 20px;
             margin-bottom: 0;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Allows the items to wrap if necessary */
         }
+        
         header nav ul li {
-            font-size: 1em;
+            font-size: 1em; /* Adjusted for better visibility */
             display: inline;
         }
+        
         header nav ul li a {
             text-decoration: none;
             color: white;
             font-weight: 600;
-            padding: 10px 15px;
+            padding: 10px 15px; /* Increased padding for better touch area */
             border-radius: 5px;
             transition: 0.3s;
         }
+        
         header nav ul li a:hover {
             background: #34495e;
         }
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
+
+         /* Fixed menu button */
+        .menu-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            width: 40px;
+            height: 40px;
             background: #2c3e50;
-            color: white;
-            text-decoration: none;
             border-radius: 5px;
-            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
         }
-        .button:hover {
+
+        .menu-icon:hover {
             background: #34495e;
         }
-        section {
-            padding: 30px 20px;
+
+        .menu-icon div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 4px 0;
+        }
+
+        /* Hidden menu styling */
+        .nav-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .nav-menu ul li {
+            padding: 15px;
             text-align: center;
         }
-        h2 {
-            font-size: 2em;
-            color: #2c3e50;
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: inline-flex;
+            transition: 0.3s;
         }
-        p {
-            font-size: 1.1em;
-            max-width: 600px;
-            margin: auto;
+
+        .nav-menu ul li a:hover {
+            background: #34495e;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+          nav ul {
+              list-style: none;
+              padding: 0;
+              display: flex;
+              justify-content: center;
+              gap: 5px;
+              margin-top: 20px;
+          }
+          
+          nav ul li {
+            font-size: 0.9em;
+            display: inline;
+          }
+          
+          nav ul li a {
+              text-decoration: none;
+              color: white;
+              font-weight: 600;
+              padding: 8px 10px;
+              border-radius: 5px;
+              transition: 0.3s;
+          }
+          
+          nav ul li a:hover {
+              background: #34495e;
+          }
+          
+          section {
+              padding: 30px 20px;
+              text-align: center;
+          }
+          
+          h2 {
+              font-size: 2em;
+              color: #2c3e50;
+          }
+          
+          p {
+              font-size: 1.1em;
+              max-width: 600px;
+              margin: auto;
+          }
+
+        .intro ul {
+                    list-style-type: none;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+            }
+
+        .intro li {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+            }
+
+        .intro {
+                padding: 10px 0px;
+                width: 100%;
+                font-size: 0.9em;
+                margin: 0px;
+                color: #333;
+                line-height: 1.2;
+                margin-top: 10px;
+            }
+
+        .intro p {
+                width: 100%;
+                color: #333;
+                line-height: 1.2;
+                margin-bottom: 10px;
+            }
+         
+          
+          .button {
+              display: inline-block;
+              margin-top: 20px;
+              padding: 10px 20px;
+              background: #2c3e50;
+              color: white;
+              text-decoration: none;
+              border-radius: 5px;
+              transition: 0.3s;
+          }
+          
+          .button:hover {
+              background: #34495e;
+          }
+
+            /* Show menu on hover for desktops */
+            @media (min-width: 769px) {
+                .menu-container:hover .nav-menu {
+                    display: block;
+                }
+            }
+
+      
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-menu {
+                width: 100%;
+                height: 100vh;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+            .nav-menu ul li {
+                padding: 15px;
+                font-size: 1.2em;
+            }
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuIcon = document.querySelector(".menu-icon");
+            const navMenu = document.querySelector(".nav-menu");
+
+            menuIcon.addEventListener("click", function(event) {
+                event.stopPropagation();
+                if (navMenu.style.display === "flex") {
+                    navMenu.style.display = "none";
+                } else {
+                    navMenu.style.display = "flex";
+                }
+            });
+
+            // Hide nav menu when clicking outside
+            document.addEventListener("click", function(event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.style.display = "none";
+                }
+            });
+
+            // Hide nav menu when a menu item is clicked
+            navMenu.addEventListener("click", function(event) {
+                if (event.target.tagName === "A") {
+                    navMenu.style.display = "none";
+                }
+            });
+
+            // Handle touch events for iPhone
+            document.addEventListener("touchstart", function(event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.style.display = "none";
+                }
+            });
+
+            // Prevent menu from hiding when touching on it (for iPhone)
+            navMenu.addEventListener("touchstart", function(event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="menu-container">

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Ensure tapping outside chatbox on iPhone closes it
     document.addEventListener("click", function (event) {
         if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
-            hideChat();
+            //hideChat();
         }
     });
 });

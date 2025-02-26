@@ -6,27 +6,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatPopup = document.getElementById("chat-popup");
     const closeChat = document.getElementById("close-chat");
 
+    function showChat() {
+        chatPopup.style.display = "flex"; // Show chat
+        setTimeout(() => {
+            chatPopup.style.transform = "translateY(0)"; // Ensure animation works
+        }, 10);
+    }
+
+    function hideChat() {
+        chatPopup.style.transform = "translateY(50px)"; // Slide down before hiding
+        setTimeout(() => {
+            chatPopup.style.display = "none";
+        }, 300);
+    }
+
     chatbotIcon.addEventListener("click", function () {
-        chatPopup.style.display = "flex"; // Show the chatbot
+        showChat();
     });
 
     closeChat.addEventListener("click", function () {
-        chatPopup.style.display = "none"; // Hide the chatbot
+        hideChat();
+    });
+
+    // Ensure tapping outside chatbox on iPhone closes it
+    document.addEventListener("click", function (event) {
+        if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
+            hideChat();
+        }
     });
 });
-
-let chatHistory = [
-    { role: "system", content: `
-        You are a virtual assistant representing Nicolas Payen. 
-        You know his expertise in investment, climate tech, and finance.
-        
-        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
-        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
-        
-        Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
-        Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
-    `}
-];
 
 async function sendMessage() {
     let userText = userInput.value.trim();

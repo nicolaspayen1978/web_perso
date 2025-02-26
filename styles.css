@@ -19,17 +19,28 @@
     height: 30px;
 }
 
-/* Chat Popup Window */
+/* Chat Popup Window - Fixed for iPhone */
 #chat-popup {
     position: fixed;
     bottom: 80px;
     right: 20px;
     width: 300px;
+    max-width: 90%;
     background: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     display: none; /* Hidden by default */
     flex-direction: column;
+    z-index: 10000; /* Ensure it's on top */
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Ensure Chat Appears on iOS */
+@supports (-webkit-touch-callout: none) {
+    #chat-popup {
+        bottom: 10vh; /* Move up slightly for better visibility */
+    }
 }
 
 #chat-header {

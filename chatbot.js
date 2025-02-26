@@ -7,32 +7,54 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeChat = document.getElementById("close-chat");
 
     function showChat() {
-        chatPopup.style.display = "flex"; // Show chat
+        chatPopup.style.display = "flex"; // Show chat instantly
         setTimeout(() => {
-            chatPopup.style.transform = "translateY(0)"; // Ensure animation works
+            chatPopup.style.opacity = "1";
+            chatPopup.style.transform = "translateY(0)"; // Ensure smooth animation
         }, 10);
     }
 
     function hideChat() {
+        chatPopup.style.opacity = "0";
         chatPopup.style.transform = "translateY(50px)"; // Slide down before hiding
         setTimeout(() => {
             chatPopup.style.display = "none";
         }, 300);
     }
 
-    chatbotIcon.addEventListener("click", function () {
-        showChat();
+    chatbotIcon.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent event bubbling
+        if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+            showChat();
+        }
     });
 
-    closeChat.addEventListener("click", function () {
+    closeChat.addEventListener("click", function (event) {
+        event.stopPropagation();
         hideChat();
     });
 
-    // Ensure tapping outside chatbox on iPhone closes it
+    // Ensure clicking inside the chat does NOT close it
+    chatPopup.addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+
+    // Ensure tapping outside chatbox on iPhone and desktop closes it
     document.addEventListener("click", function (event) {
         if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
             hideChat();
         }
+    });
+
+    // Fix for iPhone Touch Events
+    document.addEventListener("touchstart", function (event) {
+        if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
+            hideChat();
+        }
+    });
+
+    chatPopup.addEventListener("touchstart", function (event) {
+        event.stopPropagation();
     });
 });
 

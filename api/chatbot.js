@@ -1,49 +1,36 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");  // Use CommonJS syntax
+let notifiedUsers = new Set();  // Store notified users
 
-let notifiedUsers = new Set();  // Prevent multiple notifications for the same session
+// Function to send GitHub notification
+async function sendGitHubNotification(visitorMessage) {
+    const githubToken = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+    const repoOwner = "nicolaspayen1978";
+    const repoName = "web_perso";
 
-async function sendNotification(visitorMessage) {
-    const adminEmail = "your-email@example.com";  // Replace with your email
-    const slackWebhook = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK";  // Replace with your Slack webhook
-
-    const messageText = `New visitor engaged with your chatbot:\n\n"${visitorMessage}"`;
-
-    // Send Email (via Mailgun or SMTP)
-    await fetch("https://api.mailgun.net/v3/YOUR_DOMAIN/messages", {
+    await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/dispatches`, {
         method: "POST",
         headers: {
-            "Authorization": `Basic ${btoa("api:YOUR_MAILGUN_API_KEY")}`,
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Authorization": `Bearer ${githubToken}`,
+            "Accept": "application/vnd.github.everest-preview+json"
         },
-        body: new URLSearchParams({
-            from: "Chatbot <bot@your-domain.com>",
-            to: adminEmail,
-            subject: "New Chatbot Visitor",
-            text: messageText
+        body: JSON.stringify({
+            event_type: "chatbot_notification",
+            client_payload: { message: visitorMessage }
         })
     });
-
-    // Send Slack Notification
-    await fetch(slackWebhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: messageText })
-    });
-
-    console.log("Notification sent!");
 }
 
-// Check if user is new & send a notification
-export default async function handler(req, res) {
-    const { messages } = req.body;
-    const userMessage = messages.find(msg => msg.role === "user")?.content;
+// Function to send email or Telegram notification
+async function sendNotification(visitorMessage) {
+    const adminEmail = "nicolas_payen@icloud.com";  // Replace with your email
 
-    if (userMessage && !notifiedUsers.has(req.headers["x-forwarded-for"])) {
-        notifiedUsers.add(req.headers["x-forwarded-for"]);
-        await sendNotification(userMessage);
-    }
+    console.log(`Sending notification: ${visitorMessage}`);
 
-export default async function handler(req, res) {
+    // Add your notification logic here (email, Telegram, Discord, etc.)
+}
+
+// Main handler function for Vercel API
+module.exports = async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method Not Allowed. Use POST." });
     }
@@ -54,6 +41,18 @@ export default async function handler(req, res) {
     }
 
     try {
+        const { messages } = req.body;
+        const userMessage = messages.find(msg => msg.role === "user")?.content;
+        const userIP = req.headers["x-forwarded-for"];
+
+        // Send GitHub notification when the first message is received
+        if (userMessage && !notifiedUsers.has(userIP)) {
+            notifiedUsers.add(userIP);
+            await sendGitHubNotification(userMessage);
+            await sendNotification(userMessage);
+        }
+
+        // Call OpenAI API for response
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -62,7 +61,7 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 model: "gpt-4",
-                messages: req.body.messages
+                messages: messages
             })
         });
 
@@ -72,8 +71,9 @@ export default async function handler(req, res) {
 
         const data = await response.json();
         res.status(200).json(data);
+
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};

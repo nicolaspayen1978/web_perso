@@ -29,12 +29,17 @@
     background: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    /*display: none; /* Initially hidden */
+    display: flex; /* Keep it visible for debugging */
     flex-direction: column;
-    z-index: 10000; /* Make sure it's above all elements */
+    z-index: 10000; /* Ensure it's above all elements */
     transform: translateY(0);
-    transition: transform 0.3s ease-in-out;
-    pointer-events: auto; /* Allow click events */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    pointer-events: auto; /* Allow clicks inside */
+}
+
+/* Ensure All Elements Inside are Clickable */
+#chat-popup * {
+    pointer-events: auto;
 }
 
 /* Ensure Chat Appears on iOS */
@@ -42,11 +47,6 @@
     #chat-popup {
         bottom: 10vh; /* Move up slightly for better visibility */
     }
-}
-
-/* Ensure All Elements Inside are Clickable */
-#chat-popup * {
-    pointer-events: auto;
 }
 
 #chat-header {

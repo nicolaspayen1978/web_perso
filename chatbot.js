@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     closeChat.addEventListener("click", function () {
-        hideChat();
+        //hideChat();
     });
 
     // Ensure tapping outside chatbox on iPhone closes it

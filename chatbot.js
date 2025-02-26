@@ -1,6 +1,20 @@
 const chatbox = document.getElementById("chatbox");
 const userInput = document.getElementById("user-input");
 
+document.addEventListener("DOMContentLoaded", function () {
+    const chatbotIcon = document.getElementById("chatbot-icon");
+    const chatPopup = document.getElementById("chat-popup");
+    const closeChat = document.getElementById("close-chat");
+
+    chatbotIcon.addEventListener("click", function () {
+        chatPopup.style.display = "flex"; // Show the chatbot
+    });
+
+    closeChat.addEventListener("click", function () {
+        chatPopup.style.display = "none"; // Hide the chatbot
+    });
+});
+
 let chatHistory = [
     { role: "system", content: `
         You are a virtual assistant representing Nicolas Payen. 

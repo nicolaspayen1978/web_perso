@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");  // Use CommonJS syntax
 let notifiedUsers = new Set();  // Store notified users
 
 // Function to send GitHub notification

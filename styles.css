@@ -29,7 +29,7 @@
     background: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    display: none; /* Hidden by default */
+    /*display: none; /* Hidden by default */
     flex-direction: column;
     z-index: 10000; /* Ensure it's on top */
     transform: translateY(0);

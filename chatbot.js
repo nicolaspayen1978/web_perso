@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");
@@ -6,6 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeChat = document.getElementById("close-chat");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
+
+    let chatHistory = [
+        { role: "system", content: `
+        You are a virtual assistant representing Nicolas Payen. 
+        You know his expertise in investment, climate tech, and finance.
+        
+        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
+        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
+        
+        Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
+        Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
+    `}
+    ];
 
     function showChat() {
         chatPopup.style.display = "flex";
@@ -63,24 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    let chatHistory = [
-        { role: "system", content: `
-        You are a virtual assistant representing Nicolas Payen. 
-        You know his expertise in investment, climate tech, and finance.
-        
-        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
-        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
-        
-        Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
-        Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
-    `}
-    ];
-
+    // **Ensure Send Message Works**
     async function sendMessage() {
         let userText = userInput.value.trim();
         if (!userText) return;
 
         chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll down
         userInput.value = "";
 
         console.log("User input:", userText);
@@ -110,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: botReply });
 
             chatbox.innerHTML += `<p><strong>AI:</strong> ${botReply}</p>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll down
         } catch (error) {
             console.error("Chatbot Error:", error);
             chatbox.innerHTML += `<p><strong>AI:</strong> Sorry, I encountered an error. Please try again.</p>`;

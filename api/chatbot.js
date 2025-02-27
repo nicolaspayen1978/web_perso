@@ -1,4 +1,3 @@
-
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 
 // Function to send GitHub notification
@@ -80,11 +79,10 @@ module.exports = async (req, res) => {
                 "Authorization": `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                //model: "gpt-3.5-turbo", //faster model to ensure chatbot reply quickly but quality get bad
                 model: "gpt-4",
                 messages: messages,
                 max_tokens: 700,  // Reduce response length but still quite detailed
-                temperature: 0.3  // Keeps answers factual (0.3 = factual slighlty creative)
+                temperature: 0.3  // Keeps answers factual (0.3 = factual, slightly creative)
             })
         });
 
@@ -94,10 +92,22 @@ module.exports = async (req, res) => {
         }
 
         const data = await response.json();
-        return res.status(200).json(data);
+        let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+
+        // ✅ Convert Markdown-style links `[title](url)` to real HTML `<a>` links
+        botReply = formatLinks(botReply);
+
+        return res.status(200).json({ choices: [{ message: { content: botReply } }] });
 
     } catch (error) {
         console.error("Server Error:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+// ✅ Function to format links properly as clickable HTML
+function formatLinks(responseText) {
+    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
+        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
+    });
+}

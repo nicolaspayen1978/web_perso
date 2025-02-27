@@ -114,6 +114,27 @@ document.addEventListener("DOMContentLoaded", function () {
         chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll down
         userInput.value = "";
 
+         chatHistory = [
+            { 
+                role: "system", 
+                content: `
+                You are a virtual assistant representing Nicolas Payen. 
+                Here are useful resources you can share when relevant:
+
+                **Career Timeline:** ${resources.career}  
+                **Resume:** ${resources.resume}  
+
+                **Articles:**  
+                ${resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n")}
+
+                **Projects:**  
+                ${resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n")}
+
+                Provide links when they are relevant to the user's question.
+                `
+            }
+        ];
+
         const currentTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Amsterdam" });
         chatHistory.push({ role: "user", content: `User asked: "${userText}". Current time in Amsterdam is ${currentTime}.` });
 

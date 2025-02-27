@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");
     const chatPopup = document.getElementById("chat-popup");
+    const maximizeChat = document.getElementById("maximize-chat");
     const closeChat = document.getElementById("close-chat");
     const userInput = document.getElementById("user-input");
-    const maximizeChat = document.getElementById("maximize-chat");
     const sendButton = document.getElementById("send-button");
 
     function showChat() {

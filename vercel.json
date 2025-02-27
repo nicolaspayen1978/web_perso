@@ -1,7 +1,15 @@
 {
+  "version": 2,
   "functions": {
-    "api/chatbot": {
-      "maxDuration": 30
+    "api/chatbot.js": {
+      "maxDuration": 30,
+      "runtime": "nodejs20.x"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/chatbot",
+      "dest": "/api/chatbot.js"
+    }
+  ]
 }

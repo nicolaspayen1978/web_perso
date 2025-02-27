@@ -52,7 +52,7 @@
 /* Chat Header (Avatar + Text + Close Button) */
 #chat-header {
     display: flex;
-    align-items: center;
+    align-items: justify;
     justify-content: space-between;
     padding: 10px;
     background: #2c3e50;

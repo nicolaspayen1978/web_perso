@@ -1,4 +1,3 @@
-const fetch = require("node-fetch"); // Only needed for Node.js < 18
 
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 

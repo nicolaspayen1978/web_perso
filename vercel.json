@@ -3,7 +3,6 @@
   "functions": {
     "api/chatbot.js": {
       "maxDuration": 30,
-      "runtime": "nodejs20.x"
     }
   },
   "routes": [

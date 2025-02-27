@@ -36,6 +36,17 @@ async function sendNotification(visitorMessage) {
     // Add your actual notification logic (email, Telegram, Discord, etc.)
 }
 
+async function fetchDocument(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch document: ${response.statusText}`);
+        return await response.text();  // Returns text content of the document
+    } catch (error) {
+        console.error("Error fetching document:", error);
+        return "I couldn't fetch the document.";
+    }
+}
+
 module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");  // ✅ Allows any origin
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");

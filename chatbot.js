@@ -122,7 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ${resources.projects ? resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n") : "Loading..."}
 
         **Contacts:** ${resources.contact || "Loading..."}
-        Provide links when relevant. If a user asks for more information, share these sources.
+        Provide links when relevant but always share a little summary of the content of the link before doing so. 
+        If a user asks for more information, share these sources.
 
         Help visitors book meetings or calls with Nicolas Payen using Calendly.
     `;

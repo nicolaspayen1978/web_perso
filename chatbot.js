@@ -1,3 +1,6 @@
+console.log("User input:", userText);
+console.log("Sending request to:", "https://your-vercel-project.vercel.app/api/chatbot");
+
 document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");
@@ -61,6 +64,20 @@ document.addEventListener("DOMContentLoaded", function () {
             sendMessage();
         }
     });
+
+    let chatHistory = [
+    { role: "system", content: `
+        You are a virtual assistant representing Nicolas Payen. 
+        You know his expertise in investment, climate tech, and finance.
+        
+        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
+        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
+        
+        Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
+        Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
+    `}
+];
+
 
     async function sendMessage() {
         let userText = userInput.value.trim();

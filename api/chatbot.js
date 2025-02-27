@@ -36,7 +36,6 @@ async function sendNotification(visitorMessage) {
     // Add your actual notification logic (email, Telegram, Discord, etc.)
 }
 
-// Main API handler function
 module.exports = async (req, res) => {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method Not Allowed. Use POST." });
@@ -44,22 +43,18 @@ module.exports = async (req, res) => {
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-        return res.status(500).json({ error: "Missing API key in Vercel environment variables." });
+        console.error("Missing OpenAI API key.");
+        return res.status(500).json({ error: "Missing API key in server." });
     }
 
     try {
         const { messages } = req.body;
-        const userMessage = messages.find(msg => msg.role === "user")?.content;
-        const userIP = req.headers["x-forwarded-for"];
-
-        // Send GitHub notification when the first message is received from a unique user
-        if (userMessage && !notifiedUsers.has(userIP)) {
-            notifiedUsers.add(userIP);
-            await sendGitHubNotification(userMessage);
-            await sendNotification(userMessage);
+        if (!messages || messages.length === 0) {
+            console.error("Invalid request: messages array is missing.");
+            return res.status(400).json({ error: "Invalid request: Missing messages." });
         }
 
-        // Call OpenAI API for chatbot response
+        // Call OpenAI API
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -73,6 +68,7 @@ module.exports = async (req, res) => {
         });
 
         if (!response.ok) {
+            console.error(`OpenAI API error: ${response.statusText}`);
             return res.status(response.status).json({ error: `OpenAI API error: ${response.statusText}` });
         }
 
@@ -80,7 +76,7 @@ module.exports = async (req, res) => {
         return res.status(200).json(data);
 
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Server Error:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };

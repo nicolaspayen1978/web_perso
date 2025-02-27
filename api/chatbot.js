@@ -1,5 +1,12 @@
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 
+// ✅ Function to format links properly as clickable HTML
+function formatLinks(responseText) {
+    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
+        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
+    });
+}
+
 // Function to send GitHub notification
 async function sendGitHubNotification(visitorMessage) {
     try {
@@ -104,10 +111,3 @@ module.exports = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
-
-// ✅ Function to format links properly as clickable HTML
-function formatLinks(responseText) {
-    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
-        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
-    });
-}

@@ -50,6 +50,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
     }
 
+    // Function to truncate chat history to fit OpenAI token limits
+    function truncateChatHistory(chatHistory, maxTokens = 4000) {
+        let totalTokens = 0;
+        let truncatedHistory = [];
+
+        for (let i = chatHistory.length - 1; i >= 0; i--) {
+            let messageTokens = chatHistory[i].content.length / 4;  // Approximate token count
+            if (totalTokens + messageTokens > maxTokens) break;
+            totalTokens += messageTokens;
+            truncatedHistory.unshift(chatHistory[i]);  // Keep latest messages
+        }
+
+        return truncatedHistory;
+    }
+
     chatbotIcon.addEventListener("click", function (event) {
         event.stopPropagation();
         if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -101,6 +116,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const currentTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Amsterdam" });
         chatHistory.push({ role: "user", content: `User asked: "${userText}". Current time in Amsterdam is ${currentTime}.` });
+
+        // ✅ Truncate chat history before sending to API
+        chatHistory = truncateChatHistory(chatHistory, 4000);
 
         try {
             const response = await fetch("https://web-perso.vercel.app/api/chatbot", {

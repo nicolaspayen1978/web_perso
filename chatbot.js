@@ -17,16 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
         **Expertise:** Investment, finance, digital transformation, energy transition, climate tech, entrepreneurship  
         **Family life:** Married to Eveline Noya, dutch citizen and senior HR professional, he has two kids. Floris, male, borned in 2012. Romy, a girl, borned in 2016.   
 
+        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
+        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
+        
         **External Resources:**  
         - [LinkedIn Profile](https://www.linkedin.com/in/nicolaspayen)  
         - [Articles](https://nicolaspayen1978.github.io/Articles/)  
         - [Projects](https://nicolaspayen1978.github.io/web_perso/4Gs.html)  
         - [GitHub](https://github.com/nicolaspayen1978)  
 
+        **Career Timeline:** ${resources.career}  
+        **Resume:** ${resources.resume}  
+        **Projects:** ${resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n")}
+        **Articles:**  ${resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n")}
+
         If a user asks for more information, provide these links where relevant.
-        
-        Strengths: Deep knowledge in clean technologies, climate investments, international business, strategic leadership.
-        Weaknesses: Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.
         
         Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
 
@@ -114,26 +119,11 @@ document.addEventListener("DOMContentLoaded", function () {
         chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll down
         userInput.value = "";
 
-         chatHistory = [
-            { 
-                role: "system", 
-                content: `
-                You are a virtual assistant representing Nicolas Payen. 
-                Here are useful resources you can share when relevant:
-
-                **Career Timeline:** ${resources.career}  
-                **Resume:** ${resources.resume}  
-
-                **Articles:**  
-                ${resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n")}
-
-                **Projects:**  
-                ${resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n")}
-
-                Provide links when they are relevant to the user's question.
-                `
-            }
-        ];
+        // ✅ Ensure resources are loaded before sending API request
+        if (Object.keys(resources).length === 0) {
+            chatbox.innerHTML += `<p><strong>AI:</strong> Please wait, loading resources...</p>`;
+            await fetchResources();  // Reload if not already loaded
+        }
 
         const currentTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Amsterdam" });
         chatHistory.push({ role: "user", content: `User asked: "${userText}". Current time in Amsterdam is ${currentTime}.` });

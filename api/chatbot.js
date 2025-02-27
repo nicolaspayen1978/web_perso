@@ -80,10 +80,11 @@ module.exports = async (req, res) => {
                 "Authorization": `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "gpt-3.5-turbo", //faster model to ensure chatbot reply quickly
-                //model: "gpt-4",
+                //model: "gpt-3.5-turbo", //faster model to ensure chatbot reply quickly but quality get bad
+                model: "gpt-4",
                 messages: messages,
-                max_tokens: 500  // Reduce response length
+                max_tokens: 700,  // Reduce response length but still quite detailed
+                temperature: 0.3  // Keeps answers factual (0.3 = factual slighlty creative)
             })
         });
 

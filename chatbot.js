@@ -1,5 +1,3 @@
-console.log("User input:", userText);
-console.log("Sending request to:", "https://your-vercel-project.vercel.app/api/chatbot");
 
 document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");
@@ -66,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     let chatHistory = [
-    { role: "system", content: `
+        { role: "system", content: `
         You are a virtual assistant representing Nicolas Payen. 
         You know his expertise in investment, climate tech, and finance.
         
@@ -76,8 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Answer all questions in a way that reflects Nicolas Payen's thinking and expertise.
         Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
     `}
-];
-
+    ];
 
     async function sendMessage() {
         let userText = userInput.value.trim();
@@ -85,6 +82,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
         userInput.value = "";
+
+        console.log("User input:", userText);
+        console.log("Sending request to:", "https://web-perso.vercel.app/api/chatbot");
 
         const currentTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Amsterdam" });
         chatHistory.push({ role: "user", content: `User asked: "${userText}". Current time in Amsterdam is ${currentTime}.` });

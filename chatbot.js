@@ -1,3 +1,22 @@
+// ✅ Load external resources (articles, resume, career, projects)
+let resources = {};  // Store fetched resources
+
+async function fetchResources() {
+    try {
+        const response = await fetch("resources.json");
+        if (!response.ok) throw new Error("Failed to load resources");
+        resources = await response.json();
+        console.log("Resources Loaded:", resources);
+    } catch (error) {
+        console.error("Error fetching resources:", error);
+    }
+}
+
+// ✅ Fetch resources before anything else
+document.addEventListener("DOMContentLoaded", async function () {
+    await fetchResources();  // Load `resources.json`
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");

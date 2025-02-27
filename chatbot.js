@@ -1,7 +1,5 @@
-const chatbox = document.getElementById("chatbox");
-const userInput = document.getElementById("user-input");
-
 document.addEventListener("DOMContentLoaded", function () {
+    const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");
     const chatPopup = document.getElementById("chat-popup");
     const closeChat = document.getElementById("close-chat");

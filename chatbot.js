@@ -121,9 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
         **Projects:**  
         ${resources.projects ? resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n") : "Loading..."}
 
+        **Contacts:** ${resources.contact || "Loading..."}
         Provide links when relevant. If a user asks for more information, share these sources.
 
-        Help visitors book meetings or calls with Nicolas Payen using Calendly: [Calendly](https://calendly.com/nicolas_payen/30min).
+        Help visitors book meetings or calls with Nicolas Payen using Calendly.
     `;
     }
 

@@ -84,9 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll down
         userInput.value = "";
 
-        console.log("User input:", userText);
-        console.log("Sending request to:", "https://web-perso.vercel.app/api/chatbot");
-
         const currentTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Amsterdam" });
         chatHistory.push({ role: "user", content: `User asked: "${userText}". Current time in Amsterdam is ${currentTime}.` });
 

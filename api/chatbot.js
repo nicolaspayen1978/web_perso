@@ -54,7 +54,6 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: "Invalid request: Missing messages." });
         }
 
-        // Call OpenAI API
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {

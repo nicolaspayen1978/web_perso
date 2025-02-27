@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatPopup = document.getElementById("chat-popup");
     const closeChat = document.getElementById("close-chat");
     const userInput = document.getElementById("user-input");
+    const maximizeChat = document.getElementById("maximize-chat");
     const sendButton = document.getElementById("send-button");
 
     function showChat() {
@@ -91,6 +92,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.key === "Enter") {
             sendMessage();
         }
+    });
+
+    // ✅ Maximize button opens a full-page chat
+    maximizeChat.addEventListener("click", function () {
+        // Encode chat history to pass it to the new page
+        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(chatHistory));
+        window.open(`chat.html?history=${chatHistoryEncoded}`, "_blank");
     });
 
     async function getSystemMessage() {

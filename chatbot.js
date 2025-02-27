@@ -56,11 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return truncatedHistory;
     }
 
-    // ✅ Maximize button opens a full-page chat
-    maximizeChat.addEventListener("click", function (event) {
-        // Encode chat history to pass it to the new page
+    // ✅ Fix: Maximize button should open the full-page chat with history
+    maximizeChat.addEventListener("click", function () {
         const chatHistoryEncoded = encodeURIComponent(JSON.stringify(chatHistory));
-        window.open(`chat.html?history=${chatHistoryEncoded}`, "_blank");
+        const chatUrl = `chat.html?history=${chatHistoryEncoded}`;
+        window.open(chatUrl, "_blank"); // ✅ Open chat in new tab
     });
 
     chatbotIcon.addEventListener("click", function (event) {

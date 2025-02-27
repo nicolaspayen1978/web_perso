@@ -56,6 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
         return truncatedHistory;
     }
 
+    // ✅ Maximize button opens a full-page chat
+    maximizeChat.addEventListener("click", function (event) {
+        // Encode chat history to pass it to the new page
+        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(chatHistory));
+        window.open(`chat.html?history=${chatHistoryEncoded}`, "_blank");
+    });
+
     chatbotIcon.addEventListener("click", function (event) {
         event.stopPropagation();
         if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -94,12 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ✅ Maximize button opens a full-page chat
-    maximizeChat.addEventListener("click", function () {
-        // Encode chat history to pass it to the new page
-        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(chatHistory));
-        window.open(`chat.html?history=${chatHistoryEncoded}`, "_blank");
-    });
 
     async function getSystemMessage() {
         return `

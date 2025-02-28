@@ -33,6 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.opacity = "1";
             chatPopup.style.transform = "translateY(0)";
         }, 10);
+
+        // ✅ Only send welcome message once
+        if (chatHistory.length === 1) {
+            let welcomeMessage = "👋 Hi! I'm NicoAI the AI version of Nicolas Payen. How can I help you today?";
+            chatbox.innerHTML += `<p><strong>AI:</strong> ${welcomeMessage}</p>`;
+            chatHistory.push({ role: "assistant", content: welcomeMessage });
+        }
     }
 
     function hideChat() {

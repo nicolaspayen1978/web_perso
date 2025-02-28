@@ -85,8 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         // Remove system messages before sending history to new tab
-        const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
-        sessionStorage.setItem("chatHistory", JSON.stringify(filteredChatHistory));
+        //const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
+        sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
         window.open("chat.html", "_blank");
     });
 

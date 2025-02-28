@@ -69,7 +69,8 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-    align-items: end;
+    width: fit-content;
+    padding: 0px 10px;
 }
 
 /* AI Avatar Image */

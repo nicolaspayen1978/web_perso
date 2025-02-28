@@ -1,6 +1,6 @@
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 
-// ✅ Function to format links properly as clickable HTML
+// Function to format links properly as clickable HTML
 function formatLinks(responseText) {
     return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
         return `🔗 <a href="${url}" target="_blank">${title}</a>`;
@@ -101,7 +101,7 @@ module.exports = async (req, res) => {
         const data = await response.json();
         let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
 
-        // ✅ Convert Markdown-style links `[title](url)` to real HTML `<a>` links
+        // Convert Markdown-style links `[title](url)` to real HTML `<a>` links
         botReply = formatLinks(botReply);
 
         return res.status(200).json({ choices: [{ message: { content: botReply } }] });

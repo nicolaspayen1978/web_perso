@@ -52,6 +52,7 @@
         .chat-container {
             width: 95%;
             max-width: 800px;
+            margin: auto;
             height: 85vh;
             display: flex;
             flex-direction: column;
@@ -61,6 +62,15 @@
             background: white;
             padding: 15px;
             margin-top: 60px;
+            text-align: left; /* Left-align text */
+        }
+        
+        /* New Header for text + image */
+        .chat-header {
+            display: flex;
+            justify-content: space-between; /* Text on left, image on right */
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         /* AI Avatar Image */
@@ -149,13 +159,18 @@
 
     <!-- Chat Container -->
     <div class="chat-container">
-        <h1>Chat with NicoAI</h1><img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-profilepic">
+        <div class="chat-header">
+            <h1>Chat with NicoAI</h1>
+            <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-profilepic">
+        </div>
+
+        <!-- Chat messages -->
         <div id="chatbox"></div>
-        
+
         <!-- Input and Button -->
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="Ask me anything..." />
-            <button id="send-button">Send</button>
+            <input type="text" id="user-input" placeholder="Ask me anything..." aria-label="Type your message" />
+            <button id="send-button" aria-label="Send message">Send</button>
         </div>
     </div>
 

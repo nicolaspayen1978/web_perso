@@ -125,13 +125,11 @@ footer {
 }
 
 #footer-title {
-    background: #2c3e50;
-    color: #333;
     padding: 40px;
     font-size: 1.2em;
     border: thin;
     border-bottom: 5px;
-    border-color: #333;
+    border-color: antiquewhite;
 }
 
 button {

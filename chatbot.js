@@ -1,5 +1,6 @@
 // ✅ Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
+let chatHistory = [];  // ✅ Declare chatHistory globally at the top
 
 async function fetchResources() {
     try {
@@ -146,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let systemMessage = await getSystemMessage();
-        let chatHistory = [{ role: "system", content: systemMessage }];
+        
+        chatHistory = [{ role: "system", content: systemMessage }];
         chatHistory.push({ role: "user", content: userText });
 
         chatHistory = truncateChatHistory(chatHistory, 4000);

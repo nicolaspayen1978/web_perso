@@ -126,7 +126,7 @@ footer {
 }
 
 #footer-title {
-    padding-bottom: 5px;/* Space between text and line */
+    padding-bottom: 5   px;/* Space between text and line */
     font-size: 1.2em;
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -143,7 +143,7 @@ button {
     width: 100%;
 }
 
- body {
+body {
       font-family: 'Poppins', sans-serif;
       font-size: 1em;
       margin: 0;

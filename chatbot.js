@@ -86,10 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // Remove system messages before sending history to new tab
         const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
-
-        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(filteredChatHistory));
-        const chatUrl = `chat.html?history=${chatHistoryEncoded}`;
-        window.open(chatUrl, "_blank"); // Open chat in new tab
+        sessionStorage.setItem("chatHistory", JSON.stringify(filteredChatHistory));
+        window.open("chat.html", "_blank");
     });
 
     chatbotIcon.addEventListener("click", function (event) {

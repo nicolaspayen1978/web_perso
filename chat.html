@@ -99,14 +99,14 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            width: 80px; /* ✅ Adjusted to be smaller */
+            width: 80px; /*Adjusted to be smaller */
         }
 
         button:hover {
             background: #34495e;
         }
 
-        /* ✅ Mobile Responsiveness */
+        /*Mobile Responsiveness */
         @media (max-width: 768px) {
             .chat-container {
                 width: 100%;
@@ -154,9 +154,8 @@
     <script>
         // Load chat history from URL
         function getChatHistory() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const history = urlParams.get("history");
-            return history ? JSON.parse(decodeURIComponent(history)) : [];
+            const history = sessionStorage.getItem("chatHistory");
+            return history ? JSON.parse(history) : [];
         }
 
         const chatbox = document.getElementById("chatbox");
@@ -164,7 +163,7 @@
         const sendButton = document.getElementById("send-button");
         let chatHistory = getChatHistory();
 
-        // ✅ Display previous messages
+        // Display previous messages
         chatHistory
             .filter(msg => msg.role !== "system")  // ✅ Hides system messages
             .forEach(msg => {

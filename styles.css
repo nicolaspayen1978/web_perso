@@ -126,9 +126,9 @@ footer {
 }
 
 #footer-title {
-    padding: 20px;
-    font-size: 1.4em;
-    border-bottom-width: 2px;
+    padding-bottom: 2px;/* Space between text and line */
+    font-size: 1.2em;
+    border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: white;
     margin-bottom: 10px;

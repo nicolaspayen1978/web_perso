@@ -56,7 +56,7 @@
 
         // Display previous messages
         chatHistory
-            .filter(msg => msg.role !== "system")  // ✅ Hides system messages
+            .filter(msg => msg.role !== "system")  // Hides system messages
             .forEach(msg => {
                 const sender = msg.role === "assistant" ? "AI" : "You";
                 chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;

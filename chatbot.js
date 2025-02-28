@@ -1,6 +1,5 @@
-// ✅ Load external resources (articles, resume, career, projects)
+// Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
-let chatHistory = [];  // ✅ Declare chatHistory globally at the top
 
 async function fetchResources() {
     try {
@@ -13,7 +12,7 @@ async function fetchResources() {
     }
 }
 
-// ✅ Fetch resources before anything else
+// Fetch resources before anything else
 document.addEventListener("DOMContentLoaded", async function () {
     await fetchResources();  // Load `resources.json`
 });
@@ -27,6 +26,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
+    let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+
+    function displayChatHistory() {
+        chatbox.innerHTML = ""; // Clear chatbox
+        chatHistory.forEach(msg => {
+            const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+            chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+        });
+    }
+
+    function saveChatHistory() {
+        localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
+    }
+
     function showChat() {
         chatPopup.style.display = "flex";
         setTimeout(() => {
@@ -34,10 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.transform = "translateY(0)";
         }, 10);
 
-        // ✅ Check if welcome message has been sent in this session
+        displayChatHistory(); // Load previous messages when opening chat
+
+        // Check if welcome message has been sent in this session
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> 👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?</p>`;
-            sessionStorage.setItem("welcomeMessageSent", "true"); // ✅ Store flag so it doesn't repeat
+            sessionStorage.setItem("welcomeMessageSent", "true"); // Store flag so it doesn't repeat
         }
     }
 
@@ -63,18 +78,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return truncatedHistory;
     }
 
-    // ✅ Fix: Maximize button should open the full-page chat with history
+    // Fix: Maximize button should open the full-page chat with history
     maximizeChat.addEventListener("click", function () {
         if (chatHistory.length === 0) {
             console.warn("No chat history to transfer!");
             return;
         }
-        // ✅ Remove system messages before sending history to new tab
+        // Remove system messages before sending history to new tab
         const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
 
         const chatHistoryEncoded = encodeURIComponent(JSON.stringify(filteredChatHistory));
         const chatUrl = `chat.html?history=${chatHistoryEncoded}`;
-        window.open(chatUrl, "_blank"); // ✅ Open chat in new tab
+        window.open(chatUrl, "_blank"); // Open chat in new tab
     });
 
     chatbotIcon.addEventListener("click", function (event) {
@@ -164,6 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
         chatHistory = [{ role: "system", content: systemMessage }];
         chatHistory.push({ role: "user", content: userText });
 
+        saveChatHistory(); // Save user input
+
         chatHistory = truncateChatHistory(chatHistory, 4000);
 
         try {
@@ -181,8 +198,10 @@ document.addEventListener("DOMContentLoaded", function () {
             let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
 
             chatHistory.push({ role: "assistant", content: botReply });
-
             chatbox.innerHTML += `<p><strong>AI:</strong> ${botReply}</p>`;
+
+            saveChatHistory(); // Save bot response
+
             chatbox.scrollTop = chatbox.scrollHeight;
         } catch (error) {
             console.error("Chatbot Error:", error);

@@ -48,12 +48,24 @@
             margin: 4px 0;
         }
 
+        footer {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0; /* Increase padding for a larger footer */
+            font-size: 1em;
+            position: relative; /* Keep relative positioning */
+            bottom: 0;
+            margin-top: 10px; /* Ensure spacing from the chat container */
+        }
+
         /* Chat Container */
         .chat-container {
             width: 95%;
             max-width: 800px;
             margin: auto;
-            height: 85vh;
+            height: 80vh; /* Adjust height to ensure footer is aligned */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -63,6 +75,7 @@
             padding: 15px;
             margin-top: 60px;
             text-align: left;
+            min-height: 70vh; /* Ensures chatbox pushes the footer properly */
         }
         
         /* Chat Header */

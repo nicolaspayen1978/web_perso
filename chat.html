@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -63,13 +62,13 @@
             background: white;
             padding: 15px;
             margin-top: 60px;
-            text-align: left; /* Left-align text */
+            text-align: left;
         }
         
-        /* New Header for text + image */
+        /* Chat Header */
         .chat-header {
             display: flex;
-            justify-content: space-between; /* Text on left, image on right */
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
@@ -118,7 +117,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            width: 80px; /*Adjusted to be smaller */
+            width: 80px;
         }
 
         button:hover {
@@ -148,66 +147,6 @@
             }
         }
     </style>
-    <script>
-        // Load chat history from URL
-        function getChatHistory() {
-            const history = sessionStorage.getItem("chatHistory");
-            return history ? JSON.parse(history) : [];
-        }
-
-        const chatbox = document.getElementById("chatbox");
-        const userInput = document.getElementById("user-input");
-        const sendButton = document.getElementById("send-button");
-        let chatHistory = getChatHistory();
-
-        // Display previous messages
-        chatHistory
-            .filter(msg => msg.role !== "system")  // ✅ Hides system messages
-            .forEach(msg => {
-                const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
-                chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
-            });
-
-        async function sendMessage() {
-            let userText = userInput.value.trim();
-            if (!userText) return;
-
-            chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
-            chatbox.scrollTop = chatbox.scrollHeight; // ✅ Auto-scroll down
-            chatHistory.push({ role: "user", content: userText });
-            userInput.value = "";
-
-            try {
-                const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ messages: chatHistory })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
-
-                chatHistory.push({ role: "assistant", content: botReply });
-
-                chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> ${botReply}</p>`;
-                chatbox.scrollTop = chatbox.scrollHeight; // ✅ Auto-scroll down
-            } catch (error) {
-                console.error("Chatbot Error:", error);
-                chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> Sorry, I encountered an error. Please try again.</p>`;
-            }
-        }
-
-        sendButton.addEventListener("click", sendMessage);
-        userInput.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
-    </script>
 </head>
 <body>
      <div class="menu-container">
@@ -218,12 +157,11 @@
             <div></div>
         </a>
     </div>
-    <nav class="nav-menu">
-        <p></p>
-    </nav>
+
     <header>
         <h1>I built my own AI agent for this ;-)</h1>
     </header>
+
     <section id="chat-windows">
         <!-- Chat Container -->
         <div class="chat-container">
@@ -242,11 +180,79 @@
             </div>
         </div>
     </section>
-</body>
-<footer width="100%">
+
+    <footer width="100%">
         <div id="footer-title">
-            <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Enstein</i></p>
+            <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Einstein</i></p>
         </div>
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
-</footer>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatbox = document.getElementById("chatbox");
+            const userInput = document.getElementById("user-input");
+            const sendButton = document.getElementById("send-button");
+
+            // Load chat history from sessionStorage
+            function getChatHistory() {
+                const history = sessionStorage.getItem("chatHistory");
+                return history ? JSON.parse(history) : [];
+            }
+
+            let chatHistory = getChatHistory();
+
+            // Display previous messages (excluding system messages)
+            chatHistory.forEach(msg => {
+                if (msg.role !== "system") {
+                    const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+                    chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+                }
+            });
+
+            async function sendMessage() {
+                let userText = userInput.value.trim();
+                if (!userText) return;
+
+                chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+                chatHistory.push({ role: "user", content: userText });
+                userInput.value = "";
+
+                try {
+                    const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ messages: chatHistory })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+
+                    chatHistory.push({ role: "assistant", content: botReply });
+
+                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> ${botReply}</p>`;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+
+                    // Save updated chat history
+                    sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+                } catch (error) {
+                    console.error("Chatbot Error:", error);
+                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> Sorry, I encountered an error. Please try again.</p>`;
+                }
+            }
+
+            sendButton.addEventListener("click", sendMessage);
+            userInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
 </html>

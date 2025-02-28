@@ -55,9 +55,12 @@
         let chatHistory = getChatHistory();
 
         // Display previous messages
-        chatHistory.forEach(msg => {
-            chatbox.innerHTML += `<p><strong>${msg.role === "user" ? "You" : "AI"}:</strong> ${msg.content}</p>`;
-        });
+        chatHistory
+            .filter(msg => msg.role !== "system")  // ✅ Hides system messages
+            .forEach(msg => {
+                const sender = msg.role === "assistant" ? "AI" : "You";
+                chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+            });
 
         function sendMessage() {
             let userText = userInput.value.trim();

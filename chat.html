@@ -3,43 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Chat</title>
+    <title>Chat with NicoAI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
         }
 
+        /* Menu Icon */
+        .menu-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: #2c3e50;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .menu-icon:hover {
+            background: #34495e;
+        }
+
+        .menu-icon div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 4px 0;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 15px;
+            margin-top: 60px;
+        }
+
+        /* Chatbox */
         #chatbox {
-            width: 80%;
-            height: 60vh;
+            flex-grow: 1;
             overflow-y: auto;
             border: 1px solid #ccc;
+            border-radius: 8px;
             padding: 10px;
-            margin-bottom: 10px;
+            background: #f1f1f1;
+            height: 65vh;
+        }
+
+        /* Input and Button */
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
         }
 
         input {
-            width: 70%;
+            flex-grow: 1;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
         }
 
         button {
-            padding: 10px;
+            background: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background: #34495e;
         }
     </style>
 </head>
 <body>
 
-    <h1>Chat with Nicolas Payen's AI</h1>
-    <div id="chatbox"></div>
-    <input type="text" id="user-input" placeholder="Ask me anything..." />
-    <button id="send-button">Send</button>
+    <!-- Menu Icon -->
+    <a href="index.html" class="menu-icon">
+        <div></div>
+        <div></div>
+        <div></div>
+    </a>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <h1>Chat with NicoAI</h1>
+        <div id="chatbox"></div>
+        
+        <!-- Input and Button -->
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask me anything..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
 
     <script>
         // Load chat history from URL
@@ -56,9 +141,9 @@
 
         // Display previous messages
         chatHistory
-            .filter(msg => msg.role !== "system")  // Hides system messages
+            .filter(msg => msg.role !== "system")  // ✅ Hides system messages
             .forEach(msg => {
-                const sender = msg.role === "assistant" ? "AI" : "You";
+                const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
                 chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
             });
 

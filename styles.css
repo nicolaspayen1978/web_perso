@@ -117,8 +117,12 @@
 }
 
 #footer-title img {
-    width: 40px;
-    height: 40px;
+    height: 50px;
+    background: #2c3e50;
+    color: #333;
+    padding: 5px;
+    border-bottom: 2px;
+    border-color: #333;
 }
 
 button {

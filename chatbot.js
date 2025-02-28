@@ -34,11 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.transform = "translateY(0)";
         }, 10);
 
-        // ✅ Only send welcome message once
-        if (chatHistory.length === 1) {
-            let welcomeMessage = "👋 Hi! I'm NicoAI the AI version of Nicolas Payen. How can I help you today?";
-            chatbox.innerHTML += `<p><strong>AI:</strong> ${welcomeMessage}</p>`;
-            chatHistory.push({ role: "assistant", content: welcomeMessage });
+        // ✅ Check if welcome message has been sent in this session
+        if (!sessionStorage.getItem("welcomeMessageSent")) {
+            chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> 👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?</p>`;
+            sessionStorage.setItem("welcomeMessageSent", "true"); // ✅ Store flag so it doesn't repeat
         }
     }
 

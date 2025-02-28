@@ -59,7 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ Fix: Maximize button should open the full-page chat with history
     maximizeChat.addEventListener("click", function () {
-        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(chatHistory));
+        if (chatHistory.length === 0) {
+            console.warn("No chat history to transfer!");
+            return;
+        }
+        // ✅ Remove system messages before sending history to new tab
+        const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
+
+        const chatHistoryEncoded = encodeURIComponent(JSON.stringify(filteredChatHistory));
         const chatUrl = `chat.html?history=${chatHistoryEncoded}`;
         window.open(chatUrl, "_blank"); // ✅ Open chat in new tab
     });

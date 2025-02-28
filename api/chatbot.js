@@ -88,8 +88,8 @@ module.exports = async (req, res) => {
             body: JSON.stringify({
                 model: "gpt-4",
                 messages: messages,
-                max_tokens: 700,  // Reduce response length but still quite detailed
-                temperature: 0.3  // Keeps answers factual (0.3 = factual, slightly creative)
+                max_tokens: 800,  // Reduce response length but still quite detailed
+                temperature: 0.2  // Keeps answers factual (0.3 = factual, slightly creative)
             })
         });
 

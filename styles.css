@@ -53,7 +53,7 @@
 #chat-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensures spacing between elements */
     padding: 10px;
     background: #2c3e50;
     color: white;
@@ -61,6 +61,14 @@
     font-size: 14px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+}
+
+/* Chat Header (Text) */
+#chat-header span {
+    flex-grow: 1; /* Makes the text take up more space */
+    text-align: left; /* Aligns text properly */
+    font-size: 13px; /* Adjusts text size */
+    padding-right: 10px; /* Adds spacing before the buttons */
 }
 
 #chat-header button {
@@ -71,6 +79,20 @@
     cursor: pointer;
     width: fit-content;
     padding: 0px 10px;
+}
+
+#maximize-chat, #close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+#maximize-chat:hover, #close-chat:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
 }
 
 /* AI Avatar Image */

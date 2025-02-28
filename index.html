@@ -89,7 +89,14 @@
     </style>
     <script src="chatbot.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            // Clear only chat history when page loads
+            if (sessionStorage.getItem("chatHistory")) {
+                sessionStorage.removeItem("chatHistory");
+                console.log("Chat history cleared on page load.");
+            }
+
+            // Mobile menu logic
             const menuIcon = document.querySelector(".menu-icon");
             const navMenu = document.querySelector(".nav-menu");
 
@@ -102,28 +109,28 @@
                 }
             });
 
-            // Hide nav menu when clicking outside
+            // Hide menu when clicking outside
             document.addEventListener("click", function(event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
                     navMenu.style.display = "none";
                 }
             });
 
-            // Hide nav menu when a menu item is clicked
+            // Hide menu when clicking a menu item
             navMenu.addEventListener("click", function(event) {
                 if (event.target.tagName === "A") {
                     navMenu.style.display = "none";
                 }
             });
 
-            // Handle touch events for iPhone
+            // Handle iPhone touch events
             document.addEventListener("touchstart", function(event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
                     navMenu.style.display = "none";
                 }
             });
 
-            // Prevent menu from hiding when touching on it (for iPhone)
+            // Prevent menu from hiding when touching on it (iPhone fix)
             navMenu.addEventListener("touchstart", function(event) {
                 event.stopPropagation();
             });

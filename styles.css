@@ -122,13 +122,13 @@ footer {
     background: #2c3e50;
     color: white;
     text-align: center;
-    padding: 20px 0;
+    padding: 15px 0;
     font-size: 1em;
     margin-top: auto; /* Push footer to the bottom */
 }
 
 #footer-title {
-    padding-bottom: 7px;/* Space between text and line */
+    padding-bottom: 10px;/* Space between text and line */
     font-size: 1.2em;
     border-bottom-width: 1px;
     border-bottom-style: solid;

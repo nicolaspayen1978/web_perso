@@ -238,18 +238,21 @@
             menuIcon.addEventListener("click", function (event) {
                 event.stopPropagation();
                 navMenu.classList.toggle("visible");
+                navMenu.style.zIndex = "9999";
             });
 
             // Ensure iPhone touch events work properly
             menuIcon.addEventListener("touchstart", function (event) {
                 event.stopPropagation();
                 navMenu.classList.toggle("visible");
+                navMenu.style.zIndex = "9999";
             });
 
             // Hide menu when clicking outside (for both desktop & mobile)
             document.addEventListener("click", function (event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
                     navMenu.classList.remove("visible");
+                    navMenu.style.zIndex = "0";
                 }
             });
 
@@ -257,6 +260,7 @@
             document.addEventListener("touchstart", function (event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
                     navMenu.classList.remove("visible");
+                    navMenu.style.zIndex = "0";
                 }
             });
 
@@ -269,6 +273,7 @@
             navMenu.addEventListener("click", function (event) {
                 if (event.target.tagName === "A") {
                     navMenu.classList.remove("visible");
+                    navMenu.style.zIndex = "0";
                 }
             });
         });

@@ -1,42 +1,148 @@
-/* Animation for the image/banner on top */
+/* --- Global Reset & Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    background: #f9f9f9;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Hero Image (Now Positioned at the Top) --- */
 .hero-image {
     width: 100%;
-    height: 50vh; /* Adjust as needed */
-    overflow: hidden;
+    height: 60vh; /* Full-width and takes up 60% of viewport height */
     position: relative;
+    overflow: hidden;
+    z-index: -1; /* Ensures scrolling effect works */
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures it covers the full area */
+    object-fit: cover; /* Ensures image covers the section */
 }
 
+/* --- Header & Navigation (Appears Over the Image) --- */
 header {
-      text-align: center;
-      padding: 50px 20px;
-      background: #2c3e50;
-      color: white;
-  }
-
-/* Make the menu appear above the image */
-header {
-    position: relative;
+    position: absolute;
+    top: 0;
+    width: 100%;
     background: rgba(44, 62, 80, 0.9); /* Dark background with transparency */
     color: white;
-    text-align: center;
     padding: 20px;
-    z-index: 10;
+    text-align: center;
+    z-index: 10; /* Ensures it appears above the hero image */
 }
 
-/* Optional: Parallax effect to make it look smoother */
+header h1 {
+    font-size: 2.5em;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* --- Navigation Menu (Floats Over the Image) --- */
+nav {
+    position: relative;
+    z-index: 20; /* Ensures it stays above the image */
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+nav ul li {
+    font-size: 1em;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    background: #34495e;
+}
+
+/* --- Floating Menu Icon (Mobile Menu) --- */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background: #2c3e50;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+    z-index: 1000; /* Ensures menu is always accessible */
+}
+
+.menu-icon:hover {
+    background: #34495e;
+}
+
+.menu-icon div {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 4px 0;
+}
+
+/* --- Sections (Content Below Hero Image) --- */
+section {
+    padding: 30px 20px;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2em;
+    color: #2c3e50;
+}
+
+/* ---  Footer (Ensures Proper Positioning) --- */
+footer {
+    width: 100%;
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1em;
+    margin-top: auto;
+}
+
+/* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
 .hero-image {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
 }
 
-/* Floating Chatbot Button */
+/* --- Chatbot Floating Icon --- */
 #chatbot-icon {
     position: fixed;
     bottom: 20px;
@@ -57,7 +163,7 @@ header {
     height: 40px;
 }
 
-/* Chat Popup Window - Ensure Click Works */
+/* --- Chat Popup Styling --- */
 #chat-popup {
     position: fixed;
     bottom: 80px;
@@ -67,31 +173,21 @@ header {
     background: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    display: none; /*flex; /* Keep it visible for debugging */
+    display: none; /* Hidden by default */
     flex-direction: column;
-    z-index: 10000; /* Ensure it's above all elements */
+    z-index: 10000;
     transform: translateY(0);
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    pointer-events: auto; /* Allow clicks inside */
 }
 
-/* Ensure All Elements Inside are Clickable */
 #chat-popup * {
     pointer-events: auto;
 }
 
-/* Ensure Chat Appears on iOS */
-@supports (-webkit-touch-callout: none) {
-    #chat-popup {
-        bottom: 10vh; /* Move up slightly for better visibility */
-    }
-}
-
-/* Chat Header (Avatar + Text + Close Button) */
 #chat-header {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Ensures spacing between elements */
+    justify-content: space-between;
     padding: 10px;
     background: #2c3e50;
     color: white;
@@ -101,22 +197,11 @@ header {
     border-top-right-radius: 10px;
 }
 
-/* Chat Header (Text) */
 #chat-header span {
-    flex-grow: 1; /* Makes the text take up more space */
-    text-align: left; /* Aligns text properly */
-    font-size: 13px; /* Adjusts text size */
-    padding-right: 10px; /* Adds spacing before the buttons */
-}
-
-#chat-header button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    width: fit-content;
-    padding: 0px 10px;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 13px;
+    padding-right: 10px;
 }
 
 #maximize-chat, #close-chat {
@@ -133,7 +218,6 @@ header {
     border-radius: 5px;
 }
 
-/* AI Avatar Image */
 #chat-avatar {
     width: 40px;
     height: 40px;
@@ -154,264 +238,21 @@ header {
     border-top: 1px solid #ddd;
 }
 
-/* Ensure Footer is Centered */
-footer {
-    width: 100%;
-    background: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 1em;
-    margin-top: auto; /* Push footer to the bottom */
-}
-
-#footer-title {
-    padding-bottom: 10px;/* Space between text and line */
-    padding-top: 5px;/* Space between text and line */
-    font-size: 1.2em;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: white;
-    margin-bottom: 10px;
-    margin-top: 1px;
-}
-
-button {
-    background: #2c3e50;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-body {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1em;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  section {
-      padding: 30px 20px;
-      text-align: center;
-  }
-
-  p {
-      font-size: 1em;
-      max-width: 100%;
-      margin: auto;
-  }
-  
-  header h1 {
-      margin: 0;
-      font-size: 2.5em;
-  }
-  
-  header p {
-      font-size: 1.2em;
-      margin-top: 10px;
-  }
-
-header nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 0;
-    flex-wrap: wrap; /* Allows the items to wrap if necessary */
-}
-
-header nav ul li {
-    font-size: 1em; /* Adjusted for better visibility */
-    display: inline;
-}
-
-header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    padding: 10px 15px; /* Increased padding for better touch area */
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-header nav ul li a:hover {
-    background: #34495e;
-}
-
- /* Fixed menu button */
-.menu-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    width: 40px;
-    height: 40px;
-    background: #2c3e50;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background 0.3s;
-}
-
-.menu-icon:hover {
-    background: #34495e;
-}
-
-.menu-icon div {
-    width: 25px;
-    height: 3px;
-    background: white;
-    margin: 4px 0;
-}
-
-/* Hidden menu styling */
-.nav-menu {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #2c3e50;
-    padding: 15px;
-    border-radius: 8px;
-    display: none;
-    flex-direction: column;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-direction: column;
-}
-
-.nav-menu ul li {
-    padding: 15px;
-    text-align: center;
-}
-
-.nav-menu ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    display: inline-flex;
-    transition: 0.3s;
-}
-
-.nav-menu ul li a:hover {
-    background: #34495e;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 20px;
-}
-  
-nav ul li {
-font-size: 0.9em;
-display: inline;
-}
-  
-nav ul li a {
-  text-decoration: none;
-  color: white;
-  font-weight: 600;
-  padding: 8px 10px;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-  
-nav ul li a:hover {
-  background: #34495e;
-}
-  
-h2 {
-  font-size: 2em;
-  color: #2c3e50;
-}
-
-.intro ul {
-    list-style-type: none;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.intro li {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.intro {
-    text-align: left;
-    padding: 10px 0px;
-    width: 100%;
-    font-size: 1em;
-    margin: 0px;
-    color: #333;
-    line-height: 1.2;
-    margin-top: 10px;
-}
-
-.intro p {
-    width: 100%;
-    color: #333;
-    line-height: 1.2;
-    margin-bottom: 10px;
-}
- 
-  
-.button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #2c3e50;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-  
-.button:hover {
-    background: #34495e;
-}
-
-/* Show menu on hover for desktops */
-@media (min-width: 769px) {
-    .menu-container:hover .nav-menu {
-        display: block;
-    }
-}
-
-
-/* Responsive adjustments */
+/* --- Responsive Adjustments for Mobile --- */
 @media (max-width: 768px) {
-    .nav-menu {
-        width: 100%;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-
+    .hero-image {
+        height: 40vh; /* Adjusts hero image size for mobile */
     }
 
-.nav-menu ul li {
-    padding: 15px;
-    font-size: 1.2em;
+    header {
+        padding: 15px;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    .chat-popup {
+        bottom: 10vh; /* Ensures visibility on mobile */
     }
 }

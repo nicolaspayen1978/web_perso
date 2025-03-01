@@ -20,12 +20,14 @@
             align-items: center; /* Center all elements horizontally */
             justify-content: center;
             text-align: center; /* Ensures text is aligned properly */
+            min-height: 100vh; /* Ensures proper spacing */
         }
 
         /* Ensure content starts below the hero image */
         main {
             margin-top: 5vh; /* Push content down */
             padding:0;
+            align-self: center;
         }
 
         /* Improve Header Visibility */
@@ -46,9 +48,10 @@
         .chat-container {
             width: 100%;
             max-width: 800px;
-            height: 80vh;
+            height: auto;
             display: flex;
             align-items: center;
+            flex-direction: column;
             justify-content: space-between;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -111,13 +114,11 @@
             padding: 10px;
             background: #f1f1f1;
             height: 70vh;
-            text-align: left;
         }
 
         /* Input and Button */
         .input-container {
             display: flex;
-            text-align: left;
             align-items: center;
             margin-top: 10px;
             gap: 10px;
@@ -177,7 +178,6 @@
         <a href="index.html" class="menu-icon">
             <div></div>
             <div></div>
-            <div></div>
         </a>
     </div>
     <header>
@@ -202,6 +202,7 @@
                 </div>
             </div>
         </section>
+        <p></p>
     </main>
     <footer>
         <div id="footer-title">

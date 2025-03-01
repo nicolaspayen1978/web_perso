@@ -291,6 +291,7 @@
                 if (!isHidden) {
                     header.style.top = "-100px"; 
                     header.style.opacity = "0";
+                    header.style.zIndex = "0";
                     isHidden = true;
                 }
             } else {
@@ -298,6 +299,7 @@
                 if (isHidden) {
                     header.style.top = "0";
                     header.style.opacity = "1";
+                    header.style.zIndex = "9999"
                     isHidden = false;
                     //hide icon-menu menu if displayed
                     navMenu.classList.remove("visible");

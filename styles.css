@@ -24,7 +24,7 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
-    margin-top: 10vh; /* Push content down under the menu */
+    margin-top: 30vh; /* Push content down under the menu */
     margin-bottom: 0;
 }
 
@@ -44,7 +44,8 @@ body {
 
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 1vh; /* Push content down */
+    margin-top: 0; /* Push content down */
+    padding:0;
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */
@@ -133,7 +134,7 @@ nav ul li a:hover {
 
 /* --- Sections (Content Below Hero Image) --- */
 section {
-    padding: 30px 20px;
+    padding: 10px 10px;
     max-width: 800px;
     margin: auto;
     text-align: center;

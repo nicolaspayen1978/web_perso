@@ -50,6 +50,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
+    max-width: 800px;
     width: 100%;
     background: rgba(44, 62, 80, 0.97); /* Slight transparency */
     color: white;

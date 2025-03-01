@@ -20,7 +20,7 @@ body {
 /* --- Hero Image (Now Positioned at the Top) --- */
 .hero-image {
     width: 100%;
-    height: 40vh; /* Adjust height if needed */
+    /*height: 40vh; /* Adjust height if needed */
     position: relative;
     overflow: hidden;
     display: flex;

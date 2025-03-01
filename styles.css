@@ -12,7 +12,7 @@ body {
     padding: 0;
     background: #f9f9f9;
     color: #333;
-    max-width: 1200px;
+    max-width: 800px;
     margin: auto;
     padding: 20px;
 }
@@ -28,7 +28,7 @@ body {
 .hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure full coverage */
+    object-fit: contain; /* Ensure full coverage */
 }
 
 /* Ensure content starts below the hero image */

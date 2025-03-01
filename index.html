@@ -218,7 +218,7 @@
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
      <script>
-            document.addEventListener("DOMContentLoaded", function () {
+         document.addEventListener("DOMContentLoaded", function () {
             // Clear only chat history when page loads
             if (sessionStorage.getItem("chatHistory")) {
                 sessionStorage.removeItem("chatHistory");
@@ -280,6 +280,7 @@
 
         window.addEventListener("scroll", function () {
             let currentScroll = window.scrollY || document.documentElement.scrollTop;
+            const navMenu = document.querySelector(".nav-menu");
 
             if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) {
                 return; // Ignore small scrolls to prevent flickering
@@ -298,6 +299,8 @@
                     header.style.top = "0";
                     header.style.opacity = "1";
                     isHidden = false;
+                    //hide icon-menu menu if displayed
+                    navMenu.classList.remove("visible");
                 }
             }
 

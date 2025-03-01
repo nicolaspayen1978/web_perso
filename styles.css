@@ -44,7 +44,7 @@ body {
 
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 20vh; /* Push content down */
+    margin-top: 1vh; /* Push content down */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */

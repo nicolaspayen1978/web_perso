@@ -18,22 +18,24 @@ body {
 /* --- Hero Image (Now Positioned at the Top) --- */
 .hero-image {
     width: 100%;
-    height: 60vh; /* Full-width and takes up 60% of viewport height */
-    position: relative;
-    overflow: hidden;
-    z-index: -1; /* Ensures scrolling effect works */
+    height: 60vh; /* Adjust height */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Push it behind content */
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures image covers the section */
+    object-fit: cover; /* Ensure full coverage */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     background: rgba(44, 62, 80, 0.9); /* Dark background with transparency */
     color: white;
@@ -254,5 +256,9 @@ footer {
 
     .chat-popup {
         bottom: 10vh; /* Ensures visibility on mobile */
+    }
+
+    body {
+        padding-top: 40vh; /* Adjust spacing */
     }
 }

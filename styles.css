@@ -48,6 +48,7 @@ main {
 /* --- Header & Navigation (Appears Over the Image) --- */
 header {
     position: fixed;
+    align-self: center;
     top: 0;
     left: 0;
     max-width: 800px;

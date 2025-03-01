@@ -291,6 +291,11 @@ footer {
         height: 50vh; /* Adjusts hero image size for mobile */
     }
 
+    /*hide menu icon on smartphone*/
+    .menu-icon {
+        display: none !important; /* Completely hides the icon */
+    }
+
     .nav-menu {
         width: 100%;
         height: auto;

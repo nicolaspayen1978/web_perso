@@ -208,71 +208,71 @@
         </div>
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const chatbox = document.getElementById("chatbox");
-            const userInput = document.getElementById("user-input");
-            const sendButton = document.getElementById("send-button");
-
-            // Load chat history from sessionStorage
-            function getChatHistory() {
-                const history = sessionStorage.getItem("chatHistory");
-                return history ? JSON.parse(history) : [];
-            }
-
-            let chatHistory = getChatHistory();
-
-            // Display previous messages (excluding system messages)
-            chatHistory.forEach(msg => {
-                if (msg.role !== "system") {
-                    const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
-                    chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
-                }
-            });
-
-            async function sendMessage() {
-                let userText = userInput.value.trim();
-                if (!userText) return;
-
-                chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
-                chatbox.scrollTop = chatbox.scrollHeight;
-                chatHistory.push({ role: "user", content: userText });
-                userInput.value = "";
-
-                try {
-                    const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ messages: chatHistory })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
-
-                    chatHistory.push({ role: "assistant", content: botReply });
-
-                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> ${botReply}</p>`;
-                    chatbox.scrollTop = chatbox.scrollHeight;
-
-                    // Save updated chat history
-                    sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
-                } catch (error) {
-                    console.error("Chatbot Error:", error);
-                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> Sorry, I encountered an error. Please try again.</p>`;
-                }
-            }
-
-            sendButton.addEventListener("click", sendMessage);
-            userInput.addEventListener("keypress", function (event) {
-                if (event.key === "Enter") {
-                    sendMessage();
-                }
-            });
-        });
-    </script>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const chatbox = document.getElementById("chatbox");
+        const userInput = document.getElementById("user-input");
+        const sendButton = document.getElementById("send-button");
+
+        // Load chat history from sessionStorage
+        function getChatHistory() {
+            const history = sessionStorage.getItem("chatHistory");
+            return history ? JSON.parse(history) : [];
+        }
+
+        let chatHistory = getChatHistory();
+
+        // Display previous messages (excluding system messages)
+        chatHistory.forEach(msg => {
+            if (msg.role !== "system") {
+                const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+                chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+            }
+        });
+
+        async function sendMessage() {
+            let userText = userInput.value.trim();
+            if (!userText) return;
+
+            chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+            chatbox.scrollTop = chatbox.scrollHeight;
+            chatHistory.push({ role: "user", content: userText });
+            userInput.value = "";
+
+            try {
+                const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ messages: chatHistory })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+
+                chatHistory.push({ role: "assistant", content: botReply });
+
+                chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> ${botReply}</p>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+
+                // Save updated chat history
+                sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+            } catch (error) {
+                console.error("Chatbot Error:", error);
+                chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> Sorry, I encountered an error. Please try again.</p>`;
+            }
+        }
+
+        sendButton.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    });
+</script>
 </html>

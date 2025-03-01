@@ -23,6 +23,7 @@ body {
     height: 40vh; /* Adjust height if needed */
     position: relative;
     overflow: hidden;
+    display: flex;
 }
 
 .hero-image img {
@@ -31,9 +32,16 @@ body {
     object-fit: contain; /* Ensure full coverage */
 }
 
+/* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
+.hero-image {
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 120vh; /* Push content down */
+    margin-top: 160vh; /* Push content down */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */
@@ -141,13 +149,6 @@ footer {
     padding: 20px 0;
     font-size: 1em;
     margin-top: auto;
-}
-
-/* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
-.hero-image {
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
 }
 
 /* --- Chatbot Floating Icon --- */

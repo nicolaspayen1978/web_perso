@@ -38,11 +38,11 @@ main {
 
 /* --- Header & Navigation (Appears Over the Image) --- */
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(44, 62, 80, 0.85); /* Slight transparency */
+    background: rgba(44, 62, 80, 0.95); /* Slight transparency */
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -262,6 +262,10 @@ footer {
 
     nav ul {
         flex-direction: column;
+    }
+
+    header nav ul li {
+        text-align: center;
     }
 
     .chat-popup {

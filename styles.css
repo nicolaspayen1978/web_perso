@@ -132,6 +132,24 @@ nav ul li a:hover {
     margin: 4px 0;
 }
 
+.nav-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(44, 62, 80, 0.95); /* Slight opacity */
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease-in-out;
+    text-align: center;
+    z-index: 9999;
+}
+
+.nav-menu.visible {
+    display: block;
+}
+
 /* --- Sections (Content Below Hero Image) --- */
 section {
     padding: 10px 10px;

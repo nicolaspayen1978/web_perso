@@ -217,7 +217,7 @@
         </div>
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
-    <script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Clear only chat history when page loads
             if (sessionStorage.getItem("chatHistory")) {
@@ -225,42 +225,44 @@
                 console.log("Chat history cleared on page load.");
             }
 
-            // Mobile menu logic
+            // Get menu elements
             const menuIcon = document.querySelector(".menu-icon");
             const navMenu = document.querySelector(".nav-menu");
 
-            menuIcon.addEventListener("click", function(event) {
+            if (!menuIcon || !navMenu) {
+                console.error("Menu elements not found.");
+                return;
+            }
+
+            // Ensure menu icon click event works
+            menuIcon.addEventListener("click", function (event) {
                 event.stopPropagation();
-                if (navMenu.style.display === "flex") {
-                    navMenu.style.display = "none";
-                } else {
-                    navMenu.style.display = "flex";
-                }
+                navMenu.classList.toggle("visible");
             });
 
             // Hide menu when clicking outside
-            document.addEventListener("click", function(event) {
+            document.addEventListener("click", function (event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
-                    navMenu.style.display = "none";
+                    navMenu.classList.remove("visible");
                 }
             });
 
             // Hide menu when clicking a menu item
-            navMenu.addEventListener("click", function(event) {
+            navMenu.addEventListener("click", function (event) {
                 if (event.target.tagName === "A") {
-                    navMenu.style.display = "none";
+                    navMenu.classList.remove("visible");
                 }
             });
 
             // Handle iPhone touch events
-            document.addEventListener("touchstart", function(event) {
+            document.addEventListener("touchstart", function (event) {
                 if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
-                    navMenu.style.display = "none";
+                    navMenu.classList.remove("visible");
                 }
             });
 
-            // Prevent menu from hiding when touching on it (iPhone fix)
-            navMenu.addEventListener("touchstart", function(event) {
+            // Prevent menu from hiding when touched (iPhone fix)
+            navMenu.addEventListener("touchstart", function (event) {
                 event.stopPropagation();
             });
         });

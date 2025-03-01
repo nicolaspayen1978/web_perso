@@ -179,5 +179,37 @@
             </div>
             <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
         </footer>
+         <script>
+            let lastScrollTop = 0;
+            let scrollThreshold = 30; // Adjust sensitivity (higher = less flickering)
+            let header = document.querySelector("header");
+            let isHidden = false;
+
+            window.addEventListener("scroll", function () {
+                let currentScroll = window.scrollY || document.documentElement.scrollTop;
+
+                if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) {
+                    return; // Ignore small scrolls to prevent flickering
+                }
+
+                if (currentScroll > lastScrollTop && currentScroll > 50) {
+                    // Scrolling down past 50px - hide header
+                    if (!isHidden) {
+                        header.style.top = "-100px"; 
+                        header.style.opacity = "0";
+                        isHidden = true;
+                    }
+                } else {
+                    // Scrolling up - show header
+                    if (isHidden) {
+                        header.style.top = "0";
+                        header.style.opacity = "1";
+                        isHidden = false;
+                    }
+                }
+
+                lastScrollTop = currentScroll;
+            });
+        </script>
     </body>
 </html>

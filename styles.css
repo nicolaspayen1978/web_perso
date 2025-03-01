@@ -24,7 +24,7 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
-    margin-top: 60vh; /* Push content down under the menu */
+    margin-top: 20vh; /* Push content down under the menu */
 }
 
 .hero-image img {
@@ -42,7 +42,7 @@ body {
 
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 20vh; /* Push content down */
+    margin-top: 10vh; /* Push content down */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */

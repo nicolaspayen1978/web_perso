@@ -267,22 +267,35 @@
     </footer>
     <script>
         let lastScrollTop = 0;
-        const header = document.querySelector("header");
+        let scrollThreshold = 30; // Adjust sensitivity (higher = less flickering)
+        let header = document.querySelector("header");
+        let isHidden = false;
 
         window.addEventListener("scroll", function () {
             let currentScroll = window.scrollY || document.documentElement.scrollTop;
 
-            if (currentScroll > lastScrollTop) {
-                // Scrolling down - hide header
-                header.style.top = "-100px"; // Moves the header out of view
-                header.style.opacity = "0"; // Optional fade effect
+            if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) {
+                return; // Ignore small scrolls to prevent flickering
+            }
+
+            if (currentScroll > lastScrollTop && currentScroll > 50) {
+                // Scrolling down past 50px - hide header
+                if (!isHidden) {
+                    header.style.top = "-100px"; 
+                    header.style.opacity = "0";
+                    isHidden = true;
+                }
             } else {
                 // Scrolling up - show header
-                header.style.top = "0";
-                header.style.opacity = "1";
+                if (isHidden) {
+                    header.style.top = "0";
+                    header.style.opacity = "1";
+                    isHidden = false;
+                }
             }
+
             lastScrollTop = currentScroll;
         });
-</script>
+    </script>
 </body>
 </html>

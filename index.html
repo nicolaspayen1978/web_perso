@@ -34,12 +34,6 @@
               padding: 20px 10px;
               text-align: center;
           }
-
-          p {
-              font-size: 1em;
-              max-width: 100%;
-              margin: auto;
-          }
           
           h2 {
               font-size: 2em;
@@ -271,5 +265,24 @@
         </div>
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
+    <script>
+        let lastScrollTop = 0;
+        const header = document.querySelector("header");
+
+        window.addEventListener("scroll", function () {
+            let currentScroll = window.scrollY || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                // Scrolling down - hide header
+                header.style.top = "-100px"; // Moves the header out of view
+                header.style.opacity = "0"; // Optional fade effect
+            } else {
+                // Scrolling up - show header
+                header.style.top = "0";
+                header.style.opacity = "1";
+            }
+            lastScrollTop = currentScroll;
+        });
+</script>
 </body>
 </html>

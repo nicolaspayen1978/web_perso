@@ -24,13 +24,15 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
-    margin-top: 20vh; /* Push content down under the menu */
+    margin-top: 10vh; /* Push content down under the menu */
+    margin-bottom: 0;
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
     object-fit: contain; /* Ensure full coverage */
+    padding: 0;
 }
 
 /* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
@@ -42,7 +44,7 @@ body {
 
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 10vh; /* Push content down */
+    margin-top: 20vh; /* Push content down */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */

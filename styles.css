@@ -26,7 +26,7 @@ main {
 @media (max-width: 768px) {
 
     main {
-        margin-top: 50vh; /*Adjust content spacing */
+        margin-top: 50px; /*Adjust content spacing */
     }
 
      body {

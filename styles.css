@@ -41,7 +41,7 @@ main {
     position: relative;
     overflow: hidden;
     display: flex;
-    /* margin-top: 20vh; Push content down under the menu */
+    margin-top: 20vh; /*Push content down under the menu */
     margin-bottom: 0;
 }
 

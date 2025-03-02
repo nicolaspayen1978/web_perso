@@ -29,10 +29,12 @@
               box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
           }
 
-        /* Ensure content starts below the hero image */
-        main {
-            margin-top: 25vh; /* Push content down */
-            padding:0;
+        /* --- Responsive Adjustments for Mobile --- */
+        @media (max-width: 768px) {
+            /* the menu take more space on mobile*/
+            main {
+                margin-top: 45vh; /* Push content down */
+            }
         }
 
         #FourGs {

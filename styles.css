@@ -28,11 +28,10 @@ main {
     main {
         margin-top: 100px; /*Adjust content spacing */
     }
-     /*
-     body {
-        padding-top: 40vh; /*Adjust spacing */*/
+     
+    body {
+        padding-top: 40vh; /*Adjust spacing */
     }
-    */
 }
 
 /* --- Hero Image (Now Positioned at the Top) --- */

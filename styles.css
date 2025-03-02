@@ -26,11 +26,11 @@ main {
 @media (max-width: 768px) {
 
     main {
-        margin-top: 50vh; /* Adjust content spacing */
+        /* margin-top: 50vh; Adjust content spacing */
     }
 
      body {
-        padding-top: 40vh; /* Adjust spacing */
+        /* padding-top: 40vh; Adjust spacing */
     }
 }
 
@@ -41,7 +41,7 @@ main {
     position: relative;
     overflow: hidden;
     display: flex;
-    margin-top: 20vh; /* Push content down under the menu */
+    /* margin-top: 20vh; Push content down under the menu */
     margin-bottom: 0;
 }
 
@@ -56,14 +56,6 @@ main {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-}
-
-@media (max-width: 768px) {
-     /* 
-    .hero-image {
-       height: 20vh; Adjusts hero image size for mobile 
-    }
-    */
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */

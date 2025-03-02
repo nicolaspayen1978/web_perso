@@ -156,7 +156,7 @@ nav ul li a:hover {
     flex-direction: column; /* Force vertical layout */
     top: 50px; /* Adjusted to align below the icon */
     left: 0;
-    width: 100%;
+    max-width: 768px;
     background: rgba(44, 62, 80, 0.97); /* Slight opacity */
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);

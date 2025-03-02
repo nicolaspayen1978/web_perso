@@ -63,33 +63,6 @@
             margin-top: 10px;
             text-align: left; /* Center content inside */
         }
-
-        /* Menu Icon */
-        .menu-icon {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            background: #2c3e50;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s;
-        }
-
-        .menu-icon:hover {
-            background: #34495e;
-        }
-
-        .menu-icon div {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 4px 0;
-        }
         
         /* Chat Header */
         .chat-header {
@@ -180,11 +153,21 @@
 </head>
 <body>
     <div class="menu-container">
-        <!-- Menu Icon -->
-        <a href="index.html" class="menu-icon">
+        <div class="menu-icon">
             <div></div>
             <div></div>
-        </a>
+            <div></div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#articles">Articles</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#pictures">Photos</a></li>
+                <li><a href="#journey">Career</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </div>
     <header>
         <h1>I built my own AI agent for this ;-)</h1>
@@ -208,7 +191,6 @@
                 </div>
             </div>
         </section>
-        <p></p>
     </main>
     <footer>
         <div id="footer-title">

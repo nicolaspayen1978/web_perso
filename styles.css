@@ -209,6 +209,14 @@ main {
     align-items: center;
 }
 
+/* --- Responsive Adjustments for Mobile --- */
+@media (max-width: 768px) {
+    /* the menu take more space on mobile*/
+    main {
+        margin-top: 35vh; /* Push content down */
+    }
+}
+
 /* --- Sections (Content Below Hero Image) --- */
 .hero section {
     padding: 10px 10px;

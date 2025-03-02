@@ -17,6 +17,23 @@ body {
     padding: 10px;
 }
 
+/* Ensure content starts below the hero image */
+main {
+    margin-top: 0; /* Push content down */
+    padding:0;
+}
+
+@media (max-width: 768px) {
+
+    main {
+        margin-top: 50vh; /* Adjust content spacing */
+    }
+
+     body {
+        padding-top: 40vh; /* Adjust spacing */
+    }
+}
+
 /* --- Hero Image (Now Positioned at the Top) --- */
 .hero-image {
     width: 100%;
@@ -42,10 +59,10 @@ body {
     background-size: cover;
 }
 
-/* Ensure content starts below the hero image */
-main {
-    margin-top: 0; /* Push content down */
-    padding:0;
+@media (max-width: 768px) {
+    .hero-image {
+        height: 50vh; /* Adjusts hero image size for mobile */
+    }
 }
 
 /* --- Header & Navigation (Appears Over the Image) --- */
@@ -136,6 +153,7 @@ nav ul li a:hover {
 .nav-menu {
     display: none; /* Initially hidden */
     position: fixed;
+    flex-direction: column; /* Force vertical layout */
     top: 50px; /* Adjusted to align below the icon */
     left: 0;
     width: 100%;
@@ -148,7 +166,33 @@ nav ul li a:hover {
 }
 
 .nav-menu.visible {
-    display: block;
+        display: block;
+    }
+
+/* --- Responsive Adjustments for Mobile --- */
+@media (max-width: 768px) {
+     /*hide menu icon on smartphone*/
+    .menu-icon {
+        display: none !important; /* Completely hides the icon */
+    }
+
+    .nav-menu {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .nav-menu ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-menu ul li {
+        padding: 10px;
+        font-size: 1.2em;
+    }
 }
 
 /* --- Sections (Content Below Hero Image) --- */
@@ -287,36 +331,13 @@ footer {
 
 /* --- Responsive Adjustments for Mobile --- */
 @media (max-width: 768px) {
-    .hero-image {
-        height: 50vh; /* Adjusts hero image size for mobile */
+     .chat-popup {
+        bottom: 10vh; /* Ensures visibility on mobile */
     }
+}
 
-    /*hide menu icon on smartphone*/
-    .menu-icon {
-        display: none !important; /* Completely hides the icon */
-    }
-
-    .nav-menu {
-        width: 100%;
-        height: auto;
-        text-align: center;
-        padding: 15px 0;
-    }
-
-    .nav-menu ul {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .nav-menu ul li {
-        padding: 10px;
-        font-size: 1.2em;
-    }
-
-    main {
-        margin-top: 50vh; /* Adjust content spacing */
-    }
+/* --- Responsive Adjustments for Mobile --- */
+@media (max-width: 768px) {
 
     header {
         padding: 15px;
@@ -330,21 +351,12 @@ footer {
         text-align: center;
     }
 
-    .chat-popup {
-        bottom: 10vh; /* Ensures visibility on mobile */
-    }
-
-    body {
-        padding-top: 40vh; /* Adjust spacing */
-    }
 }
-
 
 /* Desktop Menu (Default) */
 header nav ul {
     display: flex;
     justify-content: center; /* Center the menu */
-    flex-direction: column; /* Force vertical layout */
     gap: 10px;
     flex-wrap: wrap; /* Allow wrapping */
     padding: 0;

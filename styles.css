@@ -26,12 +26,13 @@ main {
 @media (max-width: 768px) {
 
     main {
-        margin-top: 50px; /*Adjust content spacing */
+        margin-top: 100px; /*Adjust content spacing */
     }
-
+     /*
      body {
-        /* padding-top: 40vh; Adjust spacing */
+        padding-top: 40vh; /*Adjust spacing */*/
     }
+    */
 }
 
 /* --- Hero Image (Now Positioned at the Top) --- */

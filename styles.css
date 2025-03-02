@@ -161,7 +161,8 @@ header nav ul li a {
     }
 
     header nav ul {
-        flex-direction: column; /* Ensure items stack */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
         gap: 5px; /* Reduce white space */
         padding: 5px 0; /* Adjust padding */
         width: 100%; /* Full width */

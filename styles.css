@@ -19,7 +19,7 @@ body {
 
 /* Ensure content starts below the hero image */
 main {
-    margin-top: 0; /* Push content down */
+    margin-top: 5px; /* Push content down */
     padding:0;
 }
 
@@ -143,7 +143,7 @@ header nav ul li a {
 /* Mobile Menu (Fix wrapping issue) */
 @media (max-width: 768px) {
     header {
-        padding: 15px;
+        padding: 5px;
     }
 
     header nav {
@@ -156,8 +156,8 @@ header nav ul li a {
     header nav ul {
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
-        gap: 5px; /* Reduce white space */
-        padding: 5px 0; /* Adjust padding */
+        gap: 2px; /* Reduce white space */
+        padding: 2px 0; /* Adjust padding */
         width: 100%; /* Full width */
     }
 
@@ -169,7 +169,7 @@ header nav ul li a {
     header nav ul li a {
         display: block;
         width: 100%;
-        padding: 5px 0;
+        padding: 2px 0;
         font-size: 1.1em; /* Adjust font size */
     }
 }

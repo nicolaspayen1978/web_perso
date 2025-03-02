@@ -17,33 +17,6 @@ body {
     padding: 10px;
 }
 
-main {
-    padding:0;
-    align-items: center;
-}
-
-/* --- Hero Image (Now Positioned at the Top) --- */
-.hero-image {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    margin-bottom: 0;
-}
-
-.hero-image img {
-    width: 100%;
-    object-fit: contain; /* Ensure full coverage */
-    padding: 0px;
-}
-
-/* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
-.hero-image {
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}
-
 /* --- Header & Navigation (Appears Over the Image) --- */
 header {
     position: fixed;
@@ -229,7 +202,41 @@ header nav ul li a {
     }
 }
 
+main {
+    padding:0;
+    align-items: center;
+}
+
 /* --- Sections (Content Below Hero Image) --- */
+.hero section {
+    padding: 10px 10px;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+/* --- Hero Image (Now Positioned at the Top) --- */
+.hero-image {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 0;
+}
+
+.hero-image img {
+    width: 100%;
+    object-fit: contain; /* Ensure full coverage */
+    padding: 0px;
+}
+
+/* --- Parallax Scrolling Effect (Ensures Smooth Transitions) --- */
+.hero-image {
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
 section {
     padding: 10px 10px;
     max-width: 800px;

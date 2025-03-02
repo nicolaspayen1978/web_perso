@@ -26,7 +26,7 @@ main {
 @media (max-width: 768px) {
 
     main {
-        /* margin-top: 50vh; Adjust content spacing */
+        margin-top: 50vh; /*Adjust content spacing */
     }
 
      body {
@@ -41,7 +41,6 @@ main {
     position: relative;
     overflow: hidden;
     display: flex;
-    margin-top: 20vh; /*Push content down under the menu */
     margin-bottom: 0;
 }
 

@@ -344,6 +344,7 @@ footer {
 header nav ul {
     display: flex;
     justify-content: center; /* Center the menu */
+    flex-direction: column; /* Force vertical layout */
     gap: 10px;
     flex-wrap: wrap; /* Allow wrapping */
     padding: 0;
@@ -377,7 +378,7 @@ header nav ul li a {
     header nav ul {
         flex-direction: column; /* Ensure items stack */
         gap: 5px; /* Reduce white space */
-        padding: 10px 0; /* Adjust padding */
+        padding: 5px 0; /* Adjust padding */
         width: 100%; /* Full width */
     }
 
@@ -389,7 +390,7 @@ header nav ul li a {
     header nav ul li a {
         display: block;
         width: 100%;
-        padding: 12px 0;
+        padding: 5px 0;
         font-size: 1.1em; /* Adjust font size */
     }
 }

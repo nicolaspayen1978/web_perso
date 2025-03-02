@@ -195,6 +195,56 @@
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
     <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            // Select menu elements
+            const menuIcon = document.querySelector(".menu-icon");
+            const navMenu = document.querySelector(".nav-menu");
+
+            if (!menuIcon || !navMenu) {
+                console.error("Menu elements not found.");
+                return;
+            }
+
+            // Enable toggle on click (for desktop)
+            menuIcon.addEventListener("click", function (event) {
+                event.stopPropagation();
+                navMenu.classList.toggle("visible");
+            });
+
+            // Ensure iPhone touch events work properly
+            menuIcon.addEventListener("touchstart", function (event) {
+                event.stopPropagation();
+                navMenu.classList.toggle("visible");
+            });
+
+            // Hide menu when clicking outside (for both desktop & mobile)
+            document.addEventListener("click", function (event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove("visible");
+                }
+            });
+
+            // Hide menu when clicking outside (for iPhone touch)
+            document.addEventListener("touchstart", function (event) {
+                if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove("visible");
+                }
+            });
+
+            // Prevent menu from closing when touching inside (iPhone fix)
+            navMenu.addEventListener("touchstart", function (event) {
+                event.stopPropagation();
+            });
+
+            // Hide menu when clicking a menu item
+            navMenu.addEventListener("click", function (event) {
+                if (event.target.tagName === "A") {
+                    navMenu.classList.remove("visible");
+                }
+            });
+        });
+    </script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const chatbox = document.getElementById("chatbox");
             const userInput = document.getElementById("user-input");

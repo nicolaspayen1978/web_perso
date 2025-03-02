@@ -202,7 +202,9 @@ header nav ul li a {
     }
 }
 
+/* Ensure content starts below the hero image */
 main {
+    margin-top: 25vh; /* Push content down */
     padding:0;
     align-items: center;
 }

@@ -17,10 +17,9 @@ body {
     padding: 10px;
 }
 
-/* Ensure content starts below the hero image */
 main {
-    margin-top: 5px; /* Push content down */
     padding:0;
+    align-items: center;
 }
 
 /* --- Hero Image (Now Positioned at the Top) --- */

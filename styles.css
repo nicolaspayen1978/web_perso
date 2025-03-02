@@ -121,6 +121,65 @@ nav ul li a:hover {
     background: #34495e;
 }
 
+/* Desktop Menu (Default) */
+header nav ul {
+    display: flex;
+    justify-content: center; /* Center the menu */
+    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping */
+    padding: 0;
+    list-style: none;
+    margin: 10px auto;
+}
+
+/* Ensure Menu Links Adjust */
+header nav ul li {
+    display: inline-block;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* --- Responsive Adjustments for Mobile --- */
+/* Mobile Menu (Fix wrapping issue) */
+@media (max-width: 768px) {
+    header {
+        padding: 15px;
+    }
+
+    header nav {
+        display: flex;
+        flex-direction: column; /* Stack menu vertically */
+        align-items: center;
+        width: 100%;
+    }
+
+    header nav ul {
+        flex-direction: column; /* Ensure items stack */
+        gap: 5px; /* Reduce white space */
+        padding: 5px 0; /* Adjust padding */
+        width: 100%; /* Full width */
+    }
+
+    header nav ul li {
+        width: 100%; /* Make items take full width */
+        text-align: center; /* Center items */
+    }
+
+    header nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+        font-size: 1.1em; /* Adjust font size */
+    }
+}
+
 /* --- Floating Menu Icon (Mobile Menu) --- */
 .menu-icon {
     position: fixed;
@@ -155,7 +214,7 @@ nav ul li a:hover {
     position: fixed;
     top: 50px; /* Adjusted to align below the icon */
     left: 20px;
-    max-width: 768px;
+    max-width: 200px;
     background: rgba(44, 62, 80, 0.97); /* Slight opacity */
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -166,8 +225,16 @@ nav ul li a:hover {
 
 .nav-menu ul {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Force vertical layout */
+    align-items: flex-start; /* Align items to the left */
     gap: 10px;
+}
+
+/* Make sure each menu item is a block element */   
+.nav-menu ul li {
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: left;
 }
 
 .nav-menu.visible {
@@ -179,24 +246,6 @@ nav ul li a:hover {
      /*hide menu icon on smartphone*/
     .menu-icon {
         display: none !important; /* Completely hides the icon */
-    }
-
-    .nav-menu {
-        width: 100%;
-        height: auto;
-        text-align: center;
-        padding: 15px 0;
-    }
-
-    .nav-menu ul {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .nav-menu ul li {
-        padding: 10px;
-        font-size: 1.2em;
     }
 }
 
@@ -341,73 +390,3 @@ footer {
     }
 }
 
-/* --- Responsive Adjustments for Mobile --- */
-@media (max-width: 768px) {
-
-    header {
-        padding: 15px;
-    }
-
-    nav ul {
-        flex-direction: column;
-    }
-
-    header nav ul li {
-        text-align: center;
-    }
-
-}
-
-/* Desktop Menu (Default) */
-header nav ul {
-    display: flex;
-    justify-content: center; /* Center the menu */
-    gap: 10px;
-    flex-wrap: wrap; /* Allow wrapping */
-    padding: 0;
-    list-style: none;
-    margin: 10px auto;
-}
-
-/* Ensure Menu Links Adjust */
-header nav ul li {
-    display: inline-block;
-}
-
-header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-/* Mobile Menu (Fix wrapping issue) */
-@media (max-width: 768px) {
-    header nav {
-        display: flex;
-        flex-direction: column; /* Stack menu vertically */
-        align-items: center;
-        width: 100%;
-    }
-
-    header nav ul {
-        flex-direction: column; /* Ensure items stack */
-        gap: 5px; /* Reduce white space */
-        padding: 5px 0; /* Adjust padding */
-        width: 100%; /* Full width */
-    }
-
-    header nav ul li {
-        width: 100%; /* Make items take full width */
-        text-align: center; /* Center items */
-    }
-
-    header nav ul li a {
-        display: block;
-        width: 100%;
-        padding: 5px 0;
-        font-size: 1.1em; /* Adjust font size */
-    }
-}

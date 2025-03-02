@@ -153,9 +153,8 @@ nav ul li a:hover {
 .nav-menu {
     display: none; /* Initially hidden */
     position: fixed;
-    flex-direction: column; /* Force vertical layout */
     top: 50px; /* Adjusted to align below the icon */
-    left: 0;
+    left: 20px;
     max-width: 768px;
     background: rgba(44, 62, 80, 0.97); /* Slight opacity */
     padding: 20px;
@@ -165,9 +164,15 @@ nav ul li a:hover {
     z-index: 9999;
 }
 
+.nav-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .nav-menu.visible {
-        display: block;
-    }
+    display: block;
+}
 
 /* --- Responsive Adjustments for Mobile --- */
 @media (max-width: 768px) {

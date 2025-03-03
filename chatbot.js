@@ -4,9 +4,15 @@ let resources = {};  // Store fetched resources
 async function fetchResources() {
     try {
         const response = await fetch("resources.json");
-        if (!response.ok) throw new Error("Failed to load resources");
 
-        const json = await response.json(); // Read the response only once
+        if (!response.ok) {
+            throw new Error(`Failed to load resources: ${response.status} ${response.statusText}`);
+        }
+
+        const text = await response.text();
+        console.log("Raw JSON response:", text);
+
+        const json = JSON.parse(text); // Use JSON.parse to catch errors
         console.log("Resources Loaded:", json);
 
         resources = json; // Store the resources properly

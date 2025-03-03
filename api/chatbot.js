@@ -1,3 +1,65 @@
+const fs = require("fs");
+const path = require("path");
+const fetch = require("node-fetch");
+require("dotenv").config();
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const RESOURCES_PATH = path.join(__dirname, "../resources.json");
+
+let resourceDescriptions = {};
+
+// Load and parse resources.json
+function loadResources() {
+    try {
+        const data = fs.readFileSync(RESOURCES_PATH, "utf-8");
+        const resources = JSON.parse(data);
+        resourceDescriptions = generateResourceDescriptions(resources);
+        console.log("Resources parsed successfully.");
+    } catch (error) {
+        console.error("Error loading resources:", error);
+    }
+}
+
+// Generate descriptions for each resource using OpenAI
+async function generateResourceDescriptions(resources) {
+    let descriptions = {};
+    for (const [category, items] of Object.entries(resources)) {
+        descriptions[category] = await summarizeCategory(category, items);
+    }
+    return descriptions;
+}
+
+// Summarize each category of resources using OpenAI
+async function summarizeCategory(category, items) {
+    const prompt = `Summarize the following resources under the category '${category}':\n\n${JSON.stringify(items, null, 2)}`;
+    return await callOpenAI(prompt);
+}
+
+// Call OpenAI API
+async function callOpenAI(prompt) {
+    try {
+        const response = await fetch("https://api.openai.com/v1/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: "gpt-4",
+                prompt: prompt,
+                max_tokens: 200,
+                temperature: 0.5
+            })
+        });
+        
+        const data = await response.json();
+        return data.choices[0]?.text?.trim() || "No summary available.";
+    } catch (error) {
+        console.error("Error calling OpenAI:", error);
+        return "Error generating summary.";
+    }
+}
+
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 
 // Function to format links properly as clickable HTML
@@ -111,3 +173,7 @@ module.exports = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+// Load resources on startup
+loadResources();
+console.log("Resources loade.", resourceDescriptions);

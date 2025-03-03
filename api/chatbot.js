@@ -176,4 +176,4 @@ module.exports = async (req, res) => {
 
 // Load resources on startup
 loadResources();
-console.log("Resources loade.", resourceDescriptions);
+console.log("Resources loaded in API", resourceDescriptions);

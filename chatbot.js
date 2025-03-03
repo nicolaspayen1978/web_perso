@@ -5,6 +5,10 @@ async function fetchResources() {
     try {
         const response = await fetch("resources.json");
         if (!response.ok) throw new Error("Failed to load resources");
+
+        const text = await response.text(); // Get raw text to check for issues
+        console.log("Raw JSON response:", text); // Debugging output
+
         resources = await response.json();
         console.log("Resources Loaded:", resources);
     } catch (error) {

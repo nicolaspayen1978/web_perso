@@ -322,6 +322,7 @@ async function callOpenAI(prompt, retryCount = 3) {
     while (attempts < retryCount) {
         try {
             console.log(`🟢 Attempt ${attempts + 1}: Sending request to OpenAI...`);
+            console.log("🔍 Full OpenAI Prompt:\n", prompt);
 
             // Set up a timeout controller (20 seconds max)
             const controller = new AbortController();

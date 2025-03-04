@@ -22,19 +22,30 @@ async function loadResources() {
     }
 }
 
+// Summarize each category of resources using OpenAI
+async function summarizeCategory(category, items) {
+    const prompt = `Summarize the following resources under the category '${category}':\n\n${JSON.stringify(items, null, 2)}`;
+    return await callOpenAI(prompt);
+}
+
+// Summarize each item of resources using OpenAI
+async function summarizeItem(category, item) {
+    const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
+    return await callOpenAI(prompt);
+}
+
 // Generate descriptions for each resource using OpenAI, with a progress indicator
 async function generateResourceDescriptions(resources, updateProgress) {
     let descriptions = {};
-    let totalItems = Object.values(resources).flat().length; // Count all resources
+    let totalItems = Object.values(resources).flatMap(items => Array.isArray(items) ? items : Object.values(items)).length; // Count all resources
     let processedItems = 0;
 
     for (const [category, items] of Object.entries(resources)) {
         if (Array.isArray(items)) {
-            descriptions[category] = []; // Initialize array for category
+            descriptions[category] = []; // Initialize an array for this category
 
             for (const item of items) {
                 let summary = await summarizeItem(category, item);
-                
                 descriptions[category].push({
                     title: item.title || "Untitled",
                     url: item.url || "",
@@ -49,24 +60,38 @@ async function generateResourceDescriptions(resources, updateProgress) {
                     updateProgress(progress);
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 500)); // ⏳ Reduce API overload
+                await new Promise(resolve => setTimeout(resolve, 500)); // ⏳ Reduce API load
             }
 
         } else if (typeof items === "object" && items !== null) {
-            descriptions[category] = await summarizeCategory(category, Object.entries(items).map(([key, url]) => ({ title: key, url })));
-            processedItems++;
+            // Handle objects like "career" and "contact"
+            descriptions[category] = {};
+
+            for (const [key, value] of Object.entries(items)) {
+                let summary = await summarizeItem(category, { title: key, url: value });
+                descriptions[category][key] = {
+                    title: key,
+                    url: value,
+                    summary: summary
+                };
+
+                processedItems++;
+                let progress = Math.round((processedItems / totalItems) * 100);
+                console.log(`📊 Progress: ${progress}%`);
+
+                if (typeof updateProgress === "function") {
+                    updateProgress(progress);
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 500)); // ⏳ Reduce API load
+            }
+
         } else {
             console.error(`Warning: '${category}' is not an array or object. Skipping.`);
         }
     }
 
     return descriptions;
-}
-
-// Summarize each item of resources using OpenAI
-async function summarizeItem(category, item) {
-    const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
-    return await callOpenAI(prompt);
 }
 
 // generate a request to OpenAI that includes the user questions and the relevant resources

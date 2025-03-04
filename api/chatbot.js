@@ -277,6 +277,24 @@ async function generateChatResponse(userMessages) {
         await loadResources();
     }
 
+    let contactInfo = "Not available";
+
+    if (resourceDescriptions.contact) {
+        contactInfo = "";
+        if (resourceDescriptions.contact.email) {
+            contactInfo += `- [Email](mailto:${resourceDescriptions.contact.email})\n`;
+        }
+        if (resourceDescriptions.contact.calendly) {
+            contactInfo += `- [Calendly](${resourceDescriptions.contact.calendly})\n`;
+        }
+        if (resourceDescriptions.contact.linkedin) {
+            contactInfo += `- [LinkedIn](${resourceDescriptions.contact.linkedin})\n`;
+        }
+        if (resourceDescriptions.contact.github) {
+            contactInfo += `- [GitHub](${resourceDescriptions.contact.github})\n`;
+        }
+    }
+
     // 🛠️ Fix for the duplicate system message issue: Ensure only one exists
     const SYSTEM_MESSAGE = `
     You are NicoAI, the AI version of Nicolas Payen. You are also his AI assistant.
@@ -306,14 +324,6 @@ async function generateChatResponse(userMessages) {
         ? resourceDescriptions.projects.map(project => `- [${project.title}](${project.url})`).join("\n")
         : "Not available"
     }
-
-    **Contacts:**  
-    const contactInfo = resourceDescriptions.contact
-    ? `- [Email](mailto:${resourceDescriptions.contact.email})  
-       - [Calendly](${resourceDescriptions.contact.calendly})  
-       - [LinkedIn](${resourceDescriptions.contact.linkedin})  
-       - [GitHub](${resourceDescriptions.contact.github})`
-    : "Not available";
 
     **Contacts:**  
     ${contactInfo}

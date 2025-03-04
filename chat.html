@@ -198,6 +198,16 @@
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
     <script>
+        function updateProgress(category, completed, total) {
+            let progressBar = document.getElementById("progress-bar");
+            if (progressBar) {
+                let percentage = Math.round((completed / total) * 100);
+                progressBar.style.width = percentage + "%";
+                progressBar.innerText = `Loading ${category} (${percentage}%)`;
+            }
+        }
+    </script>
+    <script>
          document.addEventListener("DOMContentLoaded", function () {
             // Select menu elements
             const menuIcon = document.querySelector(".menu-icon");

@@ -41,8 +41,12 @@ async function generateResourceDescriptions(resources, updateProgress) {
 
             processedItems++;
             let progress = Math.round((processedItems / totalItems) * 100);
-            updateProgress(progress); // Update progress in UI
-
+            console.log(`📊 Progress: ${progress}`);
+            if (typeof updateProgress === "function") {
+                updateProgress(progress);
+            } else {
+                console.warn("⚠️ updateProgress function is missing!");
+            }
             await new Promise(resolve => setTimeout(resolve, 1000)); // ⏳ Avoid API rate limits
         }
     }

@@ -50,9 +50,10 @@ async function generateResourceDescriptions(resources, updateProgress) {
     return descriptions;
 }
 
-// Summarize each category of resources using OpenAI
-async function summarizeCategory(category, items) {
-    const prompt = `Summarize the following resources under the category '${category}':\n\n${JSON.stringify(items, null, 2)}`;
+
+// Summarize each item of resources using OpenAI
+async function summarizeItem(category, item) {
+    const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
     return await callOpenAI(prompt);
 }
 

@@ -113,10 +113,13 @@ async function generateChatResponse(userMessages) {
 }
 
 // Call OpenAI API
-async function callOpenAI(prompt, retryCount = 0) {
+async function callOpenAI(prompt, retryCount = 3) {
     let attempts = 0;
+
     while (attempts < retryCount) {
         try {
+            console.log(`🟢 Attempt ${attempts + 1}: Sending request to OpenAI...`);
+
             const response = await fetch("https://api.openai.com/v1/chat/completions", {
                 method: "POST",
                 headers: {
@@ -125,10 +128,10 @@ async function callOpenAI(prompt, retryCount = 0) {
                 },
                 body: JSON.stringify({
                     model: "gpt-4",
-                    messages: [{ role: "system", content: prompt }], // OpenAI expects an array of messages
-                    max_tokens: 500,  // ⬇️ Reduce from 800 to 500 to speed up response
-                    temperature: 0.1,  // ⬇️ Reduce randomness to minimize processing time
-                    top_p: 0.9,  // Limit diversity of responses for faster execution
+                    messages: [{ role: "user", content: prompt }], 
+                    max_tokens: 500, 
+                    temperature: 0.1,  
+                    top_p: 0.9,  
                     frequency_penalty: 0,
                     presence_penalty: 0
                 })
@@ -136,27 +139,34 @@ async function callOpenAI(prompt, retryCount = 0) {
 
             if (!response.ok) {
                 const errorMessage = await response.text();
-                console.error(`OpenAI API error: ${response.status} - ${errorMessage}`);
+                console.error(`❌ OpenAI API error: ${response.status} - ${errorMessage}`);
+
+                if (attempts + 1 < retryCount) {
+                    console.log(`🔄 Retrying... (${attempts + 1}/${retryCount})`);
+                    await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // ⏳ Exponential backoff
+                    attempts++;
+                    continue; // 🔄 Retry request
+                }
                 return "Error calling OpenAI. Please try again.";
             }
 
             const data = await response.json();
+            console.log(`✅ OpenAI Response Data:`, JSON.stringify(data, null, 2));
 
-            console.log(`OpenAI Response Data:`, JSON.stringify(data, null, 2));
-            
-            // Access response content
-            return data.choices?.[0]?.text?.trim() || "No summary available.";
-            
+            // Response extraction
+            return data.choices?.[0]?.message?.content?.trim() || "No summary available.";
+
         } catch (error) {
-                
-                console.error(`Error calling OpenAI (Attempt ${attempts + 1}):`, error);
+            console.error(`⚠️ Error calling OpenAI (Attempt ${attempts + 1}):`, error);
+
+            if (attempts + 1 < retryCount) {
+                console.log(`🔄 Retrying in ${(2000 * (attempts + 1)) / 1000} seconds...`);
+                await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // ⏳ Exponential backoff
                 attempts++;
+                continue; // 🔄 Retry request
+            }
 
-                if (attempts >= retryCount) {
-                    return "Error generating summary after multiple attempts.";
-                }
-
-                await new Promise(resolve => setTimeout(resolve, 2000 * attempts)); // ⏳ Exponential backoff
+            return "Error generating summary after multiple attempts.";
         }
     }
 }

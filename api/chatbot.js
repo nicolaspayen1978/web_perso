@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
     // ✅ Handle CORS Preflight Request
     if (req.method === "OPTIONS") {
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io"); // Allow only your GitHub Pages
         res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
         console.log("🟢 Handled preflight OPTIONS request.");
@@ -268,15 +268,25 @@ function getRelevantResources(userMessage) {
     return resourceMatches.slice(0, 5).map(item => `${item.title}: ${item.description}`).join("\n");
 }
 
-// Generate chatbot response using relevant stored descriptions
 async function generateChatResponse(userMessages) {
     console.log("🔍 Reloading latest resources from KV before generating response...");
-    await loadResources(); // Ensure latest data
+    await loadResources(); // Ensures latest data is used
 
     const lastMessage = userMessages[userMessages.length - 1].content;
-    const relevantResources = getRelevantResources(lastMessage); // Use filtered resources
+
+    // Use stored descriptions for context
+    let relevantResources = Object.entries(resourceDescriptions)
+        .flatMap(([category, items]) =>
+            Array.isArray(items)
+                ? items.map(item => `${item.title}: ${item.description}`)
+                : Object.values(items).map(obj => `${obj.title}: ${obj.description}`)
+        )
+        .join("\n");
+
+    console.log("📚 Relevant resources for OpenAI:\n", relevantResources); // Debugging
 
     const prompt = `User asked: "${lastMessage}"\n\nBased on the following summarized resources, provide an accurate answer:\n\n${relevantResources}`;
+
     return await callOpenAI(prompt);
 }
 
@@ -300,7 +310,7 @@ async function callOpenAI(prompt, retryCount = 3) {
                 },
                 body: JSON.stringify({
                     model: "gpt-4-turbo",
-                    messages: [{ role: "user", content: prompt }], 
+                    messages: [{ role: "user", content: prompt.substring(0, 5000) }], // Trim prompt to 5000 chars max
                     max_tokens: 300, 
                     temperature: 0,  
                     top_p: 0.9,  

@@ -5,12 +5,6 @@
       "maxDuration": 30
     }
   },
-  "build": {
-    "env": {
-      "KV_REST_API_URL": "@nicoai-resources",
-      "KV_REST_API_TOKEN": "@nicoai-resources"
-    }
-  },
   "routes": [
     {
       "src": "/api/chatbot",

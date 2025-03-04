@@ -1,0 +1,13 @@
+{
+  "name": "nicoai-project",
+  "version": "1.0.0",
+  "main": "api/chatbot.js",
+  "scripts": {
+    "start": "vercel dev",
+    "deploy": "vercel --prod",
+    "build": "node scripts/uploadResources.js && npm install"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  }
+}

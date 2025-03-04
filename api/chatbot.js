@@ -31,7 +31,10 @@ async function summarizeCategory(category, items) {
 // Summarize each item of resources using OpenAI
 async function summarizeItem(category, item) {
     const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
-    return await callOpenAI(prompt);
+    console.log(`📩 Calling OpenAI for summary: ${item.title} (${item.url})`);
+    const response = await callOpenAI(prompt);
+    console.log(`📝 OpenAI Response:`, response);
+    return response || "No summary available.";
 }
 
 // Generate descriptions for each resource using OpenAI, with a progress indicator

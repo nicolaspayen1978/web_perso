@@ -24,7 +24,7 @@ async function loadResources() {
 
 // Summarize each item of resources using OpenAI
 async function summarizeItem(category, item) {
-    const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
+    const prompt = `The following article titled "${article.title}" from ${article.url} needs a short, accurate summary of its content. Do NOT assume the topic based on the title—focus on the actual content. If the article is about business, technology, or personal experiences, summarize accordingly. Do NOT generate a generic or scientific explanation if the content does not support it.`;
     console.log(`📩 Calling OpenAI for summary: ${item.title} (${item.url})`);
     const response = await callOpenAI(prompt);
     console.log(`📝 OpenAI Response:`, response);

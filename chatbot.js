@@ -181,8 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let userText = userInput.value.trim();
         if (!userText) return;
 
+        //Update chat with the input from the user
         chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
         chatbox.scrollTop = chatbox.scrollHeight; 
+        //clear message field
         userInput.value = "";
 
         if (Object.keys(resources).length === 0) {
@@ -197,10 +199,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         saveChatHistory(); // Save user input
 
+        //make sure chatHistory no longer than 4000 words
         chatHistory = truncateChatHistory(chatHistory, 4000);
 
         console.log("Sending request to API...");
-        console.log("Messages being sent:", messages);
+        console.log("Messages being sent:", messages: chatHistory);
 
         try {
             const response = await fetch("https://web-perso.vercel.app/api/chatbot", {

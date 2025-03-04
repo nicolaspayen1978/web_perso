@@ -74,10 +74,10 @@ async function saveResources() {
     try {
         console.log("📤 Saving updated resources to Vercel KV...");
 
-        const response = await fetch(`${KV_URL}/set/resources`, {
+        const response = await fetch(`${KV_REST_API_URL}/set/resources`, {
             method: "PUT",
             headers: {
-                "Authorization": `Bearer ${KV_TOKEN}`,
+                "Authorization": `Bearer ${KV_REST_API_TOKEN}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(resourceDescriptions)

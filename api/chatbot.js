@@ -270,11 +270,14 @@ function getRelevantResources(userMessage) {
 
 async function generateChatResponse(userMessages) {
     console.log("🔍 Reloading latest resources from KV before generating response...");
-    // Wait for resources to load
+
+    // Ensure resources are fully loaded before constructing the prompt
     if (Object.keys(resourceDescriptions).length === 0) {
+        console.log("⚠️ Resources not yet loaded. Fetching from KV...");
         await loadResources();
     }
 
+    // 🛠️ Fix for the duplicate system message issue: Ensure only one exists
     const SYSTEM_MESSAGE = `
     You are NicoAI, the AI version of Nicolas Payen. You are also his AI assistant.
     Here is what you know about him:
@@ -291,28 +294,42 @@ async function generateChatResponse(userMessages) {
     **Resume:** ${resourceDescriptions?.career?.resume || "Not available"}  
 
     **Articles:**  
-    ${resourceDescriptions?.articles
+    ${
+      resourceDescriptions?.articles && resourceDescriptions.articles.length
         ? resourceDescriptions.articles.map(article => `- [${article.title}](${article.url})`).join("\n")
-        : "Not available"}
+        : "Not available"
+    }
 
     **Projects:**  
-    ${resourceDescriptions?.projects
+    ${
+      resourceDescriptions?.projects && resourceDescriptions.projects.length
         ? resourceDescriptions.projects.map(project => `- [${project.title}](${project.url})`).join("\n")
-        : "Not available"}
+        : "Not available"
+    }
+
+    **Contacts:**  
+    const contactInfo = resourceDescriptions.contact
+    ? `- [Email](mailto:${resourceDescriptions.contact.email})  
+       - [Calendly](${resourceDescriptions.contact.calendly})  
+       - [LinkedIn](${resourceDescriptions.contact.linkedin})  
+       - [GitHub](${resourceDescriptions.contact.github})`
+    : "Not available";
+
+    **Contacts:**  
+    ${contactInfo}
 
     Provide links when relevant. Always share a little summary of the content of the link before doing so. 
     If a user asks for more information, share these sources.
     Help visitors book meetings or calls with Nicolas Payen using Calendly.
     `;
 
-    // Ensure system message is always included
-    const messages = [{ role: "system", content: SYSTEM_MESSAGE }, ...userMessages];
+    // 🛠️ Fix: Remove duplicate system message
+    const messages = [{ role: "system", content: SYSTEM_MESSAGE }];
+        userMessages.forEach(msg => messages.push(msg));
 
-    console.log("📚 Relevant resources for OpenAI:\n", messages);
+    console.log("📚 Sending prompt to OpenAI:\n", messages);
 
-    const prompt = messages.map(m => `${m.role}: ${m.content}`).join("\n\n");
-
-    return await callOpenAI(prompt);
+    return await callOpenAI(messages);
 }
 
 // Call OpenAI API

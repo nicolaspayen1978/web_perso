@@ -7,8 +7,8 @@
   },
   "build": {
     "env": {
-      "VERCEL_KV_REST_API_URL": "@nicoai-resources",
-      "VERCEL_KV_REST_API_TOKEN": "@nicoai-resources"
+      "KV_REST_API_URL": "@nicoai-resources",
+      "KV_REST_API_TOKEN": "@nicoai-resources"
     },
     "commands": [
       "node scripts/uploadResources.js"

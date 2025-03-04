@@ -174,8 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
         **Strengths:** Deep knowledge in clean technologies, climate investments, international business, strategic leadership.  
         **Weaknesses:** Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.  
 
-        **Career Timeline:** ${resources.career || "Loading..."}  
-        **Resume:** ${resources.resume || "Loading..."}  
+        **Career Timeline:** ${resources.career.journey || "Loading..."}  
+        **Resume:** ${resources.career.resume || "Loading..."}  
 
         **Articles:**  
         ${resources.articles ? resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n") : "Loading..."}

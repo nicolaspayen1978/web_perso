@@ -15,7 +15,7 @@ let resourceDescriptions = {};
 
 // Load resources coming from '`resources.json` that have been transfer to Vercel KV
 // Load resources from Vercel KV
-aasync function loadResources() {
+async function loadResources() {
     try {
         console.log("📥 Fetching resources from Vercel KV...");
 

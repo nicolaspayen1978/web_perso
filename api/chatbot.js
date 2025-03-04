@@ -73,7 +73,7 @@ async function generateChatResponse(userMessages) {
 }
 
 // Call OpenAI API
-async function callOpenAI(prompt) {
+async function callOpenAI(prompt, retryCount = 0) {
     let attempts = 0;
     while (attempts < retryCount) {
         try {

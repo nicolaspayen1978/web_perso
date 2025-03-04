@@ -30,24 +30,38 @@ async function generateResourceDescriptions(resources, updateProgress) {
 
     for (const [category, items] of Object.entries(resources)) {
         if (Array.isArray(items)) {
-            // Process arrays normally
-            descriptions[category] = await summarizeCategory(category, items);
+            descriptions[category] = []; // Initialize array for category
+
+            for (const item of items) {
+                let summary = await summarizeItem(category, item);
+                
+                descriptions[category].push({
+                    title: item.title || "Untitled",
+                    url: item.url || "",
+                    summary: summary
+                });
+
+                processedItems++;
+                let progress = Math.round((processedItems / totalItems) * 100);
+                console.log(`📊 Progress: ${progress}%`);
+
+                if (typeof updateProgress === "function") {
+                    updateProgress(progress);
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 500)); // ⏳ Reduce API overload
+            }
+
         } else if (typeof items === "object" && items !== null) {
-            // If it's an object (like `career`), summarize each key separately
             descriptions[category] = await summarizeCategory(category, Object.entries(items).map(([key, url]) => ({ title: key, url })));
+            processedItems++;
         } else {
-            console.error(` Warning: '${category}' is not an array or object. Skipping.`);
-            continue;
+            console.error(`Warning: '${category}' is not an array or object. Skipping.`);
         }
-         processedItems++;
-        let progress = Math.round((processedItems / totalItems) * 100);
-        console.log(`📊 Progress: ${progress}`);
-        await new Promise(resolve => setTimeout(resolve, 1000)); // ⏳ Avoid API rate limits
     }
 
     return descriptions;
 }
-
 
 // Summarize each item of resources using OpenAI
 async function summarizeItem(category, item) {

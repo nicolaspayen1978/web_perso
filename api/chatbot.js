@@ -242,21 +242,39 @@ async function generateResourceDescriptions(resources, updateProgress) {
 }
 
 // generate a request to OpenAI that includes the user questions and the relevant resources
-// Generate chatbot response using stored descriptions
+//identify relevant resources
+function getRelevantResources(userMessage) {
+    const keywords = userMessage.toLowerCase().split(/\s+/); // Split message into words
+    let resourceMatches = [];
+
+    for (const [category, items] of Object.entries(resourceDescriptions)) {
+        if (Array.isArray(items)) {
+            for (const item of items) {
+                const titleLower = item.title.toLowerCase();
+                const descriptionLower = (item.description || "").toLowerCase();
+                
+                // Count keyword matches in title & description
+                let matchScore = keywords.filter(word => titleLower.includes(word) || descriptionLower.includes(word)).length;
+
+                if (matchScore > 0) {
+                    resourceMatches.push({ title: item.title, description: item.description, score: matchScore });
+                }
+            }
+        }
+    }
+
+    // Sort by relevance (higher match score first) and limit results
+    resourceMatches.sort((a, b) => b.score - a.score);
+    return resourceMatches.slice(0, 5).map(item => `${item.title}: ${item.description}`).join("\n");
+}
+
+// Generate chatbot response using relevant stored descriptions
 async function generateChatResponse(userMessages) {
-    console.log("Reloading latest resources from KV before generating response...");
-    await loadResources(); // Ensures the latest data is used
+    console.log("🔍 Reloading latest resources from KV before generating response...");
+    await loadResources(); // Ensure latest data
 
     const lastMessage = userMessages[userMessages.length - 1].content;
-
-    // Use stored descriptions for context
-    let relevantResources = Object.entries(resourceDescriptions)
-        .flatMap(([category, items]) =>
-            Array.isArray(items)
-                ? items.map(item => `${item.title}: ${item.description}`)
-                : Object.values(items).map(obj => `${obj.title}: ${obj.description}`)
-        )
-        .join("\n");
+    const relevantResources = getRelevantResources(lastMessage); // Use filtered resources
 
     const prompt = `User asked: "${lastMessage}"\n\nBased on the following summarized resources, provide an accurate answer:\n\n${relevantResources}`;
     return await callOpenAI(prompt);
@@ -281,9 +299,9 @@ async function callOpenAI(prompt, retryCount = 3) {
                     "Authorization": `Bearer ${OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: "gpt-4",
+                    model: "gpt-4-turbo",
                     messages: [{ role: "user", content: prompt }], 
-                    max_tokens: 200, 
+                    max_tokens: 300, 
                     temperature: 0,  
                     top_p: 0.9,  
                     frequency_penalty: 0,
@@ -297,11 +315,16 @@ async function callOpenAI(prompt, retryCount = 3) {
                 const errorMessage = await response.text();
                 console.error(`❌ OpenAI API error: ${response.status} - ${errorMessage}`);
 
+                if (response.status === 429 && errorMessage.includes("TPM")) {
+                    console.log("🔽 Reducing token count and retrying...");
+                    prompt = prompt.substring(0, prompt.length * 0.7); // Trim the prompt by 30%
+                }
+
                 if (attempts + 1 < retryCount) {
                     console.log(`🔄 Retrying... (${attempts + 1}/${retryCount})`);
-                    await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // ⏳ Exponential backoff
+                    await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // Exponential backoff
                     attempts++;
-                    continue; // 🔄 Retry request
+                    continue;
                 }
                 return "Error calling OpenAI. Please try again.";
             }

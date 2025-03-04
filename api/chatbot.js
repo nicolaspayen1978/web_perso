@@ -19,9 +19,9 @@ aasync function loadResources() {
     try {
         console.log("📥 Fetching resources from Vercel KV...");
 
-        const response = await fetch(`${KV_URL}/get/resources`, {
+        const response = await fetch(`${KV_REST_API_URL}/get/resources`, {
             method: "GET",
-            headers: { "Authorization": `Bearer ${KV_TOKEN}` }
+            headers: { "Authorization": `Bearer ${KV_REST_API_TOKEN}` }
         });
 
         if (!response.ok) {
@@ -42,6 +42,8 @@ aasync function loadResources() {
                         console.log(`🔍 Missing description for: ${item.title}`);
                         needsUpdate = true;
                         item.description = await summarizeItem(category, item);
+                    } else {
+                        console.log(`✅ Using existing description for: ${item.title}`);
                     }
                 }
             } else if (typeof items === "object" && items !== null) {
@@ -50,6 +52,8 @@ aasync function loadResources() {
                         console.log(`🔍 Missing description for: ${key}`);
                         needsUpdate = true;
                         value.description = await summarizeItem(category, { title: key, url: value });
+                    } else {
+                        console.log(`✅ Using existing description for: ${item.title}`);
                     }
                 }
             }
@@ -188,6 +192,9 @@ async function generateResourceDescriptions(resources, updateProgress) {
 // generate a request to OpenAI that includes the user questions and the relevant resources
 // Generate chatbot response using stored descriptions
 async function generateChatResponse(userMessages) {
+    console.log("Reloading latest resources from KV before generating response...");
+    await loadResources(); // Ensures the latest data is used
+
     const lastMessage = userMessages[userMessages.length - 1].content;
 
     // Use stored descriptions for context

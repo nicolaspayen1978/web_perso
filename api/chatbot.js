@@ -22,12 +22,6 @@ async function loadResources() {
     }
 }
 
-// Summarize each category of resources using OpenAI
-async function summarizeCategory(category, items) {
-    const prompt = `Summarize the following resources under the category '${category}':\n\n${JSON.stringify(items, null, 2)}`;
-    return await callOpenAI(prompt);
-}
-
 // Summarize each item of resources using OpenAI
 async function summarizeItem(category, item) {
     const prompt = `Summarize the following resource from category '${category}':\n\nTitle: ${item.title}\nURL: ${item.url}\n\nProvide a concise and informative summary.`;
@@ -120,6 +114,10 @@ async function callOpenAI(prompt, retryCount = 3) {
         try {
             console.log(`🟢 Attempt ${attempts + 1}: Sending request to OpenAI...`);
 
+            // Set up a timeout controller (20 seconds max)
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 20000); // ⏳ 20s timeout
+
             const response = await fetch("https://api.openai.com/v1/chat/completions", {
                 method: "POST",
                 headers: {
@@ -129,13 +127,15 @@ async function callOpenAI(prompt, retryCount = 3) {
                 body: JSON.stringify({
                     model: "gpt-4",
                     messages: [{ role: "user", content: prompt }], 
-                    max_tokens: 500, 
-                    temperature: 0.1,  
+                    max_tokens: 300, 
+                    temperature: 0,  
                     top_p: 0.9,  
                     frequency_penalty: 0,
                     presence_penalty: 0
                 })
             });
+
+            clearTimeout(timeout); // Clear timeout after response
 
             if (!response.ok) {
                 const errorMessage = await response.text();

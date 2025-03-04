@@ -13,6 +13,58 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 let resourceDescriptions = {};
 
+module.exports = async (req, res) => {
+    console.log("🚀 Received API request", req.method);
+
+    // ✅ Handle CORS Preflight Request
+    if (req.method === "OPTIONS") {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        console.log("🟢 Handled preflight OPTIONS request.");
+        return res.status(200).end();
+    }
+
+    // ✅ Reject all non-POST requests
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method Not Allowed. Use POST." });
+    }
+
+    // ✅ Continue processing for POST requests
+    try {
+        const { messages } = req.body;
+        if (!messages || messages.length === 0) {
+            console.error("Invalid request: messages array is missing.");
+            return res.status(400).json({ error: "Invalid request: Missing messages." });
+        }
+
+        // Load resources if not already loaded
+        if (Object.keys(resourceDescriptions).length === 0) {
+            console.log("Resources not loaded yet, attempting to reload.");
+            await loadResources();
+        }
+
+        // Generate chatbot response
+        const responseText = await generateChatResponse(messages);
+
+        // Ensure valid response
+        if (!responseText || responseText.trim() === "") {
+            console.warn(" OpenAI returned an empty response.");
+            return res.status(200).json({
+                choices: [{ message: { content: "I couldn't generate a response right now. Try rephrasing your question." } }]
+            });
+        }
+
+        console.log(" OpenAI Response:", responseText);
+
+        return res.status(200).json({ choices: [{ message: { content: responseText } }] });
+
+    } catch (error) {
+        console.error(" Server Error:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 // Load resources coming from '`resources.json` that have been transfer to Vercel KV
 // Load resources from Vercel KV
 async function loadResources() {
@@ -330,59 +382,6 @@ async function fetchDocument(url) {
         return "I couldn't fetch the document.";
     }
 }
-
-module.exports = async (req, res) => {
-    // CORS Headers
-    res.setHeader("Access-Control-Allow-Origin", "*");  // Allow all origins
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS"); // Allow POST & OPTIONS
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    console.log("🚀 Received API request", req.method);
-    console.log("Request Body:", req.body);
-
-    // Preflight Request Handling (Important for browsers)
-    if (req.method === "OPTIONS") {
-        return res.status(200).end();
-    }
-
-    // Reject all non-POST requests
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method Not Allowed. Use POST." });
-    }
-
-    try {
-        const { messages } = req.body;
-        if (!messages || messages.length === 0) {
-            console.error("Invalid request: messages array is missing.");
-            return res.status(400).json({ error: "Invalid request: Missing messages." });
-        }
-
-        // Ensure resources are loaded before processing the chat
-        if (Object.keys(resourceDescriptions).length === 0) {
-            console.log("Resources not loaded yet, attempting to reload.");
-            await loadResources();
-        }
-
-        // Generate chatbot response
-        const responseText = await generateChatResponse(messages);
-
-        // Ensure valid response
-        if (!responseText || responseText.trim() === "") {
-            console.warn(" OpenAI returned an empty response.");
-            return res.status(200).json({
-                choices: [{ message: { content: "I couldn't generate a response right now. Try rephrasing your question." } }]
-            });
-        }
-
-        console.log(" OpenAI Response:", responseText);
-
-        return res.status(200).json({ choices: [{ message: { content: responseText } }] });
-
-    } catch (error) {
-        console.error(" Server Error:", error);
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
-};
 
 // Load resources on startup
 loadResources();

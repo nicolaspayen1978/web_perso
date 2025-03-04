@@ -141,9 +141,12 @@ async function callOpenAI(prompt, retryCount = 0) {
             }
 
             const data = await response.json();
+
+            console.log(`OpenAI Response Data:`, JSON.stringify(data, null, 2));
             
             // Access response content
-            return data.choices[0]?.message?.content?.trim() || "No summary available.";
+            return data.choices?.[0]?.text?.trim() || "No summary available.";
+            
         } catch (error) {
                 
                 console.error(`Error calling OpenAI (Attempt ${attempts + 1}):`, error);

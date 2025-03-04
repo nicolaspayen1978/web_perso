@@ -9,12 +9,12 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 let resourceDescriptions = {};
 
 // Load and parse resources.json
-function loadResources() {
+async function loadResources() {
     try {
         const data = fs.readFileSync(RESOURCES_PATH, "utf-8");
         const resources = JSON.parse(data);
-        resourceDescriptions = generateResourceDescriptions(resources);
-        console.log("Resources parsed successfully.");
+        resourceDescriptions = await generateResourceDescriptions(resources);  // Ensure it's awaited
+        console.log("Resources parsed successfully:", resourceDescriptions);
     } catch (error) {
         console.error("Error loading resources:", error);
     }
@@ -35,6 +35,21 @@ async function summarizeCategory(category, items) {
     return await callOpenAI(prompt);
 }
 
+// generate a request to OpenAI that includes the user questions and the relevant resources
+async function generateChatResponse(userMessages) {
+    // Extract user question
+    const lastMessage = userMessages[userMessages.length - 1].content;
+
+    // Identify relevant resources
+    let relevantResources = Object.entries(resourceDescriptions)
+        .map(([category, summary]) => `${category}: ${summary}`)
+        .join("\n");
+
+    const prompt = `User asked: "${lastMessage}"\n\nBased on the following summarized resources, provide an accurate answer:\n\n${relevantResources}`;
+
+    return await callOpenAI(prompt);
+}
+
 // Call OpenAI API
 async function callOpenAI(prompt) {
     try {
@@ -47,11 +62,16 @@ async function callOpenAI(prompt) {
             body: JSON.stringify({
                 model: "gpt-4",
                 prompt: prompt,
-                max_tokens: 200,
-                temperature: 0.5
+                max_tokens: 800,
+                temperature: 0.2
             })
         });
-        
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`OpenAI API error: ${response.status} - ${errorMessage}`);
+        }
+
         const data = await response.json();
         return data.choices[0]?.text?.trim() || "No summary available.";
     } catch (error) {
@@ -104,6 +124,7 @@ async function sendNotification(visitorMessage) {
     // Add your actual notification logic (email, Telegram, Discord, etc.)
 }
 
+// Function  to get the information associated with an URL
 async function fetchDocument(url) {
     try {
         const response = await fetch(url);
@@ -116,22 +137,19 @@ async function fetchDocument(url) {
 }
 
 module.exports = async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");  // ✅ Allows any origin
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    // CORS Headers
+    res.setHeader("Access-Control-Allow-Origin", "*");  // Allow all origins
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS"); // Allow POST & OPTIONS
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
+    // Preflight Request Handling (Important for browsers)
     if (req.method === "OPTIONS") {
         return res.status(200).end();
     }
 
+    // Reject all non-POST requests
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method Not Allowed. Use POST." });
-    }
-
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-        console.error("Missing OpenAI API key.");
-        return res.status(500).json({ error: "Missing API key in server." });
     }
 
     try {
@@ -141,35 +159,29 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: "Invalid request: Missing messages." });
         }
 
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4",
-                messages: messages,
-                max_tokens: 800,  // Reduce response length but still quite detailed
-                temperature: 0.2  // Keeps answers factual (0.3 = factual, slightly creative)
-            })
-        });
-
-        if (!response.ok) {
-            console.error(`OpenAI API error: ${response.statusText}`);
-            return res.status(response.status).json({ error: `OpenAI API error: ${response.statusText}` });
+        // Ensure resources are loaded before processing the chat
+        if (Object.keys(resourceDescriptions).length === 0) {
+            console.log("Resources not loaded yet, attempting to reload.");
+            await loadResources();
         }
 
-        const data = await response.json();
-        let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+        // Generate chatbot response
+        const responseText = await generateChatResponse(messages);
 
-        // Convert Markdown-style links `[title](url)` to real HTML `<a>` links
-        botReply = formatLinks(botReply);
+        // Ensure valid response
+        if (!responseText || responseText.trim() === "") {
+            console.warn(" OpenAI returned an empty response.");
+            return res.status(200).json({
+                choices: [{ message: { content: "I couldn't generate a response right now. Try rephrasing your question." } }]
+            });
+        }
 
-        return res.status(200).json({ choices: [{ message: { content: botReply } }] });
+        console.log(" OpenAI Response:", responseText);
+
+        return res.status(200).json({ choices: [{ message: { content: responseText } }] });
 
     } catch (error) {
-        console.error("Server Error:", error);
+        console.error(" Server Error:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };

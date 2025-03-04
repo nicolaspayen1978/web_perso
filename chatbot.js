@@ -1,6 +1,7 @@
 // Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
 
+//function to access the assets in resources.json
 async function fetchResources() {
     try {
         const response = await fetch("resources.json");
@@ -35,8 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
+    //retrieve chatHistory from local storage
     let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 
+    //function to display ChatHistory in the chatbox
     function displayChatHistory() {
         chatbox.innerHTML = ""; // Clear chatbox
         chatHistory.forEach(msg => {
@@ -45,10 +48,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    //function to save ChatHistory in local storage
     function saveChatHistory() {
         localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
     }
 
+    //Make the chatbox visible to the user
     function showChat() {
         chatPopup.style.display = "flex";
         setTimeout(() => {
@@ -65,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    //Make the chatbox invisible to the user
     function hideChat() {
         chatPopup.style.opacity = "0";
         chatPopup.style.transform = "translateY(50px)";
@@ -73,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
     }
 
+    //Reduce ChatHistory to not overload OpenAI
     function truncateChatHistory(chatHistory, maxTokens = 4000) {
         let totalTokens = 0;
         let truncatedHistory = [];
@@ -137,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
+    //initial prompt to initiate NicoAI
     async function getSystemMessage() {
         return `
         You are a NicoAI the AI version of Nicolas Payen. You are also his AI assistant.
@@ -168,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     }
 
+    //function to send message in OpenAI
     async function sendMessage() {
         let userText = userInput.value.trim();
         if (!userText) return;

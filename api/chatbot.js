@@ -10,13 +10,29 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 let resourceDescriptions = {};
 
-// Load and parse resources.json
+// 📌 Load and parse `resources.json`
 async function loadResources() {
     try {
         const data = fs.readFileSync(RESOURCES_PATH, "utf-8");
-        const resources = JSON.parse(data);
-        resourceDescriptions = await generateResourceDescriptions(resources);  // Ensure it's awaited
-        console.log("Resources parsed successfully:", resourceDescriptions);
+        let resources = JSON.parse(data);
+
+        // Check if any descriptions are missing
+        let missingDescriptions = Object.values(resources).some(category =>
+            Array.isArray(category) 
+                ? category.some(item => !item.description || item.description.trim() === "") 
+                : Object.values(category).some(value => !value.description || value.description.trim() === "")
+        );
+
+        // Generate missing descriptions if necessary
+        if (missingDescriptions) {
+            console.log("🔍 Some resources are missing descriptions. Updating...");
+            resourceDescriptions = await generateResourceDescriptions(resources);
+            fs.writeFileSync(RESOURCES_PATH, JSON.stringify(resources, null, 2), "utf-8");
+        } else {
+            console.log("All resources have descriptions.");
+            resourceDescriptions = resources;
+        }
+
     } catch (error) {
         console.error("Error loading resources:", error);
     }
@@ -33,7 +49,7 @@ async function summarizeItem(category, item) {
 
 // Generate descriptions for each resource using OpenAI, with a progress indicator
 async function generateResourceDescriptions(resources, updateProgress) {
-    let descriptions = {};
+    let descriptions = { ...resources };  // Keep existing data
     let totalItems = Object.values(resources).flatMap(items => Array.isArray(items) ? items : Object.values(items)).length; // Count all resources
     let processedItems = 0;
 
@@ -42,13 +58,10 @@ async function generateResourceDescriptions(resources, updateProgress) {
             descriptions[category] = []; // Initialize an array for this category
 
             for (const item of items) {
-                let summary = await summarizeItem(category, item);
-                descriptions[category].push({
-                    title: item.title || "Untitled",
-                    url: item.url || "",
-                    summary: summary
-                });
-
+                if (!item.description || item.description.trim() === "") {
+                    let summary = await summarizeItem(category, item);
+                    item.description = summary;
+                }
                 processedItems++;
                 let progress = Math.round((processedItems / totalItems) * 100);
                 console.log(`📊 Progress: ${progress}%`);
@@ -65,13 +78,10 @@ async function generateResourceDescriptions(resources, updateProgress) {
             descriptions[category] = {};
 
             for (const [key, value] of Object.entries(items)) {
-                let summary = await summarizeItem(category, { title: key, url: value });
-                descriptions[category][key] = {
-                    title: key,
-                    url: value,
-                    summary: summary
-                };
-
+                 if (!value.description || value.description.trim() === "") {
+                    let summary = await summarizeItem(category, { title: key, url: value });
+                    value.description = summary;
+                }
                 processedItems++;
                 let progress = Math.round((processedItems / totalItems) * 100);
                 console.log(`📊 Progress: ${progress}%`);
@@ -93,17 +103,20 @@ async function generateResourceDescriptions(resources, updateProgress) {
 }
 
 // generate a request to OpenAI that includes the user questions and the relevant resources
+// Generate chatbot response using stored descriptions
 async function generateChatResponse(userMessages) {
-    // Extract user question
     const lastMessage = userMessages[userMessages.length - 1].content;
 
-    // Identify relevant resources
+    // Use stored descriptions for context
     let relevantResources = Object.entries(resourceDescriptions)
-        .map(([category, summary]) => `${category}: ${summary}`)
+        .flatMap(([category, items]) =>
+            Array.isArray(items)
+                ? items.map(item => `${item.title}: ${item.description}`)
+                : Object.values(items).map(obj => `${obj.title}: ${obj.description}`)
+        )
         .join("\n");
 
     const prompt = `User asked: "${lastMessage}"\n\nBased on the following summarized resources, provide an accurate answer:\n\n${relevantResources}`;
-
     return await callOpenAI(prompt);
 }
 

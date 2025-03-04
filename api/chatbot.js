@@ -64,8 +64,11 @@ async function callOpenAI(prompt) {
             body: JSON.stringify({
                 model: "gpt-4",
                 messages: [{ role: "system", content: prompt }], // OpenAI expects an array of messages
-                max_tokens: 800,
-                temperature: 0.2
+                max_tokens: 500,  // ⬇️ Reduce from 800 to 500 to speed up response
+                temperature: 0.1,  // ⬇️ Reduce randomness to minimize processing time
+                top_p: 0.9,  // Limit diversity of responses for faster execution
+                frequency_penalty: 0,
+                presence_penalty: 0
             })
         });
 

@@ -1,3 +1,5 @@
+// This api/chatbot.js the API deployed and executed on Vercel
+// ENV variables are set-up in Vercel to not be publicly available
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");

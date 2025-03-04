@@ -1,3 +1,4 @@
+// this is chatbot.js the frontend javascript code for the chatbot
 // Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
 

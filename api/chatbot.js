@@ -1,10 +1,9 @@
 // This api/chatbot.js the API deployed and executed on Vercel
 // ENV variables are set-up in Vercel to not be publicly available
 console.log("🔥 API is running");
-
 const fs = require("fs");
 const path = require("path");
-const fetch = require("node-fetch");
+
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const RESOURCES_PATH = path.join(__dirname, "../resources.json");
@@ -56,7 +55,7 @@ async function generateChatResponse(userMessages) {
 // Call OpenAI API
 async function callOpenAI(prompt) {
     try {
-        const response = await fetch("https://api.openai.com/v1/completions", {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -64,7 +63,7 @@ async function callOpenAI(prompt) {
             },
             body: JSON.stringify({
                 model: "gpt-4",
-                prompt: prompt,
+                messages: [{ role: "system", content: prompt }], // OpenAI expects an array of messages
                 max_tokens: 800,
                 temperature: 0.2
             })
@@ -77,7 +76,9 @@ async function callOpenAI(prompt) {
         }
 
         const data = await response.json();
-        return data.choices[0]?.text?.trim() || "No summary available.";
+        
+        // Access response content
+        return data.choices[0]?.message?.content?.trim() || "No summary available.";
     } catch (error) {
         console.error("Error calling OpenAI:", error);
         return "Error generating summary.";

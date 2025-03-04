@@ -29,26 +29,20 @@ async function generateResourceDescriptions(resources, updateProgress) {
     let processedItems = 0;
 
     for (const [category, items] of Object.entries(resources)) {
-        descriptions[category] = [];
-
-        for (const item of items) {
-            let summary = await summarizeItem(category, item);
-            descriptions[category].push({
-                title: item.title || "Untitled",
-                url: item.url || "",
-                summary: summary
-            });
-
-            processedItems++;
-            let progress = Math.round((processedItems / totalItems) * 100);
-            console.log(`📊 Progress: ${progress}`);
-            if (typeof updateProgress === "function") {
-                updateProgress(progress);
-            } else {
-                console.warn("⚠️ updateProgress function is missing!");
-            }
-            await new Promise(resolve => setTimeout(resolve, 1000)); // ⏳ Avoid API rate limits
+        if (Array.isArray(items)) {
+            // Process arrays normally
+            descriptions[category] = await summarizeCategory(category, items);
+        } else if (typeof items === "object" && items !== null) {
+            // If it's an object (like `career`), summarize each key separately
+            descriptions[category] = await summarizeCategory(category, Object.entries(items).map(([key, url]) => ({ title: key, url })));
+        } else {
+            console.error(` Warning: '${category}' is not an array or object. Skipping.`);
+            continue;
         }
+         processedItems++;
+        let progress = Math.round((processedItems / totalItems) * 100);
+        console.log(`📊 Progress: ${progress}`);
+        await new Promise(resolve => setTimeout(resolve, 1000)); // ⏳ Avoid API rate limits
     }
 
     return descriptions;

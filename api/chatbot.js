@@ -270,22 +270,47 @@ function getRelevantResources(userMessage) {
 
 async function generateChatResponse(userMessages) {
     console.log("🔍 Reloading latest resources from KV before generating response...");
-    await loadResources(); // Ensures latest data is used
+    // Wait for resources to load
+    if (Object.keys(resourceDescriptions).length === 0) {
+        await loadResources();
+    }
 
-    const lastMessage = userMessages[userMessages.length - 1].content;
+    const SYSTEM_MESSAGE = `
+    You are NicoAI, the AI version of Nicolas Payen. You are also his AI assistant.
+    Here is what you know about him:
 
-    // Use stored descriptions for context
-    let relevantResources = Object.entries(resourceDescriptions)
-        .flatMap(([category, items]) =>
-            Array.isArray(items)
-                ? items.map(item => `${item.title}: ${item.description}`)
-                : Object.values(items).map(obj => `${obj.title}: ${obj.description}`)
-        )
-        .join("\n");
+    **Birthday:** March 11, 1978, born in Valence, France  
+    **Location:** Lives in Naarden, Netherlands  
+    **Expertise:** Investment, finance, digital transformation, energy transition, climate tech, entrepreneurship  
+    **Family:** Married to Eveline Noya, Dutch citizen and senior HR professional. Two kids: Floris (born 2012) and Romy (born 2016).   
 
-    console.log("📚 Relevant resources for OpenAI:\n", relevantResources); // Debugging
+    **Strengths:** Deep knowledge in clean technologies, climate investments, international business, strategic leadership.  
+    **Weaknesses:** Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.  
 
-    const prompt = `User asked: "${lastMessage}"\n\nBased on the following summarized resources, provide an accurate answer:\n\n${relevantResources}`;
+    **Career Timeline:** ${resourceDescriptions?.career?.journey || "Not available"}  
+    **Resume:** ${resourceDescriptions?.career?.resume || "Not available"}  
+
+    **Articles:**  
+    ${resourceDescriptions?.articles
+        ? resourceDescriptions.articles.map(article => `- [${article.title}](${article.url})`).join("\n")
+        : "Not available"}
+
+    **Projects:**  
+    ${resourceDescriptions?.projects
+        ? resourceDescriptions.projects.map(project => `- [${project.title}](${project.url})`).join("\n")
+        : "Not available"}
+
+    Provide links when relevant. Always share a little summary of the content of the link before doing so. 
+    If a user asks for more information, share these sources.
+    Help visitors book meetings or calls with Nicolas Payen using Calendly.
+    `;
+
+    // Ensure system message is always included
+    const messages = [{ role: "system", content: SYSTEM_MESSAGE }, ...userMessages];
+
+    console.log("📚 Relevant resources for OpenAI:\n", messages);
+
+    const prompt = messages.map(m => `${m.role}: ${m.content}`).join("\n\n");
 
     return await callOpenAI(prompt);
 }

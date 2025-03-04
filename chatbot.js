@@ -208,6 +208,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let systemMessage = await getSystemMessage();
+
+        // Ensure system message is always included at the start
+        if (!chatHistory.find(msg => msg.role === "system")) {
+            chatHistory.unshift({ role: "system", content: systemMessage });
+        }
         
         chatHistory = [{ role: "system", content: systemMessage }];
         chatHistory.push({ role: "user", content: userText });
@@ -238,7 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
             chatbox.innerHTML += `<p><strong>AI:</strong> ${botReply}</p>`;
 
             saveChatHistory(); // Save bot response
-
             chatbox.scrollTop = chatbox.scrollHeight;
         } catch (error) {
             console.error("Chatbot Error:", error);

@@ -53,16 +53,17 @@ aasync function loadResources() {
                     }
                 }
             }
-        }
-
-        if (needsUpdate) {
-            console.log("📤 Updating Vercel KV with new descriptions...");
-            await saveResources();
+            if (needsUpdate) {
+                console.log("📤 Updating Vercel KV with new descriptions...");
+                await saveResources(); // Save after processing each batch to avoid data loss
+                needsUpdate = false;
+                }
         }
     } catch (error) {
         console.error("⚠️ Error fetching resources:", error);
     }
 }
+
 
 // **Save Updated resources.json Back to Vercel KV**
 async function saveResources() {

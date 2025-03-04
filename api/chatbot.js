@@ -22,12 +22,31 @@ async function loadResources() {
     }
 }
 
-// Generate descriptions for each resource using OpenAI
-async function generateResourceDescriptions(resources) {
+// Generate descriptions for each resource using OpenAI, with a progress indicator
+async function generateResourceDescriptions(resources, updateProgress) {
     let descriptions = {};
+    let totalItems = Object.values(resources).flat().length; // Count all resources
+    let processedItems = 0;
+
     for (const [category, items] of Object.entries(resources)) {
-        descriptions[category] = await summarizeCategory(category, items);
+        descriptions[category] = [];
+
+        for (const item of items) {
+            let summary = await summarizeItem(category, item);
+            descriptions[category].push({
+                title: item.title || "Untitled",
+                url: item.url || "",
+                summary: summary
+            });
+
+            processedItems++;
+            let progress = Math.round((processedItems / totalItems) * 100);
+            updateProgress(progress); // Update progress in UI
+
+            await new Promise(resolve => setTimeout(resolve, 1000)); // ⏳ Avoid API rate limits
+        }
     }
+
     return descriptions;
 }
 
@@ -54,37 +73,47 @@ async function generateChatResponse(userMessages) {
 
 // Call OpenAI API
 async function callOpenAI(prompt) {
-    try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${OPENAI_API_KEY}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4",
-                messages: [{ role: "system", content: prompt }], // OpenAI expects an array of messages
-                max_tokens: 500,  // ⬇️ Reduce from 800 to 500 to speed up response
-                temperature: 0.1,  // ⬇️ Reduce randomness to minimize processing time
-                top_p: 0.9,  // Limit diversity of responses for faster execution
-                frequency_penalty: 0,
-                presence_penalty: 0
-            })
-        });
+    let attempts = 0;
+    while (attempts < retryCount) {
+        try {
+            const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${OPENAI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-4",
+                    messages: [{ role: "system", content: prompt }], // OpenAI expects an array of messages
+                    max_tokens: 500,  // ⬇️ Reduce from 800 to 500 to speed up response
+                    temperature: 0.1,  // ⬇️ Reduce randomness to minimize processing time
+                    top_p: 0.9,  // Limit diversity of responses for faster execution
+                    frequency_penalty: 0,
+                    presence_penalty: 0
+                })
+            });
 
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            console.error(`OpenAI API error: ${response.status} - ${errorMessage}`);
-            return "Error calling OpenAI. Please try again.";
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                console.error(`OpenAI API error: ${response.status} - ${errorMessage}`);
+                return "Error calling OpenAI. Please try again.";
+            }
+
+            const data = await response.json();
+            
+            // Access response content
+            return data.choices[0]?.message?.content?.trim() || "No summary available.";
+        } catch (error) {
+                
+                console.error(`Error calling OpenAI (Attempt ${attempts + 1}):`, error);
+                attempts++;
+
+                if (attempts >= retryCount) {
+                    return "Error generating summary after multiple attempts.";
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 2000 * attempts)); // ⏳ Exponential backoff
         }
-
-        const data = await response.json();
-        
-        // Access response content
-        return data.choices[0]?.message?.content?.trim() || "No summary available.";
-    } catch (error) {
-        console.error("Error calling OpenAI:", error);
-        return "Error generating summary.";
     }
 }
 

@@ -2,6 +2,21 @@
 // Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
 
+// Function to update progress text or bar
+function updateProgress(percent) {
+    const textElement = document.getElementById("loading-progress");
+    const progressBar = document.getElementById("progress-bar");
+
+    if (textElement) {
+        textElement.innerText = `Loading ${percent}%...`;
+    }
+
+    if (progressBar) {
+        progressBar.style.width = `${percent}%`;
+        progressBar.innerText = `${percent}%`;
+    }
+}
+
 //function to access the assets in resources.json
 async function fetchResources() {
     try {

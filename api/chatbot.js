@@ -1,9 +1,10 @@
 // This api/chatbot.js the API deployed and executed on Vercel
 // ENV variables are set-up in Vercel to not be publicly available
+console.log("🔥 API is running");
+
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
-require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const RESOURCES_PATH = path.join(__dirname, "../resources.json");
@@ -71,7 +72,8 @@ async function callOpenAI(prompt) {
 
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`OpenAI API error: ${response.status} - ${errorMessage}`);
+            console.error(`OpenAI API error: ${response.status} - ${errorMessage}`);
+            return "Error calling OpenAI. Please try again.";
         }
 
         const data = await response.json();
@@ -143,6 +145,9 @@ module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");  // Allow all origins
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS"); // Allow POST & OPTIONS
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    console.log("🚀 Received API request", req.method);
+    console.log("Request Body:", req.body);
 
     // Preflight Request Handling (Important for browsers)
     if (req.method === "OPTIONS") {

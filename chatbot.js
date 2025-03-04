@@ -199,6 +199,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chatHistory = truncateChatHistory(chatHistory, 4000);
 
+        console.log("Sending request to API...");
+        console.log("Messages being sent:", messages);
+
         try {
             const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
                 method: "POST",

@@ -60,18 +60,28 @@ async function init_NicoAI(visitorID) {
         { role: "system", content: "Here are Nicolas's key resources which include a description of each content item: " + JSON.stringify(resources) }
     ];
 
+    console.log("📤 Sending system prompts to OpenAI one by one...");
+
     for (const prompt of systemPrompts) {
-        await callOpenAI(prompt);
+        console.log(`🟢 Sending prompt to OpenAI:`, prompt);
+        await callOpenAI([prompt]); // ✅ FIXED: Pass as an array
     }
 
-    console.log("📥 Fetching resources from resources.json...");
-    if (resources) {
-        await callOpenAI([
-            { content: "Here are Nicolas's key resources. Please summarize them for future reference.", role: "system"  },
-            { content: JSON.stringify(resources), role: "user"}
-        ]);
-    }
+    //Ensure resources exist before sending summary request
+    if (resources && Object.keys(resources).length > 0) {
+        console.log("📥 Fetching and summarizing resources...");
 
+        const summaryPrompt = [
+            { role: "system", content: "Here are Nicolas's key resources. Please summarize them for future reference." },
+            { role: "user", content: JSON.stringify(resources) }
+        ];
+
+        console.log(`🟢 Sending summary request to OpenAI:\n`, summaryPrompt);
+        await callOpenAI(summaryPrompt);
+    } else {
+        console.warn("⚠️ No resources available, skipping summary request.");
+    }
+    
     console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
     return { message: "NicoAI initialized successfully for this visitor!" };
 }

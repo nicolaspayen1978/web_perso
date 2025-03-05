@@ -1,9 +1,18 @@
 // this is chatbot.js the frontend javascript code for the chatbot
 // Load external resources (articles, resume, career, projects)
 
+// Generate or retrieve visitor ID
+function getVisitorID() {
+    let visitorID = localStorage.getItem("visitorID");
+    if (!visitorID) {
+        visitorID = crypto.randomUUID(); // Generate unique visitor ID
+        localStorage.setItem("visitorID", visitorID);
+    }
+    return visitorID;
+}
+
 async function initializeNicoAI() {
-    const visitorID = localStorage.getItem("visitorID") || crypto.randomUUID();
-    localStorage.setItem("visitorID", visitorID);
+    const visitorID = getVisitorID();
 
     try {
         const response = await fetch('/api/init', {

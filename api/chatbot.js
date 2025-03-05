@@ -1,9 +1,10 @@
 // This api/chatbot.js the API deployed and executed on Vercel
 // ENV variables are set-up in Vercel to not be publicly available
-console.log("🔥 API is running");
+console.log("🔥 API chatbot is running");
 const fs = require("fs");
 const path = require("path");
-const express = require('express'); 
+const express = require('express');
+const { isNicoAIInitialized, markNicoAIInitialized, fetchResources, callOpenAI, formatLinks, fetchDocument } = require("./utils/utils"); // Import from utils.js 
 const app = express();
 
 app.use(express.json());
@@ -16,98 +17,6 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 
 let resourceDescriptions = {};
-
-// ************** Visitor session mgmt ************** 
-// Store visitor sessions in memory (for small-scale use, use Redis for production)
-const visitorSessions = {};
-
-// Function to check if NicoAI has been initialized for a visitor
-function isNicoAIInitialized(visitorID) {
-    return visitorSessions[visitorID] && visitorSessions[visitorID].initialized;
-}
-
-// Function to mark NicoAI as initialized for a visitor
-function markNicoAIInitialized(visitorID) {
-    visitorSessions[visitorID] = { initialized: true };
-}
-
-// ************** Initiate Nico_AI for visitor ************** 
-// Initialize NicoAI for a visitor
-async function init_NicoAI(visitorID) {
-    if (isNicoAIInitialized(visitorID)) {
-        console.log(`🔄 NicoAI is already initialized for visitor ${visitorID}`);
-        return { message: "NicoAI already initialized for this visitor." };
-    }
-
-    console.log(`🚀 Initializing NicoAI for visitor ${visitorID}...`);
-    markNicoAIInitialized(visitorID);
-
-    const systemPrompts = [
-        { role: "system", content: "You are NicoAI, the AI representing Nicolas Payen and acting as his assistant." },
-        { role: "system", content: "To get to know Nicolas's life and thinking, a collection of resources is available." },
-        { role: "system", content: "Your mission is to share this information and ideas on Nicolas's behalf with visitors." },
-        { role: "system", content: "Your mission is to get to know the visitor and reply based on what you know of Nicolas' ideas and life." },
-        { role: "system", content: "You must use Nicolas's past articles, projects, and knowledge when relevant." },
-        { role: "system", content: "Encourage visitors to explore Nicolas's website and published works." },
-        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." }
-    ];
-
-     //initial prompt to initiate NicoAI
-    /*
-        You are a NicoAI the AI version of Nicolas Payen. You are also his AI assistant.
-        Here is what you know about him:
-
-        **Birthday:** March 11, 1978, born in Valence, France  
-        **Location:** Lives in Naarden, Netherlands  
-        **Expertise:** Investment, finance, digital transformation, energy transition, climate tech, entrepreneurship  
-        **Family:** Married to Eveline Noya, Dutch citizen and senior HR professional. Two kids: Floris (born 2012) and Romy (born 2016).   
-
-        **Strengths:** Deep knowledge in clean technologies, climate investments, international business, strategic leadership.  
-        **Weaknesses:** Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.  
-
-        **Career Timeline:** ${resources.career.journey || "Loading..."}  
-        **Resume:** ${resources.career.resume || "Loading..."}  
-
-        **Articles:**  
-        ${resources.articles ? resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n") : "Loading..."}
-
-        **Projects:**  
-        ${resources.projects ? resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n") : "Loading..."}
-
-        **Contacts:** ${resources.contact || "Loading..."}
-
-        Provide links when relevant. Always share a little summary of the content of the link before doing so. 
-        If a user asks for more information, share these sources.
-        Help visitors book meetings or calls with Nicolas Payen using Calendly.
-    `
-    */
-
-    for (const prompt of systemPrompts) {
-        await callOpenAI(prompt);
-    }
-
-    console.log("📥 Fetching resources from resources.json...");
-    const resources = await fetchResources();
-    if (resources) {
-        await callOpenAI([
-            { content: "Here are Nicolas's key resources. Please summarize them for future reference.", role: "system"  },
-            { content: JSON.stringify(resources), role: "user"}
-        ]);
-    }
-
-    console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
-    return { message: "NicoAI initialized successfully for this visitor!" };
-}
-
-
-// API Endpoint to Initialize NicoAI for a Visitor
-app.post('/api/init', async (req, res) => {
-    const { visitorID } = req.body;
-    if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
-    const result = await init_NicoAI(visitorID);
-    console.log(`🚀 /api/init executed`);
-    res.json(result);
-});
 
 // API Endpoint to Handle Chat
 app.post('/api/chatbot', async (req, res) => {
@@ -404,129 +313,7 @@ async function generateChatResponse(userMessages) {
     return await callOpenAI(fullusermessages);
 }
 
-// Call OpenAI API
-async function callOpenAI(prompt, retryCount = 3) {
-    let attempts = 0;
-
-    while (attempts < retryCount) {
-        try {
-            console.log(`🟢 Attempt ${attempts + 1}: Sending request to OpenAI...`);
-            console.log("🔍 Full OpenAI Prompt:\n", prompt);
-
-            // Set up a timeout controller (20 seconds max)
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 20000); // ⏳ 20s timeout
-
-            const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "gpt-4-turbo",
-                    messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
-                    max_tokens: 300, 
-                    temperature: 0,  
-                    top_p: 0.9,  
-                    frequency_penalty: 0,
-                    presence_penalty: 0
-                })
-            });
-
-            clearTimeout(timeout); // Clear timeout after response
-
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                console.error(`❌ OpenAI API error: ${response.status} - ${errorMessage}`);
-
-                if (response.status === 429 && errorMessage.includes("TPM")) {
-                    console.log("🔽 Reducing token count and retrying...");
-                    prompt = prompt.substring(0, prompt.length * 0.7); // Trim the prompt by 30%
-                }
-
-                if (attempts + 1 < retryCount) {
-                    console.log(`🔄 Retrying... (${attempts + 1}/${retryCount})`);
-                    await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // Exponential backoff
-                    attempts++;
-                    continue;
-                }
-                return "Error calling OpenAI. Please try again.";
-            }
-
-            const data = await response.json();
-            console.log(`✅ OpenAI Response Data:`, JSON.stringify(data, null, 2));
-
-            // Response extraction
-            return data.choices?.[0]?.message?.content?.trim() || "No summary available.";
-
-        } catch (error) {
-            console.error(`⚠️ Error calling OpenAI (Attempt ${attempts + 1}):`, error);
-
-            if (attempts + 1 < retryCount) {
-                console.log(`🔄 Retrying in ${(2000 * (attempts + 1)) / 1000} seconds...`);
-                await new Promise(resolve => setTimeout(resolve, 2000 * (attempts + 1))); // ⏳ Exponential backoff
-                attempts++;
-                continue; // 🔄 Retry request
-            }
-
-            return "Error generating summary after multiple attempts.";
-        }
-    }
-}
-
 let notifiedUsers = new Set(); // This will reset between serverless function runs
 
-// Function to format links properly as clickable HTML
-function formatLinks(responseText) {
-    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
-        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
-    });
-}
 
-// Function to send GitHub notification
-async function sendGitHubNotification(visitorMessage) {
-    try {
-        const githubToken = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
-        const repoOwner = "nicolaspayen1978";
-        const repoName = "web_perso";
 
-        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/dispatches`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${githubToken}`,
-                "Accept": "application/vnd.github.everest-preview+json"
-            },
-            body: JSON.stringify({
-                event_type: "chatbot_notification",
-                client_payload: { message: visitorMessage }
-            })
-        });
-
-        if (!response.ok) {
-            console.error(`GitHub notification failed: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error("Error sending GitHub notification:", error);
-    }
-}
-
-// Function to send email or Telegram notification (expand this logic as needed)
-async function sendNotification(visitorMessage) {
-    const adminEmail = "nicolas_payen@icloud.com";  // Replace with your email
-    console.log(`Sending notification: ${visitorMessage}`);
-
-    // Add your actual notification logic (email, Telegram, Discord, etc.)
-}
-
-// Function  to get the information associated with an URL
-async function fetchDocument(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to fetch document: ${response.statusText}`);
-        return await response.text();  // Returns text content of the document
-    } catch (error) {
-        console.error("Error fetching document:", error);
-        return "I couldn't fetch the document.";
-    }
-}

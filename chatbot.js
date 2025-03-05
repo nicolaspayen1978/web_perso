@@ -2,31 +2,6 @@
 // Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
 
-function getVisitorID() {
-    let visitorID = localStorage.getItem("visitorID");
-    if (!visitorID) {
-        visitorID = crypto.randomUUID();  // Generate a new unique ID
-        localStorage.setItem("visitorID", visitorID);
-    }
-    return visitorID;
-}
-
-async function initializeNicoAI() {
-    const visitorID = getVisitorID();
-
-    try {
-        const response = await fetch('/api/init', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ visitorID })
-        });
-
-        const data = await response.json();
-        console.log("✅ NicoAI Initialized:", data);
-    } catch (error) {
-        console.error("❌ Error initializing NicoAI:", error);
-    }
-}
 
 // Run initialization when the page loads
 window.onload = () => {
@@ -45,27 +20,6 @@ function updateProgress(percent) {
     if (progressBar) {
         progressBar.style.width = `${percent}%`;
         progressBar.innerText = `${percent}%`;
-    }
-}
-
-//function to access the assets in resources.json
-async function fetchResources() {
-    try {
-        const response = await fetch("resources.json");
-
-        if (!response.ok) {
-            throw new Error(`Failed to load resources: ${response.status} ${response.statusText}`);
-        }
-
-        const text = await response.text();
-        console.log("Raw JSON response:", text);
-
-        const json = JSON.parse(text); // Use JSON.parse to catch errors
-        console.log("Resources Loaded:", json);
-
-        resources = json; // Store the resources properly
-    } catch (error) {
-        console.error("Error fetching resources:", error);
     }
 }
 

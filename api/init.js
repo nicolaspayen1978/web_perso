@@ -1,6 +1,6 @@
 console.log("🔥 API Init is running");
 const express = require("express");
-const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("./utils/utils"); // Import from utils.js
+const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("../utils/utils"); // Import from utils.js
 const app = express();
 
 app.use(express.json());

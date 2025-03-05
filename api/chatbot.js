@@ -4,7 +4,7 @@ console.log("🔥 API chatbot is running");
 const fs = require("fs");
 const path = require("path");
 const express = require('express');
-const { callOpenAI, formatLinks } = require("./utils/utils"); // Import from utils.js
+const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
 const { app, resources } = require("./init");  // Import preloaded resources 
 const app = express();
 

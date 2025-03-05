@@ -1,5 +1,8 @@
 // this is chatbot.js the frontend javascript code for the chatbot
 
+// Declare chatHistory globally
+let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+
 // Generate or retrieve visitor ID
 function getVisitorID() {
     let visitorID = localStorage.getItem("visitorID");
@@ -8,13 +11,6 @@ function getVisitorID() {
         localStorage.setItem("visitorID", visitorID);
     }
     return visitorID;
-}
-
-function appendMessage(role, content) {
-    const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
-    chatbox.appendChild(messageElement);
-    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
 }
 
 async function initializeNicoAI() {
@@ -35,9 +31,9 @@ async function initializeNicoAI() {
         console.log("✅ NicoAI Initialized:", data);
         
         if (data.message) {
-            appendMessage("AI", data.message);  // Display first message
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
             saveChatHistory();  // Store in local storage
+            displayChatHistory();  // Ensure it appears in chatbox
         }
 
     } catch (error) {
@@ -69,8 +65,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
-    //retrieve chatHistory from local storage
-    let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+    // refresh chat history
+    chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+
+    // function to force the refresh of the chatbox
+    function appendMessage(role, content) {
+        const messageElement = document.createElement("p");
+        messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
+        
+        const chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
+        if (!chatbox) {
+            console.error("❌ chatbox not found!");
+            return;
+        }
+        
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
+    }
 
      if (!sessionStorage.getItem("nicoAI_initialized")) {
         initializeNicoAI();
@@ -99,12 +110,11 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.transform = "translateY(0)";
         }, 10);
 
-        displayChatHistory(); // Load previous messages when opening chat
+        displayChatHistory(); // Ensure chat history is displayed on open
 
-        // Check if welcome message has been sent in this session
         if (!sessionStorage.getItem("welcomeMessageSent")) {
-            chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> 👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?</p>`;
-            sessionStorage.setItem("welcomeMessageSent", "true"); // Store flag so it doesn't repeat
+            appendMessage("🤖 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            sessionStorage.setItem("welcomeMessageSent", "true");
         }
     }
 

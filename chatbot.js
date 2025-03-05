@@ -2,6 +2,7 @@
 
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+let chatbox; // Declare globally
 
 // Generate or retrieve visitor ID
 function getVisitorID() {
@@ -11,6 +12,26 @@ function getVisitorID() {
         localStorage.setItem("visitorID", visitorID);
     }
     return visitorID;
+}
+
+ //function to save ChatHistory in local storage
+function saveChatHistory() {
+    localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
+}
+
+//function to display ChatHistory in the chatbox
+function displayChatHistory() {
+    chatbox = document.getElementById("chatbox");
+    if (!chatbox) {
+        console.error("❌ Chatbox not found!");
+        return;
+    }
+
+    chatbox.innerHTML = ""; // Clear chatbox
+    chatHistory.forEach(msg => {
+        const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+        chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+    });
 }
 
 async function initializeNicoAI() {
@@ -32,13 +53,32 @@ async function initializeNicoAI() {
         
         if (data.message) {
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
-            saveChatHistory();  // Store in local storage
-            displayChatHistory();  // Ensure it appears in chatbox
+            saveChatHistory();  // ✅ Now this function exists
+            displayChatHistory();  // ✅ Make sure chat history is updated
+            appendMessage("🤖 NicoAI", data.message); // Display the first response
         }
 
     } catch (error) {
         console.error("❌ Error initializing NicoAI:", error);
     }
+}
+
+// function to force the refresh of the chatbox
+function appendMessage(role, content) {
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
+    chatbox = document.getElementById("chatbox");
+    if (!chatbox) {
+        console.error("❌ chatbox not found!");
+        return;
+    }
+    chatbox.appendChild(messageElement);
+    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
+}
+
+ if (!sessionStorage.getItem("nicoAI_initialized")) {
+    initializeNicoAI();
+    sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
 }
 
 // Function to update progress text or bar
@@ -65,42 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
+    chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
+
     // refresh chat history
     chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
-
-    // function to force the refresh of the chatbox
-    function appendMessage(role, content) {
-        const messageElement = document.createElement("p");
-        messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
-        
-        const chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
-        if (!chatbox) {
-            console.error("❌ chatbox not found!");
-            return;
-        }
-        
-        chatbox.appendChild(messageElement);
-        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
-    }
-
-     if (!sessionStorage.getItem("nicoAI_initialized")) {
-        initializeNicoAI();
-        sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
-    }
-
-    //function to display ChatHistory in the chatbox
-    function displayChatHistory() {
-        chatbox.innerHTML = ""; // Clear chatbox
-        chatHistory.forEach(msg => {
-            const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
-            chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
-        });
-    }
-
-    //function to save ChatHistory in local storage
-    function saveChatHistory() {
-        localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
-    }
 
     //Make the chatbox visible to the user
     function showChat() {
@@ -110,12 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.transform = "translateY(0)";
         }, 10);
 
-        displayChatHistory(); // Ensure chat history is displayed on open
-
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             appendMessage("🤖 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
             sessionStorage.setItem("welcomeMessageSent", "true");
         }
+        displayChatHistory(); // Ensure chat history is displayed on open
+
     }
 
     //Make the chatbox invisible to the user

@@ -1,5 +1,6 @@
 console.log("🔥 API Init is running");
 const express = require("express");
+const fs = require("fs");
 const path = require("path"); 
 const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("../utils/utils"); // Import from utils.js
 const app = express();

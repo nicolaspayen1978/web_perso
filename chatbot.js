@@ -2,7 +2,7 @@
 
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
-let chatbox; // Declare globally
+let chatbox = null; // Declare globally
 
 // Generate or retrieve visitor ID
 function getVisitorID() {
@@ -21,12 +21,11 @@ function saveChatHistory() {
 
 //function to display ChatHistory in the chatbox
 function displayChatHistory() {
-    chatbox = document.getElementById("chatbox");
     if (!chatbox) {
-        console.error("❌ Chatbox not found!");
+        console.error("❌ Chatbox not found! Skipping message append.");
         return;
     }
-
+    chatbox = document.getElementById("chatbox");
     chatbox.innerHTML = ""; // Clear chatbox
     chatHistory.forEach(msg => {
         const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
@@ -65,13 +64,12 @@ async function initializeNicoAI() {
 
 // function to force the refresh of the chatbox
 function appendMessage(role, content) {
-    const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
-    chatbox = document.getElementById("chatbox");
     if (!chatbox) {
-        console.error("❌ chatbox not found!");
+        console.error("❌ Chatbox not found! Skipping message append.");
         return;
     }
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
     chatbox.appendChild(messageElement);
     chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
 }

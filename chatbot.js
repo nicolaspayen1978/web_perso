@@ -94,6 +94,20 @@ function updateProgress(percent) {
     }
 }
 
+//Reduce ChatHistory to not overload OpenAI
+function truncateChatHistory(chatHistory, maxTokens = 4000) {
+    let totalTokens = 0;
+    let truncatedHistory = [];
+
+    for (let i = chatHistory.length - 1; i >= 0; i--) {
+        let messageTokens = chatHistory[i].content.length / 4;  // Approximate token count
+        if (totalTokens + messageTokens > maxTokens) break;
+        totalTokens += messageTokens;
+        truncatedHistory.unshift(chatHistory[i]);
+    }
+    return truncatedHistory;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const chatbotIcon = document.getElementById("chatbot-icon");
     const chatPopup = document.getElementById("chat-popup");
@@ -130,21 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => {
             chatPopup.style.display = "none";
         }, 300);
-    }
-
-    //Reduce ChatHistory to not overload OpenAI
-    function truncateChatHistory(chatHistory, maxTokens = 4000) {
-        let totalTokens = 0;
-        let truncatedHistory = [];
-
-        for (let i = chatHistory.length - 1; i >= 0; i--) {
-            let messageTokens = chatHistory[i].content.length / 4;  // Approximate token count
-            if (totalTokens + messageTokens > maxTokens) break;
-            totalTokens += messageTokens;
-            truncatedHistory.unshift(chatHistory[i]);
-        }
-
-        return truncatedHistory;
     }
 
     // Fix: Maximize button should open the full-page chat with history

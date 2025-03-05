@@ -15,7 +15,7 @@
     },
     {
       "src": "/api/init",
-      "dest": "/api/init.js"
+      "dest": "/api/chatbot.js"
     }
   ]
 }

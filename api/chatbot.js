@@ -104,28 +104,31 @@ async function init_NicoAI(visitorID) {
 app.post('/api/init', async (req, res) => {
     const { visitorID } = req.body;
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
-
     const result = await init_NicoAI(visitorID);
+    console.log(`🚀 /api/init executed`);
     res.json(result);
 });
 
 // API Endpoint to Handle Chat
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chatbot', async (req, res) => {
     const { visitorID, userInput } = req.body;
 
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
     if (!userInput) return res.status(400).json({ error: "No user input provided." });
-
     const response = await callOpenAI([{content: userInput,  role: "user"}]);
+    console.log(`🚀 /api/chatbot handler called`);
     res.json({ response });
 });
 
 // Start the Express server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+// ONLY start server when running locally
+if (process.env.NODE_ENV !== "vercel") {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
 
+// ✅ Export the app for Vercel
+module.exports = app;
 
 module.exports = async (req, res) => {
     console.log("🚀 Received API request", req.method);

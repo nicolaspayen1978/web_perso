@@ -67,6 +67,7 @@ async function init_NicoAI(visitorID) {
         await callOpenAI([prompt]); // ✅ FIXED: Pass as an array
     }
 
+    /*
     //Ensure resources exist before sending summary request
     if (resources && Object.keys(resources).length > 0) {
         console.log("📥 Fetching and summarizing resources...");
@@ -81,7 +82,8 @@ async function init_NicoAI(visitorID) {
     } else {
         console.warn("⚠️ No resources available, skipping summary request.");
     }
-    
+    */
+
     console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
     return { message: "NicoAI initialized successfully for this visitor!" };
 }

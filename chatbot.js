@@ -53,7 +53,8 @@ async function initializeNicoAI() {
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
             saveChatHistory();  // ✅ Now this function exists
             displayChatHistory();  // ✅ Make sure chat history is updated
-            appendMessage("🤖 NicoAI", data.message); // Display the first response
+            appendMessage("🧠 NicoAI", data.message); // Display the first response
+            sessionStorage.setItem("welcomeMessageSent", "true");
         }
 
     } catch (error) {
@@ -115,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 10);
 
         if (!sessionStorage.getItem("welcomeMessageSent")) {
-            appendMessage("🤖 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            appendMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
             sessionStorage.setItem("welcomeMessageSent", "true");
         }
         displayChatHistory(); // Ensure chat history is displayed on open
@@ -233,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let botReply = data.response || "I'm sorry, I didn't understand that.";
 
             chatHistory.push({ role: "assistant", content: botReply });
-            appendMessage("AI", botReply);
+            appendMessage("🧠 NicoAI", botReply);
 
             saveChatHistory(); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;

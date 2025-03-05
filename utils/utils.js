@@ -84,7 +84,7 @@ async function callOpenAI(prompt, retryCount = 3) {
                     model: "gpt-4-turbo",
                     messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
                     max_tokens: 300, 
-                    temperature: 0,  
+                    temperature: 0.1,  
                     top_p: 0.9,  
                     frequency_penalty: 0,
                     presence_penalty: 0

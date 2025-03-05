@@ -1,31 +1,13 @@
-// this is api/resources.js the API to manage access to the resources made available to the agent
+// this is api/resources.js the API to manage access to the resources made available to the agent (articles, resume, career, projects)
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-
-const router = express.Router();
 
 const KV_REST_API_URL = process.env.KV_REST_API_URL;
 const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN;
 const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 let resourceDescriptions = {};
-
-// Load resources.json and serve it
-router.get("/", async (req, res) => {
-    try {
-        const resourcesPath = path.join(__dirname, "../resources.json");
-        if (!fs.existsSync(resourcesPath)) {
-            return res.status(404).json({ error: "resources.json not found" });
-        }
-
-        const data = fs.readFileSync(resourcesPath, "utf-8");
-        res.json(JSON.parse(data));
-    } catch (error) {
-        console.error("Error loading resources.json:", error);
-        res.status(500).json({ error: "Failed to load resources.json" });
-    }
-});
 
 // Load resources coming from '`resources.json` that have been transfer to Vercel KV
 // Load resources from Vercel KV

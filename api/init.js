@@ -113,4 +113,4 @@ async function fetchDocument(url) {
 }
 
 // Export app for Vercel
-module.exports = app;
+module.exports = { initApp: app, resources };

@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const express = require('express');
 const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
-const { app, resources } = require("./init");  // Import preloaded resources 
+const { initApp, resources } = require("./init"); // ✅ No conflict
 const app = express();
 
 app.use(express.json());
@@ -68,9 +68,6 @@ if (process.env.NODE_ENV !== "vercel") {
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 }
 
-// Export the app for Vercel
-module.exports = app;
-
 async function generateChatResponse(userMessages) {
     console.log("🔍 Using preloaded resources from init.js before generating response...");
     
@@ -85,6 +82,8 @@ async function generateChatResponse(userMessages) {
     return await callOpenAI(fullUserMessages);
 }
 
+// Export the app for Vercel
+module.exports = { chatbotApp: app };
 
 
 

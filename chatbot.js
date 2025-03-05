@@ -1,5 +1,4 @@
 // this is chatbot.js the frontend javascript code for the chatbot
-// Load external resources (articles, resume, career, projects)
 
 // Generate or retrieve visitor ID
 function getVisitorID() {

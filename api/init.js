@@ -56,8 +56,8 @@ async function init_NicoAI(visitorID) {
         { role: "system", content: "You are NicoAI, the AI representing Nicolas Payen and acting as his assistant." },
         { role: "system", content: "To get to know Nicolas's life and thinking, a collection of resources is available." },
         { role: "system", content: "Encourage visitors to explore Nicolas's website and published works." },
-        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." },
-        { role: "system", content: "Here are Nicolas's key resources which include a description of each content item: " + JSON.stringify(resources) }
+        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." }
+        //{ role: "system", content: "Here are Nicolas's key resources which include a description of each content item: " + JSON.stringify(resources) }
     ];
 
     console.log("📤 Sending system prompts to OpenAI one by one...");
@@ -67,13 +67,12 @@ async function init_NicoAI(visitorID) {
         await callOpenAI([prompt]); // ✅ FIXED: Pass as an array
     }
 
-    /*
     //Ensure resources exist before sending summary request
     if (resources && Object.keys(resources).length > 0) {
         console.log("📥 Fetching and summarizing resources...");
 
         const summaryPrompt = [
-            { role: "system", content: "Here are Nicolas's key resources. Please summarize them for future reference." },
+            { role: "system", content: "Here are Nicolas's key resources. Please provide a description of their content in 100 words maximum for future reference." },
             { role: "user", content: JSON.stringify(resources) }
         ];
 
@@ -82,7 +81,6 @@ async function init_NicoAI(visitorID) {
     } else {
         console.warn("⚠️ No resources available, skipping summary request.");
     }
-    */
 
     console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
     return { message: "NicoAI initialized successfully for this visitor!" };

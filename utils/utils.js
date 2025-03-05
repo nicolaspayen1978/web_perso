@@ -4,29 +4,63 @@ const path = require("path");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-// ✅ Load visitor sessions from a JSON file (temporary, replace with Redis for production)
-const SESSIONS_FILE = path.join(__dirname, "../visitorSessions.json");
+const fetch = require("node-fetch");
 
-function loadVisitorSessions() {
-    if (fs.existsSync(SESSIONS_FILE)) {
-        return JSON.parse(fs.readFileSync(SESSIONS_FILE, "utf-8"));
+const KV_REST_API_URL = process.env.KV_REST_API_URL;  // KV database url
+const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN; // KV database KEY
+
+// Load visitor sessions from Vercel KV
+async function loadVisitorSessions() {
+    try {
+        console.log("📥 Loading visitor sessions from Vercel KV...");
+        const response = await fetch(`${KV_REST_API_URL}/get/visitorSessions`, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${KV_REST_API_TOKEN}` }
+        });
+
+        if (!response.ok) {
+            console.error("❌ Failed to fetch from KV:", await response.text());
+            return {};
+        }
+
+        const data = await response.json();
+        return data || {}; // Return an empty object if KV has no data
+    } catch (error) {
+        console.error("⚠️ Error loading visitor sessions:", error);
+        return {};
     }
-    return {};
 }
 
-function saveVisitorSessions(data) {
-    fs.writeFileSync(SESSIONS_FILE, JSON.stringify(data, null, 2));
+// Save visitor sessions to Vercel KV
+async function saveVisitorSessions(visitorSessions) {
+    try {
+        console.log("📤 Saving visitor sessions to Vercel KV...");
+        await fetch(`${KV_REST_API_URL}/set/visitorSessions`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${KV_REST_API_TOKEN}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(visitorSessions)
+        });
+        console.log("✅ Successfully saved visitor sessions to Vercel KV!");
+    } catch (error) {
+        console.error("⚠️ Error saving visitor sessions:", error);
+    }
 }
 
-const visitorSessions = loadVisitorSessions();
+// Initialize visitor sessions from KV at startup
+let visitorSessions = {};
+loadVisitorSessions().then(data => visitorSessions = data);
 
+// Functions to manage visitor sessions
 function isNicoAIInitialized(visitorID) {
     return visitorSessions[visitorID] && visitorSessions[visitorID].initialized;
 }
 
-function markNicoAIInitialized(visitorID) {
+async function markNicoAIInitialized(visitorID) {
     visitorSessions[visitorID] = { initialized: true };
-    saveVisitorSessions(visitorSessions);
+    await saveVisitorSessions(visitorSessions); // ✅ Save to KV instead of file system
 }
 
 // Call OpenAI API
@@ -108,10 +142,8 @@ function formatLinks(responseText) {
     });
 }
 
-// ✅ Export functions to be used in `init.js` and `chatbot.js`
+// Export functions to be used in `init.js` and `chatbot.js`
 module.exports = {
-    loadVisitorSessions,
-    saveVisitorSessions,
     isNicoAIInitialized,
     markNicoAIInitialized,
     callOpenAI,

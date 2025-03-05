@@ -143,8 +143,7 @@ app.use((req, res, next) => {
     next();
 });
 
-/*
-module.exports = async (req, res) => {
+/* module.exports = async (req, res) => {
     console.log("🚀 Received API request", req.method);
 
     // ✅ Handle CORS Preflight Request

@@ -3,12 +3,19 @@
   "functions": {
     "api/chatbot.js": {
       "maxDuration": 30
+    },
+    "api/init.js": {
+      "maxDuration": 30
     }
   },
   "routes": [
     {
       "src": "/api/chatbot",
       "dest": "/api/chatbot.js"
+    },
+    {
+      "src": "/api/init",
+      "dest": "/api/init.js"
     }
   ]
 }

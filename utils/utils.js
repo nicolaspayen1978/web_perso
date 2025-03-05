@@ -4,8 +4,6 @@ const path = require("path");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-const fetch = require("node-fetch");
-
 const KV_REST_API_URL = process.env.KV_REST_API_URL;  // KV database url
 const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN; // KV database KEY
 
@@ -60,7 +58,7 @@ function isNicoAIInitialized(visitorID) {
 
 async function markNicoAIInitialized(visitorID) {
     visitorSessions[visitorID] = { initialized: true };
-    await saveVisitorSessions(visitorSessions); // ✅ Save to KV instead of file system
+    await saveVisitorSessions(visitorSessions); //
 }
 
 // Call OpenAI API

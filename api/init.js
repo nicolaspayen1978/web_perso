@@ -61,7 +61,7 @@ async function init_NicoAI(visitorID) {
     ];
 
     console.log("📤 Sending system prompts to OpenAI one by one...");
-    let botReply[]
+    let botReply[];
     try {
         console.log("📤 Sending system prompts to OpenAI in parallel...");
         botReply = await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec

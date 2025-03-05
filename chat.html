@@ -257,6 +257,7 @@
             });
         });
     </script>
+    <script src="chatbot.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const chatbox = document.getElementById("chatbox");
@@ -274,25 +275,43 @@
             // Display previous messages (excluding system messages)
             chatHistory.forEach(msg => {
                 if (msg.role !== "system") {
-                    const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+                    const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
                     chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
                 }
             });
 
+            //function to save ChatHistory in local storage
+            function saveChatHistory() {
+                localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
+            }
+
+            //function to send message in OpenAI
             async function sendMessage() {
                 let userText = userInput.value.trim();
                 if (!userText) return;
 
+                //Update chat with the input from the user
                 chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
-                chatbox.scrollTop = chatbox.scrollHeight;
+                chatbox.scrollTop = chatbox.scrollHeight; 
+                userInput.value = ""; //clear message field
+
                 chatHistory.push({ role: "user", content: userText });
-                userInput.value = "";
+
+                saveChatHistory(); // Save user input
+
+                //make sure chatHistory no longer than 4000 words
+                chatHistory = truncateChatHistory(chatHistory, 4000);
+
+                console.log("Sending request to API...");
+
+                const visitorID = getVisitorID(); // Ensure visitorID is sent
+                const fullSentMessage = JSON.stringify({ visitorID, userInput: userText});
 
                 try {
                     const response = await fetch("/api/chatbot", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ messages: chatHistory })
+                        body: fullSentMessage
                     });
 
                     if (!response.ok) {
@@ -300,18 +319,17 @@
                     }
 
                     const data = await response.json();
-                    let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+                    let botReply = data.response || "I'm sorry, I didn't understand that.";
 
+                    //update chat
                     chatHistory.push({ role: "assistant", content: botReply });
+                    appendMessage("🧠 NicoAI", botReply);
 
-                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> ${botReply}</p>`;
+                    saveChatHistory(); // Save bot response
                     chatbox.scrollTop = chatbox.scrollHeight;
-
-                    // Save updated chat history
-                    sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
                 } catch (error) {
                     console.error("Chatbot Error:", error);
-                    chatbox.innerHTML += `<p><strong>🤖 NicoAI:</strong> Sorry, I encountered an error. Please try again.</p>`;
+                    chatbox.innerHTML += `<p><strong>AI:</strong> Sorry, I encountered an error. Please try again.</p>`;
                 }
             }
 

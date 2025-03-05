@@ -2,6 +2,32 @@
 // Load external resources (articles, resume, career, projects)
 let resources = {};  // Store fetched resources
 
+function getVisitorID() {
+    let visitorID = localStorage.getItem("visitorID");
+    if (!visitorID) {
+        visitorID = crypto.randomUUID();  // Generate a new unique ID
+        localStorage.setItem("visitorID", visitorID);
+    }
+    return visitorID;
+}
+
+async function initializeNicoAI() {
+    const visitorID = getVisitorID();
+
+    try {
+        const response = await fetch('/api/init', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visitorID })
+        });
+
+        const data = await response.json();
+        console.log("✅ NicoAI Initialized:", data);
+    } catch (error) {
+        console.error("❌ Error initializing NicoAI:", error);
+    }
+}
+
 // Function to update progress text or bar
 function updateProgress(percent) {
     const textElement = document.getElementById("loading-progress");
@@ -161,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //initial prompt to initiate NicoAI
+    /*
     async function getSystemMessage() {
         return `
         You are a NicoAI the AI version of Nicolas Payen. You are also his AI assistant.
@@ -190,6 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Help visitors book meetings or calls with Nicolas Payen using Calendly.
     `;
     }
+    */
 
     //function to send message in OpenAI
     async function sendMessage() {
@@ -207,14 +235,6 @@ document.addEventListener("DOMContentLoaded", function () {
             await fetchResources();
         }
 
-        let systemMessage = await getSystemMessage();
-
-        // Ensure system message is always included at the start
-        if (!chatHistory.find(msg => msg.role === "system")) {
-            chatHistory.unshift({ role: "system", content: systemMessage });
-        }
-        
-        chatHistory = [{ role: "system", content: systemMessage }];
         chatHistory.push({ role: "user", content: userText });
 
         saveChatHistory(); // Save user input
@@ -250,3 +270,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+// Run initialization when the page loads
+window.onload = () => {
+    initializeNicoAI();
+};

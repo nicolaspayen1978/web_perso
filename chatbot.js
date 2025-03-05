@@ -173,11 +173,6 @@ document.addEventListener("DOMContentLoaded", function () {
         chatbox.scrollTop = chatbox.scrollHeight; 
         userInput.value = ""; //clear message field
 
-        if (Object.keys(resources).length === 0) {
-            chatbox.innerHTML += `<p><strong>AI:</strong> Please wait, loading resources...</p>`;
-            await fetchResources();
-        }
-
         chatHistory.push({ role: "user", content: userText });
 
         saveChatHistory(); // Save user input

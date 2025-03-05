@@ -5,7 +5,7 @@
 function getVisitorID() {
     let visitorID = localStorage.getItem("visitorID");
     if (!visitorID) {
-        visitorID = crypto.randomUUID(); // Generate unique visitor ID
+        visitorID = crypto.randomUUID();
         localStorage.setItem("visitorID", visitorID);
     }
     return visitorID;
@@ -32,13 +32,18 @@ async function initializeNicoAI() {
     }
 }
 
-// Run initialization when the page loads if not already initiated
-document.addEventListener("DOMContentLoaded", function () {
-    if (!sessionStorage.getItem("nicoAI_initialized")) {
-        initializeNicoAI();
-        sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
+async function fetchResources() {
+    try {
+        const response = await fetch('/api/resources');
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const data = await response.json();
+        console.log("✅ Resources Loaded:", data);
+        return data;
+    } catch (error) {
+        console.error("❌ Error fetching resources:", error);
+        return {};
     }
-});
+}
 
 // Function to update progress text or bar
 function updateProgress(percent) {
@@ -66,6 +71,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //retrieve chatHistory from local storage
     let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+
+     if (!sessionStorage.getItem("nicoAI_initialized")) {
+        initializeNicoAI();
+        sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
+    }
 
     //function to display ChatHistory in the chatbox
     function displayChatHistory() {
@@ -193,8 +203,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const visitorID = getVisitorID(); // Ensure visitorID is sent
 
-        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText });
-        console.log("Messages being sent:", fullSentMessage);
+        const resources = await fetchResources(); // Fetch resources before sending message
+        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText, resources });
 
         try {
             const response = await fetch("/api/chatbot", {

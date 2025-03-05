@@ -276,7 +276,7 @@
             chatHistory.forEach(msg => {
                 if (msg.role !== "system") {
                     const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
-                    chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+                    appendMessage(sender, msg.content); // Display the message
                 }
             });
 

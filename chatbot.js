@@ -191,39 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    //initial prompt to initiate NicoAI
-    /*
-    async function getSystemMessage() {
-        return `
-        You are a NicoAI the AI version of Nicolas Payen. You are also his AI assistant.
-        Here is what you know about him:
-
-        **Birthday:** March 11, 1978, born in Valence, France  
-        **Location:** Lives in Naarden, Netherlands  
-        **Expertise:** Investment, finance, digital transformation, energy transition, climate tech, entrepreneurship  
-        **Family:** Married to Eveline Noya, Dutch citizen and senior HR professional. Two kids: Floris (born 2012) and Romy (born 2016).   
-
-        **Strengths:** Deep knowledge in clean technologies, climate investments, international business, strategic leadership.  
-        **Weaknesses:** Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.  
-
-        **Career Timeline:** ${resources.career.journey || "Loading..."}  
-        **Resume:** ${resources.career.resume || "Loading..."}  
-
-        **Articles:**  
-        ${resources.articles ? resources.articles.map(article => `- [${article.title}](${article.url})`).join("\n") : "Loading..."}
-
-        **Projects:**  
-        ${resources.projects ? resources.projects.map(project => `- [${project.title}](${project.url})`).join("\n") : "Loading..."}
-
-        **Contacts:** ${resources.contact || "Loading..."}
-
-        Provide links when relevant. Always share a little summary of the content of the link before doing so. 
-        If a user asks for more information, share these sources.
-        Help visitors book meetings or calls with Nicolas Payen using Calendly.
-    `;
-    }
-    */
-
     //function to send message in OpenAI
     async function sendMessage() {
         let userText = userInput.value.trim();
@@ -232,8 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //Update chat with the input from the user
         chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
         chatbox.scrollTop = chatbox.scrollHeight; 
-        //clear message field
-        userInput.value = "";
+        userInput.value = ""; //clear message field
 
         if (Object.keys(resources).length === 0) {
             chatbox.innerHTML += `<p><strong>AI:</strong> Please wait, loading resources...</p>`;
@@ -248,13 +214,17 @@ document.addEventListener("DOMContentLoaded", function () {
         chatHistory = truncateChatHistory(chatHistory, 4000);
 
         console.log("Sending request to API...");
-        console.log("Messages being sent:", JSON.stringify({ messages: chatHistory }));
+
+        const visitorID = getVisitorID(); // Ensure visitorID is sent
+
+        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText });
+        console.log("Messages being sent:", fullSentMessage);
 
         try {
-            const response = await fetch("https://web-perso.vercel.app/api/chatbot", {
+            const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: chatHistory })
+                body: fullSentMessage)
             });
 
             if (!response.ok) {
@@ -262,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const data = await response.json();
-            let botReply = data.choices[0]?.message?.content || "I'm sorry, I didn't understand that.";
+            let botReply = data.response || "I'm sorry, I didn't understand that.";
 
             chatHistory.push({ role: "assistant", content: botReply });
             chatbox.innerHTML += `<p><strong>AI:</strong> ${botReply}</p>`;

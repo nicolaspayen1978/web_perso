@@ -28,7 +28,7 @@ function displayChatHistory() {
     chatbox.innerHTML = ""; // Clear chatbox
     chatHistory.forEach(msg => {
         const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
-        chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
+        appendMessage(sender, msg.content); // Display the message
     });
 }
 
@@ -51,9 +51,8 @@ async function initializeNicoAI() {
         
         if (data.message) {
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
-            saveChatHistory();  // ✅ Now this function exists
-            displayChatHistory();  // ✅ Make sure chat history is updated
-            appendMessage("🧠 NicoAI", data.message); // Display the first response
+            saveChatHistory();  // Now this function exists
+            displayChatHistory();  // Make sure chat history is updated
             sessionStorage.setItem("welcomeMessageSent", "true");
         }
 

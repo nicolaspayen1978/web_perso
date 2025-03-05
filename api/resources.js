@@ -63,7 +63,6 @@ async function loadResources() {
     }
 }
 
-
 // **Save Updated resources.json Back to Vercel KV**
 async function saveResources() {
     try {

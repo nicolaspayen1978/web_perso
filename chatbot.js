@@ -25,7 +25,6 @@ function displayChatHistory() {
         console.error("❌ Chatbox not found! Skipping message append.");
         return;
     }
-    chatbox = document.getElementById("chatbox");
     chatbox.innerHTML = ""; // Clear chatbox
     chatHistory.forEach(msg => {
         const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
@@ -95,7 +94,6 @@ function updateProgress(percent) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const chatbox = document.getElementById("chatbox");
     const chatbotIcon = document.getElementById("chatbot-icon");
     const chatPopup = document.getElementById("chat-popup");
     const maximizeChat = document.getElementById("maximize-chat");

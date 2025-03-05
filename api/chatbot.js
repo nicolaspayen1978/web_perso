@@ -17,6 +17,7 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 let resourceDescriptions = {};
 
+// ************** Visitor session mgmt ************** 
 // Store visitor sessions in memory (for small-scale use, use Redis for production)
 const visitorSessions = {};
 
@@ -29,6 +30,71 @@ function isNicoAIInitialized(visitorID) {
 function markNicoAIInitialized(visitorID) {
     visitorSessions[visitorID] = { initialized: true };
 }
+
+// ************** Initiate Nico_AI for visitor ************** 
+// Initialize NicoAI for a visitor
+async function init_NicoAI(visitorID) {
+    if (isNicoAIInitialized(visitorID)) {
+        console.log(`🔄 NicoAI is already initialized for visitor ${visitorID}`);
+        return { message: "NicoAI already initialized for this visitor." };
+    }
+
+    console.log(`🚀 Initializing NicoAI for visitor ${visitorID}...`);
+    markNicoAIInitialized(visitorID);
+
+    const systemPrompts = [
+        { role: "system", content: "You are NicoAI, the AI representing Nicolas Payen and acting as his assistant." },
+        { role: "system", content: "To get to know Nicolas's life and thinking, a collection of resources is available." },
+        { role: "system", content: "Your mission is to share this information and ideas on Nicolas's behalf with visitors." },
+        { role: "system", content: "Your mission is to get to know the visitor and reply based on what you know of Nicolas' ideas and life." },
+        { role: "system", content: "You must use Nicolas's past articles, projects, and knowledge when relevant." },
+        { role: "system", content: "Encourage visitors to explore Nicolas's website and published works." },
+        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." }
+    ];
+
+    for (const prompt of systemPrompts) {
+        await callOpenAI([prompt.content], [prompt.role]);
+    }
+
+    console.log("📥 Fetching resources from resources.json...");
+    const resources = await fetchResources();
+    if (resources) {
+        await callOpenAI([
+            { content: "Here are Nicolas's key resources. Please summarize them for future reference.", role: "system"  },
+            { content: JSON.stringify(resources), role: "user"}
+        ]);
+    }
+
+    console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
+    return { message: "NicoAI initialized successfully for this visitor!" };
+}
+
+
+// API Endpoint to Initialize NicoAI for a Visitor
+app.post('/api/init', async (req, res) => {
+    const { visitorID } = req.body;
+    if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
+
+    const result = await init_NicoAI(visitorID);
+    res.json(result);
+});
+
+// API Endpoint to Handle Chat
+app.post('/api/chat', async (req, res) => {
+    const { visitorID, userInput } = req.body;
+
+    if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
+    if (!userInput) return res.status(400).json({ error: "No user input provided." });
+
+    const response = await callOpenAI([{content: userInput,  role: "user"}]);
+    res.json({ response });
+});
+
+// Start the Express server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
 
 
 module.exports = async (req, res) => {
@@ -189,16 +255,14 @@ async function updateResourceDescription(category, itemTitle, newDescription) {
 
 // Summarize each item of resources using OpenAI
 async function summarizeItem(category, item) {
-    const prompt = `The following content titled "${item.title}" from "${item.url}"" needs a short, accurate summary of its content in 100 words. Do NOT assume the topic based on the title or other headlines. The summary must reflect the actual content and not be a general explanation.`;
-
+    const prompt = { role: "system", content: `The following content titled "${item.title}" from "${item.url}"" needs a short, accurate summary of its content in 100 words. Do NOT assume the topic based on the title or other headlines. The summary must reflect the actual content and not be a general explanation.`};
     console.log(`📩 Calling OpenAI for summary: ${item.title} (${item.url})`);
-    let response = await callOpenAI(prompt);
+    let response = await callOpenAI(prompt.content, "system");
 
     if (!response || response.trim() === "") {
         console.warn(`⚠️ OpenAI returned an empty response for: ${item.title}. Setting description to "-1" for retry.`);
         response = "-1"; // Mark for retry
     }
-
     console.log(`📝 OpenAI Response:`, response);
     await updateResourceDescription(category, item.title, response);
     return response;
@@ -288,80 +352,13 @@ function getRelevantResources(userMessage) {
 
 async function generateChatResponse(userMessages) {
     console.log("🔍 Reloading latest resources from KV before generating response...");
-
-    // Ensure resources are fully loaded before constructing the prompt
-    if (Object.keys(resourceDescriptions).length === 0) {
-        console.log("⚠️ Resources not yet loaded. Fetching from KV...");
-        await loadResources();
-    }
-
-    let contactInfo = "Not available";
-
-    if (resourceDescriptions.contact) {
-        contactInfo = "";
-        if (resourceDescriptions.contact.email) {
-            contactInfo += `- [Email](mailto:${resourceDescriptions.contact.email})\n`;
-        }
-        if (resourceDescriptions.contact.calendly) {
-            contactInfo += `- [Calendly](${resourceDescriptions.contact.calendly})\n`;
-        }
-        if (resourceDescriptions.contact.linkedin) {
-            contactInfo += `- [LinkedIn](${resourceDescriptions.contact.linkedin})\n`;
-        }
-        if (resourceDescriptions.contact.github) {
-            contactInfo += `- [GitHub](${resourceDescriptions.contact.github})\n`;
-        }
-    }
-
-    // 🛠️ Fix for the duplicate system message issue: Ensure only one exists
-    const SYSTEM_MESSAGE = `
-    You are NicoAI, the AI version of Nicolas Payen. You are also his AI assistant.
-    Here is what you know about him:
-
-    **Birthday:** March 11, 1978, born in Valence, France  
-    **Location:** Lives in Naarden, Netherlands  
-    **Expertise:** Investment, finance, digital transformation, energy transition, climate tech, entrepreneurship  
-    **Family:** Married to Eveline Noya, Dutch citizen and senior HR professional. Two kids: Floris (born 2012) and Romy (born 2016).   
-
-    **Strengths:** Deep knowledge in clean technologies, climate investments, international business, strategic leadership.  
-    **Weaknesses:** Sometimes overanalyzes decisions, prefers calculated risk, needs data to act.  
-
-    **Career Timeline:** ${resourceDescriptions?.career?.journey || "Not available"}  
-    **Resume:** ${resourceDescriptions?.career?.resume || "Not available"}  
-
-    **Articles:**  
-    ${
-      resourceDescriptions?.articles && resourceDescriptions.articles.length
-        ? resourceDescriptions.articles.map(article => `- [${article.title}](${article.url})`).join("\n")
-        : "Not available"
-    }
-
-    **Projects:**  
-    ${
-      resourceDescriptions?.projects && resourceDescriptions.projects.length
-        ? resourceDescriptions.projects.map(project => `- [${project.title}](${project.url})`).join("\n")
-        : "Not available"
-    }
-
-    **Contacts:**  
-    ${contactInfo}
-
-    Provide links when relevant. Always share a little summary of the content of the link before doing so. 
-    If a user asks for more information, share these sources.
-    Help visitors book meetings or calls with Nicolas Payen using Calendly.
-    `;
-
-    // 🛠️ Fix: Remove duplicate system message
-    const messages = [{ role: "system", content: SYSTEM_MESSAGE }];
-        userMessages.forEach(msg => messages.push(msg));
-
-    console.log("📚 Sending prompt to OpenAI:\n", messages);
-
-    return await callOpenAI(messages);
+    const fullmessages = [{ role: "user", content: userMessages }];
+    console.log("📚 Sending prompt to OpenAI:\n", fullmessages);
+    return await callOpenAI(userMessages);
 }
 
 // Call OpenAI API
-async function callOpenAI(prompt, retryCount = 3) {
+async function callOpenAI(prompt, role="user", retryCount = 3) {
     let attempts = 0;
 
     while (attempts < retryCount) {
@@ -381,7 +378,7 @@ async function callOpenAI(prompt, retryCount = 3) {
                 },
                 body: JSON.stringify({
                     model: "gpt-4-turbo",
-                    messages: [{ role: "user", content: prompt.substring(0, 5000) }], // Trim prompt to 5000 chars max
+                    messages: [{ role: role, content: prompt.substring(0, 5000) }], // Trim prompt to 5000 chars max
                     max_tokens: 300, 
                     temperature: 0,  
                     top_p: 0.9,  
@@ -486,9 +483,3 @@ async function fetchDocument(url) {
         return "I couldn't fetch the document.";
     }
 }
-
-// Load resources on startup
-
-loadResources();
-
-console.log("Resources loaded in API", resourceDescriptions);

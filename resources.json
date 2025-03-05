@@ -198,17 +198,38 @@
       "description": ""
     }
   ],
-  "contact": {
-    "email": "mailto:nicolas_payen@icloud.com",
-    "calendly": "https://calendly.com/nicolas_payen/30min",
-    "linkedin": "https://www.linkedin.com/in/nicolaspayen",
-    "github": "https://github.com/nicolaspayen1978",
-    "description": ""
-
-  },
-  "career": {
-    "journey": "https://nicolaspayen1978.github.io/Resumes/TimeLine.html",
-    "resume": "https://nicolaspayen1978.github.io/Resumes/Nicolas_Payen_resume_XL.html",
-    "description": ""
+  "contact": [
+     {
+      "title": "email",
+      "url": "mailto:nicolas_payen@icloud.com",
+      "description": "how to reach Nicolas Payen by email"
+    },
+     {
+      "title": "book meeting",
+      "url": "https://calendly.com/nicolas_payen/30min",
+      "description": "how to book a meeting with Nicolas Payen using calendly."
+    },
+    {
+      "title": "github",
+      "url": "https://github.com/nicolaspayen1978",
+      "description": "how to book a meeting with Nicolas Payen using calendly."
+    }
+  ],
+  "career": [
+    {
+      "title": "professional journey or timeline",
+      "url": "https://nicolaspayen1978.github.io/Resumes/TimeLine.html",
+      "description": "A detailed description of Nicolas Payen's career path with his various jobs, employers, companies, successes, educations, and diplomas. It also includes the results of personality tests he has taken over the years."
+    },
+    {
+      "title": "resume or CV",
+      "url": "https://nicolaspayen1978.github.io/Resumes/Nicolas_Payen_resume_XL.html",
+      "description": "A formal resume that describes shortly Nicolas Payen's career."
+    }
+  ],
+  "family": {
+    "son": "Floris Payen, borned on the 2nd of April 2012 in Suresnes France, Very clever and funny boy. He likes football and can speak several languages.",
+    "daughter": "Romy Payen, borned on the 11 of January 2016 in Singapore, Very sportive, clever, and careing girl. Shes likes dog and play outside with friends.",
+    "wife": "Eveline Noya, borned on the 10th of June 1975 in Tegelen. She has dutch and indonesian origin. Very beautiful and clever person. Successful senior HR professional. Amazing mother."
   }
 }

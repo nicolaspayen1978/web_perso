@@ -3,6 +3,10 @@
 console.log("🔥 API is running");
 const fs = require("fs");
 const path = require("path");
+const express = require('express'); 
+const app = express();
+
+app.use(express.json());
 
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -12,6 +16,20 @@ const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 
 
 let resourceDescriptions = {};
+
+// Store visitor sessions in memory (for small-scale use, use Redis for production)
+const visitorSessions = {};
+
+// Function to check if NicoAI has been initialized for a visitor
+function isNicoAIInitialized(visitorID) {
+    return visitorSessions[visitorID] && visitorSessions[visitorID].initialized;
+}
+
+// Function to mark NicoAI as initialized for a visitor
+function markNicoAIInitialized(visitorID) {
+    visitorSessions[visitorID] = { initialized: true };
+}
+
 
 module.exports = async (req, res) => {
     console.log("🚀 Received API request", req.method);
@@ -470,5 +488,7 @@ async function fetchDocument(url) {
 }
 
 // Load resources on startup
+
 loadResources();
+
 console.log("Resources loaded in API", resourceDescriptions);

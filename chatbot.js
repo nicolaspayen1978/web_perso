@@ -27,7 +27,7 @@ function displayChatHistory() {
     }
     chatbox.innerHTML = ""; // Clear chatbox
     chatHistory.forEach(msg => {
-        const sender = msg.role === "assistant" ? "🤖 NicoAI" : "You";
+        const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
         chatbox.innerHTML += `<p><strong>${sender}:</strong> ${msg.content}</p>`;
     });
 }

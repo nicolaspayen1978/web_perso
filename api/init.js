@@ -62,10 +62,13 @@ async function init_NicoAI(visitorID) {
 
     console.log("📤 Sending system prompts to OpenAI one by one...");
 
-    for (const prompt of systemPrompts) {
-        console.log(`🟢 Sending prompt to OpenAI:`, prompt);
-        await callOpenAI([prompt]); // ✅ FIXED: Pass as an array
+    try {
+        console.log("📤 Sending system prompts to OpenAI in parallel...");
+        await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec
+    } catch (error) {
+        console.error("❌ Error during OpenAI initialization:", error);
     }
+
 
     //Ensure resources exist before sending summary request
     /*

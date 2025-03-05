@@ -4,9 +4,6 @@
     "api/chatbot.js": {
       "maxDuration": 30
     },
-    "api/init.js": {
-      "maxDuration": 30
-    }
   },
   "routes": [
     {

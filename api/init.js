@@ -65,7 +65,6 @@ async function init_NicoAI(visitorID) {
     }
 
     console.log("📥 Fetching resources from resources.json...");
-    const resources = await fetchResources();
     if (resources) {
         await callOpenAI([
             { content: "Here are Nicolas's key resources. Please summarize them for future reference.", role: "system"  },

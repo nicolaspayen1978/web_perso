@@ -1,9 +1,40 @@
 console.log("🔥 API Init is running");
 const express = require("express");
-const { isNicoAIInitialized, markNicoAIInitialized, fetchResources, callOpenAI, formatLinks, fetchDocument } = require("./utils/utils"); // Import from utils.js
+const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("./utils/utils"); // Import from utils.js
 const app = express();
 
 app.use(express.json());
+
+// ✅ CORS Middleware - Add this BEFORE defining `/api/init`
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (req.method === "OPTIONS") {
+        return res.status(200).end(); // Handle preflight request
+    }
+    next();
+});
+
+// Load resources once at startup
+let resources = {};
+const resourcesPath = path.join(__dirname, "../resources.json");
+
+function loadResources() {
+    try {
+        if (fs.existsSync(resourcesPath)) {
+            resources = JSON.parse(fs.readFileSync(resourcesPath, "utf-8"));
+            console.log("✅ Resources loaded successfully");
+        } else {
+            console.error("❌ resources.json not found!");
+        }
+    } catch (error) {
+        console.error("❌ Error loading resources.json:", error);
+    }
+}
+
+loadResources();  // Load once on startup
 
 // ************** Initiate NicoAI for a visitor **************
 async function init_NicoAI(visitorID) {
@@ -19,7 +50,8 @@ async function init_NicoAI(visitorID) {
         { role: "system", content: "You are NicoAI, the AI representing Nicolas Payen and acting as his assistant." },
         { role: "system", content: "To get to know Nicolas's life and thinking, a collection of resources is available." },
         { role: "system", content: "Encourage visitors to explore Nicolas's website and published works." },
-        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." }
+        { role: "system", content: "If a visitor asks for Nicolas's contact details, refer to the provided contact information." },
+        { role: "system", content: "Here are Nicolas's key resources which include a description of each content item: " + JSON.stringify(resources) }
     ];
 
     for (const prompt of systemPrompts) {
@@ -49,5 +81,17 @@ app.post("/api/init", async (req, res) => {
     res.json(result);
 });
 
-// ✅ Export app for Vercel
-module.exports = app;
+// Function  to get the information associated with an URL
+async function fetchDocument(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch document: ${response.statusText}`);
+        return await response.text();  // Returns text content of the document
+    } catch (error) {
+        console.error("Error fetching document:", error);
+        return "I couldn't fetch the document.";
+    }
+}
+
+// Export app for Vercel
+module.exports = (app, resources);

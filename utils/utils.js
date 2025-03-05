@@ -100,38 +100,6 @@ async function callOpenAI(prompt, retryCount = 3) {
     }
 }
 
-//function to access the assets in resources.json
-async function fetchResources() {
-    try {
-        const response = await fetch("resources.json");
-
-        if (!response.ok) {
-            throw new Error(`Failed to load resources: ${response.status} ${response.statusText}`);
-        }
-
-        const text = await response.text();
-        console.log("Raw JSON response:", text);
-
-        const json = JSON.parse(text); // Use JSON.parse to catch errors
-        console.log("Resources Loaded:", json);
-
-        resources = json; // Store the resources properly
-    } catch (error) {
-        console.error("Error fetching resources:", error);
-    }
-}
-
-// Function  to get the information associated with an URL
-async function fetchDocument(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to fetch document: ${response.statusText}`);
-        return await response.text();  // Returns text content of the document
-    } catch (error) {
-        console.error("Error fetching document:", error);
-        return "I couldn't fetch the document.";
-    }
-}
 
 // Function to format links properly as clickable HTML
 function formatLinks(responseText) {
@@ -147,7 +115,5 @@ module.exports = {
     isNicoAIInitialized,
     markNicoAIInitialized,
     callOpenAI,
-    fetchResources,
-    fetchDocument,
     formatLinks
 };

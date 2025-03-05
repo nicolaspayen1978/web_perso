@@ -1,12 +1,35 @@
 // this is chatbot.js the frontend javascript code for the chatbot
 // Load external resources (articles, resume, career, projects)
-let resources = {};  // Store fetched resources
 
+async function initializeNicoAI() {
+    const visitorID = localStorage.getItem("visitorID") || crypto.randomUUID();
+    localStorage.setItem("visitorID", visitorID);
 
-// Run initialization when the page loads
-window.onload = () => {
-    initializeNicoAI();
-};
+    try {
+        const response = await fetch('/api/init', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visitorID })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("✅ NicoAI Initialized:", data);
+    } catch (error) {
+        console.error("❌ Error initializing NicoAI:", error);
+    }
+}
+
+// Run initialization when the page loads if not already initiated
+document.addEventListener("DOMContentLoaded", function () {
+    if (!sessionStorage.getItem("nicoAI_initialized")) {
+        initializeNicoAI();
+        sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
+    }
+});
 
 // Function to update progress text or bar
 function updateProgress(percent) {
@@ -22,11 +45,6 @@ function updateProgress(percent) {
         progressBar.innerText = `${percent}%`;
     }
 }
-
-// Fetch resources before anything else
-document.addEventListener("DOMContentLoaded", async function () {
-    await fetchResources();  // Load `resources.json`
-});
 
 document.addEventListener("DOMContentLoaded", function () {
     const chatbox = document.getElementById("chatbox");

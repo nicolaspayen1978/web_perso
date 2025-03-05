@@ -6,16 +6,14 @@
     },
     "api/init.js": {
       "maxDuration": 30
+    },
+    "api/resources.js": {
+      "maxDuration": 30
     }
   },
   "routes": [
-    {
-      "src": "/api/chatbot",
-      "dest": "/api/chatbot.js"
-    },
-    {
-      "src": "/api/init",
-      "dest": "/api/init.js"
-    }
+    {"src": "/api/chatbot","dest": "/api/chatbot.js"},
+    {"src": "/api/init", "dest": "/api/init.js"},
+    {"src": "/api/resources", "dest": "/api/resources.js"}
   ]
 }

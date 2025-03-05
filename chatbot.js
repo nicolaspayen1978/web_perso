@@ -28,6 +28,11 @@ async function initializeNicoAI() {
     }
 }
 
+// Run initialization when the page loads
+window.onload = () => {
+    initializeNicoAI();
+};
+
 // Function to update progress text or bar
 function updateProgress(percent) {
     const textElement = document.getElementById("loading-progress");
@@ -270,8 +275,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
-
-// Run initialization when the page loads
-window.onload = () => {
-    initializeNicoAI();
-};

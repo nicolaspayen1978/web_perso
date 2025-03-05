@@ -1,4 +1,5 @@
 // this is chatbot.js the frontend javascript code for the chatbot
+import { formatLinks } from "./utils/utils.js";
 
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
@@ -67,8 +68,10 @@ function appendMessage(role, content) {
         console.error("❌ Chatbox not found! Skipping message append.");
         return;
     }
+    const formattedContent = formatLinks(content); // Apply link formatting
     const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
+    messageElement.innerHTML = `<strong>${role}:</strong> ${formattedContent}`;
+    
     chatbox.appendChild(messageElement);
     chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
 }

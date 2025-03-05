@@ -130,6 +130,20 @@ if (process.env.NODE_ENV !== "vercel") {
 // ✅ Export the app for Vercel
 module.exports = app;
 
+// ✅ Handle CORS
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+
+    next();
+});
+
+/*
 module.exports = async (req, res) => {
     console.log("🚀 Received API request", req.method);
 
@@ -181,6 +195,7 @@ module.exports = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+*/
 
 // Load resources coming from '`resources.json` that have been transfer to Vercel KV
 // Load resources from Vercel KV

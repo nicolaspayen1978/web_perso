@@ -10,6 +10,13 @@ function getVisitorID() {
     return visitorID;
 }
 
+function appendMessage(role, content) {
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
+    chatbox.appendChild(messageElement);
+    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
+}
+
 async function initializeNicoAI() {
     const visitorID = getVisitorID();
 
@@ -82,13 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
     //function to save ChatHistory in local storage
     function saveChatHistory() {
         localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
-    }
-
-    function appendMessage(role, content) {
-        const messageElement = document.createElement("p");
-        messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
-        chatbox.appendChild(messageElement);
-        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
     }
 
     //Make the chatbox visible to the user

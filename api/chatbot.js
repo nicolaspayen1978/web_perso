@@ -53,7 +53,7 @@ async function init_NicoAI(visitorID) {
     ];
 
     for (const prompt of systemPrompts) {
-        await callOpenAI([prompt.content], [prompt.role]);
+        await callOpenAI(prompt);
     }
 
     console.log("📥 Fetching resources from resources.json...");
@@ -257,7 +257,7 @@ async function updateResourceDescription(category, itemTitle, newDescription) {
 async function summarizeItem(category, item) {
     const prompt = { role: "system", content: `The following content titled "${item.title}" from "${item.url}"" needs a short, accurate summary of its content in 100 words. Do NOT assume the topic based on the title or other headlines. The summary must reflect the actual content and not be a general explanation.`};
     console.log(`📩 Calling OpenAI for summary: ${item.title} (${item.url})`);
-    let response = await callOpenAI(prompt.content, "system");
+    let response = await callOpenAI(prompt);
 
     if (!response || response.trim() === "") {
         console.warn(`⚠️ OpenAI returned an empty response for: ${item.title}. Setting description to "-1" for retry.`);
@@ -352,13 +352,13 @@ function getRelevantResources(userMessage) {
 
 async function generateChatResponse(userMessages) {
     console.log("🔍 Reloading latest resources from KV before generating response...");
-    const fullmessages = [{ role: "user", content: userMessages }];
-    console.log("📚 Sending prompt to OpenAI:\n", fullmessages);
-    return await callOpenAI(userMessages);
+    const fullusermessages = [{ role: "user", content: userMessages }];
+    console.log("📚 Sending prompt to OpenAI:\n", fullusermessages);
+    return await callOpenAI(fullusermessages);
 }
 
 // Call OpenAI API
-async function callOpenAI(prompt, role="user", retryCount = 3) {
+async function callOpenAI(prompt, retryCount = 3) {
     let attempts = 0;
 
     while (attempts < retryCount) {
@@ -378,7 +378,7 @@ async function callOpenAI(prompt, role="user", retryCount = 3) {
                 },
                 body: JSON.stringify({
                     model: "gpt-4-turbo",
-                    messages: [{ role: role, content: prompt.substring(0, 5000) }], // Trim prompt to 5000 chars max
+                    messages: [{ role: role, content: prompt }], 
                     max_tokens: 300, 
                     temperature: 0,  
                     top_p: 0.9,  

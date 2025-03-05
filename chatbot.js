@@ -77,6 +77,13 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
     }
 
+    function appendMessage(role, content) {
+        const messageElement = document.createElement("p");
+        messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
     //Make the chatbox visible to the user
     function showChat() {
         chatPopup.style.display = "flex";
@@ -205,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let botReply = data.response || "I'm sorry, I didn't understand that.";
 
             chatHistory.push({ role: "assistant", content: botReply });
-            chatbox.innerHTML += `<p><strong>AI:</strong> ${botReply}</p>`;
+            appendMessage("AI", botReply);
 
             saveChatHistory(); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;

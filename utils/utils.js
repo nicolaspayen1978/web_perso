@@ -16,16 +16,11 @@ async function loadVisitorSessions() {
             headers: { "Authorization": `Bearer ${KV_REST_API_TOKEN}` }
         });
 
-        if (!response.ok) {
-            console.error("❌ Failed to fetch from KV:", await response.text());
-            return {};
-        }
-
-        const data = await response.json();
-        return data || {}; // Return an empty object if KV has no data
+        if (!response.ok) throw new Error(`KV fetch failed: ${response.status}`);
+        return await response.json() || {};
     } catch (error) {
         console.error("⚠️ Error loading visitor sessions:", error);
-        return {};
+        return {};  // Return empty sessions instead of failing
     }
 }
 

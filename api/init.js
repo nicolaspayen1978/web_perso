@@ -64,11 +64,12 @@ async function init_NicoAI(visitorID) {
 
     try {
         console.log("📤 Sending system prompts to OpenAI in parallel...");
-        await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec
+        const response = await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec
     } catch (error) {
         console.error("❌ Error during OpenAI initialization:", error);
     }
 
+    const firstMessage = responses[0] || "👋 Hi! I'm NicoAI. How can I help you today?";
 
     //Ensure resources exist before sending summary request
     /*
@@ -86,28 +87,29 @@ async function init_NicoAI(visitorID) {
         console.warn("⚠️ No resources available, skipping summary request.");
     }
     */
-    console.log(`✅ NicoAI initialized for visitor ${visitorID}`);
-    return { message: "NicoAI initialized successfully for this visitor!" };
+    console.log(`✅ NicoAI initialized for visitor ${visitorID}. First message: ${firstMessage}`);
+
+    return { message: firstMessage };
 }
 
-// ✅ API Endpoint to Initialize NicoAI for a Visitor
+// API Endpoint to Initialize NicoAI for a Visitor
 initApp.post("/api/init", async (req, res) => {
     const { visitorID } = req.body;
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
 
-    const result = await init_NicoAI(visitorID);
+    const initResponse = await init_NicoAI(visitorID);
     console.log(`🚀 /api/init executed`);
-    res.json(result);
+    res.json(initResponse);
 });
 
 // Function  to get the information associated with an URL
 async function fetchDocument(url) {
     try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to fetch document: ${response.statusText}`);
+        if (!response.ok) throw new Error(`⚠️ Failed to fetch document: ${response.statusText}`);
         return await response.text();  // Returns text content of the document
     } catch (error) {
-        console.error("Error fetching document:", error);
+        console.error("⚠️ Error fetching document:", error);
         return "I couldn't fetch the document.";
     }
 }

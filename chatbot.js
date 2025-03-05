@@ -26,6 +26,13 @@ async function initializeNicoAI() {
 
         const data = await response.json();
         console.log("✅ NicoAI Initialized:", data);
+        
+        if (data.message) {
+            appendMessage("AI", data.message);  // Display first message
+            chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
+            saveChatHistory();  // Store in local storage
+        }
+
     } catch (error) {
         console.error("❌ Error initializing NicoAI:", error);
     }
@@ -61,6 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
      if (!sessionStorage.getItem("nicoAI_initialized")) {
         initializeNicoAI();
         sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
+        appendMessage("AI", botReply);
+        saveChatHistory()
     }
 
     //function to display ChatHistory in the chatbox
@@ -81,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const messageElement = document.createElement("p");
         messageElement.innerHTML = `<strong>${role}:</strong> ${content}`;
         chatbox.appendChild(messageElement);
-        chatbox.scrollTop = chatbox.scrollHeight;
+        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
     }
 
     //Make the chatbox visible to the user

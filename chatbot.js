@@ -1,5 +1,5 @@
 // this is chatbot.js the frontend javascript code for the chatbot
-import { formatLinks } from "./utils/utils.js";
+const { formatLinks } = require("./utils/utils.js"); // CommonJS Import
 
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history

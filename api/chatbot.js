@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-// ✅ Handle CORS
+// Handle CORS
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -22,6 +22,24 @@ app.use((req, res, next) => {
 
     next();
 });
+
+// Load resources ONCE when `chatbot.js` starts
+let resources = {};
+const resourcesPath = path.join(__dirname, "../resources.json");
+
+function loadResources() {
+    try {
+        if (fs.existsSync(resourcesPath)) {
+            resources = JSON.parse(fs.readFileSync(resourcesPath, "utf-8"));
+            console.log("✅ Resources loaded successfully in chatbot.js");
+        } else {
+            console.error("❌ resources.json not found!");
+        }
+    } catch (error) {
+        console.error("❌ Error loading resources.json:", error);
+    }
+}
+loadResources(); // Load resources at startup
 
 // API Endpoint to Handle Chat
 app.post('/api/chatbot', async (req, res) => {
@@ -50,7 +68,7 @@ if (process.env.NODE_ENV !== "vercel") {
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 }
 
-// ✅ Export the app for Vercel
+// Export the app for Vercel
 module.exports = app;
 
 async function generateChatResponse(userMessages) {
@@ -67,7 +85,6 @@ async function generateChatResponse(userMessages) {
     return await callOpenAI(fullUserMessages);
 }
 
-//let notifiedUsers = new Set(); // This will reset between serverless function runs
 
 
 

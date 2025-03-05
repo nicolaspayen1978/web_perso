@@ -68,8 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
      if (!sessionStorage.getItem("nicoAI_initialized")) {
         initializeNicoAI();
         sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
-        appendMessage("AI", botReply);
-        saveChatHistory()
     }
 
     //function to display ChatHistory in the chatbox

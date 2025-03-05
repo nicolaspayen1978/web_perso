@@ -5,7 +5,11 @@ const path = require("path");
 const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("../utils/utils"); // Import from utils.js
 const app = express();
 
+// Ensure fetch() is available in Node.js
+const fetch = globalThis.fetch || require("node-fetch");
+
 app.use(express.json());
+
 
 // ✅ CORS Middleware - Add this BEFORE defining `/api/init`
 app.use((req, res, next) => {

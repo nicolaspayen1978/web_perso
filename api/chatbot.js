@@ -44,13 +44,6 @@ chatApp.post('/api/chatbot', async (req, res) => {
     res.json({ response: aiResponse });
 });
 
-// Start the Express server
-// ONLY start server when running locally
-if (process.env.NODE_ENV !== "vercel") {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-}
-
 async function generateChatResponse(userMessages) {
     console.log("🔍 Using preloaded resources from init.js before generating response...");
     

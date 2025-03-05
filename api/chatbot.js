@@ -5,13 +5,14 @@ const fs = require("fs");
 const path = require("path");
 const express = require('express');
 const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
-const { initApp, resources } = require("./init"); // ✅ No conflict
-const app = express();
+const initApp = require("./init");  // import from Init.js
+const { resources } = require("./init");  // import from Init.js
+const chatApp = express();
 
-app.use(express.json());
+chatApp.use(express.json());
 
 // Handle CORS
-app.use((req, res, next) => {
+chatApp.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -23,26 +24,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Load resources ONCE when `chatbot.js` starts
-let resources = {};
-const resourcesPath = path.join(__dirname, "../resources.json");
-
-function loadResources() {
-    try {
-        if (fs.existsSync(resourcesPath)) {
-            resources = JSON.parse(fs.readFileSync(resourcesPath, "utf-8"));
-            console.log("✅ Resources loaded successfully in chatbot.js");
-        } else {
-            console.error("❌ resources.json not found!");
-        }
-    } catch (error) {
-        console.error("❌ Error loading resources.json:", error);
-    }
-}
-loadResources(); // Load resources at startup
-
 // API Endpoint to Handle Chat
-app.post('/api/chatbot', async (req, res) => {
+chatApp.post('/api/chatbot', async (req, res) => {
     const { visitorID, userInput } = req.body;
 
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
@@ -83,7 +66,7 @@ async function generateChatResponse(userMessages) {
 }
 
 // Export the app for Vercel
-module.exports = { chatbotApp: app };
+module.exports = chatApp;
 
 
 

@@ -1,5 +1,4 @@
 // this is api/resources.js the API to manage access to the resources made available to the agent (articles, resume, career, projects)
-const express = require("express");
 const fs = require("fs");
 const path = require("path");
 
@@ -209,5 +208,3 @@ function getRelevantResources(userMessage) {
     resourceMatches.sort((a, b) => b.score - a.score);
     return resourceMatches.slice(0, 5).map(item => `${item.title}: ${item.description}`).join("\n");
 }
-
-module.exports = router;

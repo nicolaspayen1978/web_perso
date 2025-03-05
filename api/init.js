@@ -3,16 +3,16 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path"); 
 const { isNicoAIInitialized, markNicoAIInitialized, callOpenAI, formatLinks} = require("../utils/utils"); // Import from utils.js
-const app = express();
+const initApp = express();
 
 // Ensure fetch() is available in Node.js
 const fetch = globalThis.fetch || require("node-fetch");
 
-app.use(express.json());
+initApp.use(express.json());
 
 
 // ✅ CORS Middleware - Add this BEFORE defining `/api/init`
-app.use((req, res, next) => {
+initApp.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -91,7 +91,7 @@ async function init_NicoAI(visitorID) {
 }
 
 // ✅ API Endpoint to Initialize NicoAI for a Visitor
-app.post("/api/init", async (req, res) => {
+initApp.post("/api/init", async (req, res) => {
     const { visitorID } = req.body;
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
 
@@ -112,5 +112,6 @@ async function fetchDocument(url) {
     }
 }
 
-// Export app for Vercel
-module.exports = { initApp: app, resources };
+// Export app for Vercel (fixing export issue)
+module.exports = initApp;
+module.exports.resources = resources;

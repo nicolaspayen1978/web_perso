@@ -32,19 +32,6 @@ async function initializeNicoAI() {
     }
 }
 
-async function fetchResources() {
-    try {
-        const response = await fetch('/api/resources');
-        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-        const data = await response.json();
-        console.log("✅ Resources Loaded:", data);
-        return data;
-    } catch (error) {
-        console.error("❌ Error fetching resources:", error);
-        return {};
-    }
-}
-
 // Function to update progress text or bar
 function updateProgress(percent) {
     const textElement = document.getElementById("loading-progress");
@@ -202,9 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Sending request to API...");
 
         const visitorID = getVisitorID(); // Ensure visitorID is sent
-
-        const resources = await fetchResources(); // Fetch resources before sending message
-        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText, resources });
+        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText});
 
         try {
             const response = await fetch("/api/chatbot", {

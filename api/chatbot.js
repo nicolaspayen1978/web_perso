@@ -408,7 +408,7 @@ async function callOpenAI(prompt, retryCount = 3) {
                 },
                 body: JSON.stringify({
                     model: "gpt-4-turbo",
-                    messages: [{ role: role, content: prompt }], 
+                    messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
                     max_tokens: 300, 
                     temperature: 0,  
                     top_p: 0.9,  

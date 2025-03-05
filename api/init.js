@@ -61,15 +61,20 @@ async function init_NicoAI(visitorID) {
     ];
 
     console.log("📤 Sending system prompts to OpenAI one by one...");
-
+    let botReply[]
     try {
         console.log("📤 Sending system prompts to OpenAI in parallel...");
-        const responses = await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec
+        botReply = await Promise.all(systemPrompts.map(prompt => callOpenAI([prompt]))); // Runs in // for faster exec
     } catch (error) {
         console.error("❌ Error during OpenAI initialization:", error);
     }
 
-    const firstMessage = responses[0] || "👋 Hi! I'm NicoAI. How can I help you today?";
+    // Ensure responses exist and contain valid data
+    let firstMessage = "👋 Hi! I'm NicoAI. How can I help you today?"; // Default message
+
+    if (Array.isArray(botReply) && botReply.length > 0 && botReply[0]?.choices?.length > 0) {
+        firstMessage = botReply[0].choices[0].message?.content || firstMessage;
+    }
 
     //Ensure resources exist before sending summary request
     /*

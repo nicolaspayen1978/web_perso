@@ -1,6 +1,4 @@
 // this is chatbot.js the frontend javascript code for the chatbot
-const { formatLinks } = require("./utils/utils.js"); // CommonJS Import
-
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 let chatbox = null; // Declare globally
@@ -60,6 +58,13 @@ async function initializeNicoAI() {
     } catch (error) {
         console.error("❌ Error initializing NicoAI:", error);
     }
+}
+
+// Function to format links properly as clickable HTML
+function formatLinks(responseText) {
+    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
+        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
+    });
 }
 
 // function to force the refresh of the chatbox

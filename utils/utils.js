@@ -127,18 +127,9 @@ async function callOpenAI(prompt, retryCount = 3) {
     }
 }
 
-
-// Function to format links properly as clickable HTML
-function formatLinks(responseText) {
-    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
-        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
-    });
-}
-
 // Export functions to be used in `init.js` and `chatbot.js`
 module.exports = {
     isNicoAIInitialized,
     markNicoAIInitialized,
-    callOpenAI,
-    formatLinks
+    callOpenAI
 };

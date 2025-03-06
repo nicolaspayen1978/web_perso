@@ -79,10 +79,11 @@ async function callOpenAI(prompt, retryCount = 3) {
                     //model: "gpt-4-turbo",
                     model: "o3-mini",
                     messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
-                    //max_tokens: 300, 
+                    //max_tokens: 300, "gpt model only"
                     max_completion_tokens: 300, 
-                    temperature: 0.1,  
-                    top_p: 0.9,  
+                    //temperature: 0.1, "gpt model only"
+                    reasoning_effort: "low",  
+                    //top_p: 0.9,  "gpt model only"
                     frequency_penalty: 0,
                     presence_penalty: 0
                 }),

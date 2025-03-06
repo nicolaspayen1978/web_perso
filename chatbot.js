@@ -3,6 +3,16 @@
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 let chatbox = null; // Declare globally
 
+//Broadcast channel to keep all chatbot in Sync
+const chatChannel = new BroadcastChannel("chat-sync");
+
+// Listen for messages from other tabs
+chatChannel.onmessage = (event) => {
+    console.log("📩 Received message from another tab:", event.data);
+    displayChatHistory(chatHistory);
+    
+};
+
 // Generate or retrieve visitor ID
 function getVisitorID() {
     let visitorID = localStorage.getItem("visitorID");
@@ -53,6 +63,8 @@ async function initializeNicoAI() {
             saveChatHistory();  // Now this function exists
             displayChatHistory();  // Make sure chat history is updated
             sessionStorage.setItem("welcomeMessageSent", "true");
+            // Broadcast message to all open pages
+            chatChannel.postMessage({ role: "assistant", content: data.message });
         }
 
     } catch (error) {
@@ -135,10 +147,14 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.opacity = "1";
             chatPopup.style.transform = "translateY(0)";
         }, 10);
-
         if (!sessionStorage.getItem("welcomeMessageSent")) {
+            chatHistory.push("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            saveChatHistory(); // Save message sent to user
             appendMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            //change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
+            //informed other open chat about the new message
+            chatChannel.postMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
         }
         displayChatHistory(); // Ensure chat history is displayed on open
 
@@ -214,11 +230,12 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.value = ""; //clear message field
 
         chatHistory.push({ role: "user", content: userText });
-
         saveChatHistory(); // Save user input
+        // Broadcast message to all open pages
+            chatChannel.postMessage({ role: "user", content: userText });
 
-        //make sure chatHistory no longer than 4000 words
-        chatHistory = truncateChatHistory(chatHistory, 4000);
+        //make sure chatHistory no longer than 100000 words
+        chatHistory = truncateChatHistory(chatHistory, 100000);
 
         console.log("Sending request to API...");
 
@@ -231,19 +248,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: { "Content-Type": "application/json" },
                 body: fullSentMessage
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
             const data = await response.json();
             let botReply = data.response || "I'm sorry, I didn't understand that.";
-
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("🧠 NicoAI", botReply);
-
             saveChatHistory(); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;
+             // Broadcast message to all open pages
+            chatChannel.postMessage("🧠 NicoAI", botReply);
+
         } catch (error) {
             console.error("Chatbot Error:", error);
             chatbox.innerHTML += `<p><strong>AI:</strong> Sorry, I encountered an error. Please try again.</p>`;

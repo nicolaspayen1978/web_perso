@@ -76,7 +76,8 @@ async function callOpenAI(prompt, retryCount = 3) {
                     "Authorization": `Bearer ${OPENAI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: "gpt-4-turbo",
+                    //model: "gpt-4-turbo",
+                    model: "o3-mini",
                     messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
                     max_tokens: 300, 
                     temperature: 0.1,  

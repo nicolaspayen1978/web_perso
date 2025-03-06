@@ -206,11 +206,6 @@
         </footer>
          <script>
              document.addEventListener("DOMContentLoaded", function () {
-                // Clear only chat history when page loads
-                if (sessionStorage.getItem("chatHistory")) {
-                    sessionStorage.removeItem("chatHistory");
-                    console.log("Chat history cleared on page load.");
-                }
 
                 // Select menu elements
                 const menuIcon = document.querySelector(".menu-icon");

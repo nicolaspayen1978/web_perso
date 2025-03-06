@@ -91,6 +91,29 @@
     </script>
 </head>
 <body>
+     <!-- Floating Chatbot Button -->
+    <div id="chatbot-icon">
+         <img src="images/NicoAvatar.png" alt="Chatbot" />
+    </div>
+    <!-- Chatbot Popup Window -->
+    <div id="chat-popup">
+        <div id="chat-header">
+            <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-avatar">
+            <span width="100%">Chat with an AI version of me!</span>
+            <button id="maximize-chat">🔲</button> <!-- Maximize button -->
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chatbox"></div>
+            <!-- 
+            <div style="width: 100%; background: #ddd; border-radius: 5px;">
+            <div id="progress-bar" style="width: 0%; background: #2c3e50; color: white; text-align: center; padding: 5px; border-radius: 5px;">...</div>
+            add progress bar -->
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask me anything..." />
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script src="chatbot.js"></script>
     <div class="menu-container">
         <div class="menu-icon">
             <div></div>

@@ -376,6 +376,7 @@ footer {
 /* Input and Button */
 #input-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     text-align: left;
     margin-top: 10px;
@@ -393,13 +394,12 @@ footer {
 #send-button{
     background: #2c3e50;
     color: white;
-    padding: 5px;
     border: 1px solid #2c3e50;
     border-radius: 5px;
+    padding: 5px;
     cursor: pointer;
     font-size: 0.9em;
     margin-top: 2px;
-    align-self: right;
 }
 
 /* --- Responsive Adjustments for Mobile --- */

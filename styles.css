@@ -373,6 +373,16 @@ footer {
     overflow-y: auto;
 }
 
+/* Input and Button */
+#input-container {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-top: 10px;
+    gap: 10px;
+    width: 100%;
+}
+
 #user-input {
     width: calc(100% - 20px);
     padding: 5px;
@@ -383,12 +393,11 @@ footer {
 #send-button{
     background: #2c3e50;
     color: white;
-    padding: 2px;
+    padding: 5px;
     border: 1px solid #2c3e50;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1em;
-    width: 80px;
+    font-size: 0.9em;
 }
 
 /* --- Responsive Adjustments for Mobile --- */

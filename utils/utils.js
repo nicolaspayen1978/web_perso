@@ -84,7 +84,7 @@ async function callOpenAI(prompt, retryCount = 3) {
                     frequency_penalty: 0,
                     presence_penalty: 0
                 })
-                signal: controller.signal // Use timeout controller 
+                signal: controller.signal; // Use timeout controller 
             });
 
             clearTimeout(timeout); // Clear timeout after response

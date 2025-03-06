@@ -398,6 +398,7 @@ footer {
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.9em;
+    margin-top: 2px;
 }
 
 /* --- Responsive Adjustments for Mobile --- */

@@ -385,7 +385,7 @@ footer {
 }
 
 #user-input {
-    width: calc(100% - 20px);
+    width: calc(100% - 25px);
     padding: 5px;
     border: none;
     border-top: 1px solid #ddd;
@@ -393,13 +393,13 @@ footer {
 
 #send-button{
     background: #2c3e50;
+    width: 20px;
     color: white;
     border: 1px solid #2c3e50;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
     font-size: 0.9em;
-    margin-top: 2px;
 }
 
 /* --- Responsive Adjustments for Mobile --- */

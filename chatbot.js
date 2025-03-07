@@ -74,6 +74,10 @@ async function initializeNicoAI() {
 
 // Function to format links properly as clickable HTML
 function formatLinks(responseText) {
+    if (!responseText || typeof responseText !== "string") {
+        console.error("Error: responseText is undefined or not a string");
+        return;  // Exit early to prevent further errors
+    }
     return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
         return `🔗 <a href="${url}" target="_blank">${title}</a>`;
     });

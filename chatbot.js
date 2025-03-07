@@ -10,7 +10,7 @@ const chatChannel = new BroadcastChannel("chat-sync");
 chatChannel.onmessage = (event) => {
     console.log("📩 Received message from another tab:", event.data);
     displayChatHistory(chatHistory);
-    
+
 };
 
 // Generate or retrieve visitor ID
@@ -114,16 +114,28 @@ function updateProgress(percent) {
 }
 
 //Reduce ChatHistory to not overload OpenAI
-function truncateChatHistory(chatHistory, maxTokens = 4000) {
-    let totalTokens = 0;
+function truncateChatHistory(chatHistory, maxTokens=4000) {
+    if (!Array.isArray(chatHistory)) {
+        console.error("Error: chatHistory is not an array.");
+        return [];  // Return an empty array if chatHistory is invalid
+    }
+
     let truncatedHistory = [];
+    let totalTokens = 0;
 
     for (let i = chatHistory.length - 1; i >= 0; i--) {
+        if (!chatHistory[i] || typeof chatHistory[i].content !== "string") {
+            console.warn(`Skipping invalid message at index ${i}`);
+            continue;  // Skip messages that are not in the right format
+        }
+
         let messageTokens = chatHistory[i].content.length / 4;  // Approximate token count
         if (totalTokens + messageTokens > maxTokens) break;
+
         totalTokens += messageTokens;
         truncatedHistory.unshift(chatHistory[i]);
     }
+
     return truncatedHistory;
 }
 

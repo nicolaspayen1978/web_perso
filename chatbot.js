@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    if(chatPopup && chatbotIcon && closeChat && maximizeChat {
+    if(chatPopup && chatbotIcon && closeChat && maximizeChat) {
 
         // Fix: Maximize button should open the full-page chat with history
         maximizeChat.addEventListener("click", function () {

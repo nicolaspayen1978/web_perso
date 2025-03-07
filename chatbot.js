@@ -60,12 +60,6 @@ function displayChatHistory() {
         }
         appendMessage(msg.role, msg.content); // Display the message
     });
-
-    // Check if user is already at the bottom before forcing auto-scroll
-    const isUserAtBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 10;
-    if (isUserAtBottom) {
-        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll only if user is at the bottom
-    }
 }
 
 async function initializeNicoAI() {
@@ -134,12 +128,6 @@ function appendMessage(role, content) {
 
     const sender = role === "assistant" ? "🧠 NicoAI" : "You";
     messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedContent}`;
-    
-    // Check if user is already at the bottom before forcing auto-scroll
-    const isUserAtBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 10;
-    if (isUserAtBottom) {
-        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll only if user is at the bottom
-    }
 }
 
 //Reduce ChatHistory to not overload OpenAI

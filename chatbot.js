@@ -193,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 chatPopup.style.opacity = "1";
                 chatPopup.style.transform = "translateY(0)";
             }, 10);
+            sessionStorage.setItem("showChat", "true");
         }
         displayChatHistory(); // Ensure chat history is displayed on open
     }
@@ -210,6 +211,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 content: welcomeMessage
             });
         }
+        //if the chat was opened on another page, then we open it automaticaly.
+        if (sessionStorage.getItem("showChat")){
+            showChat();
+        }
         displayChatHistory();
 
     }
@@ -222,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 chatPopup.style.display = "none";
             }, 300);
+            sessionStorage.removeItem("showChat");
         }
     }
 

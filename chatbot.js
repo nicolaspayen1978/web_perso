@@ -1,7 +1,5 @@
 //this is chatbot.js the frontend javascript code for the chatbot
 //it is used in all pages with a chatbot 
-// Declare chatHistory globally
-let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 let chatbox = null; // Declare globally
 
 
@@ -30,12 +28,19 @@ function getVisitorID() {
 }
 
  //function to save ChatHistory in local storage
-function saveChatHistory() {
-    localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
+function saveChatHistory(newChatHistory) {
+    localStorage.setItem("chatHistory", newChatHistory); // Save chat history
+}
+
+ //function to get ChatHistory from local storage
+function getChatHistory() {
+    return JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 }
 
 // Function to display chat history in the chatbox
 function displayChatHistory() {
+    const chatHistory = getChatHistory();
+
     if (!chatbox) {
         console.error("❌ Chatbox not found! Skipping message append.");
         return;
@@ -68,7 +73,7 @@ async function initializeNicoAI() {
         console.log("🔄 NicoAI is already initialized. Skipping...");
         return;
     }
-
+    const chatHistory = getChatHistory();
     const visitorID = getVisitorID();
 
     try {
@@ -88,7 +93,7 @@ async function initializeNicoAI() {
         
         if (data.message) {
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
-            saveChatHistory();  // Now this function exists
+            saveChatHistory(chatHistory);  // Now this function exists
             displayChatHistory();  // Make sure chat history is updated
             sessionStorage.setItem("welcomeMessageSent", "true");
             // Broadcast message to all open pages
@@ -191,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sendButton = document.getElementById("send-button");
 
     // refresh chat history
-    chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
+    chatHistory = getChatHistory();
 
     //Make the chatbox visible to the user
     function showChat() {
@@ -205,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
             chatHistory.push({ role: "assistant", content: welcomeMessage });
-            saveChatHistory(); // Save message sent to user
+            saveChatHistory(chatHistory); // Save message sent to user
             appendMessage("assistant", welcomeMessage);//change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
             //informed other open chat about the new message
@@ -296,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.value = ""; //clear message field
 
         chatHistory.push({ role: "user", content: userText });
-        saveChatHistory(); // Save user input
+        saveChatHistory(chatHistory); // Save user input
         // Broadcast message to all open pages
         chatChannel.postMessage({ role: "user", content: userText });
 
@@ -323,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("assistant", botReply );
-            saveChatHistory(); // Save bot response
+            saveChatHistory(chatHistory); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;
 
              // Broadcast message to all open pages

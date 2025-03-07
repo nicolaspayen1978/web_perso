@@ -28,14 +28,25 @@ function saveChatHistory() {
     localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
 }
 
-//function to display ChatHistory in the chatbox
+// Function to display chat history in the chatbox
 function displayChatHistory() {
     if (!chatbox) {
         console.error("❌ Chatbox not found! Skipping message append.");
         return;
     }
+
+    if (!Array.isArray(chatHistory)) {
+        console.warn("⚠️ Chat history is missing or not an array. Initializing as empty.");
+        chatHistory = []; // Ensure it's a valid array
+    }
+
     chatbox.innerHTML = ""; // Clear chatbox
+
     chatHistory.forEach(msg => {
+        if (!msg || typeof msg.content !== "string") {
+            console.warn("⚠️ Skipping invalid message:", msg);
+            return;
+        }
         const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
         appendMessage(sender, msg.content); // Display the message
     });
@@ -75,12 +86,19 @@ async function initializeNicoAI() {
 // Function to format links properly as clickable HTML
 function formatLinks(responseText) {
     if (!responseText || typeof responseText !== "string") {
-        console.error("Error: responseText is undefined or not a string");
-        return;  // Exit early to prevent further errors
+        console.error("❌ Error: responseText is undefined or not a string");
+        return responseText || "";  // Return original text or empty string
     }
-    return responseText.replace(/\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g, function (match, title, url) {
-        return `🔗 <a href="${url}" target="_blank">${title}</a>`;
-    });
+
+    try {
+        return responseText.replace(
+            /\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g,
+            (match, title, url) => `🔗 <a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`
+        );
+    } catch (error) {
+        console.error("⚠️ Error formatting links:", error);
+        return responseText; // Return the original text if replacement fails
+    }
 }
 
 // function to force the refresh of the chatbox
@@ -194,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // Remove system messages before sending history to new tab
         //const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
-        sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+        //localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
         window.open("chat.html", "_blank");
     });
 

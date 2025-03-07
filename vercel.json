@@ -13,6 +13,6 @@
   },
   "routes": [
     {"src": "/api/chatbot","dest": "/api/chatbot.js"},
-    {"src": "/api/init", "dest": "/api/init.js"},
+    {"src": "/api/init", "dest": "/api/init.js"}
   ]
 }

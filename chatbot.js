@@ -29,7 +29,7 @@ function getVisitorID() {
 
  //function to save ChatHistory in local storage
 function saveChatHistory(newChatHistory) {
-    localStorage.setItem("chatHistory", newChatHistory); // Save chat history
+    localStorage.setItem("chatHistory", JSON.stringify(newChatHistory)); // Fix: Ensure proper storage format
 }
 
  //function to get ChatHistory from local storage

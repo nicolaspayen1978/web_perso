@@ -4,14 +4,19 @@
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 let chatbox = null; // Declare globally
 
-//Broadcast channel to keep all chatbot in Sync
-const chatChannel = new BroadcastChannel("chat-sync");
+
+// Create BroadcastChannel creation
+if (!window.chatChannel) {
+    window.chatChannel = new BroadcastChannel("chat-sync");
+}
+
+// Alias for easier access
+const chatChannel = window.chatChannel;
 
 // Listen for messages from other tabs
 chatChannel.onmessage = (event) => {
     console.log("📩 Received message from another tab:", event.data);
-    displayChatHistory(chatHistory);
-
+    displayChatHistory();
 };
 
 // Generate or retrieve visitor ID
@@ -50,9 +55,16 @@ function displayChatHistory() {
         }
         appendMessage(msg.role, msg.content); // Display the message
     });
+
+    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to latest message
 }
 
 async function initializeNicoAI() {
+    if (localStorage.getItem("nicoAI_initialized")) {
+        console.log("🔄 NicoAI is already initialized. Skipping...");
+        return;
+    }
+
     const visitorID = getVisitorID();
 
     try {
@@ -68,6 +80,7 @@ async function initializeNicoAI() {
 
         const data = await response.json();
         console.log("✅ NicoAI Initialized:", data);
+        localStorage.setItem("nicoAI_initialized", "true"); // Mark as initialized
         
         if (data.message) {
             chatHistory.push({ role: "assistant", content: data.message });  // Save Init response
@@ -133,6 +146,8 @@ function updateProgress(percent) {
 }
 
 //Reduce ChatHistory to not overload OpenAI
+//maxTokens for GTP is 4000
+//maxTokens for o3 is 200 000
 function truncateChatHistory(chatHistory, maxTokens=4000) {
     if (!Array.isArray(chatHistory)) {
         console.error("Error: chatHistory is not an array.");
@@ -202,10 +217,12 @@ document.addEventListener("DOMContentLoaded", function () {
             appendMessage("assistant", welcomeMessage);//change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
             //informed other open chat about the new message
-            chatChannel.postMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            chatChannel.postMessage({
+                role: "assistant",
+                content: "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?"
+            });
         }
         displayChatHistory(); // Ensure chat history is displayed on open
-
     }
 
     //Make the chatbox invisible to the user
@@ -289,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chatHistory.push({ role: "user", content: userText });
         saveChatHistory(); // Save user input
         // Broadcast message to all open pages
-            chatChannel.postMessage({ role: "user", content: userText });
+        chatChannel.postMessage({ role: "user", content: userText });
 
         //make sure chatHistory no longer than 100000 words
         chatHistory = truncateChatHistory(chatHistory, 100000);

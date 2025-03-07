@@ -84,20 +84,20 @@ async function initializeNicoAI() {
 }
 
 // Function to format links properly as clickable HTML
-function formatLinks(responseText) {
-    if (!responseText || typeof responseText !== "string") {
+function formatLinks(message) {
+    if (!message || typeof message !== "string") {
         console.error("❌ Error: responseText is undefined or not a string");
-        return responseText || "";  // Return original text or empty string
+        return message || "";  // Return original text or empty string
     }
 
     try {
-        return responseText.replace(
+        return message.replace(
             /\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g,
             (match, title, url) => `🔗 <a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`
         );
     } catch (error) {
         console.error("⚠️ Error formatting links:", error);
-        return responseText; // Return the original text if replacement fails
+        return message; // Return the original text if replacement fails
     }
 }
 
@@ -183,10 +183,10 @@ document.addEventListener("DOMContentLoaded", function () {
             chatPopup.style.transform = "translateY(0)";
         }, 10);
         if (!sessionStorage.getItem("welcomeMessageSent")) {
-            chatHistory.push("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
+            const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
+            chatHistory.push({ role: "assistant", content: welcomeMessage });
             saveChatHistory(); // Save message sent to user
-            appendMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
-            //change bolean to avoid displaying twice
+            appendMessage("🧠 NicoAI", welcomeMessage);//change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
             //informed other open chat about the new message
             chatChannel.postMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
@@ -287,13 +287,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
-            let botReply = data.response || "I'm sorry, I didn't understand that.";
+            
+            let botReply = typeof data.response === "string" ? data.response.trim() : "I'm sorry, I didn't understand that.";
+            
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("🧠 NicoAI", botReply);
             saveChatHistory(); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;
+            
              // Broadcast message to all open pages
-            chatChannel.postMessage("🧠 NicoAI", botReply);
+            chatChannel.postMessage({ role: "assistant", content: botReply });
 
         } catch (error) {
             console.error("Chatbot Error:", error);

@@ -265,26 +265,14 @@
             const userInput = document.getElementById("user-input");
             const sendButton = document.getElementById("send-button");
 
-            // Load chat history from sessionStorage
-            function getChatHistory() {
-                const history = sessionStorage.getItem("chatHistory");
-                return history ? JSON.parse(history) : [];
-            }
+            //get chatbox
+            chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
 
-            let chatHistory = getChatHistory();
+            // refresh chat history
+            chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 
-            // Display previous messages (excluding system messages)
-            chatHistory.forEach(msg => {
-                if (msg.role !== "system") {
-                    const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
-                    appendMessage(sender, msg.content); // Display the message
-                }
-            });
-
-            //function to save ChatHistory in local storage
-            function saveChatHistory() {
-                localStorage.setItem("chatHistory", JSON.stringify(chatHistory)); // Save chat history
-            }
+            //display ChatHistory
+            displayChatHistory()
 
             //function to send message in OpenAI
             async function sendMessage() {
@@ -324,7 +312,7 @@
 
                     //update chat
                     chatHistory.push({ role: "assistant", content: botReply });
-                    appendMessage("🧠 NicoAI", botReply);
+                    appendMessage("assistant", botReply);
 
                     saveChatHistory(); // Save bot response
                     chatbox.scrollTop = chatbox.scrollHeight;

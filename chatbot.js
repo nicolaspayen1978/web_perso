@@ -47,8 +47,7 @@ function displayChatHistory() {
             console.warn("⚠️ Skipping invalid message:", msg);
             return;
         }
-        const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
-        appendMessage(sender, msg.content); // Display the message
+        appendMessage(msg.role, msg.content); // Display the message
     });
 }
 
@@ -109,7 +108,9 @@ function appendMessage(role, content) {
     }
     const formattedContent = formatLinks(content); // Apply link formatting
     const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${role}:</strong> ${formattedContent}`;
+
+    const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
+    messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedContent}`;
     
     chatbox.appendChild(messageElement);
     chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
@@ -186,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
             chatHistory.push({ role: "assistant", content: welcomeMessage });
             saveChatHistory(); // Save message sent to user
-            appendMessage("🧠 NicoAI", welcomeMessage);//change bolean to avoid displaying twice
+            appendMessage("assistant", welcomeMessage);//change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
             //informed other open chat about the new message
             chatChannel.postMessage("🧠 NicoAI", "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?");
@@ -291,10 +292,10 @@ document.addEventListener("DOMContentLoaded", function () {
             let botReply = typeof data.response === "string" ? data.response.trim() : "I'm sorry, I didn't understand that.";
             
             chatHistory.push({ role: "assistant", content: botReply });
-            appendMessage("🧠 NicoAI", botReply);
+            appendMessage("assistant", botReply );
             saveChatHistory(); // Save bot response
             chatbox.scrollTop = chatbox.scrollHeight;
-            
+
              // Broadcast message to all open pages
             chatChannel.postMessage({ role: "assistant", content: botReply });
 

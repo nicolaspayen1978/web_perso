@@ -176,15 +176,9 @@
                     <h1>Chat with NicoAI</h1>
                     <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-profilepic">
                 </div>
-
                 <!-- Chat messages -->
                 <div id="chatbox"></div>
-                <!-- add progress bar
-                <div id="progress-bar" style="width: 0%; background: #2c3e50; color: white; text-align: center; padding: 5px; border-radius: 5px;">
-                    0%
-                </div>
-                 -->
-                <!-- Input and Button -->
+                 <!-- Input and Button -->
                 <div class="input-container">
                     <input type="text" id="user-input" placeholder="Ask me anything..." aria-label="Type your message" />
                     <button id="send-button" aria-label="Send message">Send</button>
@@ -198,16 +192,6 @@
         </div>
         <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
     </footer>
-    <script>
-        function updateProgress(category, completed, total) {
-            let progressBar = document.getElementById("progress-bar");
-            if (progressBar) {
-                let percentage = Math.round((completed / total) * 100);
-                progressBar.style.width = percentage + "%";
-                progressBar.innerText = `Loading ${category} (${percentage}%)`;
-            }
-        }
-    </script>
     <script>
          document.addEventListener("DOMContentLoaded", function () {
             // Select menu elements

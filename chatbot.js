@@ -56,7 +56,11 @@ function displayChatHistory() {
         appendMessage(msg.role, msg.content); // Display the message
     });
 
-    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to latest message
+    // Check if user is already at the bottom before forcing auto-scroll
+    const isUserAtBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 10;
+    if (isUserAtBottom) {
+        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll only if user is at the bottom
+    }
 }
 
 async function initializeNicoAI() {
@@ -126,22 +130,10 @@ function appendMessage(role, content) {
     const sender = role === "assistant" ? "🧠 NicoAI" : "You";
     messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedContent}`;
     
-    chatbox.appendChild(messageElement);
-    chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
-}
-
-// Function to update progress text or bar
-function updateProgress(percent) {
-    const textElement = document.getElementById("loading-progress");
-    const progressBar = document.getElementById("progress-bar");
-
-    if (textElement) {
-        textElement.innerText = `Loading ${percent}%...`;
-    }
-
-    if (progressBar) {
-        progressBar.style.width = `${percent}%`;
-        progressBar.innerText = `${percent}%`;
+    // Check if user is already at the bottom before forcing auto-scroll
+    const isUserAtBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 10;
+    if (isUserAtBottom) {
+        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll only if user is at the bottom
     }
 }
 

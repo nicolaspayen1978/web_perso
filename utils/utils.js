@@ -68,6 +68,7 @@ async function callOpenAI(prompt, retryCount = 3) {
             // Set up a timeout controller (20 seconds max)
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 20000); // ⏳ 20s timeout
+            let maxTokens = Math.min(700, Math.max(300, prompt.length / 3)); // Adjust dynamically the token limit based on the prompt size
 
             const response = await fetch("https://api.openai.com/v1/chat/completions", {
                 method: "POST",
@@ -79,8 +80,8 @@ async function callOpenAI(prompt, retryCount = 3) {
                     //model: "gpt-4-turbo",
                     model: "o3-mini",
                     messages: Array.isArray(prompt) ? prompt : [{ role: role, content: prompt }], 
-                    //max_tokens: 300, "gpt model only"
-                    max_completion_tokens: 300, 
+                    //max_tokens: 300, "gpt model only / not o3 or o1"
+                    max_completion_tokens: Math.floor(maxTokens),  // Dynamically adjust token limit
                     //temperature: 0.1, "gpt model only"
                     reasoning_effort: "low",  
                     //top_p: 0.9,  "gpt model only"

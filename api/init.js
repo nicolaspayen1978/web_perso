@@ -13,7 +13,7 @@ initApp.use(express.json());
 
 // ✅ CORS Middleware - Add this BEFORE defining `/api/init`
 initApp.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://nicolaspayen1978.github.io");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
@@ -76,22 +76,6 @@ async function init_NicoAI(visitorID) {
         firstMessage = botReply[0].choices[0].message?.content || firstMessage;
     }
 
-    //Ensure resources exist before sending summary request
-    /*
-    if (resources && Object.keys(resources).length > 0) {
-        console.log("📥 Fetching and summarizing resources...");
-
-        const summaryPrompt = [
-            { role: "system", content: "Here are Nicolas's key resources. Please provide a description of their content in 100 words maximum for future reference." },
-            { role: "user", content: JSON.stringify(resources) }
-        ];
-
-        console.log(`🟢 Sending summary request to OpenAI:\n`, summaryPrompt);
-        await callOpenAI(summaryPrompt);
-    } else {
-        console.warn("⚠️ No resources available, skipping summary request.");
-    }
-    */
     console.log(`✅ NicoAI initialized for visitor ${visitorID}. First message: ${firstMessage}`);
 
     return { message: firstMessage };

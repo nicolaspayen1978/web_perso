@@ -60,6 +60,8 @@ function displayChatHistory() {
         }
         appendMessage(msg.role, msg.content); // Display the message
     });
+
+    chatbox.scrollTop = chatbox.scrollHeight;
 }
 
 async function initializeNicoAI() {
@@ -128,6 +130,9 @@ function appendMessage(role, content) {
 
     const sender = role === "assistant" ? "🧠 NicoAI" : "You";
     messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedContent}`;
+
+    chatbox.appendChild(messageElement); // ✅ Append message properly to chatbox
+    chatbox.scrollTop = chatbox.scrollHeight; // ✅ Auto-scroll to latest message
 }
 
 //Reduce ChatHistory to not overload OpenAI
@@ -158,7 +163,7 @@ function truncateChatHistory(chatHistory, maxTokens=4000) {
     return truncatedHistory;
 }
 
-// If the backend API for NicoAI is not yet initialized, then we initialize it
+// If the backend API for NicoAI is not yet initialized, then we initialize it.
 if (!localStorage.getItem("nicoAI_initialized")) {  
     initializeNicoAI();  // Call the initialization function
     localStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
@@ -166,12 +171,6 @@ if (!localStorage.getItem("nicoAI_initialized")) {
 
 document.addEventListener("DOMContentLoaded", function () {
     chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
-
-    // Only initialize the chatbot if the chatbox exists on the page
-    if (!chatbox) {
-        console.warn("⚠️ Chatbox not found on this page. Skipping chatbot initialization.");
-        return;
-    }
 
     //not on chat.html
     const chatbotIcon = document.getElementById("chatbot-icon");
@@ -195,19 +194,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 chatPopup.style.transform = "translateY(0)";
             }, 10);
         }
+        displayChatHistory(); // Ensure chat history is displayed on open
+    }
+
+    function initSessionChat() {
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
+            const chatHistory = getChatHistory();
             chatHistory.push({ role: "assistant", content: welcomeMessage });
-            saveChatHistory(chatHistory); // Save message sent to user
-            appendMessage("assistant", welcomeMessage);//change bolean to avoid displaying twice
             sessionStorage.setItem("welcomeMessageSent", "true");
+            saveChatHistory(chatHistory); // Save message sent to user
             //informed other open chat about the new message
             chatChannel.postMessage({
                 role: "assistant",
-                content: "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?"
+                content: welcomeMessage
             });
         }
-        displayChatHistory(); // Ensure chat history is displayed on open
+        displayChatHistory();
+
     }
 
     //Make the chatbox invisible to the user
@@ -327,4 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatbox.innerHTML += `<p><strong>AI:</strong> Sorry, I encountered an error. Please try again.</p>`;
         }
     }
+
+    //when the page load we initiate the chat session
+    initSessionChat();
 });

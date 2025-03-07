@@ -97,11 +97,6 @@ function appendMessage(role, content) {
     chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to bottom
 }
 
- if (!sessionStorage.getItem("nicoAI_initialized")) {
-    initializeNicoAI();
-    sessionStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
-}
-
 // Function to update progress text or bar
 function updateProgress(percent) {
     const textElement = document.getElementById("loading-progress");
@@ -141,6 +136,12 @@ function truncateChatHistory(chatHistory, maxTokens=4000) {
     }
 
     return truncatedHistory;
+}
+
+// If the backend API for NicoAI is not yet initialized, then we initialize it
+if (!localStorage.getItem("nicoAI_initialized")) {  
+    initializeNicoAI();  // Call the initialization function
+    localStorage.setItem("nicoAI_initialized", "true"); // Prevent re-initialization
 }
 
 document.addEventListener("DOMContentLoaded", function () {

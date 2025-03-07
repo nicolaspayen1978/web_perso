@@ -165,25 +165,36 @@ if (!localStorage.getItem("nicoAI_initialized")) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
+
+    // Only initialize the chatbot if the chatbox exists on the page
+    if (!chatbox) {
+        console.warn("⚠️ Chatbox not found on this page. Skipping chatbot initialization.");
+        return;
+    }
+
+    //not on chat.html
     const chatbotIcon = document.getElementById("chatbot-icon");
     const chatPopup = document.getElementById("chat-popup");
     const maximizeChat = document.getElementById("maximize-chat");
     const closeChat = document.getElementById("close-chat");
+    
+    //in all pages even chat.html
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
-
-    chatbox = document.getElementById("chatbox"); // Ensure chatbox exists
 
     // refresh chat history
     chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 
     //Make the chatbox visible to the user
     function showChat() {
-        chatPopup.style.display = "flex";
-        setTimeout(() => {
-            chatPopup.style.opacity = "1";
-            chatPopup.style.transform = "translateY(0)";
-        }, 10);
+        if (chatPopup){
+            chatPopup.style.display = "flex";
+            setTimeout(() => {
+                chatPopup.style.opacity = "1";
+                chatPopup.style.transform = "translateY(0)";
+            }, 10);
+        }
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
             chatHistory.push({ role: "assistant", content: welcomeMessage });
@@ -199,50 +210,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Make the chatbox invisible to the user
     function hideChat() {
-        chatPopup.style.opacity = "0";
-        chatPopup.style.transform = "translateY(50px)";
-        setTimeout(() => {
-            chatPopup.style.display = "none";
-        }, 300);
+        if(chatPopup) {
+            chatPopup.style.opacity = "0";
+            chatPopup.style.transform = "translateY(50px)";
+            setTimeout(() => {
+                chatPopup.style.display = "none";
+            }, 300);
+        }
     }
 
-    // Fix: Maximize button should open the full-page chat with history
-    maximizeChat.addEventListener("click", function () {
-        if (chatHistory.length === 0) {
-            console.warn("No chat history to transfer!");
-            return;
-        }
-        // Remove system messages before sending history to new tab
-        //const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
-        //localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
-        window.open("chat.html", "_blank");
-    });
+    if(chatPopup && chatbotIcon && closeChat && maximizeChat {
 
-    chatbotIcon.addEventListener("click", function (event) {
-        event.stopPropagation();
-        if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
-            showChat();
-        }
-    });
+        // Fix: Maximize button should open the full-page chat with history
+        maximizeChat.addEventListener("click", function () {
+            if (chatHistory.length === 0) {
+                console.warn("No chat history to transfer!");
+                return;
+            }
+            // Remove system messages before sending history to new tab
+            //const filteredChatHistory = chatHistory.filter(msg => msg.role !== "system");
+            //localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+            window.open("chat.html", "_blank");
+        });
 
-    closeChat.addEventListener("click", function (event) {
-        event.stopPropagation();
-        hideChat();
-    });
+        chatbotIcon.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+                showChat();
+            }
+        });
 
-    chatPopup.addEventListener("click", function (event) {
-        event.stopPropagation();
-    });
+        closeChat.addEventListener("click", function (event) {
+            event.stopPropagation();
+            hideChat();
+        });
+
+        chatPopup.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+    }
 
     document.addEventListener("click", function (event) {
-        if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
-            hideChat();
+        if(chatPopup && chatbotIcon){
+            if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
+                hideChat();
+            }
         }
     });
 
     document.addEventListener("touchstart", function (event) {
-        if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
-            hideChat();
+        if(chatPopup && chatbotIcon){
+            if (!chatPopup.contains(event.target) && !chatbotIcon.contains(event.target)) {
+                hideChat();
+            }
         }
     });
 

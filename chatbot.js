@@ -1,4 +1,5 @@
-// this is chatbot.js the frontend javascript code for the chatbot
+//this is chatbot.js the frontend javascript code for the chatbot
+//it is used in all pages with a chatbot 
 // Declare chatHistory globally
 let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
 let chatbox = null; // Declare globally

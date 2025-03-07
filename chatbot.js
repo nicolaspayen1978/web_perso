@@ -109,7 +109,7 @@ function appendMessage(role, content) {
     const formattedContent = formatLinks(content); // Apply link formatting
     const messageElement = document.createElement("p");
 
-    const sender = msg.role === "assistant" ? "🧠 NicoAI" : "You";
+    const sender = role === "assistant" ? "🧠 NicoAI" : "You";
     messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedContent}`;
     
     chatbox.appendChild(messageElement);

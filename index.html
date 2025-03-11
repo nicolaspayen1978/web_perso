@@ -218,8 +218,11 @@
         <div id="footer-title">
             <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Enstein</i></p>
         </div>
-        <p>&copy; 2025 Nicolas Payen. All rights reserved.</p>
+        <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
     </footer>
+    <script type="text/javascript">
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
      <script>
          document.addEventListener("DOMContentLoaded", function () {
             

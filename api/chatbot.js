@@ -36,7 +36,7 @@ chatApp.post('/api/chatbot', async (req, res) => {
     // Use resources from init.js instead of fetching them separately
     const systemPrompt = {
         role: "system",
-        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses.`
+        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses. Keep answer in 100 words max (excluding links). If you don't know yet the identity of this user please ask for it, ask for its contact details, and ask for the reason of his/her visit to the website.`
     };
 
     const aiResponse = await callOpenAI([systemPrompt, { role: "user", content: userInput }]);
@@ -49,7 +49,7 @@ async function generateChatResponse(userMessages) {
     
     const systemMessage = {
         role: "system",
-        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses.`
+        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses. Keep answer in 100 words max (excluding links). If you don't know yet the identity of this user please ask for it, ask for its contact details, and ask for the reason of his/her visit to the website.`
     };
 
     const fullUserMessages = [systemMessage, { role: "user", content: userMessages }];

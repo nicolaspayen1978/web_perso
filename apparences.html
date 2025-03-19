@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore Nicolas Payen's articles on sustainable investing, climate tech, and more">
+    <meta name="description" content="Explore Nicolas Payen's apparences in videos, events, podcasts on sustainable investing, climate tech, and more, plus video interviews from YouTube.">
     <meta name="author" content="Nicolas Payen">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://web-perso.vercel.app/articles.html">
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Nicolas Payen’s Articles – Technology, Climate, Sustainability & Investments">
-    <meta property="og:description" content="Read Nicolas Payen’s articles and watch his YouTube interviews on technology, sustainability, climate tech, and the 4Gs portfolio.">
-    <meta property="og:image" content="https://web-perso.vercel.app/images/Articles.jpg">
-    <meta property="og:url" content="https://web-perso.vercel.app/articles.html">
+    <meta property="og:title" content="Nicolas Payen’s videos and podcasts – Technology, Sustainability & Investments">
+    <meta property="og:description" content="Watch and/or listen to Nicolas Payen’s interviews on sustainability, climate tech, and the 4Gs portfolio.">
+    <meta property="og:image" content="https://web-perso.vercel.app/images/apparences.jpg">
+    <meta property="og:url" content="https://web-perso.vercel.app/apparences.html">
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Nicolas Payen’s Articles – Technology, Sustainability & Investments">
-    <meta name="twitter:description" content="Read Nicolas Payen’s articles on its life, its professional experiences, technology, sustainability, climate tech, and the 4Gs portfolio.">
-    <meta name="twitter:image" content="https://web-perso.vercel.app/images/Articles.jpg">
-    <title>Nicolas Payen | Articles</title>
+    <meta name="twitter:title" content="Nicolas Payen’s Videos or Podcasts apparences – Technology, Sustainability & Investments">
+    <meta name="twitter:description" content="Watch and/or listen to Nicolas Payen’s interviews on sustainability, climate tech, and the 4Gs portfolio.">
+    <meta name="twitter:image" content="https://web-perso.vercel.app/images/apparences.jpg">
+    <title>Nicolas Payen | Videos & Podcasts</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
@@ -101,7 +101,7 @@
         </nav>
     </div>
     <header>
-        <h1>Articles by Nicolas Payen</h1>
+        <h1>Videos & Podcasts by or with Nicolas Payen</h1>
         <p>Insights and interviews on sustainability, climate tech, and investments</p>
         <nav>
             <ul>
@@ -115,8 +115,8 @@
         </nav>
     </header>
     <main>
-        <section class="article-list" id="articles">
-            <h2>All Articles</h2>
+        <section class="video-section" id="videos">
+            <h2>Video Interviews</h2>
             <!-- Populated by JS -->
         </section>
     </main>
@@ -152,24 +152,28 @@
                 }
                 lastScrollTop = currentScroll;
             });
-
-            // Fetch and populate articles and videos
+            // Fetch and populate videos
             fetch('resources.json') // Adjust path if needed (e.g., '/path/to/resources.json')
                 .then(response => response.json())
                 .then(data => {
-                    // Articles
-                    const articleList = document.querySelector(".article-list");
-                    const sortedArticles = data.articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    sortedArticles.forEach(article => {
-                        const articleDiv = document.createElement("div");
-                        articleDiv.className = "article-item";
-                        articleDiv.innerHTML = `
-                            <h3><a href="${article.url}">${article.title}</a></h3>
-                            <p><strong>${article.date}</strong></p>
-                            <p>${article.description || article.summary || "No summary available."}</p>
-                        `;
-                        articleList.appendChild(articleDiv);
-                    });
+                    // Videos
+                    const videoSection = document.querySelector(".video-section");
+                    if (data.videos && data.videos.length > 0) {
+                        const sortedVideos = data.videos.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        sortedVideos.forEach(video => {
+                            const embedUrl = video.url.replace("watch?v=", "embed/");
+                            const videoDiv = document.createElement("div");
+                            videoDiv.className = "video-item";
+                            videoDiv.innerHTML = `
+                                <h3>${video.title}</h3>
+                                <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+                                <p>${video.description || "No summary available."}</p>
+                            `;
+                            videoSection.appendChild(videoDiv);
+                        });
+                    } else {
+                        videoSection.innerHTML += "<p>No video interviews available yet.</p>";
+                    }
                 })
                 .catch(error => console.error("Error loading resources.json:", error));
         });

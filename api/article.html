@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Nicolas Payen's articles on sustainable investing, climate tech, and more, plus video interviews from YouTube.">
+    <meta name="author" content="Nicolas Payen">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://web-perso.vercel.app/articles.html">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Nicolas Payen’s Articles & Videos – Sustainability & Investments">
+    <meta property="og:description" content="Read Nicolas Payen’s articles and watch his YouTube interviews on sustainability, climate tech, and the 4Gs portfolio.">
+    <meta property="og:image" content="https://web-perso.vercel.app/images/Articles.jpg">
+    <meta property="og:url" content="https://web-perso.vercel.app/articles.html">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nicolas Payen’s Articles & Videos – Sustainability & Investments">
+    <meta name="twitter:description" content="Read Nicolas Payen’s articles and watch his YouTube interviews on sustainability, climate tech, and the 4Gs portfolio.">
+    <meta name="twitter:image" content="https://web-perso.vercel.app/images/Articles.jpg">
+    <title>Nicolas Payen | Articles & Videos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 10px;
+        }
+        main {
+            margin-top: 25vh;
+            padding: 0;
+        }
+        @media (max-width: 768px) {
+            main {
+                margin-top: 35vh;
+            }
+        }
+        .article-list, .video-section {
+            text-align: left;
+            padding: 20px 0;
+        }
+        .article-item, .video-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .article-item h3, .video-item h3 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .article-item p, .video-item p {
+            margin: 5px 0;
+        }
+        .video-item iframe {
+            max-width: 100%;
+            height: 200px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Chatbot Button -->
+    <div id="chatbot-icon">
+        <img src="images/NicoAvatar.png" alt="Chatbot" />
+    </div>
+    <!-- Chatbot Popup Window -->
+    <div id="chat-popup">
+        <div id="chat-header">
+            <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-avatar">
+            <span>Chat with an AI version of me!</span>
+            <button id="maximize-chat">🔲</button>
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chatbox"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask me anything..." />
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <div class="menu-container">
+        <div class="menu-icon">
+            <div></div><div></div><div></div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html#articles">Articles</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#pictures">Photos</a></li>
+                <li><a href="index.html#journey">Career</a></li>
+                <li><a href="index.html#resume">Resume</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <header>
+        <h1>Articles & Videos by Nicolas Payen</h1>
+        <p>Insights and interviews on sustainability, climate tech, and investments</p>
+        <nav>
+            <ul>
+                <li><a href="index.html#articles">Articles</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#pictures">Photos</a></li>
+                <li><a href="index.html#journey">Career</a></li>
+                <li><a href="index.html#resume">Resume</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="article-list" id="articles">
+            <h2>All Articles</h2>
+            <!-- Populated by JS -->
+        </section>
+        <section class="video-section" id="videos">
+            <h2>Video Interviews</h2>
+            <!-- Populated by JS -->
+        </section>
+    </main>
+    <footer>
+        <div id="footer-title">
+            <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Einstein</i></p>
+        </div>
+        <p>© <span id="year"></span> Nicolas Payen. All rights reserved.</p>
+    </footer>
+    <script src="chatbot.js"></script>
+    <script type="text/javascript">
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuIcon = document.querySelector(".menu-icon");
+            const navMenu = document.querySelector(".nav-menu");
+            if (menuIcon && navMenu) {
+                menuIcon.addEventListener("click", (e) => { e.stopPropagation(); navMenu.classList.toggle("visible"); });
+                document.addEventListener("click", (e) => {
+                    if (!menuIcon.contains(e.target) && !navMenu.contains(e.target)) navMenu.classList.remove("visible");
+                });
+                navMenu.addEventListener("click", (e) => { if (e.target.tagName === "A") navMenu.classList.remove("visible"); });
+            }
+            let lastScrollTop = 0, scrollThreshold = 50, header = document.querySelector("header"), isHidden = false;
+            window.addEventListener("scroll", () => {
+                let currentScroll = window.scrollY || document.documentElement.scrollTop;
+                if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) return;
+                if (currentScroll > lastScrollTop && currentScroll > 50) {
+                    if (!isHidden) { header.style.top = "-100px"; header.style.opacity = "0"; isHidden = true; }
+                } else {
+                    if (isHidden) { header.style.top = "0"; header.style.opacity = "1"; isHidden = false; navMenu.classList.remove("visible"); }
+                }
+                lastScrollTop = currentScroll;
+            });
+
+            // Fetch and populate articles and videos
+            fetch('resources.json') // Adjust path if needed (e.g., '/path/to/resources.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Articles
+                    const articleList = document.querySelector(".article-list");
+                    const sortedArticles = data.articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    sortedArticles.forEach(article => {
+                        const articleDiv = document.createElement("div");
+                        articleDiv.className = "article-item";
+                        articleDiv.innerHTML = `
+                            <h3><a href="${article.url}">${article.title}</a></h3>
+                            <p><strong>${article.date}</strong></p>
+                            <p>${article.description || article.summary || "No summary available."}</p>
+                        `;
+                        articleList.appendChild(articleDiv);
+                    });
+
+                    // Videos
+                    const videoSection = document.querySelector(".video-section");
+                    if (data.videos && data.videos.length > 0) {
+                        const sortedVideos = data.videos.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        sortedVideos.forEach(video => {
+                            const embedUrl = video.url.replace("watch?v=", "embed/");
+                            const videoDiv = document.createElement("div");
+                            videoDiv.className = "video-item";
+                            videoDiv.innerHTML = `
+                                <h3>${video.title}</h3>
+                                <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+                                <p>${video.summary || "No summary available."}</p>
+                            `;
+                            videoSection.appendChild(videoDiv);
+                        });
+                    } else {
+                        videoSection.innerHTML += "<p>No video interviews available yet.</p>";
+                    }
+                })
+                .catch(error => console.error("Error loading resources.json:", error));
+        });
+    </script>
+</body>
+</html>

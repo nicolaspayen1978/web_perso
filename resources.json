@@ -187,6 +187,26 @@
       "description": "Nicolas Payen explores how organizing a running dinner for 27 neighbors turned into an unexpected AI challenge. Various AI engines, including xAI and OpenAI, were tested to create an optimal dinner route. The results highlighted AI strengths, limitations, and the importance of iterative problem-solving in complex, real-world scenarios."
     }
   ],
+  "video": [
+    {
+      "title": "GrowCFO show : Episode 204 Powering the Future: Finance’s Role in the Energy Transition with Nicolas Payen",
+      "url": "https://www.youtube.com/watch?v=u3zKtG0SCGY",
+      "date": "2024-10-16",
+      "description": "Nicolas Payen, former CEO of Positive Energy Ltd, joins Kevin Appleby on the Grow CFO Show to discuss the energy transition, policy impacts, and investment implications. He highlights the CFO’s role in managing strategic decisions and explores how sustainability influences talent recruitment, particularly among younger generations prioritizing green companies."
+    },
+    {
+      "title": "Horasis Global Meeting 2022 : Moving to Climate Adaptation or Mitigation: A Clash of Policies - Horasis Global Meeting 2022",
+      "url": "https://www.youtube.com/watch?v=QbDxl2AlXQk",
+      "date": "2022-05-20",
+      "description": "The mitigation goals set by Kyoto and then Paris are creating difficulties for all nations to follow and to achieve. Governments have been slow to act - routes are not well modeled and thus offer no solid guidance. Economists have noted, … All that stands in the way of saving the planet is a combination of ignorance, prejudice and vested interests. What could go wrong? We ask again, in 2022, what can go wrong?  What are the viable solutions?."
+    },
+    {
+      "title": "Horasis Global Meeting 2021. Panel discussion. Paving the Way to COP26",
+      "url": "https://www.youtube.com/watch?v=jhH24wpmD2E",
+      "date": "2021-06-09",
+      "description": "The 2021 UN/Climate Change meeting is to be held in Glasgow, UK in November urging progress towards the 2030 climate targets. Now the US has formally re-joined the Paris Accord, will this be enough to instill global collaboration similar to the work against COVID? What will it take to generate transformative approaches leading to a better shared solution for humanity?"
+    }
+  ],
   "projects": [
     {
       "title": "4Gs Portfolio",

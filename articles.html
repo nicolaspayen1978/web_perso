@@ -143,14 +143,28 @@
     </script>
     <script>
         function filterContent() {
-                let input = document.getElementById("search-input").value.toLowerCase();
-                let articles = document.querySelectorAll(".article-item");
-                
-                articles.forEach(article => {
-                    let text = article.textContent.toLowerCase();
-                    article.style.display = text.includes(input) ? "flex" : "none";
-                });
+            let input = document.getElementById("search-input").value.toLowerCase();
+            let articles = document.querySelectorAll(".article-item");
+            
+            articles.forEach(article => {
+                let text = article.textContent.toLowerCase();
+                article.style.display = text.includes(input) ? "flex" : "none";
+            });
+        }
+        
+        async function fetchOGImage(url) {
+            try {
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, "text/html");
+                const ogImage = doc.querySelector('meta[property="og:image"]');
+                return ogImage ? ogImage.content : 'https://web-perso.vercel.app/images/default.jpg';
+            } catch (error) {
+                console.error("Error fetching OG image for:", url, error);
+                return 'https://web-perso.vercel.app/images/default.jpg';
             }
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             const menuIcon = document.querySelector(".menu-icon");
@@ -182,10 +196,12 @@
                     const articleList = document.querySelector(".article-list");
                     const sortedArticles = data.articles.sort((a, b) => new Date(b.date) - new Date(a.date));
                     sortedArticles.forEach(article => {
+                        const imageUrl = await fetchOGImage(article.url);
                         const articleDiv = document.createElement("div");
+
                         articleDiv.className = "article-item";
                         articleDiv.innerHTML = `
-                            <img src="${article.image || 'https://web-perso.vercel.app/images/default.jpg'}" alt="${article.title}" loading="lazy">
+                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
                             <div class="article-content">
                                 <h3><a href="${article.url}">${article.title}</a></h3>
                                 <p><strong>${article.date}</strong></p>

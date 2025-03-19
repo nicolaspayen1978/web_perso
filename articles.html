@@ -179,30 +179,24 @@
                 lastScrollTop = currentScroll;
             });
 
-            // Fetch and populate articles and videos
-            fetch('resources.json') // Adjust path if needed (e.g., '/path/to/resources.json')
-                .then(response => response.json())
-                .then(data => {
-                    // Articles
-                    const articleList = document.querySelector(".article-list");
-                    const sortedArticles = data.articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    sortedArticles.forEach(article => {
-                        const imageUrl = await fetchOGImage(article.url);
-                        const articleDiv = document.createElement("div");
-
-                        articleDiv.className = "article-item";
-                        articleDiv.innerHTML = `
-                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
-                            <div class="article-content">
-                                <h3><a href="${article.url}">${article.title}</a></h3>
-                                <p><strong>${article.date}</strong></p>
-                                <p>${article.description || article.summary || "No summary available."}</p>
-                            </div>
-                        `;
-                        articleList.appendChild(articleDiv);
-                    });
-                })
-                .catch(error => console.error("Error loading resources.json:", error));
+            const articleList = document.querySelector(".article-list");
+            const response = await fetch('resources.json');
+            const data = await response.json();
+            
+            for (const article of data.articles) {
+                const imageUrl = await fetchOGImage(article.url);
+                const articleDiv = document.createElement("div");
+                articleDiv.className = "article-item";
+                articleDiv.innerHTML = `
+                    <img src="${imageUrl}" alt="${article.title}" loading="lazy">
+                    <div class="article-content">
+                        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+                        <p><strong>${article.date}</strong></p>
+                        <p>${article.description || article.summary || "No summary available."}</p>
+                    </div>
+                `;
+                articleList.appendChild(articleDiv);
+            }
         });
     </script>
 </body>

@@ -44,7 +44,7 @@
         }
 
         .article-item img {
-            width: 120px;
+            width: 200px;
             height: auto;
             border-radius: 8px;
             object-fit: cover;
@@ -176,10 +176,10 @@
                         const articleDiv = document.createElement("div");
                         articleDiv.className = "article-item";
                         articleDiv.innerHTML = `
-                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
                             <div class="article-content">
                                 <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
                                 <p><strong>${article.date}</strong></p>
+                                <img src="${imageUrl}" alt="${article.title}" loading="lazy">
                                 <p>${article.description || article.summary || "No summary available."}</p>
                             </div>
                         `;

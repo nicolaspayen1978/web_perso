@@ -207,21 +207,21 @@
       "title": "4Gs portfolio update - 2024 Annual returns",
       "url": "https://nicolaspayen1978.github.io/Articles/30_4Gs_2024_YE/Article30.html",
       "date": "2025-01-10",
-      "ogImage": "-1",
+      "ogImage": "https://nicolaspayen1978.github.io/Articles/30_4Gs_2024_YE/image/cover.png",
       "description": "Nicolas Payen’s 4Gs portfolio achieved a 24.6% return in 2024, outperforming the S&P 500. Driven by Climate Tech, EssilorLuxottica, and a rebound in China’s equities, the portfolio reflects long-term societal and technological trends. Future goals focus on rebalancing towards Green investments, enhancing dividends, and scouting growth opportunities."
     },
     {
       "title": "The AI Running Dinner Challenge, Fight of the Giants",
       "url": "https://nicolaspayen1978.github.io/Articles/31_AI_running_dinner_challenge/Article31.html",
       "date": "2025-03-15",
-      "ogImage": "-1",
+      "ogImage": "https://nicolaspayen1978.github.io/Articles/31_AI_running_dinner_challenge/image/cover.jpg",
       "description": "Nicolas Payen explores how organizing a running dinner for 27 neighbors turned into an unexpected AI challenge. Various AI engines, including xAI and OpenAI, were tested to create an optimal dinner route. The results highlighted AI strengths, limitations, and the importance of iterative problem-solving in complex, real-world scenarios."
     },
      {
       "title": "Enhancing Smart EV Charging for a Sustainable Future",
       "url": "https://nicolaspayen1978.github.io/Articles/32_EV_SmartCharging/Article32.html",
       "date": "2025-03-16",
-      "ogImage": "-1",
+      "ogImage": "https://nicolaspayen1978.github.io/Articles/32_EV_SmartCharging/image/cover.jpg",
       "description": "Nicolas Payen shares his experience optimizing smart EV charging at home after switching to a Mercedes EV and a Quatt heat pump. Facing manual charging limitations between the Mercedes app and Easee charger, he calls for better integration to maximize solar energy use, especially with saldering ending in 2027."
     }
   ],

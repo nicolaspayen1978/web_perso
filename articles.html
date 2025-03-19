@@ -42,6 +42,14 @@
                 margin-top: 35vh;
             }
         }
+
+        .article-item img {
+            width: 120px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
         .article-list, .video-section {
             text-align: left;
             padding: 20px 0;
@@ -115,6 +123,9 @@
         </nav>
     </header>
     <main>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search articles..." onkeyup="filterContent()">
+        </div>
         <section class="article-list" id="articles">
             <h2>All Articles</h2>
             <!-- Populated by JS -->
@@ -131,6 +142,16 @@
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
     <script>
+        function filterContent() {
+                let input = document.getElementById("search-input").value.toLowerCase();
+                let articles = document.querySelectorAll(".article-item");
+                
+                articles.forEach(article => {
+                    let text = article.textContent.toLowerCase();
+                    article.style.display = text.includes(input) ? "flex" : "none";
+                });
+            }
+
         document.addEventListener("DOMContentLoaded", () => {
             const menuIcon = document.querySelector(".menu-icon");
             const navMenu = document.querySelector(".nav-menu");
@@ -164,9 +185,12 @@
                         const articleDiv = document.createElement("div");
                         articleDiv.className = "article-item";
                         articleDiv.innerHTML = `
-                            <h3><a href="${article.url}">${article.title}</a></h3>
-                            <p><strong>${article.date}</strong></p>
-                            <p>${article.description || article.summary || "No summary available."}</p>
+                            <img src="${article.image || 'https://web-perso.vercel.app/images/default.jpg'}" alt="${article.title}" loading="lazy">
+                            <div class="article-content">
+                                <h3><a href="${article.url}">${article.title}</a></h3>
+                                <p><strong>${article.date}</strong></p>
+                                <p>${article.description || article.summary || "No summary available."}</p>
+                            </div>
                         `;
                         articleList.appendChild(articleDiv);
                     });

@@ -167,6 +167,7 @@
                             videoDiv.className = "video-item";
                             videoDiv.innerHTML = `
                                 <h3>${video.title}</h3>
+                                <p><strong>${video.date}</strong></p>
                                 <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
                                 <p>${video.description || "No summary available."}</p>
                             `;

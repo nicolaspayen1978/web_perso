@@ -123,9 +123,6 @@
         </nav>
     </header>
     <main>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search articles..." onkeyup="filterContent()">
-        </div>
         <section class="article-list" id="articles">
             <h2>All Articles</h2>
             <!-- Populated by JS -->
@@ -141,17 +138,7 @@
     <script type="text/javascript">
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
-    <script>
-        function filterContent() {
-            let input = document.getElementById("search-input").value.toLowerCase();
-            let articles = document.querySelectorAll(".article-item");
-            
-            articles.forEach(article => {
-                let text = article.textContent.toLowerCase();
-                article.style.display = text.includes(input) ? "flex" : "none";
-            });
-        }
-        
+    <script>       
         async function fetchOGImage(url) {
             try {
                 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;

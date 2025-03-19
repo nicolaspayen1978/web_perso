@@ -137,8 +137,7 @@
     <script src="chatbot.js"></script>
     <script type="text/javascript">
         document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-    <script>       
+        
         async function fetchOGImage(url) {
             try {
                 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
@@ -157,6 +156,37 @@
             }
         }
 
+        document.addEventListener("DOMContentLoaded", function () {
+            async function loadArticles() {
+                try {
+                    const articleList = document.querySelector(".article-list");
+                    const response = await fetch('resources.json');
+                    const data = await response.json();
+                    
+                    for (const article of data.articles) {
+                        const imageUrl = await fetchOGImage(article.url);
+                        const articleDiv = document.createElement("div");
+                        articleDiv.className = "article-item";
+                        articleDiv.innerHTML = `
+                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
+                            <div class="article-content">
+                                <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+                                <p><strong>${article.date}</strong></p>
+                                <p>${article.description || article.summary || "No summary available."}</p>
+                            </div>
+                        `;
+                        articleList.appendChild(articleDiv);
+                    }
+                } catch (error) {
+                    console.error("Error loading articles:", error);
+                }
+            }
+            
+            // Call the async function
+            loadArticles();
+        });
+    </script>
+    <script>       
         document.addEventListener("DOMContentLoaded", () => {
             const menuIcon = document.querySelector(".menu-icon");
             const navMenu = document.querySelector(".nav-menu");
@@ -178,25 +208,6 @@
                 }
                 lastScrollTop = currentScroll;
             });
-
-            const articleList = document.querySelector(".article-list");
-            const response = await fetch('resources.json');
-            const data = await response.json();
-            
-            for (const article of data.articles) {
-                const imageUrl = await fetchOGImage(article.url);
-                const articleDiv = document.createElement("div");
-                articleDiv.className = "article-item";
-                articleDiv.innerHTML = `
-                    <img src="${imageUrl}" alt="${article.title}" loading="lazy">
-                    <div class="article-content">
-                        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-                        <p><strong>${article.date}</strong></p>
-                        <p>${article.description || article.summary || "No summary available."}</p>
-                    </div>
-                `;
-                articleList.appendChild(articleDiv);
-            }
         });
     </script>
 </body>

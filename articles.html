@@ -137,54 +137,6 @@
     <script src="chatbot.js"></script>
     <script type="text/javascript">
         document.getElementById("year").textContent = new Date().getFullYear();
-        
-        async function fetchOGImage(url) {
-            try {
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-                const response = await fetch(proxyUrl);
-                const data = await response.json();
-                
-                // Parse HTML to extract Open Graph image
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data.contents, "text/html");
-                const ogImage = doc.querySelector('meta[property="og:image"]');
-                
-                return ogImage ? ogImage.content : "https://web-perso.vercel.app/images/default-article.jpeg"; // Fallback image
-            } catch (error) {
-                console.error("Error fetching OG image for:", url, error);
-                return "https://web-perso.vercel.app/images/default-article.jpeg"; // Default image
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            async function loadArticles() {
-                try {
-                    const articleList = document.querySelector(".article-list");
-                    const response = await fetch('resources.json');
-                    const data = await response.json();
-                    
-                    for (const article of data.articles) {
-                        const imageUrl = await fetchOGImage(article.url);
-                        const articleDiv = document.createElement("div");
-                        articleDiv.className = "article-item";
-                        articleDiv.innerHTML = `
-                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
-                            <div class="article-content">
-                                <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-                                <p><strong>${article.date}</strong></p>
-                                <p>${article.description || article.summary || "No summary available."}</p>
-                            </div>
-                        `;
-                        articleList.appendChild(articleDiv);
-                    }
-                } catch (error) {
-                    console.error("Error loading articles:", error);
-                }
-            }
-            
-            // Call the async function
-            loadArticles();
-        });
     </script>
     <script>       
         document.addEventListener("DOMContentLoaded", () => {
@@ -208,6 +160,38 @@
                 }
                 lastScrollTop = currentScroll;
             });
+
+            async function loadArticles() {
+                try {
+                    const articleList = document.querySelector(".article-list");
+                    const response = await fetch('resources.json');
+                    const data = await response.json();
+
+                    for (const article of data.articles) {
+                        let imageUrl = article.ogImage;
+                        if (!imageUrl || imageUrl === "-1") {
+                            imageUrl = "./images/default-article.jpeg"; // Default image if OG image is missing
+                        }
+
+                        const articleDiv = document.createElement("div");
+                        articleDiv.className = "article-item";
+                        articleDiv.innerHTML = `
+                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
+                            <div class="article-content">
+                                <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+                                <p><strong>${article.date}</strong></p>
+                                <p>${article.description || article.summary || "No summary available."}</p>
+                            </div>
+                        `;
+                        articleList.appendChild(articleDiv);
+                    }
+                } catch (error) {
+                    console.error("Error loading articles:", error);
+                }
+            }
+            
+            // Call the async function
+            loadArticles();
         });
     </script>
 </body>

@@ -186,7 +186,7 @@ header nav ul li a {
 /* Make sure each menu item is a block element */   
 .nav-menu ul li {
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 0.9em;
     text-align: left;
 }
 

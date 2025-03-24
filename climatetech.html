@@ -4,16 +4,105 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ClimateTech LinkedIn Group</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css" /><style>
+        body {
+              font-family: 'Poppins', sans-serif;
+              font-size: 1em;
+              padding: 0;
+              background: #f9f9f9;
+              color: #333;
+              max-width: 800px;
+              margin: auto;
+              padding: 10px 0px;
+              border-radius: 8px;
+              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          }
+
+        /* --- Responsive Adjustments for Mobile --- */
+        @media (max-width: 768px) {
+            /* the menu take more space on mobile*/
+            main {
+                margin-top: 45vh; /* Push content down */
+            }
+        }
+
+        #FourGs {
+            text-align: left;
+        }
+
+        .FourGs ul {
+            list-style-type: disc;
+            margin: 5px 0 15px 20px;
+            margin-bottom: 2px;
+        }
+
+    </style>
 </head>
 <body>
-  <!-- Reuse your existing header -->
-  <header>
-    <!-- Include your site's header/menu here -->
-    <!-- Example: -->
-    <!-- <div id="header-container"></div> -->
-  </header>
-
+     <!-- Floating Chatbot Button -->
+    <div id="chatbot-icon">
+         <img src="images/NicoAvatar.png" alt="Chatbot" />
+    </div>
+    <!-- Chatbot Popup Window -->
+    <div id="chat-popup">
+        <div id="chat-header">
+            <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-avatar">
+            <span width="100%">Chat with an AI version of me!</span>
+            <button id="maximize-chat">🔲</button> <!-- Maximize button -->
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chatbox"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask me anything..." />
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+   <div class="menu-container">
+        <div class="menu-icon">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./index.html#articles">Insights</a></li>
+                <li><a href="./media.html">Media</a>
+                <li><a href="./index.html#projects">Projects</a>
+                    <ul>
+                        <li><a href="4Gs.html">4Gs</a></li>
+                        <li><a href="https://github.com/nicolaspayen1978/KOI">Koi</a></li>
+                        <li><a href="https://www.linkedin.com/groups/12485043/">ClimateTech</a></li>
+                    </ul>
+                </li>
+                <li><a href="./index.html#journey">Career</a>
+                    <ul>
+                        <li><a href="https://nicolaspayen1978.github.io/Resumes/TimeLine.html">Timeline</a></li>
+                        <li><a href="https://nicolaspayen1978.github.io/Resumes/Nicolas_Payen_resume_L.html">Resume</a></li>
+                    </ul>
+                </li>
+                <li><a href="./index.html#pictures">Art</a>
+                    <ul>
+                        <li><a href="https://www.icloud.com/sharedalbum/#B2UGygGyFmzvHq">Photos</a></li>
+                    </ul>
+                </li>
+                <li><a href="./index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+       <header>
+            <h1>4Gs portfolio</h1>
+            <p>The 4Gs is a portfolio of listed securities actively managed by Nicolas Payen. <br>He defines himself as a slightly contrarian growth value investor.</p>
+            <nav>
+                <ul>
+                    <li><a href="./index.html#articles">Insights</a></li>
+                    <li><a href="./media.html">Media</a></li>
+                    <li><a href="./index.html#projects">Projects</a></li>
+                    <li><a href="./index.html#journey">Career</a></li>
+                    <li><a href="./index.html#pictures">Art</a></li>
+                    <li><a href="./index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
   <main class="container">
     <section class="hero">
       <h1>🌍 ClimateTech Community</h1>
@@ -50,7 +139,6 @@
         Whether you're building, funding, or simply following the space — you're welcome to join us.
       </p>
     </section>
-
     <section class="group-feed">
       <h2>Latest Posts</h2>
       <p>(If the feed doesn't load, please use the button below.)</p>
@@ -72,11 +160,100 @@
       </div>
     </section>
   </main>
+ <script src="chatbot.js"></script>
+        <footer>
+            <div id="footer-title">
+                <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Einstein</i></p>
+            </div>
+            <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
+        </footer>
+        <script type="text/javascript">
+            document.getElementById("year").textContent = new Date().getFullYear();
+        </script>
+         <script>
+             document.addEventListener("DOMContentLoaded", function () {
 
-  <!-- Reuse your existing footer and chatbot -->
-  <footer>
-    <!-- Include your site's footer here -->
-  </footer>
-  <script src="chatbot.js"></script>
-</body>
+                // Select menu elements
+                const menuIcon = document.querySelector(".menu-icon");
+                const navMenu = document.querySelector(".nav-menu");
+
+                if (!menuIcon || !navMenu) {
+                    console.error("Menu elements not found.");
+                    return;
+                }
+
+                // Enable toggle on click (for desktop)
+                menuIcon.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                    navMenu.classList.toggle("visible");
+                });
+
+                // Ensure iPhone touch events work properly
+                menuIcon.addEventListener("touchstart", function (event) {
+                    event.stopPropagation();
+                    navMenu.classList.toggle("visible");
+                });
+
+                // Hide menu when clicking outside (for both desktop & mobile)
+                document.addEventListener("click", function (event) {
+                    if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                        navMenu.classList.remove("visible");
+                    }
+                });
+
+                // Hide menu when clicking outside (for iPhone touch)
+                document.addEventListener("touchstart", function (event) {
+                    if (!menuIcon.contains(event.target) && !navMenu.contains(event.target)) {
+                        navMenu.classList.remove("visible");
+                    }
+                });
+
+                // Prevent menu from closing when touching inside (iPhone fix)
+                navMenu.addEventListener("touchstart", function (event) {
+                    event.stopPropagation();
+                });
+
+                // Hide menu when clicking a menu item
+                navMenu.addEventListener("click", function (event) {
+                    if (event.target.tagName === "A") {
+                        navMenu.classList.remove("visible");
+                    }
+                });
+            });
+
+            let lastScrollTop = 0;
+            let scrollThreshold = 50; // Adjust sensitivity (higher = less flickering)
+            let header = document.querySelector("header");
+            let isHidden = false;
+
+            window.addEventListener("scroll", function () {
+                let currentScroll = window.scrollY || document.documentElement.scrollTop;
+                const navMenu = document.querySelector(".nav-menu");
+
+                if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) {
+                    return; // Ignore small scrolls to prevent flickering
+                }
+
+                if (currentScroll > lastScrollTop && currentScroll > 50) {
+                    // Scrolling down past 50px - hide header
+                    if (!isHidden) {
+                        header.style.top = "-100px"; 
+                        header.style.opacity = "0";
+                        isHidden = true;
+                    }
+                } else {
+                    // Scrolling up - show header
+                    if (isHidden) {
+                        header.style.top = "0";
+                        header.style.opacity = "1";
+                        isHidden = false;
+                        //hide icon-menu menu if displayed
+                        navMenu.classList.remove("visible");
+                    }
+                }
+
+                lastScrollTop = currentScroll;
+            });
+        </script>
+    </body>
 </html>

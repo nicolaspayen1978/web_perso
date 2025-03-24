@@ -36,7 +36,8 @@
     .gallery a {
       text-decoration: none;
     }
-    .pswp-caption {
+    .pswp-info-panel {
+      display: none;
       font-size: 0.9rem;
       color: #fff;
       background-color: rgba(0, 0, 0, 0.7);
@@ -44,6 +45,23 @@
       border-radius: 5px;
       max-width: 90vw;
       line-height: 1.6;
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    .pswp-info-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 30px;
+      text-align: center;
+      cursor: pointer;
     }
     .print-request {
       display: inline-block;
@@ -155,11 +173,22 @@
 
       lightbox.on('uiRegister', function () {
         lightbox.pswp.ui.registerElement({
-          name: 'custom-caption',
+          name: 'info-button',
+          order: 8,
+          isButton: true,
+          html: '<div class="pswp-info-button">i</div>',
+          onClick: (el, pswp) => {
+            const panel = pswp.element.querySelector('.pswp-info-panel');
+            panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+          }
+        });
+
+        lightbox.pswp.ui.registerElement({
+          name: 'info-panel',
           order: 9,
           isButton: false,
           appendTo: 'root',
-          html: '',
+          html: '<div class="pswp-info-panel"></div>',
           onInit: (el, pswp) => {
             pswp.on('change', () => {
               const currSlide = pswp.currSlide;
@@ -169,18 +198,16 @@
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
               const title = meta.title || 'Photo Request';
-
               el.innerHTML = `
-                <div class="pswp-caption">
-                  <strong>${meta.title}</strong><br>
-                  ${meta.location}<br>
-                  ${meta.description}<br>
-                  <em>Available formats:</em> ${meta.formats?.join(', ')}<br>
-                  <em>Available prints:</em> ${meta.available}<br>
-                  <em>${meta.details}</em>
-                  <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
-                </div>
+                <strong>${meta.title}</strong><br>
+                ${meta.location}<br>
+                ${meta.description}<br>
+                <em>Available formats:</em> ${meta.formats?.join(', ')}<br>
+                <em>Available prints:</em> ${meta.available}<br>
+                <em>${meta.details}</em>
+                <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
               `;
+              el.style.display = 'none';
             });
           }
         });

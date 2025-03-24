@@ -177,9 +177,11 @@
           order: 8,
           isButton: true,
           html: '<div class="pswp-info-button">i</div>',
-          onClick: (el, pswp) => {
-            const panel = pswp.element.querySelector('.pswp-info-panel');
-            panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+          onClick: () => {
+            const panel = document.querySelector('.pswp-info-panel');
+            if (panel) {
+              panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+            }
           }
         });
 

@@ -71,6 +71,7 @@
       photos.forEach(photo => {
         const link = document.createElement('a');
         link.href = `photos/${photo.filename}`;
+        link.setAttribute('data-pswp-src', `photos/${photo.filename}`);
         link.setAttribute('data-caption', `
           <strong>${photo.title}</strong><br>
           ${photo.location}<br>

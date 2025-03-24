@@ -51,6 +51,22 @@
     .print-request.dark:hover {
       background: rgba(0, 0, 0, 0.8);
     }
+
+    footer {
+      margin-top: 3rem;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      background-color: #f0f0f0;
+      border-top: 1px solid #ddd;
+    }
+    #footer-title p {
+      margin-bottom: 0.5rem;
+      font-style: italic;
+      font-weight: 500;
+      color: #444;
+    }
   </style>
 </head>
 <body>
@@ -143,14 +159,14 @@
 
     loadGallery();
   </script>
-</body>
-<footer>
+  <footer>
     <div id="footer-title">
-        <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Enstein</i></p>
+      <p><i><strong>“In the midst of every crisis lies great opportunity”</strong> – Albert Einstein</i></p>
     </div>
     <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
-</footer>
-<script type="text/javascript">
-    document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+  </footer>
+  <script type="text/javascript">
+      document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>

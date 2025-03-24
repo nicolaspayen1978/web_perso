@@ -63,15 +63,30 @@
   <script type="module">
     import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
 
+    async function getImageSize(src) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        img.src = src;
+      });
+    }
+
     async function loadGallery() {
       const response = await fetch('gallery.json');
       const photos = await response.json();
 
       const gallery = document.getElementById('gallery');
-      photos.forEach(photo => {
+
+      for (const photo of photos) {
+        const fullSrc = `photos/${photo.filename}`;
+        const thumbSrc = `photos/${photo.thumbnail}`;
+        const dimensions = await getImageSize(fullSrc);
+
         const link = document.createElement('a');
-        link.href = `photos/${photo.filename}`;
-        link.setAttribute('data-pswp-src', `photos/${photo.filename}`);
+        link.href = fullSrc;
+        link.setAttribute('data-pswp-width', dimensions.width);
+        link.setAttribute('data-pswp-height', dimensions.height);
+        link.setAttribute('data-pswp-src', fullSrc);
         link.setAttribute('data-caption', `
           <strong>${photo.title}</strong><br>
           ${photo.location}<br>
@@ -82,12 +97,12 @@
         `);
 
         const img = document.createElement('img');
-        img.src = `photos/${photo.thumbnail}`;
+        img.src = thumbSrc;
         img.alt = photo.title;
 
         link.appendChild(img);
         gallery.appendChild(link);
-      });
+      }
 
       $('#gallery').justifiedGallery({
         rowHeight: 250,
@@ -101,6 +116,7 @@
         children: 'a',
         pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
       });
+
       lightbox.on('uiRegister', function () {
         lightbox.pswp.ui.registerElement({
           name: 'custom-caption',
@@ -112,17 +128,15 @@
             pswp.on('change', () => {
               const currSlide = pswp.currSlide;
               const caption = currSlide.data.caption || '';
-
-              // Determine light or dark mode based on background
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
-
               el.innerHTML = caption +
                 `<br><a class='${buttonClass}' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>🖨️ Request a print</a>`;
             });
           }
         });
       });
+
       lightbox.init();
     }
 

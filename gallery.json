@@ -8,9 +8,7 @@
     "description": "Early hour over the canal, captured in late summer.",
     "print_formats": ["30x40", "50x70"],
     "available_prints": 3,
-    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered.",
-    "width": 1600,
-    "height": 1066
+    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered."
   },
   {
     "id": "photo2",
@@ -21,8 +19,6 @@
     "description": "Golden hour over the canal, captured in late summer.",
     "print_formats": ["30x40", "50x70"],
     "available_prints": 3,
-    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered.",
-    "width": 1600,
-    "height": 1066
+    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered."
   }
 ]

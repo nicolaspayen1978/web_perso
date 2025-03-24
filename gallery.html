@@ -28,10 +28,28 @@
       border-radius: 5px;
     }
     .print-request {
-      display: block;
-      margin-top: 6px;
-      font-size: 0.8rem;
-      color: #0077cc;
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .print-request.light {
+      background: rgba(255, 255, 255, 0.85);
+      color: #000;
+    }
+    .print-request.light:hover {
+      background: #fff;
+    }
+    .print-request.dark {
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+    .print-request.dark:hover {
+      background: rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
@@ -53,8 +71,6 @@
       photos.forEach(photo => {
         const link = document.createElement('a');
         link.href = `photos/${photo.filename}`;
-        link.setAttribute('data-pswp-width', photo.width || 1600);
-        link.setAttribute('data-pswp-height', photo.height || 1066);
         link.setAttribute('data-caption', `
           <strong>${photo.title}</strong><br>
           ${photo.location}<br>
@@ -95,6 +111,12 @@
             pswp.on('change', () => {
               const currSlide = pswp.currSlide;
               const caption = currSlide.data.caption || '';
+
+              // Determine light or dark mode based on background
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
+
+
               el.innerHTML = caption +
                 `<br><a class='print-request' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>Request a print</a>`;
             });

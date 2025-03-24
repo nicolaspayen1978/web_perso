@@ -117,9 +117,8 @@
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
 
-
               el.innerHTML = caption +
-                `<br><a class='print-request' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>Request a print</a>`;
+                `<br><a class='${buttonClass}' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>🖨️ Request a print</a>`;
             });
           }
         });

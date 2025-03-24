@@ -36,31 +36,6 @@
     .gallery a {
       text-decoration: none;
     }
-    .pswp-info-panel {
-      display: none;
-      font-size: 0.95rem;
-      color: #222;
-      background-color: #fff;
-      padding: 1.4rem 1.6rem;
-      border-radius: 12px;
-      max-width: 440px;
-      line-height: 1.7;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-    }
-    .pswp-info-panel strong {
-      font-size: 1.1rem;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    .pswp-info-panel em {
-      font-style: normal;
-      color: #666;
-    }
     .pswp-info-button {
       width: 30px;
       height: 30px;
@@ -212,16 +187,30 @@
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
               const title = meta.title || 'Photo Request';
+
+              el.style.display = 'none';
+              el.style.backgroundColor = '#fff';
+              el.style.color = '#222';
+              el.style.padding = '1.4rem 1.6rem';
+              el.style.borderRadius = '12px';
+              el.style.maxWidth = '440px';
+              el.style.lineHeight = '1.7';
+              el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
+              el.style.position = 'absolute';
+              el.style.bottom = '80px';
+              el.style.left = '50%';
+              el.style.transform = 'translateX(-50%)';
+              el.style.zIndex = '100';
+
               el.innerHTML = `
-                <strong>${meta.title}</strong><br>
+                <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
                 ${meta.location}<br>
                 ${meta.description}<br>
-                <em>Available formats:</em> ${meta.formats?.join(', ')}<br>
-                <em>Available prints:</em> ${meta.available}<br>
-                <em>${meta.details}</em>
+                <em style="color:#666;">Available formats:</em> ${meta.formats?.join(', ')}<br>
+                <em style="color:#666;">Available prints:</em> ${meta.available}<br>
+                <em style="color:#666;">${meta.details}</em>
                 <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
               `;
-              el.style.display = 'none';
             });
           }
         });

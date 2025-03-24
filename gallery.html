@@ -40,12 +40,14 @@
       font-size: 0.9rem;
       color: #fff;
       background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px;
+      padding: 14px;
       border-radius: 5px;
+      max-width: 90vw;
+      line-height: 1.6;
     }
     .print-request {
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 24px;
       padding: 6px 14px;
       font-size: 0.85rem;
       border-radius: 6px;
@@ -67,7 +69,6 @@
     .print-request.dark:hover {
       background: rgba(0, 0, 0, 0.8);
     }
-
     footer {
       margin-top: 3rem;
       padding: 2rem;
@@ -120,14 +121,16 @@
         link.setAttribute('data-pswp-height', dimensions.height);
         link.setAttribute('data-pswp-src', fullSrc);
         link.setAttribute('data-title', photo.title);
-        link.setAttribute('data-caption', `
-          <strong>${photo.title}</strong><br>
-          ${photo.location}<br>
-          ${photo.description}<br>
-          <em>Available formats:</em> ${photo.print_formats.join(', ')}<br>
-          <em>Available prints:</em> ${photo.available_prints}<br>
-          <em>${photo.print_description}</em>
-        `);
+
+        // Store structured caption as JSON in a data attribute
+        link.setAttribute('data-meta', JSON.stringify({
+          title: photo.title,
+          location: photo.location,
+          description: photo.description,
+          formats: photo.print_formats,
+          available: photo.available_prints,
+          details: photo.print_description
+        }));
 
         const img = document.createElement('img');
         img.src = thumbSrc;
@@ -160,11 +163,24 @@
           onInit: (el, pswp) => {
             pswp.on('change', () => {
               const currSlide = pswp.currSlide;
-              const caption = currSlide.data.caption || '';
+              const elData = currSlide.data.element;
+              const metaRaw = elData?.getAttribute('data-meta') || '{}';
+              const meta = JSON.parse(metaRaw);
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
-              const title = currSlide.data.element?.getAttribute('data-title') || 'Photo Request';
-              el.innerHTML = caption + `<br><a class='${buttonClass}' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>`;
+              const title = meta.title || 'Photo Request';
+
+              el.innerHTML = `
+                <div class="pswp-caption">
+                  <strong>${meta.title}</strong><br>
+                  ${meta.location}<br>
+                  ${meta.description}<br>
+                  <em>Available formats:</em> ${meta.formats?.join(', ')}<br>
+                  <em>Available prints:</em> ${meta.available}<br>
+                  <em>${meta.details}</em>
+                  <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
+                </div>
+              `;
             });
           }
         });
@@ -175,6 +191,7 @@
 
     loadGallery();
   </script>
+
   <footer>
     <div id="footer-title">
       <p><i><strong>“In the midst of every crisis lies great opportunity”</strong> – Albert Einstein</i></p>
@@ -182,7 +199,7 @@
     <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
   </footer>
   <script type="text/javascript">
-      document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

@@ -87,6 +87,7 @@
         link.setAttribute('data-pswp-width', dimensions.width);
         link.setAttribute('data-pswp-height', dimensions.height);
         link.setAttribute('data-pswp-src', fullSrc);
+        link.setAttribute('data-title', photo.title);
         link.setAttribute('data-caption', `
           <strong>${photo.title}</strong><br>
           ${photo.location}<br>
@@ -130,8 +131,8 @@
               const caption = currSlide.data.caption || '';
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
-              el.innerHTML = caption +
-                `<br><a class='${buttonClass}' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>🖨️ Request a print</a>`;
+              const title = currSlide.data.element?.getAttribute('data-title') || 'Photo Request';
+              el.innerHTML = caption + `<br><a class='${buttonClass}' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>`;
             });
           }
         });

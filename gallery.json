@@ -1,8 +1,8 @@
 [
   {
     "id": "photo1",
-    "filename": "photo1.jpg",
-    "thumbnail": "thumbs/photo1.jpg",
+    "filename": "photo1.jpeg",
+    "thumbnail": "thumbs/photo1.jpeg",
     "title": "Sunset in Naarden",
     "location": "Naarden, Netherlands",
     "description": "Golden hour over the canal, captured in late summer.",

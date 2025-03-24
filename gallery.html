@@ -140,7 +140,6 @@
         link.setAttribute('data-pswp-src', fullSrc);
         link.setAttribute('data-title', photo.title);
 
-        // Store structured caption as JSON in a data attribute
         link.setAttribute('data-meta', JSON.stringify({
           title: photo.title,
           location: photo.location,
@@ -171,6 +170,8 @@
         pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
       });
 
+      let infoPanelEl;
+
       lightbox.on('uiRegister', function () {
         lightbox.pswp.ui.registerElement({
           name: 'info-button',
@@ -178,9 +179,9 @@
           isButton: true,
           html: '<div class="pswp-info-button">i</div>',
           onClick: () => {
-            const panel = document.querySelector('.pswp-info-panel');
-            if (panel) {
-              panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+            if (infoPanelEl) {
+              const isVisible = infoPanelEl.style.display === 'block';
+              infoPanelEl.style.display = isVisible ? 'none' : 'block';
             }
           }
         });
@@ -192,6 +193,7 @@
           appendTo: 'root',
           html: '<div class="pswp-info-panel"></div>',
           onInit: (el, pswp) => {
+            infoPanelEl = el;
             pswp.on('change', () => {
               const currSlide = pswp.currSlide;
               const elData = currSlide.data.element;

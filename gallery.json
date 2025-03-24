@@ -1,0 +1,15 @@
+[
+  {
+    "id": "photo1",
+    "filename": "photo1.jpg",
+    "thumbnail": "thumbs/photo1.jpg",
+    "title": "Sunset in Naarden",
+    "location": "Naarden, Netherlands",
+    "description": "Golden hour over the canal, captured in late summer.",
+    "print_formats": ["30x40", "50x70"],
+    "available_prints": 3,
+    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered.",
+    "width": 1600,
+    "height": 1066
+  }
+]

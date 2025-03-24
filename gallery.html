@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .gallery a {
+      text-decoration: none;
+    }
+    .pswp-caption {
+      font-size: 0.9rem;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .print-request {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #0077cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Photography by Nicolas Payen</h1>
+  <div id="gallery" class="gallery"></div>
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+  <script type="module">
+    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+
+    async function loadGallery() {
+      const response = await fetch('gallery.json');
+      const photos = await response.json();
+
+      const gallery = document.getElementById('gallery');
+      photos.forEach(photo => {
+        const link = document.createElement('a');
+        link.href = `photos/${photo.filename}`;
+        link.setAttribute('data-pswp-width', photo.width || 1600);
+        link.setAttribute('data-pswp-height', photo.height || 1066);
+        link.setAttribute('data-caption', `
+          <strong>${photo.title}</strong><br>
+          ${photo.location}<br>
+          ${photo.description}<br>
+          <em>Available formats:</em> ${photo.print_formats.join(', ')}<br>
+          <em>Available prints:</em> ${photo.available_prints}<br>
+          <em>${photo.print_description}</em>
+        `);
+
+        const img = document.createElement('img');
+        img.src = `photos/${photo.thumbnail}`;
+        img.alt = photo.title;
+
+        link.appendChild(img);
+        gallery.appendChild(link);
+      });
+
+      $('#gallery').justifiedGallery({
+        rowHeight: 250,
+        margins: 5,
+        lastRow: 'nojustify',
+        captions: false
+      });
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#gallery',
+        children: 'a',
+        pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
+      });
+      lightbox.on('uiRegister', function () {
+        lightbox.pswp.ui.registerElement({
+          name: 'custom-caption',
+          order: 9,
+          isButton: false,
+          appendTo: 'root',
+          html: '',
+          onInit: (el, pswp) => {
+            pswp.on('change', () => {
+              const currSlide = pswp.currSlide;
+              const caption = currSlide.data.caption || '';
+              el.innerHTML = caption +
+                `<br><a class='print-request' href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(currSlide.data.caption)}'>Request a print</a>`;
+            });
+          }
+        });
+      });
+      lightbox.init();
+    }
+
+    loadGallery();
+  </script>
+</body>
+</html>

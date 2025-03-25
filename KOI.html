@@ -87,27 +87,37 @@
     </div>
     <header>
         <h1>KOI – Portfolio Analysis Tool</h1>
-        <p>KOI is a personal Python project by Nicolas Payen designed to analyze and benchmark portfolios.</p>
+        <p>KOI is a personal Python project by Nicolas Payen designed to analyze and benchmark stocks & portfolios.</p>
+        <nav>
+                <ul>
+                    <li><a href="./articles.html">Insights</a></li>
+                    <li><a href="./media.html">Media</a></li>
+                    <li><a href="./index.html#projects">Projects</a></li>
+                    <li><a href="./index.html#journey">Career</a></li>
+                    <li><a href="./index.html#pictures">Art</a></li>
+                    <li><a href="./index.html#contact">Contact</a></li>
+                </ul>
+        </nav>
     </header>
     <main>
         <section id="KOI">
             <h2>Overview</h2>
             <p>
-              KOI is a versatile and comprehensive tool for analyzing and benchmarking investment portfolios, with a specific focus on climate tech and thematic sectors. It leverages Yahoo Finance data and supports all major stock exchanges and currencies.
+              <strong>KOI is a versatile and comprehensive tool for analyzing and benchmarking stocks and investment portfolios</strong>, with a specific focus on thematic sectors like on climate tech. It leverages Yahoo Finance data and supports all major stock exchanges and currencies.
             </p>
 
-            <h3>KOI Origins</h3>
+            <h2>Origins</h2>
             <p>
-              I’ve always found it difficult to efficiently screen the market for new companies worth investing in. My process usually involves reading articles, listening to podcasts, watching YouTube videos, and jotting down names of interesting companies. Then I dig deeper—reading financial reports, analyzing company fundamentals, and assessing the return/risk profile. But it’s a very manual, time-consuming process.
+              I’ve always found it difficult to <strong>efficiently screen the market for new companies worth investing in</strong>. My process usually involves reading articles, listening to podcasts, watching YouTube videos, and jotting down names of interesting companies. Then I dig deeper—reading financial reports, analyzing company fundamentals, and assessing the return/risk profile. But it’s a very manual, time-consuming process.
             </p>
             <p>
-              I felt something was missing—a tool that could quickly surface companies based on their past shareholder returns. I didn’t have the budget or interest in getting a Bloomberg Terminal or subscribing to expensive data services. So I started wondering if I could build something myself using public data and Python.
+              I felt something was missing—a tool that could <strong>quickly surface companies</strong> based on their past shareholder returns. I didn’t have the budget or interest in getting a Bloomberg Terminal or subscribing to expensive data services. So I started wondering if I could build something myself using public data and Python.
             </p>
             <p>
-              That simple idea turned into six months of intense coding, and eventually into KOI. My Python skills were rusty, but the project became a rewarding learning journey—both technically and from a financial analysis perspective.
+              That simple idea turned into six months of intense coding and eventually became KOI. My Python skills were rusty, but the project turned into a deeply rewarding learning experience—both technically and from a financial analysis perspective. It was also my first SW porject developped with the help of AI.
             </p>
             <p>
-              Over time, what started as a small side project grew into a fairly advanced library, offering features rarely accessible to retail investors.
+              Over time, what started as a small side project grew into a fairly advanced library, offering features rarely accessible to retail investors. What began as a basic tool for analyzing a single stock evolved into a robust engine capable of benchmarking complex portfolios with stocks across multiple exchanges.
             </p>
             <h2>Key Features</h2>
             <ul>
@@ -124,20 +134,34 @@
 
             <h2>Examples</h2>
             <ul>
-                <li>Single Stock Analysis – Tesla over 5 years</li>
-                <li>ClimateTech Benchmarking – Compare solar/wind/storage</li>
+                <li>Single Stock Analysis – Google
+                <figure>
+                    <img src="images/koi_single_stock.png" alt="KOI Google stock analysis" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <figcaption>Google candlestick chart with RSI</figcaption>
+                </figure>
+                </li>
+                <li>Annualized returns vs risks profile Artificial Intelligence tickers</li>
+                    <figure>
+                        <img src="images/koi_AI_annualized_fromdate_return.png" alt="KOI stocks returns benchmarking " style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <figcaption>Compare annual returns / risks profile of various tickers</figcaption>
+                    </figure>
+                </li>
+                <li> Benchmark RSI indicators for various stocks of a given portfolio
+                    <figure>
+                        <img src="images/koi_RSI_indicators.png" alt="KOI RSI benchmarking" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <figcaption>Benchmark RSI for various stocks</figcaption>
+                    </figure>
+                </li>
+                <li> Correlation of returns versus several stocks
+                    <figure>
+                        <img src="images/koi_AI_annualized_fromdate_correlation.png" alt="KOI Screenshot 2" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <figcaption>Example: RSI for ClimateTech Portfolio</figcaption>
+                    </figure>
+                </li>
             </ul>
-            <h2>Screenshots</h2>
-            <figure>
-                <img src="images/koi_screenshot1.png" alt="KOI Screenshot 1" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <figcaption>Example: Annualized Return Analysis</figcaption>
-            </figure>
-            <figure>
-                <img src="images/koi_screenshot2.png" alt="KOI Screenshot 2" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <figcaption>Example: RSI for ClimateTech Portfolio</figcaption>
-            </figure>
             <!-- Add more <figure> blocks as needed -->
             <h2>Explore KOI</h2>
+
             <p>KOI is available on GitHub.</p>
             <a href="https://github.com/nicolaspayen1978/KOI" target="_blank">🔗 View the KOI GitHub Repository</a>
         </section>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KOI is a versatile and comprehensive portfolio analysis tool built by Nicolas Payen. It enables performance and risk benchmarking with a focus on climate tech and thematic investing.">
+    <meta name="author" content="Nicolas Payen">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://web-perso.vercel.app/koi.html">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="KOI – Portfolio Analysis Tool by Nicolas Payen">
+    <meta property="og:description" content="Explore KOI, a Python-based investment analysis tool with support for climate tech portfolios, custom weighting, and benchmarking across global markets.">
+    <meta property="og:image" content="https://web-perso.vercel.app/images/koi.png">
+    <meta property="og:url" content="https://web-perso.vercel.app/koi.html">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KOI – Portfolio Analysis Tool by Nicolas Payen">
+    <meta name="twitter:description" content="Analyze your investments with KOI: a Python-based portfolio analysis tool built to support climate tech and thematic investing.">
+    <meta name="twitter:image" content="https://web-perso.vercel.app/images/koi.png">
+    <title>KOI – Portfolio Analysis Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            background: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            main {
+                margin-top: 45vh;
+            }
+        }
+        #KOI {
+            text-align: left;
+        }
+        .KOI ul {
+            list-style-type: disc;
+            margin: 5px 0 15px 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chatbot -->
+    <div id="chatbot-icon">
+        <img src="images/NicoAvatar.png" alt="Chatbot" />
+    </div>
+    <div id="chat-popup">
+        <div id="chat-header">
+            <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-avatar">
+            <span>Chat with an AI version of me!</span>
+            <button id="maximize-chat">🔲</button>
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chatbox"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask me anything..." />
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <div class="menu-container">
+        <div class="menu-icon">
+            <div></div><div></div><div></div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./articles.html">Insights</a></li>
+                <li><a href="./media.html">Media</a></li>
+                <li><a href="./index.html#projects">Projects</a></li>
+                    <ul>
+                        <li><a href="4Gs.html">4Gs</a></li>
+                        <li><a href="https://github.com/nicolaspayen1978/KOI">KOI (GitHub)</a></li>
+                        <li><a href="climatetech.html">ClimateTech</a></li>
+                    </ul>
+                <li><a href="./index.html#journey">Career</a></li>
+                <li><a href="./index.html#pictures">Art</a></li>
+                <li><a href="./index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <header>
+        <h1>KOI – Portfolio Analysis Tool</h1>
+        <p>KOI is a personal Python project by Nicolas Payen designed to analyze and benchmark portfolios with a climate tech lens.</p>
+    </header>
+    <main>
+        <section id="KOI">
+            <h2>Overview</h2>
+            <p>KOI is a versatile and comprehensive tool for analyzing and benchmarking investment portfolios, with a specific focus on climate tech and thematic sectors. It leverages Yahoo Finance data and supports all major stock exchanges and currencies.</p>
+            <p><strong>Note:</strong> KOI analyzes static portfolios and does not track real-time changes or transactions over time.</p>
+            <h2>Key Features</h2>
+            <ul>
+                <li>Global stock & currency support via Yahoo Finance</li>
+                <li>Flexible currency reference (USD or EUR)</li>
+                <li>Multiple weighting options (equal, custom, random)</li>
+                <li>Total return calculations (capital gains + dividends)</li>
+                <li>Automatic benchmarking against major indexes</li>
+                <li>Annualized return and risk-adjusted metrics</li>
+                <li>Sharpe Ratio and RSI calculation</li>
+            </ul>
+            <h2>Installation</h2>
+            <pre><code>git clone https://github.com/nicolaspayen1978/KOI.git
+cd KOI
+pip install -r requirements.txt</code></pre>
+            <h2>Usage</h2>
+            <ol>
+                <li>Run <code>python main.py</code></li>
+                <li>Enter ticker (e.g., TSLA)</li>
+                <li>Choose analysis duration (e.g., 5 years)</li>
+            </ol>
+            <p>Preconfigured portfolios include ClimateTech, AI, Healthcare, Fossil Fuels, and more.</p>
+            <h2>Configuration</h2>
+            <p>You can customize portfolios using JSON or CSV. Example:</p>
+            <pre><code>{
+  "ClimateTech_SOLAR": ["AGX", "NXT", "ENPH"],
+  "ClimateTech_WIND": ["TPIC", "VWSB.DE", "GE"]
+}</code></pre>
+            <h2>Examples</h2>
+            <ul>
+                <li>Single Stock Analysis – Tesla over 5 years</li>
+                <li>ClimateTech Benchmarking – Compare solar/wind/storage</li>
+            </ul>
+            <h2>Screenshots</h2>
+            <figure>
+                <img src="images/koi_screenshot1.png" alt="KOI Screenshot 1" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <figcaption>Example: Annualized Return Analysis</figcaption>
+            </figure>
+            <figure>
+                <img src="images/koi_screenshot2.png" alt="KOI Screenshot 2" style="max-width:100%; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <figcaption>Example: RSI for ClimateTech Portfolio</figcaption>
+            </figure>
+            <!-- Add more <figure> blocks as needed -->
+            <h2>Explore KOI</h2>
+            <p>KOI is fully open source and available on GitHub.</p>
+            <a href="https://github.com/nicolaspayen1978/KOI" target="_blank">🔗 View the KOI GitHub Repository</a>
+        </section>
+    </main>
+    <script src="chatbot.js"></script>
+    <footer>
+        <div id="footer-title">
+            <p><i><strong>In the mist of every crisis, lies great opportunity</strong> – Albert Einstein</i></p>
+        </div>
+        <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
+    </footer>
+    <script type="text/javascript">
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <script src="menu.js"></script>
+</body>
+</html>

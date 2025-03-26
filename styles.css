@@ -114,7 +114,7 @@ header nav ul li a {
 
     header nav ul {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+        grid-template-columns: repeat(3, 1fr); /* Two equal-width columns */
         gap: 2px; /* Reduce white space */
         padding: 2px 0; /* Adjust padding */
         width: 100%; /* Full width */

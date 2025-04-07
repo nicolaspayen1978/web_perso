@@ -33,6 +33,24 @@ function saveChatHistory(newChatHistory) {
     localStorage.setItem("chatHistory", JSON.stringify(newChatHistory)); // Fix: Ensure proper storage format
 }
 
+//function to save the messages on the server side
+async function saveMessage(role, content) {
+  const visitorID = getVisitorID();
+  const timestamp = Date.now();
+
+  // Save locally
+  const chatHistory = getChatHistory();
+  chatHistory.push({ role, content });
+  saveChatHistory(chatHistory);
+
+  // Save remotely
+  await fetch("/api/saveMessage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
+  });
+}
+
  //function to get ChatHistory from local storage
 function getChatHistory() {
     return JSON.parse(localStorage.getItem("chatHistory")) || []; // Load chat history
@@ -289,24 +307,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sendMessage();
         }
     });
-
-    //function to save the messages on the server side
-    async function saveMessage(role, content) {
-      const visitorID = getVisitorID();
-      const timestamp = Date.now();
-
-      // Save locally
-      const chatHistory = getChatHistory();
-      chatHistory.push({ role, content });
-      saveChatHistory(chatHistory);
-
-      // Save remotely
-      await fetch("/api/saveMessage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
-      });
-    }
 
     //function to send message in OpenAI
     async function sendMessage() {

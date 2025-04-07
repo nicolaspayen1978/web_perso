@@ -11,20 +11,20 @@
       "maxDuration": 30
     },
     "api/debug-kv.js": {
-      "region": "eu"
+      "regions": ["fra1"]
     },
     "api/conversations.js": {
-      "region": "eu"
+      "regions": ["fra1"]
     },
     "api/conversations/[visitorID].js": {
-      "region": "eu"
+      "regions": ["fra1"]
     },
     "api/saveMessage.js": {
-      "region": "eu"
+      "regions": ["fra1"]
     }
   },
   "routes": [
-    {"src": "/api/chatbot","dest": "/api/chatbot.js"},
-    {"src": "/api/init", "dest": "/api/init.js"}
+    { "src": "/api/chatbot", "dest": "/api/chatbot.js" },
+    { "src": "/api/init", "dest": "/api/init.js" }
   ]
 }

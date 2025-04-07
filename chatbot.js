@@ -37,18 +37,16 @@ function saveChatHistory(newChatHistory) {
 async function saveMessage(role, content) {
   const visitorID = getVisitorID();
   const timestamp = Date.now();
-
-  // Save locally
-  const chatHistory = getChatHistory();
-  chatHistory.push({ role, content });
-  saveChatHistory(chatHistory);
-
   // Save remotely
-  await fetch("/api/saveMessage", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
-  });
+  try{
+      await fetch("/api/saveMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
+      });
+    } catch(error) {
+        console.error("❌ Error saving message to server:", error);
+    }
 }
 
  //function to get ChatHistory from local storage
@@ -217,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
         displayChatHistory(); // Ensure chat history is displayed on open
     }
 
-    function initSessionChat() {
+    async function initSessionChat() {
         if (!sessionStorage.getItem("welcomeMessageSent")) {
             const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
             const chatHistory = getChatHistory();

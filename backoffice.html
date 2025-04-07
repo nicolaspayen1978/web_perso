@@ -4,19 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Backoffice - NicoAI Conversations</title>
+
+  <!-- 🖼 Simple inline styling for layout and message formatting -->
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
-    .hidden { display: none; }
-    .conversation { border: 1px solid #ddd; padding: 10px; margin-top: 10px; }
-    .message { margin-bottom: 5px; }
-    .user { color: #007bff; }
-    .nicoAI { color: #28a745; }
-    code { background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .hidden {
+      display: none;
+    }
+    .conversation {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .message {
+      margin-bottom: 5px;
+    }
+    .user {
+      color: #007bff; /* Blue for user messages */
+    }
+    .nicoAI {
+      color: #28a745; /* Green for NicoAI messages */
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
   </style>
 </head>
+
 <body>
   <h1>🔐 NicoAI Conversations (Backoffice)</h1>
 
+  <!-- 🔐 Login section: visible until password is entered -->
   <div id="loginSection">
     <p>Enter password:</p>
     <input type="password" id="password" />
@@ -24,49 +49,64 @@
     <p id="loginError" style="color: red;"></p>
   </div>
 
+  <!-- 📊 Main dashboard: hidden until login succeeds -->
   <div id="dashboard" class="hidden">
     <h2>Visitor Conversations</h2>
-    <ul id="visitorList"></ul>
+    <ul id="visitorList"></ul> <!-- Will be filled with visitorIDs -->
 
+    <!-- 💬 Chat viewer: shows the full conversation with a selected visitor -->
     <div id="chatViewer" class="conversation hidden">
       <h3>Conversation with <span id="activeVisitor"></span></h3>
-      <div id="chatMessages"></div>
+      <div id="chatMessages"></div> <!-- Message list -->
     </div>
   </div>
 
   <script>
-    let authHeader = '';
+    let authHeader = ''; // Store auth token after login
 
+    // 🔐 Function to attempt login using entered password
     async function login() {
       const pwd = document.getElementById('password').value;
       authHeader = 'Bearer ' + pwd;
 
+      // 🔍 Attempt to fetch the list of visitors
       const res = await fetch('/api/conversations', {
         headers: { 'Authorization': authHeader }
       });
 
       if (res.ok) {
+        // ✅ Login successful: show dashboard
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
+
         const visitors = await res.json();
-        renderVisitorList(visitors);
+        renderVisitorList(visitors); // Render visitor list
       } else {
+        // ❌ Login failed: show error
         document.getElementById('loginError').textContent = 'Invalid password.';
       }
     }
 
+    // 🧾 Render the list of visitors (with message count and last message time)
     function renderVisitorList(visitors) {
       const list = document.getElementById('visitorList');
-      list.innerHTML = '';
+      list.innerHTML = ''; // Clear previous entries
+
       visitors.forEach(v => {
         const li = document.createElement('li');
-        const date = new Date(v.lastMessage).toLocaleString();
-        li.innerHTML = `<code>${v.visitorID}</code> — ${v.messages} messages — Last: ${date}
-                        <button onclick="loadConversation('${v.visitorID}')">View</button>`;
+        const date = new Date(v.lastMessage).toLocaleString(); // Format timestamp
+
+        // Show visitor ID + stats + View button
+        li.innerHTML = `
+          <code>${v.visitorID}</code> — ${v.messages} messages — Last: ${date}
+          <button onclick="loadConversation('${v.visitorID}')">View</button>
+        `;
+
         list.appendChild(li);
       });
     }
 
+    // 💬 Load and display the full conversation with the selected visitor
     async function loadConversation(visitorID) {
       const res = await fetch(`/api/conversations/${visitorID}`, {
         headers: { 'Authorization': authHeader }
@@ -74,18 +114,22 @@
 
       if (res.ok) {
         const data = await res.json();
+
         document.getElementById('activeVisitor').textContent = visitorID;
         document.getElementById('chatViewer').classList.remove('hidden');
 
         const chatBox = document.getElementById('chatMessages');
-        chatBox.innerHTML = '';
+        chatBox.innerHTML = ''; // Clear previous messages
 
+        // 🧱 Render each message with sender and timestamp
         data.messages.forEach(m => {
           const el = document.createElement('div');
-          const who = m.sender === 'user' ? 'user' : 'nicoAI';
-          const time = new Date(m.timestamp).toLocaleTimeString();
+          const who = m.sender === 'user' ? 'user' : 'nicoAI'; // Color based on sender
+          const time = new Date(m.timestamp).toLocaleTimeString(); // Format time
+
           el.className = `message ${who}`;
           el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
+
           chatBox.appendChild(el);
         });
       }

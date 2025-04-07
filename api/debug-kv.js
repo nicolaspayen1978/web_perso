@@ -10,6 +10,10 @@ export default async function handler(req, res) {
   const keys = keyData.result || [];
   const values = {};
 
+console.log("🌐 DEBUG-KV URL:", process.env.KV_REST_API_URL);
+console.log("🔐 DEBUG-KV TOKEN starts with:", process.env.KV_REST_API_TOKEN?.slice(0, 8));
+
+
   for (const key of keys) {
     const getRes = await fetch(`${process.env.KV_REST_API_URL}/get/${key}`, {
       headers: {

@@ -1,18 +1,23 @@
-import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
   const { authorization } = req.headers;
-  const pwd = process.env.BACKOFFICE_PASSWORD;
 
-  if (authorization !== `Bearer ${pwd}`) {
+  if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const keys = await kv.keys('chat:*');
+  const listRes = await fetch(`${process.env.KV_REST_API_URL}/keys?prefix=chat:`, {
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`
+    }
+  });
+
+  const keyData = await listRes.json();
+  const keys = keyData.result || [];
   const grouped = {};
 
   for (const key of keys) {
-    const [, visitorID, timestamp] = key.split(':');
+    const [, visitorID, timestamp] = key.split(":");
     if (!grouped[visitorID]) {
       grouped[visitorID] = [];
     }

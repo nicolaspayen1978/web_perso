@@ -2,6 +2,10 @@
 // It uses the environment variables: KV_REST_API_URL and KV_REST_API_TOKEN
 
 export default async function handler(req, res) {
+  console.log("📥 Incoming message:", req.body); // <-- Add this
+  console.log("🌐 Using KV_REST_API_URL:", process.env.KV_REST_API_URL); // <-- Add this
+  console.log("🔐 Token starts with:", process.env.KV_REST_API_TOKEN?.slice(0, 8)); // <-- Add this
+  
   // 🛑 Only allow POST requests
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 

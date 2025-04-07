@@ -1,49 +1,55 @@
-// This dynamic API route returns all chat messages for a specific visitorID using the @vercel/kv SDK.
-// Example: GET /api/conversations/abc123 → returns all chat messages from that visitor.
-
+// /api/conversations/[visitorID].js
 import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
-  const { visitorID } = req.query;               // 🧾 Extract from URL
-  const { authorization } = req.headers;         // 🔐 Auth header
+  const { visitorID } = req.query;
+  const { authorization } = req.headers;
 
-  // 🔐 Validate access with your backoffice password
+  // 🔐 Check access token
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
-    // 🔍 Fetch all message keys for this visitor
+    // 🔑 List keys matching this visitor
     const keys = await kv.keys(`chat:${visitorID}:*`);
+    console.log(`🔍 Found ${keys.length} keys for visitorID ${visitorID}`, keys);
 
     const messages = [];
 
-    // ⏬ Loop through each key and fetch the associated message
     for (const key of keys) {
-      const value = await kv.get(key);
-
       try {
-        // ✅ Handle both stringified and raw objects
-        const parsed = typeof value === "string" ? JSON.parse(value) : value;
+        const value = await kv.get(key);
+
+        // 👀 Log raw value for debugging
+        console.log(`📦 Raw value for key "${key}":`, value);
+
+        // 🧠 Handle multiple value formats
+        const parsed =
+          typeof value === 'string'
+            ? JSON.parse(value)
+            : typeof value === 'object'
+            ? value
+            : JSON.parse(String(value));
 
         if (parsed?.sender && parsed?.message && parsed?.timestamp) {
           messages.push(parsed);
         } else {
-          console.warn(`⚠️ Skipping malformed message for key: ${key}`);
+          console.warn(`⚠️ Incomplete or malformed message for key "${key}":`, parsed);
         }
       } catch (err) {
-        console.error(`❌ Error parsing message for key ${key}:`, err);
+        console.error(`❌ Failed to parse value for key "${key}":`, err);
       }
     }
 
-    // 📅 Sort messages chronologically
+    // 🕒 Sort messages by timestamp
     messages.sort((a, b) => a.timestamp - b.timestamp);
 
-    // ✅ Return full chat history
-    res.status(200).json({ visitorID, messages });
+    // ✅ Return messages
+    return res.status(200).json({ visitorID, messages });
 
   } catch (err) {
-    console.error(`❌ Error fetching messages for ${visitorID}:`, err);
-    res.status(500).json({ error: 'KV fetch error', details: err.message });
+    console.error(`❌ KV error while loading visitorID ${visitorID}:`, err);
+    return res.status(500).json({ error: 'KV fetch failed', details: err.message });
   }
 }

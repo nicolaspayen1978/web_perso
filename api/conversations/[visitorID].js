@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // 📥 List all KV keys for the given visitorID (format: chat:<visitorID>:<timestamp>)
+  //  List all KV keys for the given visitorID (format: chat:<visitorID>:<timestamp>)
   const listRes = await fetch(`${process.env.KV_REST_API_URL}/keys?prefix=chat:${visitorID}:`, {
     headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` }
   });

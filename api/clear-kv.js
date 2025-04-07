@@ -2,7 +2,7 @@
 // It requires a valid Authorization header using BACKOFFICE_PASSWORD.
 
 export default async function handler(req, res) {
-  // 🔐 Check if the request includes a valid bearer token
+  // Check if the request includes a valid bearer token
   if (req.headers.authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' }); // If not authorized, return 401
   }

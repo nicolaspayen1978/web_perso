@@ -4,7 +4,7 @@
 export default async function handler(req, res) {
   const { authorization } = req.headers;
 
-  // 🔐 Protect the route with a password check (stored in environment variable)
+  // Protect the route with a password check (stored in environment variable)
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
   });
 
-  // 📦 Extract and fallback to empty array if no keys found
+  // Extract and fallback to empty array if no keys found
   const keyData = await listRes.json();
   const keys = keyData.result || [];
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     grouped[visitorID].push(parseInt(timestamp)); // Store the timestamp for sorting later
   }
 
-  // 📝 Create a summary array with visitorID, message count, and latest message timestamp
+  // Create a summary array with visitorID, message count, and latest message timestamp
   const summary = Object.entries(grouped).map(([id, timestamps]) => ({
     visitorID: id,
     messages: timestamps.length,

@@ -34,7 +34,7 @@ function saveChatHistory(newChatHistory) {
 }
 
 //function to save the messages on the server side
-async function saveMessage(role, content) {
+async function saveMessageInKV(role, content) {
   const visitorID = getVisitorID();
   const timestamp = Date.now();
   // Save remotely
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: welcomeMessage });
             sessionStorage.setItem("welcomeMessageSent", "true");
             saveChatHistory(chatHistory); // Save message sent to user
-            await saveMessage("assistant", welcomeMessage); //Save message on the server side KV database
+            await saveMessageInKV("assistant", welcomeMessage); //Save message on the server side KV database
             //informed other open chat about the new message
             chatChannel.postMessage({
                 role: "assistant",
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chatHistory.push({ role: "user", content: userText });
         saveChatHistory(chatHistory); // Save user input
-        await saveMessage("user", userText); //Save user input on the server side KV database
+        await saveMessageInKV("user", userText); //Save user input on the server side KV database
         // Broadcast message to all open pages
         chatChannel.postMessage({ role: "user", content: userText });
 
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("assistant", botReply );
             saveChatHistory(chatHistory); // Save bot response
-            await saveMessage("nicoAI", botReply); //Save bot response on the server side KV database
+            await saveMessageInKV("nicoAI", botReply); //Save bot response on the server side KV database
             chatbox.scrollTop = chatbox.scrollHeight;
 
              // Broadcast message to all open pages

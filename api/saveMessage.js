@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   const key = `chat:${visitorID}:${timestamp}`;
 
   // 💾 Prepare the value to store — stringify the message object
-  const value = JSON.stringify({ sender, message, timestamp });
+  const value = { sender, message, timestamp }; // ✅ raw object
 
   try {
     // 📡 Send POST request to Vercel KV REST API to save the key-value pair

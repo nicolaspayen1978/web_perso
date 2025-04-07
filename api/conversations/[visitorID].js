@@ -2,7 +2,7 @@
 // This dynamic API route returns all chat messages for a specific visitorID using the @vercel/kv SDK.
 
 import { kv } from '@vercel/kv';
-import { getParsedKV } from '@/utils/kvUtils'; // Adjust the import path if needed
+import { getParsedKV } from '../../utils/kvUtils';
 
 export default async function handler(req, res) {
   const { visitorID } = req.query;

@@ -29,6 +29,7 @@ function getVisitorID() {
 
  //function to save ChatHistory in local storage
 function saveChatHistory(newChatHistory) {
+
     localStorage.setItem("chatHistory", JSON.stringify(newChatHistory)); // Fix: Ensure proper storage format
 }
 
@@ -205,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: welcomeMessage });
             sessionStorage.setItem("welcomeMessageSent", "true");
             saveChatHistory(chatHistory); // Save message sent to user
+            await saveMessage("assistant", welcomeMessage); //Save message on the server side KV database
             //informed other open chat about the new message
             chatChannel.postMessage({
                 role: "assistant",
@@ -288,6 +290,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    //function to save the messages on the server side
+    async function saveMessage(role, content) {
+      const visitorID = getVisitorID();
+      const timestamp = Date.now();
+
+      // Save locally
+      const chatHistory = getChatHistory();
+      chatHistory.push({ role, content });
+      saveChatHistory(chatHistory);
+
+      // Save remotely
+      await fetch("/api/saveMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
+      });
+    }
+
     //function to send message in OpenAI
     async function sendMessage() {
         let userText = userInput.value.trim();
@@ -300,6 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chatHistory.push({ role: "user", content: userText });
         saveChatHistory(chatHistory); // Save user input
+        await saveMessage("user", userText); //Save user input on the server side KV database
         // Broadcast message to all open pages
         chatChannel.postMessage({ role: "user", content: userText });
 
@@ -327,6 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("assistant", botReply );
             saveChatHistory(chatHistory); // Save bot response
+            await saveMessage("nicoAI", botReply); //Save bot response on the server side KV database
             chatbox.scrollTop = chatbox.scrollHeight;
 
              // Broadcast message to all open pages

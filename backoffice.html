@@ -68,7 +68,7 @@
     }
 
     async function loadConversation(visitorID) {
-      const res = await fetch(`/api/conversation/${visitorID}`, {
+      const res = await fetch(`/api/conversations/${visitorID}`, {
         headers: { 'Authorization': authHeader }
       });
 

@@ -10,9 +10,6 @@
     "api/resources.js": {
       "maxDuration": 30
     },
-    "api/clear-kv.js": {
-      "region": "eu"
-    },
     "api/debug-kv.js": {
       "region": "eu"
     },

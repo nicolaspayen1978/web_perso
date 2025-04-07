@@ -11,28 +11,29 @@
       "maxDuration": 30
     },
     "api/saveMessage.js": {
-      "maxDuration": 10,
-      "regions": ["fra1"]  // use region closest to your Upstash KV (eu-central-1)
+      "maxDuration": 10
     },
     "api/conversations.js": {
-      "maxDuration": 10,
-      "regions": ["fra1"]
+      "maxDuration": 10
     },
     "api/conversations/[visitorID].js": {
-      "maxDuration": 10,
-      "regions": ["fra1"]
+      "maxDuration": 10
     },
     "api/debug-kv.js": {
-      "maxDuration": 10,
-      "regions": ["fra1"]
+      "maxDuration": 10
     },
     "api/clear-kv.js": {
-      "maxDuration": 10,
-      "regions": ["fra1"]
+      "maxDuration": 10
     }
   },
   "routes": [
     { "src": "/api/chatbot", "dest": "/api/chatbot.js" },
-    { "src": "/api/init", "dest": "/api/init.js" }
+    { "src": "/api/init", "dest": "/api/init.js" },
+    { "src": "/api/resources", "dest": "/api/resources.js" },
+    { "src": "/api/saveMessage", "dest": "/api/saveMessage.js" },
+    { "src": "/api/conversations", "dest": "/api/conversations.js" },
+    { "src": "/api/conversations/(.*)", "dest": "/api/conversations/[visitorID].js" },
+    { "src": "/api/debug-kv", "dest": "/api/debug-kv.js" },
+    { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" }
   ]
 }

@@ -25,7 +25,6 @@
     "api/saveMessage.js": {
       "region": "eu"
     }
-  }
   },
   "routes": [
     {"src": "/api/chatbot","dest": "/api/chatbot.js"},

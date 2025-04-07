@@ -2,46 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Backoffice - NicoAI Conversations</title>
-
-  <!-- 🖼 Simple inline styling for layout and message formatting -->
   <style>
     body {
-      font-family: sans-serif;
-      padding: 20px;
-      max-width: 800px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      max-width: 900px;
       margin: auto;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
     }
     .hidden {
       display: none;
     }
     .conversation {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-top: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
     .message {
-      margin-bottom: 5px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      border-radius: 5px;
     }
     .user {
-      color: #007bff; /* Blue for user messages */
+      background-color: #e7f0fd;
+      color: #007bff;
     }
     .nicoAI {
-      color: #28a745; /* Green for NicoAI messages */
+      background-color: #e6f4ea;
+      color: #28a745;
     }
     code {
-      background: #f4f4f4;
-      padding: 2px 4px;
+      background: #eef;
+      padding: 2px 5px;
       border-radius: 4px;
+      font-size: 0.9em;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    li button {
+      margin-left: 10px;
+      background-color: #28a745;
     }
   </style>
 </head>
-
 <body>
   <h1>🔐 NicoAI Conversations (Backoffice)</h1>
 
-  <!-- 🔐 Login section: visible until password is entered -->
   <div id="loginSection">
     <p>Enter password:</p>
     <input type="password" id="password" />
@@ -49,64 +92,51 @@
     <p id="loginError" style="color: red;"></p>
   </div>
 
-  <!-- 📊 Main dashboard: hidden until login succeeds -->
   <div id="dashboard" class="hidden">
     <h2>Visitor Conversations</h2>
-    <ul id="visitorList"></ul> <!-- Will be filled with visitorIDs -->
+    <ul id="visitorList"></ul>
 
-    <!-- 💬 Chat viewer: shows the full conversation with a selected visitor -->
     <div id="chatViewer" class="conversation hidden">
       <h3>Conversation with <span id="activeVisitor"></span></h3>
-      <div id="chatMessages"></div> <!-- Message list -->
+      <div id="chatMessages"></div>
     </div>
   </div>
 
   <script>
-    let authHeader = ''; // Store auth token after login
+    let authHeader = '';
 
-    // 🔐 Function to attempt login using entered password
     async function login() {
       const pwd = document.getElementById('password').value;
       authHeader = 'Bearer ' + pwd;
 
-      // 🔍 Attempt to fetch the list of visitors
       const res = await fetch('/api/conversations', {
         headers: { 'Authorization': authHeader }
       });
 
       if (res.ok) {
-        // ✅ Login successful: show dashboard
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
-
         const visitors = await res.json();
-        renderVisitorList(visitors); // Render visitor list
+        renderVisitorList(visitors);
       } else {
-        // ❌ Login failed: show error
         document.getElementById('loginError').textContent = 'Invalid password.';
       }
     }
 
-    // 🧾 Render the list of visitors (with message count and last message time)
     function renderVisitorList(visitors) {
       const list = document.getElementById('visitorList');
-      list.innerHTML = ''; // Clear previous entries
-
+      list.innerHTML = '';
       visitors.forEach(v => {
         const li = document.createElement('li');
-        const date = new Date(v.lastMessage).toLocaleString(); // Format timestamp
-
-        // Show visitor ID + stats + View button
+        const date = new Date(v.lastMessage).toLocaleString();
         li.innerHTML = `
           <code>${v.visitorID}</code> — ${v.messages} messages — Last: ${date}
           <button onclick="loadConversation('${v.visitorID}')">View</button>
         `;
-
         list.appendChild(li);
       });
     }
 
-    // 💬 Load and display the full conversation with the selected visitor
     async function loadConversation(visitorID) {
       const res = await fetch(`/api/conversations/${visitorID}`, {
         headers: { 'Authorization': authHeader }
@@ -114,22 +144,18 @@
 
       if (res.ok) {
         const data = await res.json();
-
         document.getElementById('activeVisitor').textContent = visitorID;
         document.getElementById('chatViewer').classList.remove('hidden');
 
         const chatBox = document.getElementById('chatMessages');
-        chatBox.innerHTML = ''; // Clear previous messages
+        chatBox.innerHTML = '';
 
-        // 🧱 Render each message with sender and timestamp
         data.messages.forEach(m => {
           const el = document.createElement('div');
-          const who = m.sender === 'user' ? 'user' : 'nicoAI'; // Color based on sender
-          const time = new Date(m.timestamp).toLocaleTimeString(); // Format time
-
+          const who = m.sender === 'user' ? 'user' : 'nicoAI';
+          const time = new Date(m.timestamp).toLocaleTimeString();
           el.className = `message ${who}`;
           el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
-
           chatBox.appendChild(el);
         });
       }

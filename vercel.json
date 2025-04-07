@@ -10,16 +10,24 @@
     "api/resources.js": {
       "maxDuration": 30
     },
-    "api/debug-kv.js": {
-      "regions": ["fra1"]
+    "api/saveMessage.js": {
+      "maxDuration": 10,
+      "regions": ["fra1"]  // use region closest to your Upstash KV (eu-central-1)
     },
     "api/conversations.js": {
+      "maxDuration": 10,
       "regions": ["fra1"]
     },
     "api/conversations/[visitorID].js": {
+      "maxDuration": 10,
       "regions": ["fra1"]
     },
-    "api/saveMessage.js": {
+    "api/debug-kv.js": {
+      "maxDuration": 10,
+      "regions": ["fra1"]
+    },
+    "api/clear-kv.js": {
+      "maxDuration": 10,
       "regions": ["fra1"]
     }
   },

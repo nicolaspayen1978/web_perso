@@ -1,44 +1,44 @@
 // This API route returns a summary of all stored conversations in Vercel KV.
 // Each conversation is grouped by visitorID, with a count of messages and the timestamp of the last one.
 
+import { kv } from '@vercel/kv';
+
 export default async function handler(req, res) {
   const { authorization } = req.headers;
 
-  // Protect the route with a password check (stored in environment variable)
+  // 🔐 Password protection
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // 📥 Fetch all keys from the KV store that start with "chat:"
-  const listRes = await fetch(`${process.env.KV_REST_API_URL}/keys?prefix=chat:`, {
-    headers: {
-      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` // KV auth token
-    }
-  });
+  try {
+    // 📥 Fetch all chat keys from KV (keys look like: "chat:<visitorID>:<timestamp>")
+    const keys = await kv.keys("chat:*");
 
-  // Extract and fallback to empty array if no keys found
-  const keyData = await listRes.json();
-  const keys = keyData.result || [];
+    const grouped = {};
 
-  // 📊 Group messages by visitorID
-  const grouped = {};
-  for (const key of keys) {
-    const [, visitorID, timestamp] = key.split(":"); // Extract parts from key: "chat:<visitorID>:<timestamp>"
+    for (const key of keys) {
+      const [, visitorID, timestamp] = key.split(":");
+      if (!visitorID || !timestamp) continue;
 
-    if (!grouped[visitorID]) {
-      grouped[visitorID] = [];
+      if (!grouped[visitorID]) {
+        grouped[visitorID] = [];
+      }
+
+      grouped[visitorID].push(parseInt(timestamp));
     }
 
-    grouped[visitorID].push(parseInt(timestamp)); // Store the timestamp for sorting later
+    // 📊 Create summary per visitor
+    const summary = Object.entries(grouped).map(([id, timestamps]) => ({
+      visitorID: id,
+      messages: timestamps.length,
+      lastMessage: Math.max(...timestamps)
+    }));
+
+    // ✅ Return the summary
+    res.status(200).json(summary);
+  } catch (err) {
+    console.error("❌ Error reading KV:", err);
+    res.status(500).json({ error: "KV read failed", details: err.message });
   }
-
-  // Create a summary array with visitorID, message count, and latest message timestamp
-  const summary = Object.entries(grouped).map(([id, timestamps]) => ({
-    visitorID: id,
-    messages: timestamps.length,
-    lastMessage: Math.max(...timestamps)
-  }));
-
-  // ✅ Return the summary as JSON
-  res.status(200).json(summary);
 }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Backoffice - NicoAI Conversations</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    .hidden { display: none; }
+    .conversation { border: 1px solid #ddd; padding: 10px; margin-top: 10px; }
+    .message { margin-bottom: 5px; }
+    .user { color: #007bff; }
+    .nicoAI { color: #28a745; }
+    code { background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🔐 NicoAI Conversations (Backoffice)</h1>
+
+  <div id="loginSection">
+    <p>Enter password:</p>
+    <input type="password" id="password" />
+    <button onclick="login()">Login</button>
+    <p id="loginError" style="color: red;"></p>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <h2>Visitor Conversations</h2>
+    <ul id="visitorList"></ul>
+
+    <div id="chatViewer" class="conversation hidden">
+      <h3>Conversation with <span id="activeVisitor"></span></h3>
+      <div id="chatMessages"></div>
+    </div>
+  </div>
+
+  <script>
+    let authHeader = '';
+
+    async function login() {
+      const pwd = document.getElementById('password').value;
+      authHeader = 'Bearer ' + pwd;
+
+      const res = await fetch('/api/conversations', {
+        headers: { 'Authorization': authHeader }
+      });
+
+      if (res.ok) {
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        const visitors = await res.json();
+        renderVisitorList(visitors);
+      } else {
+        document.getElementById('loginError').textContent = 'Invalid password.';
+      }
+    }
+
+    function renderVisitorList(visitors) {
+      const list = document.getElementById('visitorList');
+      list.innerHTML = '';
+      visitors.forEach(v => {
+        const li = document.createElement('li');
+        const date = new Date(v.lastMessage).toLocaleString();
+        li.innerHTML = `<code>${v.visitorID}</code> — ${v.messages} messages — Last: ${date}
+                        <button onclick="loadConversation('${v.visitorID}')">View</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    async function loadConversation(visitorID) {
+      const res = await fetch(`/api/conversation/${visitorID}`, {
+        headers: { 'Authorization': authHeader }
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('activeVisitor').textContent = visitorID;
+        document.getElementById('chatViewer').classList.remove('hidden');
+
+        const chatBox = document.getElementById('chatMessages');
+        chatBox.innerHTML = '';
+
+        data.messages.forEach(m => {
+          const el = document.createElement('div');
+          const who = m.sender === 'user' ? 'user' : 'nicoAI';
+          const time = new Date(m.timestamp).toLocaleTimeString();
+          el.className = `message ${who}`;
+          el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
+          chatBox.appendChild(el);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

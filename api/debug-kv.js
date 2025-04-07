@@ -1,34 +1,47 @@
-//file to debug KV database
+// /api/debug-kv.js
 export default async function handler(req, res) {
-  const listRes = await fetch(`${process.env.KV_REST_API_URL}/keys?prefix=chat:`, {
-    headers: {
-      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`
-    }
-  });
+  const KV_URL = process.env.KV_REST_API_URL;
+  const KV_TOKEN = process.env.KV_REST_API_TOKEN;
 
-  const keyData = await listRes.json();
-  const keys = keyData.result || [];
-  const values = {};
+  if (!KV_URL || !KV_TOKEN) {
+    return res.status(500).json({ error: "Missing KV env vars" });
+  }
 
-console.log("🌐 DEBUG-KV URL:", process.env.KV_REST_API_URL);
-console.log("🔐 DEBUG-KV TOKEN starts with:", process.env.KV_REST_API_TOKEN?.slice(0, 8));
+  try {
+    console.log("🛠 DEBUG-KV: Listing all chat:* keys...");
 
-
-  for (const key of keys) {
-    const getRes = await fetch(`${process.env.KV_REST_API_URL}/get/${key}`, {
+    // 🔍 Step 1: List keys with prefix "chat:"
+    const listRes = await fetch(`${KV_URL}/keys?prefix=chat:`, {
       headers: {
-        Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`
+        Authorization: `Bearer ${KV_TOKEN}`
       }
     });
 
-    const raw = await getRes.text();
+    const { result: keys = [] } = await listRes.json();
+    console.log("🔑 Keys found:", keys);
 
-    try {
-      values[key] = JSON.parse(raw).result; // ✅ this assumes new format
-    } catch (err) {
-      console.error("❌ Failed to parse KV entry:", raw);
+    // 🧾 Step 2: Get values
+    const values = {};
+    for (const key of keys) {
+      const getRes = await fetch(`${KV_URL}/get/${key}`, {
+        headers: {
+          Authorization: `Bearer ${KV_TOKEN}`
+        }
+      });
+
+      const raw = await getRes.text();
+      try {
+        const { result } = JSON.parse(raw); // ✅ This works with correct storage
+        values[key] = result;
+      } catch (err) {
+        console.warn(`⚠️ Failed to parse key ${key}:`, raw);
+      }
     }
-  }
 
-  res.status(200).json({ keys, values });
+    res.status(200).json({ keys, values });
+
+  } catch (err) {
+    console.error("❌ Error in debug-kv:", err);
+    res.status(500).json({ error: "Failed to list or fetch KV keys", details: err.message });
+  }
 }

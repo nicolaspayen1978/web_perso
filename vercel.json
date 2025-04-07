@@ -9,7 +9,23 @@
     },
     "api/resources.js": {
       "maxDuration": 30
+    },
+    "api/clear-kv.js": {
+      "region": "eu"
+    },
+    "api/debug-kv.js": {
+      "region": "eu"
+    },
+    "api/conversations.js": {
+      "region": "eu"
+    },
+    "api/conversations/[visitorID].js": {
+      "region": "eu"
+    },
+    "api/saveMessage.js": {
+      "region": "eu"
     }
+  }
   },
   "routes": [
     {"src": "/api/chatbot","dest": "/api/chatbot.js"},

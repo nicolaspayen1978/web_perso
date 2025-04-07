@@ -1,3 +1,5 @@
+//We use the Vercel KV integration, Vercel gives you environment variables: KV_REST_API_URL, KV_REST_API_TOKEN
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 

@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   console.log("📥 Incoming message:", req.body); // <-- Add this
   console.log("🌐 Using KV_REST_API_URL:", process.env.KV_REST_API_URL); // <-- Add this
   console.log("🔐 Token starts with:", process.env.KV_REST_API_TOKEN?.slice(0, 8)); // <-- Add this
-  
+
   // 🛑 Only allow POST requests
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
   const value = { sender, message, timestamp }; // ✅ raw object
 
   try {
+    console.log("📤 Saving to KV", { key, value });
     // 📡 Send POST request to Vercel KV REST API to save the key-value pair
     const kvRes = await fetch(`${process.env.KV_REST_API_URL}/set/${key}`, {
       method: 'POST',

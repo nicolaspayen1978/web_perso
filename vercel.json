@@ -31,7 +31,7 @@
     { "src": "/api/init", "dest": "/api/init.js" },
     { "src": "/api/resources", "dest": "/api/resources.js" },
     { "src": "/api/saveMessage", "dest": "/api/saveMessage.js" },
-    { "src": "/api/conversation", "dest": "/api/conversations.js" },
+    { "src": "/api/conversations", "dest": "/api/conversations.js" },
     { "src": "/api/conversation/([^/]+)", "dest": "/api/conversation/[visitorID].js" },
     { "src": "/api/debug-kv", "dest": "/api/debug-kv.js" },
     { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" }

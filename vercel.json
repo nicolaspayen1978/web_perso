@@ -28,7 +28,7 @@
   }, 
   "rewrites": [
     {
-      "source": "/test-resume",
+      "source": "/test-resumes",
       "destination": "https://nicolaspayen1978.github.io/Resumes/Nicolas_Payen_resume_XL.html"
     },
     {

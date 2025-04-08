@@ -32,7 +32,7 @@
       "destination": "https://nicolaspayen1978.github.io/Articles/:slug*"
     },
     {
-      "source": "/resumes/:slug*",
+      "source": "/Resumes/:slug*",
       "destination": "https://nicolaspayen1978.github.io/Resumes/:slug*"
     }
   ],

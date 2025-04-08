@@ -131,7 +131,7 @@
         const date = new Date(v.lastMessage).toLocaleString();
         li.innerHTML = `
           <code>${v.visitorID}</code> — ${v.messages} messages — Last: ${date}
-          <button onclick="loadConversation('${v.visitorID}')">View</button>
+          <button onclick='loadConversation(${JSON.stringify(v.visitorID)})'>View</button>
         `;
         list.appendChild(li);
       });
@@ -145,9 +145,9 @@
         return;
       }
 
-      console.log("📥 Loading conversation for:", visitorID);
+      console.log("📥 Loading conversations for:", visitorID);
 
-      const res = await fetch(`/api/conversations/${visitorID}`, {
+      const res = await fetch(`/api/conversation/${visitorID}`, {
         headers: { 'Authorization': authHeader }
       });
 

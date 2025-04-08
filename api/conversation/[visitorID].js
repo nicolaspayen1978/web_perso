@@ -7,6 +7,8 @@ export default async function handler(req, res) {
   const { visitorID } = req.query;
   const { authorization } = req.headers;
 
+  console.log("VisitorID param:", req.query.visitorID);
+
   // 🔐 Check access
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });

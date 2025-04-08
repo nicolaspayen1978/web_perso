@@ -139,36 +139,46 @@
       console.log("🔍 Rendering visitors:", visitors);
     }
 
-    async function loadConversation(visitorID) {
+   async function loadConversation(visitorID) {
       if (!visitorID) {
         console.error("❌ No visitorID provided to loadConversation()");
         return;
       }
-      //debug print
+
       console.log("📥 Loading conversation for:", visitorID);
+
       const res = await fetch(`/api/conversations/${visitorID}`, {
         headers: { 'Authorization': authHeader }
       });
-      if (res.ok) {
-        const data = await res.json();
-        document.getElementById('activeVisitor').textContent = visitorID;
-        document.getElementById('chatViewer').classList.remove('hidden');
 
-        const chatBox = document.getElementById('chatMessages');
-        chatBox.innerHTML = '';
-
-        data.messages.forEach(m => {
-          const el = document.createElement('div');
-          const who = m.sender === 'user' ? 'user' : 'nicoAI';
-          const time = new Date(m.timestamp).toLocaleTimeString();
-          el.className = `message ${who}`;
-          el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
-          chatBox.appendChild(el);
-        });
-
-      } else {
-        console.error("❌ Failed to fetch conversation for", visitorID);
+      if (!res.ok) {
+        console.error(`❌ Failed to fetch conversation for ${visitorID} (Status ${res.status})`);
+        return;
       }
+
+      const data = await res.json();
+      console.log("📨 Full API response:", data); // <--- Debug print
+      console.log("💬 Messages:", data.messages); // <--- Debug print
+
+      document.getElementById('activeVisitor').textContent = visitorID;
+      document.getElementById('chatViewer').classList.remove('hidden');
+
+      const chatBox = document.getElementById('chatMessages');
+      chatBox.innerHTML = '';
+
+      if (!Array.isArray(data.messages)) {
+        console.warn("⚠️ No messages array in API response!");
+        return;
+      }
+
+      data.messages.forEach(m => {
+        const el = document.createElement('div');
+        const who = m.sender === 'user' ? 'user' : 'nicoAI';
+        const time = new Date(m.timestamp).toLocaleTimeString();
+        el.className = `message ${who}`;
+        el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
+        chatBox.appendChild(el);
+      });
     }
   </script>
 </body>

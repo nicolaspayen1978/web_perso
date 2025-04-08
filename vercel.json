@@ -28,12 +28,12 @@
   },
   "rewrites": [
     {
-      "source": "/articles/:slug*",
-      "destination": "https://nicolaspayen1978.github.io/Articles/:slug*"
+      "source": "/test-resume",
+      "destination": "https://nicolaspayen1978.github.io/Resumes/Nicolas_Payen_resume_XL.html"
     },
     {
-      "source": "/Resumes/:slug*",
-      "destination": "https://nicolaspayen1978.github.io/Resumes/:slug*"
+      "source": "/articles/:slug*",
+      "destination": "https://nicolaspayen1978.github.io/Articles/:slug*"
     }
   ],
   "routes": [

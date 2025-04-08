@@ -16,7 +16,7 @@
     "api/conversations.js": {
       "maxDuration": 30
     },
-    "api/conversation/[visitorID].js": {
+    "api/conversation/[visitorID]/index.js": {
       "maxDuration": 30
     },
     "api/debug-kv.js": {
@@ -32,7 +32,7 @@
     { "src": "/api/resources", "dest": "/api/resources.js" },
     { "src": "/api/saveMessage", "dest": "/api/saveMessage.js" },
     { "src": "/api/conversations", "dest": "/api/conversations.js" },
-    { "src": "/api/conversation/(.+)", "dest": "/api/conversation/[visitorID].js" },
+    { "src": "/api/conversation/(.+)", "dest": "/api/conversation/$1/index.js" },
     { "src": "/api/debug-kv", "dest": "/api/debug-kv.js" },
     { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" }
   ]

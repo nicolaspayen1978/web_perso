@@ -18,8 +18,19 @@ export default async function handler(req, res) {
     const grouped = {};
 
     for (const key of keys) {
-      const [, visitorID, timestamp] = key.split(":");
-      if (!visitorID || !timestamp) continue;
+      const parts = key.split(":");
+
+      if (parts.length !== 3) {
+        console.warn(`⚠️ Skipping malformed key: ${key}`);
+        continue;
+      }
+
+      const [, visitorID, timestamp] = parts;
+
+      if (!visitorID || isNaN(parseInt(timestamp))) {
+        console.warn(`⚠️ Invalid visitorID or timestamp in key: ${key}`);
+        continue;
+      }
 
       if (!grouped[visitorID]) {
         grouped[visitorID] = [];
@@ -34,6 +45,9 @@ export default async function handler(req, res) {
       messages: timestamps.length,
       lastMessage: Math.max(...timestamps)
     }));
+
+    //debug print
+    console.log("📊 Visitor summary:", summary);
 
     // ✅ Return the summary
     res.status(200).json(summary);

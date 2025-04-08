@@ -135,13 +135,20 @@
         `;
         list.appendChild(li);
       });
+      //debug print
+      console.log("🔍 Rendering visitors:", visitors);
     }
 
     async function loadConversation(visitorID) {
+      if (!visitorID) {
+        console.error("❌ No visitorID provided to loadConversation()");
+        return;
+      }
+      //debug print
+      console.log("📥 Loading conversation for:", visitorID);
       const res = await fetch(`/api/conversations/${visitorID}`, {
         headers: { 'Authorization': authHeader }
       });
-
       if (res.ok) {
         const data = await res.json();
         document.getElementById('activeVisitor').textContent = visitorID;
@@ -158,6 +165,9 @@
           el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
           chatBox.appendChild(el);
         });
+
+      } else {
+        console.error("❌ Failed to fetch conversation for", visitorID);
       }
     }
   </script>

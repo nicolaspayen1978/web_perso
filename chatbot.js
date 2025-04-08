@@ -33,20 +33,20 @@ function saveChatHistory(newChatHistory) {
     localStorage.setItem("chatHistory", JSON.stringify(newChatHistory)); // Fix: Ensure proper storage format
 }
 
-//function to save the messages on the server side
-async function saveMessageInKV(role, content) {
+/// Frontend helper to send message to backend KV API
+async function sendMessageToServer(role, content) {
   const visitorID = getVisitorID();
   const timestamp = Date.now();
-  // Save remotely
-  try{
-      await fetch("/api/saveMessage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
-      });
-    } catch(error) {
-        console.error("❌ Error saving message to server:", error);
-    }
+
+  try {
+    await fetch("/api/saveMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visitorID, sender: role, message: content, timestamp })
+    });
+  } catch (error) {
+    console.error("❌ Error sending message to server:", error);
+  }
 }
 
  //function to get ChatHistory from local storage
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: welcomeMessage });
             sessionStorage.setItem("welcomeMessageSent", "true");
             saveChatHistory(chatHistory); // Save message sent to user
-            await saveMessageInKV("assistant", welcomeMessage); //Save message on the server side KV database
+            await sendMessageToServer("assistant", welcomeMessage); //Save message on the server side KV database
             //informed other open chat about the new message
             chatChannel.postMessage({
                 role: "assistant",
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chatHistory.push({ role: "user", content: userText });
         saveChatHistory(chatHistory); // Save user input
-        await saveMessageInKV("user", userText); //Save user input on the server side KV database
+        await sendMessageToServer("user", userText); //Save user input on the server side KV database
         // Broadcast message to all open pages
         chatChannel.postMessage({ role: "user", content: userText });
 
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatHistory.push({ role: "assistant", content: botReply });
             appendMessage("assistant", botReply );
             saveChatHistory(chatHistory); // Save bot response
-            await saveMessageInKV("nicoAI", botReply); //Save bot response on the server side KV database
+            await sendMessageToServer("nicoAI", botReply); //Save bot response on the server side KV database
             chatbox.scrollTop = chatbox.scrollHeight;
 
              // Broadcast message to all open pages

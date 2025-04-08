@@ -1,61 +1,47 @@
 import { kv } from '@vercel/kv';
 
 /**
- * Reads and safely parses a message from KV.
- * Handles both raw object and stringified formats.
+ * Save a chat message to Vercel KV under a unique key.
+ * @param {string} visitorID - Unique ID representing the user.
+ * @param {object} messageObj - Chat message with sender, message, and timestamp.
  */
-export async function getParsedKV(key) {
+export async function saveMessageInKV(visitorID, messageObj) {
+  if (!visitorID || !messageObj || typeof messageObj.timestamp !== 'number') {
+    console.warn("⚠️ Invalid input: visitorID or timestamp missing");
+    return;
+  }
+
+  const key = `chat:${visitorID}:${messageObj.timestamp}`;
   try {
-    const raw = await kv.get(key);
-    const value = typeof raw === 'string' ? JSON.parse(raw) : raw;
-
-    if (
-      typeof value === 'object' &&
-      typeof value.sender === 'string' &&
-      typeof value.message === 'string' &&
-      typeof value.timestamp === 'number'
-    ) {
-      return value;
-    }
-
-    console.warn(`⚠️ Skipping malformed KV data for key: ${key}`);
-    return null;
-
+    await kv.set(key, messageObj); // Store raw object (no JSON.stringify)
+    console.log(`✅ Message saved to KV: ${key}`);
   } catch (err) {
-    console.error(`❌ Error in getParsedKV(${key}):`, err);
-    return null;
+    console.error(`❌ Failed to save message to KV: ${key}`, err);
   }
 }
 
 /**
- * Safely saves a message in KV, correcting format if needed.
- * Accepts either { sender, message, timestamp } or a full object.
+ * Safe wrapper around kv.get() that parses stringified values if needed.
+ * @param {string} key - KV key to fetch.
+ * @returns {object|null} Parsed message object, or null if malformed.
  */
-export async function saveMessageInKV(visitorID, rawData) {
-  if (!visitorID || typeof visitorID !== 'string') {
-    console.error("❌ Invalid visitorID:", visitorID);
-    return;
-  }
-
-  // Normalize message structure
-  const { sender, message, timestamp } = rawData;
-
-  if (
-    typeof sender !== 'string' ||
-    typeof message !== 'string' ||
-    typeof timestamp !== 'number'
-  ) {
-    console.error("❌ Invalid message format:", rawData);
-    return;
-  }
-
-  const key = `chat:${visitorID}:${timestamp}`;
-  const value = { sender, message, timestamp };
-
+export async function safeGetKV(key) {
   try {
-    await kv.set(key, value);
-    console.log(`✅ Message saved in KV: ${key}`);
+    const value = await kv.get(key);
+
+    if (!value) return null;
+
+    // Handle both raw objects and double-stringified JSON
+    const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+
+    if (parsed?.sender && parsed?.message && parsed?.timestamp) {
+      return parsed;
+    } else {
+      console.warn(`⚠️ Invalid message format in key: ${key}`);
+      return null;
+    }
   } catch (err) {
-    console.error(`❌ Failed to save message to KV for ${key}:`, err);
+    console.error(`❌ Error reading/parsing key ${key}:`, err);
+    return null;
   }
 }

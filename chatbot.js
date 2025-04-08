@@ -3,7 +3,7 @@
 let chatbox = null; // Declare globally
 
 
-// Create BroadcastChannel creation
+// Create BroadcastChannel creation ..
 if (!window.chatChannel) {
     window.chatChannel = new BroadcastChannel("chat-sync");
 }

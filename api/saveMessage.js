@@ -1,6 +1,6 @@
 // This API route saves a single chat message to Vercel KV using the @vercel/kv SDK.
 // No need to manage tokens or regions manually.
-import { saveMessageInKV } from '../../utils/kvUtils';
+import { saveMessageInKV } from '../utils/kvUtils';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');

@@ -66,6 +66,13 @@
       border-right: 1px solid #ccc;
     }
 
+    .group-header {
+      margin-top: 1.5em;
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 1.1em;
+    }
+
     #visitorList li {
       margin-bottom: 12px;
       padding: 8px 12px;
@@ -79,7 +86,7 @@
     }
 
     #visitorList button {
-      margin-left: 10px;
+      margin-top: 5px;
       background-color: #28a745;
     }
 
@@ -126,8 +133,6 @@
 
   <!-- 📊 Main dashboard with two-column layout -->
   <div id="dashboard" class="hidden">
-    
-    <!-- 📜 Scrollable list of visitor conversations -->
     <ul id="visitorList"></ul>
 
     <!-- 💬 Chat viewer for selected visitor -->
@@ -159,19 +164,50 @@
       }
     }
 
-    // 🧾 Render all visitors in the sidebar
+    // 🧾 Render all visitors in the sidebar, grouped by recency
     function renderVisitorList(visitors) {
       const list = document.getElementById('visitorList');
       list.innerHTML = '';
-      visitors.forEach(v => {
-        const li = document.createElement('li');
-        const date = new Date(v.lastMessage).toLocaleString();
-        li.innerHTML = `
-          <code>${v.visitorID}</code><br>${v.messages} messages<br>Last: ${date}
-          <br><button onclick='loadConversation(${JSON.stringify(v.visitorID)})'>View</button>
-        `;
-        list.appendChild(li);
-      });
+
+      const groups = {
+        Today: [],
+        Yesterday: [],
+        'This Week': [],
+        Earlier: []
+      };
+
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const yesterdayStart = todayStart - 86400000;
+      const weekStart = todayStart - 7 * 86400000;
+
+      visitors.sort((a, b) => b.lastMessage - a.lastMessage); // 🕒 Sort latest first
+
+      for (const v of visitors) {
+        const ts = v.lastMessage;
+        if (ts >= todayStart) groups.Today.push(v);
+        else if (ts >= yesterdayStart) groups.Yesterday.push(v);
+        else if (ts >= weekStart) groups['This Week'].push(v);
+        else groups.Earlier.push(v);
+      }
+
+      for (const [groupName, groupItems] of Object.entries(groups)) {
+        if (groupItems.length === 0) continue;
+        const header = document.createElement('div');
+        header.className = 'group-header';
+        header.textContent = groupName;
+        list.appendChild(header);
+
+        for (const v of groupItems) {
+          const li = document.createElement('li');
+          const date = new Date(v.lastMessage).toLocaleString();
+          li.innerHTML = `
+            <code>${v.visitorID}</code><br>${v.messages} messages<br>Last: ${date}
+            <br><button onclick='loadConversation(${JSON.stringify(v.visitorID)})'>View</button>
+          `;
+          list.appendChild(li);
+        }
+      }
     }
 
     // 💬 Load a single visitor conversation

@@ -17,7 +17,7 @@
       "maxDuration": 10
     },
     "api/conversation/[visitorID].js": {
-      "maxDuration": 10
+      "maxDuration": 20
     },
     "api/debug-kv.js": {
       "maxDuration": 10

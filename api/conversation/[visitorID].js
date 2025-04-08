@@ -1,5 +1,5 @@
 // This dynamic API route returns all chat messages for a specific visitorID using the @vercel/kv SDK.
-// Example: GET /api/conversations/abc123 → returns all chat messages from that visitor.
+// Example: GET /api/conversation/abc123 → returns all chat messages from that visitor.
 
 import { kv } from '@vercel/kv';
 
@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   const { visitorID } = req.query;
   const { authorization } = req.headers;
 
+  console.log("req.query:", req.query);
   console.log("VisitorID param:", req.query.visitorID);
 
   // 🔐 Check access

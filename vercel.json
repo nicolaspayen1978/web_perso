@@ -26,6 +26,12 @@
       "maxDuration": 10
     }
   },
+  "rewrites": [
+    {
+      "source": "/articles/:slug*",
+      "destination": "https://nicolaspayen1978.github.io/Articles/:slug*"
+    }
+  ],
   "routes": [
     { "src": "/api/chatbot", "dest": "/api/chatbot.js" },
     { "src": "/api/init", "dest": "/api/init.js" },

@@ -1,5 +1,5 @@
 // This API route returns a summary of all stored conversations in Vercel KV.
-// Each conversation is grouped by visitorID, with a count of messages and the timestamp of the last one.
+// Each conversation is grouped by visitorID, with a count of messages and the timestamp of the last one. 
 
 import { kv } from '@vercel/kv';
 

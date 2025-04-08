@@ -1,5 +1,5 @@
 // This api/chatbot.js the API deployed and executed on Vercel
-// ENV variables are set-up in Vercel to not be publicly available
+// ENV variables are set-up in Vercel to not be publicly available 
 console.log("🔥 API chatbot is running");
 const fs = require("fs");
 const path = require("path");

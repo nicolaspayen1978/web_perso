@@ -1,3 +1,4 @@
+//functions usefull to manage the KV database
 import { kv } from '@vercel/kv';
 
 /**

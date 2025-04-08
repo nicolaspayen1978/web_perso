@@ -112,7 +112,7 @@
       const res = await fetch('/api/conversations', {
         headers: { 'Authorization': authHeader }
       });
-
+      
       if (res.ok) {
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');

@@ -34,6 +34,8 @@
     { "src": "/api/conversations", "dest": "/api/conversations.js" },
     { "src": "/api/conversation/(.+)", "dest": "/api/conversation/$1/index.js" },
     { "src": "/api/debug-kv", "dest": "/api/debug-kv.js" },
-    { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" }
+    { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" },
+    { "handle": "filesystem" },
+    { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1"}
   ]
 }

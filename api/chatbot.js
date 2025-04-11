@@ -29,6 +29,7 @@ chatApp.use((req, res, next) => {
 // API Endpoint to Handle Chat
 chatApp.post('/api/chatbot', async (req, res) => {
     const { visitorID, userInput } = req.body;
+    const previousMessages = req.body.previousMessages || [];
 
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
     if (!userInput) return res.status(400).json({ error: "No user input provided." });

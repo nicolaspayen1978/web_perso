@@ -131,6 +131,9 @@
 
     const data = await res.json();
     alert(data.message || 'Update finished.');
+
+    // Automatically reload the JSON after script finishes
+    await loadGallery();
   }
 
   async function loadJSON() {

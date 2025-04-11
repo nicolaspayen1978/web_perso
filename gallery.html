@@ -125,8 +125,9 @@
     }
 
     async function loadGallery() {
-      const response = await fetch('gallery.json');
-      const photos = await response.json();
+      const response = await fetch('/api/gallery/load');
+      const data = await response.json();
+      const photos = data.current || [];
 
       const gallery = document.getElementById('gallery');
 

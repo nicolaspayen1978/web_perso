@@ -377,6 +377,12 @@ footer {
     overflow-y: auto;
 }
 
+.chat-note {
+  font-style: italic;
+  color: #666; /* Optional, to visually differentiate */
+  font-size: 0.9em;
+}
+
 /* Input and Button */
 #input-container {
     display: flex;

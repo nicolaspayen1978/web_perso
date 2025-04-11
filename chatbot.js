@@ -217,7 +217,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function initSessionChat() {
         if (!sessionStorage.getItem("welcomeMessageSent")) {
-            const welcomeMessage = "👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?";
+             const welcomeMessage = `👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?<br>
+<span class="chat-note">Note: Nicolas will personally review this conversation later, so you can also use it to leave him a message. Your input will be stored and shared with him.</span>`;
+
             const chatHistory = getChatHistory();
             chatHistory.push({ role: "assistant", content: welcomeMessage });
             sessionStorage.setItem("welcomeMessageSent", "true");

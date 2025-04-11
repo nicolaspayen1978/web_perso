@@ -70,7 +70,8 @@ async function init_NicoAI(visitorID) {
     }
 
     // Ensure responses exist and contain valid data
-    let firstMessage = "👋 Hi! I'm NicoAI. How can I help you today?"; // Default message
+    let firstMessage = `👋 Hi! I'm NicoAI, the AI version of Nicolas Payen. How can I help you today?<br>
+<span class="chat-note">Note: Nicolas will personally review this conversation later, so you can also use it to leave him a message. Your input will be stored and shared with him.</span>`; // Default message
 
     if (Array.isArray(botReply) && botReply.length > 0 && botReply[0]?.choices?.length > 0) {
         firstMessage = botReply[0].choices[0].message?.content || firstMessage;

@@ -6,7 +6,7 @@
     "start": "vercel dev",
     "deploy": "vercel --prod",
     "postinstall": "node scripts/uploadResources.js",
-    "update-gallery": "node utils/updateGallery.js" 
+    "update-gallery": "node scripts/runGalleryUpdate.js"
   },
   "dependencies": {
     "@vercel/kv": "latest",

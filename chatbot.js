@@ -308,29 +308,47 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    //function to send message in OpenAI
+   // Function to send user message and receive NicoAI response
     async function sendMessage() {
         let userText = userInput.value.trim();
         if (!userText) return;
 
-        //Update chat with the input from the user
+        // Display user's message in the chatbox
         chatbox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
-        chatbox.scrollTop = chatbox.scrollHeight; 
-        userInput.value = ""; //clear message field
+        chatbox.scrollTop = chatbox.scrollHeight;
+        userInput.value = ""; // Clear message input field
 
+        // Update chat history and save it locally
         chatHistory.push({ role: "user", content: userText });
-        saveChatHistory(chatHistory); // Save user input
-        await sendMessageToServer("user", userText); //Save user input on the server side KV database
-        // Broadcast message to all open pages
-        chatChannel.postMessage({ role: "user", content: userText });
+        saveChatHistory(chatHistory);
+        await sendMessageToServer("user", userText); // Save to server (KV)
+        chatChannel.postMessage({ role: "user", content: userText }); // Broadcast to other tabs
 
-        //make sure chatHistory no longer than 100000 words
+        // Truncate chat history to fit token limits
         chatHistory = truncateChatHistory(chatHistory, 100000);
 
         console.log("Sending request to API...");
 
-        const visitorID = getVisitorID(); // Ensure visitorID is sent
-        const fullSentMessage = JSON.stringify({ visitorID, userInput: userText});
+        const visitorID = getVisitorID(); // Retrieve or generate visitor ID
+        const previousMessages = getChatHistory(); // 🔄 NEW: Get full chat history
+
+        // Once-per-day notification logic
+        const today = new Date().toISOString().slice(0, 10); // Format: "YYYY-MM-DD"
+        const lastNotificationDate = localStorage.getItem("lastNicoAINotified");
+
+        let shouldNotify = false;
+        if (lastNotificationDate !== today) {
+            shouldNotify = true;
+            localStorage.setItem("lastNicoAINotified", today); // Save today's date
+        }
+
+        // Include full context + notify flag in the request body
+        const fullSentMessage = JSON.stringify({
+            visitorID,
+            userInput: userText,
+            previousMessages,
+            notifyToday: shouldNotify // ✅ Only true once per day
+        });
 
         try {
             const response = await fetch("/api/chatbot", {
@@ -338,20 +356,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: { "Content-Type": "application/json" },
                 body: fullSentMessage
             });
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
             const data = await response.json();
-            
-            let botReply = typeof data.response === "string" ? data.response.trim() : "I'm sorry, I didn't understand that.";
-            
+
+            let botReply = typeof data.response === "string"
+                ? data.response.trim()
+                : "I'm sorry, I didn't understand that.";
+
             chatHistory.push({ role: "assistant", content: botReply });
-            appendMessage("assistant", botReply );
-            saveChatHistory(chatHistory); // Save bot response
-            await sendMessageToServer("nicoAI", botReply); //Save bot response on the server side KV database
+            appendMessage("assistant", botReply);
+            saveChatHistory(chatHistory); // Save assistant response
+            await sendMessageToServer("nicoAI", botReply); // Save to server (KV)
             chatbox.scrollTop = chatbox.scrollHeight;
 
-             // Broadcast message to all open pages
+            // Broadcast assistant message to other open tabs
             chatChannel.postMessage({ role: "assistant", content: botReply });
 
         } catch (error) {

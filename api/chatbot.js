@@ -1,13 +1,15 @@
-// This api/chatbot.js the API deployed and executed on Vercel
+// This api/chatbot.js is the API deployed and executed on Vercel
 // ENV variables are set-up in Vercel to not be publicly available 
+
 console.log("🔥 API chatbot is running");
+
 const fs = require("fs");
 const path = require("path");
 const express = require('express');
 const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
-const initApp = require("./init");  // import from Init.js
-const { resources } = require("./init");  // import from Init.js
-const notifyNicolas = require("../utils/notify"); // Import the notification helper
+const initApp = require("./init");  // import from init.js
+const { resources } = require("./init");  // import preloaded resources
+const notifyNicolas = require("../utils/notify"); // 🔔 Import the Pushover notification helper
 
 const chatApp = express();
 
@@ -28,33 +30,54 @@ chatApp.use((req, res, next) => {
 
 // API Endpoint to Handle Chat
 chatApp.post('/api/chatbot', async (req, res) => {
-    const { visitorID, userInput } = req.body;
-    const previousMessages = req.body.previousMessages || [];
+    // Destructure and assign request fields with fallback values
+    const {
+        visitorID,
+        userInput,
+        previousMessages = [],
+        notifyToday
+    } = req.body;
 
+    // Basic validation
     if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
     if (!userInput) return res.status(400).json({ error: "No user input provided." });
 
     console.log(`🚀 /api/chatbot executed for visitor ${visitorID}`);
 
-     // Check if it's the user's first message
-    const isFirstMessage = !previousMessages || previousMessages.length === 0;
+    // Optional: log visitor's user agent (helps with context or abuse debugging)
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    console.log(`🧭 Visitor agent: ${userAgent}`);
 
-    // Send Pushover notification on first message
-    if (isFirstMessage) {
-        await notifyNicolas(`📬 New visitor (ID: ${visitorID}) just started chatting with NicoAI.`);
+    // Strict boolean check to avoid unwanted notification triggers
+    const shouldNotify = notifyToday === true;
+
+    // Robust push notification with fail-safe
+    if (shouldNotify) {
+        try {
+            await notifyNicolas(`📬 Visitor ${visitorID} is engaging with NicoAI today.`);
+        } catch (error) {
+            console.error("❌ Failed to send Pushover notification:", error);
+            // Don't block the response to the user
+        }
     }
 
-    // Use resources from init.js instead of fetching them separately
+    // System prompt with resources
     const systemPrompt = {
         role: "system",
         content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses. Keep answer in 100-125 words max. If you don't know yet the identity of this user please ask for it, ask for its contact details, and ask for the reason of his/her visit to the website. Never ask these information more than two times.`
     };
 
-    const aiResponse = await callOpenAI([systemPrompt, { role: "user", content: userInput }]);
+    // Generate OpenAI response using system + user message
+    const aiResponse = await callOpenAI([
+        systemPrompt,
+        { role: "user", content: userInput }
+    ]);
 
+    // Return response to frontend
     res.json({ response: aiResponse });
 });
 
+// Optional: helper function (unused for now)
 async function generateChatResponse(userMessages) {
     console.log("🔍 Using preloaded resources from init.js before generating response...");
     
@@ -69,8 +92,5 @@ async function generateChatResponse(userMessages) {
     return await callOpenAI(fullUserMessages);
 }
 
-// Export the app for Vercel
+// Export the app for Vercel deployment
 module.exports = chatApp;
-
-
-

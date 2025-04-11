@@ -126,14 +126,13 @@
 
     async function loadGallery() {
       const response = await fetch('/api/gallery/public-load');
-      const data = await response.json();
-      const photos = data.current || [];
+      const photos = await response.json();
 
       const gallery = document.getElementById('gallery');
 
       for (const photo of photos) {
-        const fullSrc = `photos/${photo.filename}`;
-        const thumbSrc = `photos/${photo.thumbnail}`;
+        const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
+        const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
         const dimensions = await getImageSize(fullSrc);
 
         const link = document.createElement('a');

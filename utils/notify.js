@@ -1,7 +1,5 @@
 // utils/notify.js
 //we use pushover service to send live Notification to Nicolas 
-require("dotenv").config();
-
 async function notifyNicolas(message = "🚀 Someone just messaged NicoAI!") {
   const fetch = (await import('node-fetch')).default;
 

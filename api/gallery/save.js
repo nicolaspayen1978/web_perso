@@ -1,6 +1,5 @@
-// /api/gallery/save.js
-import fs from 'fs';
-import path from 'path';
+// api/gallery/save.js
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
   const { authorization } = req.headers;
@@ -14,17 +13,24 @@ export default async function handler(req, res) {
 
   try {
     const { json } = req.body;
-    const galleryPath = path.join(process.cwd(), 'gallery.json');
 
-    // Validate structure (light)
     if (!Array.isArray(json)) {
-      return res.status(400).json({ error: 'Invalid format. Expected an array.' });
+      return res.status(400).json({ error: 'Invalid gallery format. Must be an array.' });
     }
 
-    fs.writeFileSync(galleryPath, JSON.stringify(json, null, 2));
-    res.status(200).json({ message: 'gallery.json saved successfully.' });
+    // Backup current version
+    const existing = await kv.get('gallery:json');
+    if (existing) {
+      const timestamp = Date.now();
+      await kv.set(`gallery:backup:${timestamp}`, existing);
+    }
+
+    // Save new version
+    await kv.set('gallery:json', json);
+    res.status(200).json({ message: 'Gallery updated successfully.' });
+
   } catch (err) {
-    console.error("❌ Failed to save gallery.json:", err);
+    console.error("❌ Failed to save gallery to KV:", err);
     res.status(500).json({ error: 'Save failed', details: err.message });
   }
 }

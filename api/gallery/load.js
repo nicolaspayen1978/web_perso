@@ -1,4 +1,5 @@
-// /api/gallery/load.js
+// api/gallery/load.js
+import { kv } from '@vercel/kv';
 import fs from 'fs';
 import path from 'path';
 
@@ -9,19 +10,29 @@ export default async function handler(req, res) {
   }
 
   try {
-    const currentPath = path.join(process.cwd(), 'gallery.json');
-    const dir = fs.readdirSync(process.cwd());
-    const backups = dir.filter(f => f.startsWith('gallery_backup_') && f.endsWith('.json'))
-                       .sort().reverse();
-    const lastBackup = backups.length ? fs.readFileSync(path.join(process.cwd(), backups[0]), 'utf-8') : '[]';
+    // Try to load from KV first
+    const current = await kv.get('gallery:json');
 
-    const current = fs.readFileSync(currentPath, 'utf-8');
+    // If KV is empty, fall back to file system on first deploy
+    let fallback = [];
+    try {
+      const fallbackPath = path.join(process.cwd(), 'gallery.json');
+      const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8');
+      fallback = JSON.parse(fallbackContent);
+    } catch (e) {
+      console.warn("⚠️ No fallback gallery.json found or invalid");
+    }
+
+    const backupKeys = await kv.keys('gallery:backup:*');
+    const sorted = backupKeys.sort().reverse();
+    const previous = sorted.length ? await kv.get(sorted[0]) : [];
+
     res.status(200).json({
-      current: JSON.parse(current),
-      previous: JSON.parse(lastBackup)
+      current: current || fallback,
+      previous
     });
   } catch (err) {
-    console.error("❌ Failed to load gallery files:", err);
-    res.status(500).json({ error: 'Failed to load gallery files', details: err.message });
+    console.error("❌ Failed to load gallery from KV:", err);
+    res.status(500).json({ error: 'Failed to load gallery', details: err.message });
   }
 }

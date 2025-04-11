@@ -7,6 +7,8 @@ const express = require('express');
 const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
 const initApp = require("./init");  // import from Init.js
 const { resources } = require("./init");  // import from Init.js
+const notifyNicolas = require("../utils/notify"); // Import the notification helper
+
 const chatApp = express();
 
 chatApp.use(express.json());
@@ -32,6 +34,14 @@ chatApp.post('/api/chatbot', async (req, res) => {
     if (!userInput) return res.status(400).json({ error: "No user input provided." });
 
     console.log(`🚀 /api/chatbot executed for visitor ${visitorID}`);
+
+     // Check if it's the user's first message
+    const isFirstMessage = !previousMessages || previousMessages.length === 0;
+
+    // Send Pushover notification on first message
+    if (isFirstMessage) {
+        await notifyNicolas(`📬 New visitor (ID: ${visitorID}) just started chatting with NicoAI.`);
+    }
 
     // Use resources from init.js instead of fetching them separately
     const systemPrompt = {

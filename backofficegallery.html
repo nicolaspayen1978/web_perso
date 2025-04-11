@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gallery Backoffice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    #loginSection {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      margin: 5px 0;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 300px;
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #adminTools {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h3 {
+      margin-top: 30px;
+      color: #444;
+    }
+
+    .json-container {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🖼️ Gallery Backoffice</h1>
+
+<div id="loginSection">
+  <p>Enter password:</p>
+  <input type="password" id="password" />
+  <button onclick="login()">Login</button>
+  <p id="loginError" style="color: red;"></p>
+</div>
+
+<div id="adminTools" class="hidden">
+
+  <button onclick="runScript()">🔄 Run Update Script</button>
+  <button onclick="loadJSON()">📂 Load Gallery JSON</button>
+  <button onclick="saveJSON()">💾 Save Current JSON</button>
+
+  <div class="json-container">
+    <h3>Current <code>gallery.json</code></h3>
+    <textarea id="currentJSON" placeholder="Current gallery.json will load here..."></textarea>
+  </div>
+
+  <div class="json-container">
+    <h3>Previous Backup</h3>
+    <textarea id="previousJSON" readonly placeholder="Previous backup will load here..."></textarea>
+  </div>
+
+</div>
+
+<script>
+  let authHeader = '';
+
+  async function login() {
+    const pwd = document.getElementById('password').value;
+    authHeader = 'Bearer ' + pwd;
+
+    // Test access using a quick fetch
+    const res = await fetch('/api/gallery/load', {
+      headers: { 'Authorization': authHeader }
+    });
+
+    if (res.ok) {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('adminTools').classList.remove('hidden');
+    } else {
+      document.getElementById('loginError').textContent = 'Invalid password.';
+    }
+  }
+
+  async function runScript() {
+    const res = await fetch('/api/gallery/run-update', {
+      method: 'POST',
+      headers: { 'Authorization': authHeader }
+    });
+
+    const data = await res.json();
+    alert(data.message || 'Update finished.');
+  }
+
+  async function loadJSON() {
+    const res = await fetch('/api/gallery/load', {
+      headers: { 'Authorization': authHeader }
+    });
+    const data = await res.json();
+    document.getElementById('currentJSON').value = JSON.stringify(data.current, null, 2);
+    document.getElementById('previousJSON').value = JSON.stringify(data.previous, null, 2);
+  }
+
+  async function saveJSON() {
+    const raw = document.getElementById('currentJSON').value;
+    try {
+      const json = JSON.parse(raw);
+      const res = await fetch('/api/gallery/save', {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ json })
+      });
+
+      const data = await res.json();
+      alert(data.message || 'Saved successfully.');
+    } catch (err) {
+      alert("Invalid JSON. Please fix errors before saving.");
+    }
+  }
+</script>
+
+</body>
+</html>

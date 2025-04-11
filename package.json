@@ -5,11 +5,15 @@
   "scripts": {
     "start": "vercel dev",
     "deploy": "vercel --prod",
-    "postinstall": "node scripts/uploadResources.js"
+    "postinstall": "node scripts/uploadResources.js",
+    "update-gallery": "node utils/updateGallery.js" // 🔧 CLI shortcut
   },
   "dependencies": {
-    "node-fetch": "^3.3.1",
     "@vercel/kv": "latest",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.1",
+    "exif-parser": "^0.1.12",        // 📷 Needed for EXIF data
+    "sharp": "^0.32.1",              // 📐 Needed for image dimensions
+    "uuid": "^9.0.0"                 // 🔑 For unique IDs if needed
   }
 }

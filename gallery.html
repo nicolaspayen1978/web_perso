@@ -233,9 +233,10 @@
                 ${meta.print_editions?.L ? `&nbsp;&nbsp;• <strong>Gallery edition</strong> — ${meta.print_editions.L.total - meta.print_editions.L.sold} of ${meta.print_editions.L.total} available<br>` : ''}
                 ${meta.print_editions?.XL ? `&nbsp;&nbsp;• <strong>Collector edition</strong> — ${meta.print_editions.XL.total - meta.print_editions.XL.sold} of ${meta.print_editions.XL.total} available<br>` : ''}
                 ${meta.print_editions?.artist ? `&nbsp;&nbsp;• <strong>Artist’s proof</strong> — ${meta.print_editions.artist.total - meta.print_editions.artist.sold} of ${meta.print_editions.artist.total} available<br>` : ''}
-
-                <br><em style="color:#666;">${meta.details}</em><br>
-
+                <br><em style="color:#666;">Edition pricing:</em><br>
+                ${meta.price_details?.L ? `&nbsp;&nbsp;• <strong>Gallery edition:</strong> ${meta.price_details.L}<br>` : ''}
+                ${meta.price_details?.XL ? `&nbsp;&nbsp;• <strong>Collector edition:</strong> ${meta.price_details.XL}<br>` : ''}
+                ${meta.price_details?.artist === null ? `&nbsp;&nbsp;• <strong>Artist’s proof:</strong> price upon request<br>` : ''}
                 <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
               `;
             });

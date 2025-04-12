@@ -148,7 +148,8 @@
           description: photo.description,
           formats: photo.print_formats,
           available: photo.available_prints,
-          details: photo.print_description
+          details: photo.print_description,
+          print_editions: photo.print_editions
         }));
 
         const img = document.createElement('img');
@@ -224,9 +225,18 @@
                 ${meta.location}<br>
                 ${meta.description}<br>
                 <em style="color:#666;">Available formats:</em> ${meta.formats?.join(', ')}<br>
-                <em style="color:#666;">Available prints:</em> ${meta.print_editions? Object.entries(meta.print_editions).map(([type, val]) => `${type}: ${val.sold}/${val.total}`).join(', '): meta.available}<br>
-                <em style="color:#666;">${meta.details}</em>
-                <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
+                <em style="color:#666;">Available prints:</em> ${
+                  meta.print_editions
+                    ? Object.entries(meta.print_editions)
+                        .map(([type, val]) => {
+                          const remaining = val.total - val.sold;
+                          return type === "artist"
+                            ? `${remaining} artist${remaining !== 1 ? 's' : ''}`
+                            : `${remaining} of ${val.total} ${type}`;
+                        }).join(', ')
+                    : meta.available
+                }<br>
+                <a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
               `;
             });
           }

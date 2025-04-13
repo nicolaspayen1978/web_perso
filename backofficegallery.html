@@ -111,8 +111,7 @@
     const pwd = document.getElementById('password').value;
     authHeader = 'Bearer ' + pwd;
 
-    // Test access using a quick fetch
-    const res = await fetch('/api/gallery/load', {
+    const res = await fetch('/api/gallery?action=load', {
       headers: { 'Authorization': authHeader }
     });
 
@@ -125,20 +124,18 @@
   }
 
   async function runScript() {
-    const res = await fetch('/api/gallery/run-update', {
+    const res = await fetch('/api/gallery?action=run-update', {
       method: 'POST',
       headers: { 'Authorization': authHeader }
     });
 
     const data = await res.json();
     alert(data.message || 'Update finished.');
-
-    // Automatically reload the JSON after script finishes
     await loadJSON();
   }
 
   async function loadJSON() {
-    const res = await fetch('/api/gallery/load', {
+    const res = await fetch('/api/gallery?action=load', {
       headers: { 'Authorization': authHeader }
     });
     const data = await res.json();
@@ -150,7 +147,7 @@
     const raw = document.getElementById('currentJSON').value;
     try {
       const json = JSON.parse(raw);
-      const res = await fetch('/api/gallery/save', {
+      const res = await fetch('/api/gallery?action=save', {
         method: 'POST',
         headers: {
           'Authorization': authHeader,
@@ -171,15 +168,13 @@
       return;
     }
 
-    const res = await fetch('/api/gallery/clear', {
+    const res = await fetch('/api/gallery?action=clear', {
       method: 'POST',
       headers: { 'Authorization': authHeader }
     });
 
     const data = await res.json();
     alert(data.message || 'Gallery cleared.');
-
-    // Refresh the editor
     await loadJSON();
   }
 </script>

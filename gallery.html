@@ -126,7 +126,7 @@
 
     //fonction to load the gallery
     async function loadGallery() {
-      const response = await fetch('/api/gallery/public-load');
+      const response = await fetch('/api/gallery?action=public-load');
       const photos = await response.json();
 
       const gallery = document.getElementById('gallery');

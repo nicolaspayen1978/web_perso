@@ -1,6 +1,6 @@
 import { kv } from '@vercel/kv';
 import updateGallery from '../lib/updateGallery.js';
-import { requireAuth } from '../utils/auth.js';
+import { requireAuth } from '../../utils/auth.js';
 import fs from 'fs';
 import path from 'path';
 

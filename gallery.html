@@ -116,17 +116,13 @@
   <script type="module">
     import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
 
-    async function getImageSize(src) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
-        img.src = src;
-      });
-    }
-
     //fonction to load the gallery
     async function loadGallery() {
       const response = await fetch('/api/gallery?action=public-load');
+      if (!response.ok) {
+        console.error("❌ Failed to load gallery:", response.statusText);
+        return;
+      }
       const photos = await response.json();
 
       const gallery = document.getElementById('gallery');
@@ -134,12 +130,11 @@
       for (const photo of photos) {
         const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
         const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
-        const dimensions = await getImageSize(fullSrc);
 
         const link = document.createElement('a');
         link.href = fullSrc;
-        link.setAttribute('data-pswp-width', dimensions.width);
-        link.setAttribute('data-pswp-height', dimensions.height);
+        link.setAttribute('data-pswp-width', photo.width);
+        link.setAttribute('data-pswp-height', photo.height);
         link.setAttribute('data-pswp-src', fullSrc);
         link.setAttribute('data-title', photo.title);
 
@@ -156,6 +151,7 @@
         const img = document.createElement('img');
         img.src = thumbSrc;
         img.alt = photo.title;
+        img.loading = 'lazy';
 
         link.appendChild(img);
         gallery.appendChild(link);
@@ -221,7 +217,7 @@
               el.style.transform = 'translateX(-50%)';
               el.style.zIndex = '100';
 
-              el.innerHTML = `
+             el.innerHTML = `
                 <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
                 ${meta.location ? `${meta.location}<br>` : ''}
                 ${meta.description ? `${meta.description}<br><br>` : '<br>'}

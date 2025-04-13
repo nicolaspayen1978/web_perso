@@ -218,35 +218,35 @@
               el.style.zIndex = '100';
 
              el.innerHTML = `
-                <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
-                ${meta.location ? `${meta.location}<br>` : ''}
-                ${meta.description ? `${meta.description}<br><br>` : '<br>'}
+              <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
+              ${meta.location ? `${meta.location}<br>` : ''}
+              ${meta.description ? `${meta.description}<br><br>` : '<br>'}
 
-                <em style="color:#666;">Available formats & dimensions:</em><br>
-                ${meta.dimensions?.L ? `&nbsp;&nbsp;<strong>${meta.format_labels?.L || 'Gallery edition'}:</strong> ${meta.dimensions.L}<br>` : ''}
-                ${meta.dimensions?.XL ? `&nbsp;&nbsp;<strong>${meta.format_labels?.XL || 'Collector edition'}:</strong> ${meta.dimensions.XL}<br>` : ''}
+              <em style="color:#666;">Available formats & dimensions:</em><br>
+              &nbsp;&nbsp;<strong>${meta.format_labels?.L}:</strong> ${meta.dimensions?.L}<br>
+              &nbsp;&nbsp;<strong>${meta.format_labels?.XL}:</strong> ${meta.dimensions?.XL}<br>
 
-                <br><em style="color:#666;">Edition limits:</em><br>
-                ${meta.print_editions?.L ? `&nbsp;&nbsp;• ${meta.format_labels?.L || 'Gallery edition'} — Limited to ${meta.print_editions.L.total} prints<br>` : ''}
-                ${meta.print_editions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL || 'Collector edition'} — Limited to ${meta.print_editions.XL.total} prints<br>` : ''}
-                ${meta.print_editions?.artist ? `&nbsp;&nbsp;• Artist’s proof — Limited to ${meta.print_editions.artist.total} artist copies<br>` : ''}
+              <br><em style="color:#666;">Edition limits:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L} — Limited to ${meta.print_editions?.L?.total} prints<br>
+              &nbsp;&nbsp;• ${meta.format_labels?.XL} — Limited to ${meta.print_editions?.XL?.total} prints<br>
+              &nbsp;&nbsp;• Artist’s proof — Limited to ${meta.print_editions?.artist?.total} artist copies<br>
 
-                <br><em style="color:#666;">Available copies:</em><br>
-                ${meta.print_editions?.L ? `&nbsp;&nbsp;• ${meta.format_labels?.L || 'Gallery edition'} — ${meta.print_editions.L.total - meta.print_editions.L.sold} available<br>` : ''}
-                ${meta.print_editions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL || 'Collector edition'} — ${meta.print_editions.XL.total - meta.print_editions.XL.sold} available<br>` : ''}
-                ${meta.print_editions?.artist ? `&nbsp;&nbsp;• Artist’s proof — ${meta.print_editions.artist.total - meta.print_editions.artist.sold} available<br>` : ''}
+              <br><em style="color:#666;">Available copies:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L} — ${meta.print_editions?.L?.total - meta.print_editions?.L?.sold} available<br>
+              &nbsp;&nbsp;• ${meta.format_labels?.XL} — ${meta.print_editions?.XL?.total - meta.print_editions?.XL?.sold} available<br>
+              &nbsp;&nbsp;• Artist’s proof — ${meta.print_editions?.artist?.total - meta.print_editions?.artist?.sold} available<br>
 
-                <br><em style="color:#666;">Edition pricing:</em><br>
-                ${meta.price_details?.L ? `&nbsp;&nbsp;• ${meta.format_labels?.L || 'Gallery edition'}: ${meta.price_details.L}<br>` : ''}
-                ${meta.price_details?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL || 'Collector edition'}: ${meta.price_details.XL}<br>` : ''}
-                ${meta.price_details?.artist === null ? `&nbsp;&nbsp;• Artist’s proof: <em>price upon request</em><br>` : ''}
+              <br><em style="color:#666;">Edition pricing:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L}: ${meta.price_details?.L}<br>
+              &nbsp;&nbsp;• ${meta.format_labels?.XL}: ${meta.price_details?.XL}<br>
+              &nbsp;&nbsp;• Artist’s proof: <em>price upon request</em><br>
 
-                <br><div style="font-size: 0.8rem; color: #777; margin-top: 6px;">
-                  <em>Note: Artist’s proofs may vary in format and support depending on availability and artistic discretion.</em>
-                </div>
+              <br><div style="font-size: 0.8rem; color: #777; margin-top: 6px;">
+                <em>Note: Artist’s proofs may vary in format and support depending on availability and artistic discretion.</em>
+              </div>
 
-                <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
-              `;
+              <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
+            `;
             });
           }
         });

@@ -20,22 +20,25 @@
       "maxDuration": 25
     },
     "api/debug-kv.js": {
-      "maxDuration": 10
+      "maxDuration": 15
     },
     "api/clear-kv.js": {
-      "maxDuration": 10
+      "maxDuration": 15
     },
     "api/gallery/run-update.js": {
       "maxDuration": 60
     },
     "api/gallery/load.js": {
-      "maxDuration": 10
+      "maxDuration": 15
+    },
+    "api/gallery/clear.js": {
+      "maxDuration": 15
     },
     "api/gallery/public-load.js": { 
-      "maxDuration": 10 
+      "maxDuration": 15 
     },
     "api/gallery/save.js": {
-      "maxDuration": 10
+      "maxDuration": 15
     }
   },
   "routes": [
@@ -50,6 +53,7 @@
     { "src": "/api/gallery/run-update", "dest": "/api/gallery/run-update.js" },
     { "src": "/api/gallery/load", "dest": "/api/gallery/load.js" },
     { "src": "/api/gallery/save", "dest": "/api/gallery/save.js" },
+    { "src": "/api/gallery/clear", "dest": "/api/gallery/clear.js" },
     { "src": "/api/gallery/public-load", "dest": "/api/gallery/public-load.js" },
     { "handle": "filesystem" },
     { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1"}

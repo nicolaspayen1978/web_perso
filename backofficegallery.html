@@ -90,6 +90,7 @@
   <button onclick="runScript()">🔄 Run Update Script</button>
   <button onclick="loadJSON()">📂 Load Gallery JSON</button>
   <button onclick="saveJSON()">💾 Save Current JSON</button>
+  <button onclick="clearGallery()">🗑️ Clear Gallery</button>
 
   <div class="json-container">
     <h3>Current <code>gallery.json</code></h3>
@@ -133,7 +134,7 @@
     alert(data.message || 'Update finished.');
 
     // Automatically reload the JSON after script finishes
-    await loadGallery();
+    await loadJSON();
   }
 
   async function loadJSON() {
@@ -163,6 +164,23 @@
     } catch (err) {
       alert("Invalid JSON. Please fix errors before saving.");
     }
+  }
+
+  async function clearGallery() {
+    if (!confirm("⚠️ Are you sure you want to delete the entire gallery? A backup will be saved.")) {
+      return;
+    }
+
+    const res = await fetch('/api/gallery/clear', {
+      method: 'POST',
+      headers: { 'Authorization': authHeader }
+    });
+
+    const data = await res.json();
+    alert(data.message || 'Gallery cleared.');
+
+    // Refresh the editor
+    await loadJSON();
   }
 </script>
 

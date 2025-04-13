@@ -1,6 +1,5 @@
 import { kv } from '@vercel/kv';
 import updateGallery from '../lib/updateGallery.js';
-import { requireAuth } from '../../utils/auth.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -19,8 +18,8 @@ export default async function handler(req, res) {
   }
 
   // Everything else requires auth
-  const authResult = requireAuth(req);
-  if (!authResult.authorized) {
+  const { authorization } = req.headers;
+  if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

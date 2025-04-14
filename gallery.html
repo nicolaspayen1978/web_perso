@@ -281,10 +281,11 @@
             link.style.display = "none";
           }
         });
-      });
 
-      lightbox.init();
-    }
+      $('#gallery').justifiedGallery('norewind');
+    });
+
+    lightbox.init(); // This stays after the filter
 
     loadGallery();
   </script>

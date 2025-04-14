@@ -1,24 +1,965 @@
 [
   {
-    "id": "photo1",
-    "filename": "photo1.jpeg",
-    "thumbnail": "thumbs/photo1.jpeg",
-    "title": "Sunsrise in Naarden",
-    "location": "Naarden, Netherlands",
-    "description": "Early hour over the canal, captured in late summer.",
-    "print_formats": ["30x40", "50x70"],
-    "available_prints": 3,
-    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered."
+    "id": "2s9a3577",
+    "filename": "2s9a3577.jpg",
+    "thumbnail": "thumbs/2s9a3577.jpg",
+    "title": "2s9a3577",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
   },
   {
-    "id": "photo2",
-    "filename": "photo2.jpeg",
-    "thumbnail": "thumbs/photo2.jpeg",
-    "title": "Sunset in Naarden",
-    "location": "Naarden, Netherlands",
-    "description": "Golden hour over the canal, captured in late summer.",
-    "print_formats": ["30x40", "50x70"],
-    "available_prints": 3,
-    "print_description": "Printed on Hahnemühle FineArt Baryta, signed and numbered."
+    "id": "2s9a1259",
+    "filename": "2s9a1259.jpg",
+    "thumbnail": "thumbs/2s9a1259.jpg",
+    "title": "2s9a1259",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 37.5 × 28 cm — €427 incl. Collector edition (XL): 75 × 56 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.33,
+    "width": 7360,
+    "height": 5520,
+    "dimensions": {
+      "L": "37.5 × 28 cm",
+      "XL": "75 × 56 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
+  },
+  {
+    "id": "2s9a3539",
+    "filename": "2s9a3539.jpg",
+    "thumbnail": "thumbs/2s9a3539.jpg",
+    "title": "2s9a3539",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 25 cm — €427 incl. Collector edition (XL): 88.5 × 49.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.78,
+    "width": 8688,
+    "height": 4887,
+    "dimensions": {
+      "L": "44 × 25 cm",
+      "XL": "88.5 × 49.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
+  },
+  {
+    "id": "2s9a5370",
+    "filename": "2s9a5370.jpg",
+    "thumbnail": "thumbs/2s9a5370.jpg",
+    "title": "2s9a5370",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 5792,
+    "height": 8688,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05104",
+    "filename": "bestofme_2016-08-05104.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05104.jpg",
+    "title": "Bestofme 2016 08 05104",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 47 × 31.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 4637,
+    "height": 3091,
+    "dimensions": {
+      "L": "47 × 31.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05153",
+    "filename": "bestofme_2016-08-05153.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05153.jpg",
+    "title": "Bestofme 2016 08 05153",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 47.5 × 31.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 4673,
+    "height": 3114,
+    "dimensions": {
+      "L": "47.5 × 31.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0592",
+    "filename": "bestofme_2016-08-0592.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0592.jpg",
+    "title": "Bestofme 2016 08 0592",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 46.5 × 31.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.48,
+    "width": 4588,
+    "height": 3109,
+    "dimensions": {
+      "L": "46.5 × 31.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "dsc01398",
+    "filename": "dsc01398.jpg",
+    "thumbnail": "thumbs/dsc01398.jpg",
+    "title": "Dsc01398",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 53 × 37 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.44,
+    "width": 5217,
+    "height": 3629,
+    "dimensions": {
+      "L": "53 × 37 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05107",
+    "filename": "bestofme_2016-08-05107.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05107.jpg",
+    "title": "Bestofme 2016 08 05107",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05155",
+    "filename": "bestofme_2016-08-05155.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05155.jpg",
+    "title": "Bestofme 2016 08 05155",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 34.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.66,
+    "width": 3420,
+    "height": 5146,
+    "dimensions": {
+      "L": "52.5 × 34.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05211",
+    "filename": "bestofme_2016-08-05211.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05211.jpg",
+    "title": "Bestofme 2016 08 05211",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 55.5 × 37 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3648,
+    "height": 5472,
+    "dimensions": {
+      "L": "55.5 × 37 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05278",
+    "filename": "bestofme_2016-08-05278.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05278.jpg",
+    "title": "Bestofme 2016 08 05278",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0528",
+    "filename": "bestofme_2016-08-0528.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0528.jpg",
+    "title": "Bestofme 2016 08 0528",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 28 × 19 cm — €427 incl. Collector edition (XL): 56.5 × 37.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5552,
+    "height": 3696,
+    "dimensions": {
+      "L": "28 × 19 cm",
+      "XL": "56.5 × 37.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0529",
+    "filename": "bestofme_2016-08-0529.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0529.jpg",
+    "title": "Bestofme 2016 08 0529",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 5792,
+    "height": 8688,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0589",
+    "filename": "bestofme_2016-08-0589.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0589.jpg",
+    "title": "Bestofme 2016 08 0589",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5184,
+    "height": 3456,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "dsc01409",
+    "filename": "dsc01409.jpg",
+    "thumbnail": "thumbs/dsc01409.jpg",
+    "title": "Dsc01409",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44.5 × 37 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.82,
+    "width": 3622,
+    "height": 4392,
+    "dimensions": {
+      "L": "44.5 × 37 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "img_2030",
+    "filename": "img_2030.jpg",
+    "thumbnail": "thumbs/img_2030.jpg",
+    "title": "Img 2030",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 51.5 × 34.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3394,
+    "height": 5091,
+    "dimensions": {
+      "L": "51.5 × 34.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "img_2679",
+    "filename": "img_2679.jpg",
+    "thumbnail": "thumbs/img_2679.jpg",
+    "title": "Img 2679",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "img_3710",
+    "filename": "img_3710.jpg",
+    "thumbnail": "thumbs/img_3710.jpg",
+    "title": "Img 3710",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 42 × 30 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.72,
+    "width": 2941,
+    "height": 4110,
+    "dimensions": {
+      "L": "42 × 30 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "img_5899",
+    "filename": "img_5899.jpg",
+    "thumbnail": "thumbs/img_5899.jpg",
+    "title": "Img 5899",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5184,
+    "height": 3456,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
+  },
+  {
+    "id": "img_6289",
+    "filename": "img_6289.jpg",
+    "thumbnail": "thumbs/img_6289.jpg",
+    "title": "Img 6289",
+    "location": "",
+    "description": "",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52 × 34.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5116,
+    "height": 3411,
+    "dimensions": {
+      "L": "52 × 34.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    }
   }
 ]

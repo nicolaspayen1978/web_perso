@@ -9,7 +9,8 @@
     "api/conversation/[visitorID]/index.js": { "maxDuration": 25 },
     "api/debug-kv.js": { "maxDuration": 15 },
     "api/clear-kv.js": { "maxDuration": 15 },
-    "api/gallery.js": { "maxDuration": 60 }
+    "api/gallery.js": { "maxDuration": 60 },
+    "api/generateCaption.js": { "maxDuration": 60 }
   },
   "routes": [
     { "src": "/api/chatbot", "dest": "/api/chatbot.js" },
@@ -21,6 +22,7 @@
     { "src": "/api/debug-kv", "dest": "/api/debug-kv.js" },
     { "src": "/api/clear-kv", "dest": "/api/clear-kv.js" },
     { "src": "/api/gallery", "dest": "/api/gallery.js" },
+    { "src": "/api/generateCaption", "dest": "/api/generateCaption.js" },
     { "handle": "filesystem" },
     { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1" }
   ]

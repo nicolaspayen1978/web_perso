@@ -228,6 +228,23 @@
     const container = document.getElementById('editorContainer');
     container.innerHTML = '';
 
+    async function suggestCaption(index) {
+      const photo = galleryData[index];
+      const res = await fetch('/api/generateCaption', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authHeader
+        },
+        body: JSON.stringify({ filename: photo.thumbnail })
+      });
+
+      const result = await res.json();
+      if (result.title) galleryData[index].title = result.title;
+      if (result.description) galleryData[index].description = result.description;
+      renderEditor();
+    }
+
     galleryData.forEach((photo, index) => {
       const card = document.createElement('div');
       card.className = 'photo-card';
@@ -265,6 +282,7 @@
           <label>Sold (Artist):</label>
           <input type="text" value="${photo.print_editions?.artist?.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
         </div>
+        <button onclick="suggestCaption(${index})" style="margin-top: 6px;">✨ Suggest Title & Description</button>
       `;
 
       container.appendChild(card);

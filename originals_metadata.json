@@ -1,5 +1,34 @@
 [
   {
+    "file": "2s9a3577.jpg",
+    "width": 8688,
+    "height": 5792,
+    "sizeBytes": 21544287,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 88.5,
+        "shortCm": 59
+      },
+      "XL": {
+        "format": "XL",
+        "long": 88.5,
+        "short": 59,
+        "orientation": "landscape"
+      },
+      "L": {
+        "format": "L",
+        "long": 44,
+        "short": 29.5,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
     "file": "2s9a1259.jpg",
     "width": 7360,
     "height": 5520,
@@ -87,20 +116,89 @@
     "category": "printable"
   },
   {
-    "file": "bestofme_2016-08-05107_.jpg",
-    "width": 3456,
-    "height": 5184,
-    "sizeBytes": 19001693,
+    "file": "bestofme_2016-08-05104.jpg",
+    "width": 4637,
+    "height": 3091,
+    "sizeBytes": 11666497,
     "printSizes": {
       "maxPrintCm": {
-        "longCm": 52.5,
-        "shortCm": 35
+        "longCm": 47,
+        "shortCm": 31.5
       },
       "L": {
         "format": "L",
-        "long": 52.5,
-        "short": 35,
-        "orientation": "portrait"
+        "long": 47,
+        "short": 31.5,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "bestofme_2016-08-05153.jpg",
+    "width": 4673,
+    "height": 3114,
+    "sizeBytes": 7721295,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 47.5,
+        "shortCm": 31.5
+      },
+      "L": {
+        "format": "L",
+        "long": 47.5,
+        "short": 31.5,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "bestofme_2016-08-0592.jpg",
+    "width": 4588,
+    "height": 3109,
+    "sizeBytes": 11109000,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 46.5,
+        "shortCm": 31.5
+      },
+      "L": {
+        "format": "L",
+        "long": 46.5,
+        "short": 31.5,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "dsc01398.jpg",
+    "width": 5217,
+    "height": 3629,
+    "sizeBytes": 9316701,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 53,
+        "shortCm": 37
+      },
+      "L": {
+        "format": "L",
+        "long": 53,
+        "short": 37,
+        "orientation": "landscape"
       }
     },
     "resolutionWarnings": {

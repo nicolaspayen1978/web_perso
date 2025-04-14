@@ -125,6 +125,38 @@
       outline: none;
       border-color: #555;
     }
+
+    .pswp-info-panel {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #222;
+      padding: 1.4rem 1.6rem;
+      border-radius: 12px;
+      max-width: 440px;
+      line-height: 1.7;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      z-index: 100;
+    }
+
+    @media (max-width: 768px) {
+      .pswp-info-panel {
+        position: fixed !important;
+        bottom: 10vh !important;
+        left: 5vw !important;
+        width: 90vw !important;
+        max-height: 75vh;
+        padding: 1.2rem 1rem;
+        border-radius: 16px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        word-break: break-word;
+      }
+    }
 </style>
 </head>
  <body>

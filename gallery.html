@@ -108,6 +108,14 @@
 </head>
 <body>
   <h1>Photography by Nicolas Payen</h1>
+  <div style="text-align:center; margin-bottom: 2rem;">
+    <label for="format-filter" style="font-weight:500; margin-right:10px;">Show only:</label>
+    <select id="format-filter" style="font-size: 1rem; padding: 6px 12px;">
+      <option value="all">All Editions</option>
+      <option value="L">Gallery Edition (L)</option>
+      <option value="XL">Collector Edition (XL)</option>
+    </select>
+ </div>
   <div id="gallery" class="gallery"></div>
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
@@ -251,6 +259,22 @@
                 <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
               `;
             });
+          }
+        });
+      });
+
+      document.getElementById("format-filter").addEventListener("change", function() {
+        const selected = this.value;
+        const links = document.querySelectorAll("#gallery a");
+
+        links.forEach(link => {
+          const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
+          const formats = meta.print_formats || [];
+
+          if (selected === "all" || formats.includes(selected)) {
+            link.style.display = "";
+          } else {
+            link.style.display = "none";
           }
         });
       });

@@ -265,25 +265,28 @@
       });
 
       document.getElementById("format-filter").addEventListener("change", function () {
-        const selected = this.value;
-        const links = document.querySelectorAll("#gallery a");
+      const selected = this.value;
+      const links = document.querySelectorAll("#gallery a");
 
-        links.forEach(link => {
-          const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-          const formats = (meta.print_formats || []).map(f => f.toUpperCase());
+      links.forEach(link => {
+        const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
+        const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
 
-          if (
-            selected === "all" ||
-            (selected === "L" && formats.includes("L")) ||
-            (selected === "XL" && formats.includes("XL"))
-          ) {
-            link.style.display = "";
-          } else {
-            link.style.display = "none";
-          }
-        });
+        const show =
+          selected === "all" ||
+          (selected === "L" && formats.includes("L")) ||
+          (selected === "XL" && formats.includes("XL"));
 
-      $('#gallery').justifiedGallery('norewind');
+        link.style.display = show ? "" : "none";
+      });
+
+      // Refresh the layout
+      $('#gallery').justifiedGallery('norewind').justifiedGallery('destroy').justifiedGallery({
+        rowHeight: 250,
+        margins: 5,
+        lastRow: 'nojustify',
+        captions: false
+      });
     });
 
     lightbox.init();

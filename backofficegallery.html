@@ -74,11 +74,28 @@
     }
 
     .photo-card {
+      display: flex;
+      flex-wrap: wrap;
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 16px;
       margin-bottom: 20px;
       background-color: #fff;
+      gap: 20px;
+    }
+
+    .photo-left {
+      flex: 1 1 200px;
+      min-width: 200px;
+    }
+
+    .photo-left img {
+      max-width: 100%;
+      border-radius: 4px;
+    }
+
+    .photo-right {
+      flex: 2 1 400px;
     }
 
     .photo-card input[type="text"],
@@ -108,6 +125,13 @@
     .save-btn:hover {
       background-color: #1e7e34;
     }
+
+    .tag-summary {
+      background: #eef;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -128,6 +152,7 @@
   <button class="save-btn" onclick="saveEditor()">💾 Save All Changes</button>
   <button onclick="clearGallery()">🗑️ Clear Gallery</button>
 
+  <div class="tag-summary" id="tagSummary"></div>
   <div id="editorContainer"></div>
 
   <div class="json-container">
@@ -181,7 +206,22 @@
     galleryData = data.current;
     document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
     document.getElementById('previousJSON').value = JSON.stringify(data.previous, null, 2);
+    renderTagSummary();
     renderEditor();
+  }
+
+  function renderTagSummary() {
+    const tags = new Set();
+    const exhibitions = new Set();
+    galleryData.forEach(photo => {
+      (photo.tags || []).forEach(t => tags.add(t));
+      (photo.exhibitions || []).forEach(e => exhibitions.add(e));
+    });
+    const html = `
+      <strong>Tags:</strong> ${[...tags].join(', ') || '—'}<br>
+      <strong>Exhibitions:</strong> ${[...exhibitions].join(', ') || '—'}
+    `;
+    document.getElementById('tagSummary').innerHTML = html;
   }
 
   function renderEditor() {
@@ -193,23 +233,38 @@
       card.className = 'photo-card';
 
       card.innerHTML = `
-        <h4>${photo.id}</h4>
-        <label>Title:</label>
-        <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
+        <div class="photo-left">
+          <img src="/photos/${photo.thumbnail}" alt="${photo.title}" />
+          <p><strong>Gallery:</strong> ${photo.dimensions?.L || '-'}<br>Price: ${photo.price_details?.L || '-'}</p>
+          <p><strong>Collector:</strong> ${photo.dimensions?.XL || '-'}<br>Price: ${photo.price_details?.XL || '-'}</p>
+        </div>
+        <div class="photo-right">
+          <h4>${photo.id}</h4>
+          <label>Title:</label>
+          <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
 
-        <label>Description:</label>
-        <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
+          <label>Description:</label>
+          <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
 
-        <label>Tags (comma-separated):</label>
-        <input type="text" value="${(photo.tags || []).join(', ')}"
-               onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+          <label>Tags (comma-separated):</label>
+          <input type="text" value="${(photo.tags || []).join(', ')}"
+                 onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
 
-        <label>Exhibition Tags (comma-separated):</label>
-        <input type="text" value="${(photo.exhibitions || []).join(', ')}"
-               onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+          <label>Exhibition Tags (comma-separated):</label>
+          <input type="text" value="${(photo.exhibitions || []).join(', ')}"
+                 onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
 
-        <label><input type="checkbox" ${photo.visible ? 'checked' : ''} onchange="galleryData[${index}].visible = this.checked" />
-        Visible</label>
+          <label><input type="checkbox" ${photo.visible ? 'checked' : ''} onchange="galleryData[${index}].visible = this.checked" /> Visible</label>
+
+          <label>Sold (Gallery):</label>
+          <input type="text" value="${photo.print_editions?.L?.sold || 0}" onchange="galleryData[${index}].print_editions.L.sold = parseInt(this.value) || 0" />
+
+          <label>Sold (Collector):</label>
+          <input type="text" value="${photo.print_editions?.XL?.sold || 0}" onchange="galleryData[${index}].print_editions.XL.sold = parseInt(this.value) || 0" />
+
+          <label>Sold (Artist):</label>
+          <input type="text" value="${photo.print_editions?.artist?.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
+        </div>
       `;
 
       container.appendChild(card);

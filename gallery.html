@@ -106,16 +106,19 @@
     }
   </style>
 </head>
-<body>
+ <body>
   <h1>Photography by Nicolas Payen</h1>
   <div style="text-align:center; margin-bottom: 2rem;">
     <label for="format-filter" style="font-weight:500; margin-right:10px;">Show only:</label>
-    <select id="format-filter" style="font-size: 1rem; padding: 6px 12px;">
+    <select id="format-filter" style="font-size: 1rem; padding: 6px 12px; margin-right: 10px;">
       <option value="all">All Editions</option>
       <option value="L">Gallery Edition (L)</option>
       <option value="XL">Collector Edition (XL)</option>
     </select>
- </div>
+    <select id="exhibition-filter" style="font-size: 1rem; padding: 6px 12px;">
+      <option value="">All Exhibitions</option>
+    </select>
+  </div>
   <div id="gallery" class="gallery"></div>
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
@@ -126,16 +129,19 @@
 
   async function loadGallery() {
     const response = await fetch('/api/gallery?action=public-load');
-    if (!response.ok) {
-      console.error("❌ Failed to load gallery:", response.statusText);
-      return;
-    }
+    if (!response.ok) return console.error("❌ Failed to load gallery:", response.statusText);
 
-    const photos = await response.json();
+    const photos = (await response.json()).filter(p => p.visible !== false);
     const gallery = document.getElementById('gallery');
+    const exhibitionFilter = document.getElementById('exhibition-filter');
+    const formatFilter = document.getElementById('format-filter');
+
     const allLinks = [];
+    const exhibitionsSet = new Set();
 
     for (const photo of photos) {
+      (photo.exhibitions || []).forEach(e => exhibitionsSet.add(e));
+
       const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
       const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
 
@@ -145,6 +151,7 @@
       link.setAttribute('data-pswp-height', photo.height);
       link.setAttribute('data-pswp-src', fullSrc);
       link.setAttribute('data-title', photo.title);
+      link.setAttribute('data-exhibitions', (photo.exhibitions || []).join(','));
 
       link.setAttribute('data-meta', JSON.stringify({
         title: photo.title,
@@ -154,7 +161,7 @@
         format_labels: photo.format_labels,
         print_editions: photo.print_editions,
         price_details: photo.price_details,
-        print_formats: photo.print_formats  
+        print_formats: photo.print_formats
       }));
 
       const img = document.createElement('img');
@@ -167,12 +174,40 @@
       gallery.appendChild(link);
     }
 
-    $('#gallery').justifiedGallery({
-      rowHeight: 250,
-      margins: 5,
-      lastRow: 'nojustify',
-      captions: false
+    [...exhibitionsSet].sort().forEach(tag => {
+      const option = document.createElement('option');
+      option.value = tag;
+      option.textContent = tag;
+      exhibitionFilter.appendChild(option);
     });
+
+    function applyFilters() {
+      const selectedFormat = formatFilter.value;
+      const selectedExhibition = exhibitionFilter.value;
+
+      gallery.innerHTML = '';
+      const filtered = allLinks.filter(link => {
+        const meta = JSON.parse(link.getAttribute('data-meta') || '{}');
+        const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
+        const exhibitions = (link.getAttribute('data-exhibitions') || '').split(',');
+        return (selectedFormat === 'all' || formats.includes(selectedFormat)) &&
+               (!selectedExhibition || exhibitions.includes(selectedExhibition));
+      });
+
+      filtered.forEach(link => gallery.appendChild(link));
+      $('#gallery').justifiedGallery('norewind').justifiedGallery({
+        rowHeight: 250,
+        margins: 5,
+        lastRow: 'nojustify',
+        captions: false
+      });
+      lightbox.init();
+    }
+
+    formatFilter.addEventListener("change", applyFilters);
+    exhibitionFilter.addEventListener("change", applyFilters);
+
+    $('#gallery').justifiedGallery({ rowHeight: 250, margins: 5, lastRow: 'nojustify', captions: false });
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: '#gallery',
@@ -189,10 +224,7 @@
         isButton: true,
         html: '<div class="pswp-info-button">i</div>',
         onClick: () => {
-          if (infoPanelEl) {
-            const isVisible = infoPanelEl.style.display === 'block';
-            infoPanelEl.style.display = isVisible ? 'none' : 'block';
-          }
+          if (infoPanelEl) infoPanelEl.style.display = infoPanelEl.style.display === 'block' ? 'none' : 'block';
         }
       });
 
@@ -262,34 +294,11 @@
       });
     });
 
-    document.getElementById("format-filter").addEventListener("change", function () {
-      const selected = this.value;
-      const gallery = document.getElementById("gallery");
-      gallery.innerHTML = "";
-
-      const matching = allLinks.filter(link => {
-        const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-        const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
-        return selected === "all" || formats.includes(selected);
-      });
-
-      matching.forEach(link => gallery.appendChild(link));
-
-      $('#gallery').justifiedGallery('norewind').justifiedGallery({
-        rowHeight: 250,
-        margins: 5,
-        lastRow: 'nojustify',
-        captions: false
-      });
-
-      lightbox.init();
-    });
-
     lightbox.init();
   }
 
   loadGallery();
-</script>
+  </script>
 
   <footer>
     <div id="footer-title">

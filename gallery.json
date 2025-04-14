@@ -102,7 +102,10 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "2s9a3539",
@@ -150,7 +153,13 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "landscape"
+    ]
   },
   {
     "id": "2s9a5370",
@@ -198,7 +207,10 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "bestofme_2016-08-05104",
@@ -243,13 +255,21 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "visible": false,
+    "tags": [
+      "france",
+      "landscape"
+    ]
   },
   {
     "id": "bestofme_2016-08-05153",
     "filename": "bestofme_2016-08-05153.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05153.jpg",
-    "title": "Bestofme 2016 08 05153",
+    "title": "who are you?",
     "location": "",
     "description": "",
     "print_formats": [
@@ -288,13 +308,16 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "bestofme_2016-08-0592",
     "filename": "bestofme_2016-08-0592.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0592.jpg",
-    "title": "Bestofme 2016 08 0592",
+    "title": "Sit and relax",
     "location": "",
     "description": "",
     "print_formats": [
@@ -333,13 +356,20 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "tags": [
+      "reflection",
+      "france"
+    ],
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "dsc01398",
     "filename": "dsc01398.jpg",
     "thumbnail": "thumbs/dsc01398.jpg",
-    "title": "Dsc01398",
+    "title": "Dramatic horizon",
     "location": "",
     "description": "",
     "print_formats": [
@@ -378,13 +408,19 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "france"
+    ]
   },
   {
     "id": "bestofme_2016-08-05107",
     "filename": "bestofme_2016-08-05107.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05107.jpg",
-    "title": "Bestofme 2016 08 05107",
+    "title": "First sun",
     "location": "",
     "description": "",
     "print_formats": [
@@ -423,7 +459,13 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "france"
+    ]
   },
   {
     "id": "bestofme_2016-08-05155",
@@ -468,7 +510,10 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "bestofme_2016-08-05211",
@@ -513,7 +558,10 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "bestofme_2016-08-05278",
@@ -558,13 +606,16 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "bestofme_2016-08-0528",
     "filename": "bestofme_2016-08-0528.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0528.jpg",
-    "title": "Bestofme 2016 08 0528",
+    "title": "Glitch",
     "location": "",
     "description": "",
     "print_formats": [
@@ -606,15 +657,21 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "france"
+    ]
   },
   {
     "id": "bestofme_2016-08-0529",
     "filename": "bestofme_2016-08-0529.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0529.jpg",
-    "title": "Bestofme 2016 08 0529",
+    "title": "Oscillations",
     "location": "",
-    "description": "",
+    "description": "La Ciotat early hours",
     "print_formats": [
       "XL",
       "L"
@@ -654,13 +711,19 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "france"
+    ]
   },
   {
     "id": "bestofme_2016-08-0589",
     "filename": "bestofme_2016-08-0589.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0589.jpg",
-    "title": "Bestofme 2016 08 0589",
+    "title": "night reflections",
     "location": "",
     "description": "",
     "print_formats": [
@@ -699,13 +762,16 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ]
   },
   {
     "id": "dsc01409",
     "filename": "dsc01409.jpg",
     "thumbnail": "thumbs/dsc01409.jpg",
-    "title": "Dsc01409",
+    "title": "upside down",
     "location": "",
     "description": "",
     "print_formats": [
@@ -744,7 +810,14 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "urban",
+      "france"
+    ]
   },
   {
     "id": "img_2030",
@@ -789,7 +862,13 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "urban"
+    ]
   },
   {
     "id": "img_2679",
@@ -834,7 +913,13 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "landscape"
+    ]
   },
   {
     "id": "img_3710",
@@ -879,7 +964,15 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection",
+      "BlackandWhite"
+    ],
+    "tags": [
+      "urban",
+      "BlackandWhite"
+    ]
   },
   {
     "id": "img_5899",
@@ -924,7 +1017,15 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection",
+      "BlackandWhite"
+    ],
+    "tags": [
+      "urban",
+      "BlackandWhite"
+    ]
   },
   {
     "id": "img_6289",
@@ -969,6 +1070,14 @@
     "resolution_warnings": {
       "XL": true,
       "L": false
-    }
+    },
+    "exhibitions": [
+      "reflection"
+    ],
+    "tags": [
+      "reflection",
+      "landscape",
+      "sunset"
+    ]
   }
 ]

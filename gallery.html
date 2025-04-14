@@ -263,15 +263,19 @@
         });
       });
 
-      document.getElementById("format-filter").addEventListener("change", function() {
+      document.getElementById("format-filter").addEventListener("change", function () {
         const selected = this.value;
         const links = document.querySelectorAll("#gallery a");
 
         links.forEach(link => {
           const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-          const formats = meta.print_formats || [];
+          const formats = (meta.print_formats || []).map(f => f.toUpperCase());
 
-          if (selected === "all" || formats.includes(selected)) {
+          if (
+            selected === "all" ||
+            (selected === "L" && formats.includes("L")) ||
+            (selected === "XL" && formats.includes("XL"))
+          ) {
             link.style.display = "";
           } else {
             link.style.display = "none";

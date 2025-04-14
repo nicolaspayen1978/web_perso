@@ -26,44 +26,53 @@ export default async function handler(req, res) {
   const base64Image = fileBuffer.toString('base64');
 
   try {
-    // Send a request to OpenAI with the image and prompt
+    // Send a request to OpenAI with the image and your poetic prompt
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // Vision-capable model
       messages: [
         {
           role: "user",
           content: [
-            // Prompt the model for poetic captioning
-            { type: "text", text: "Give a poetic title and a short description of this photo." },
+            // Your refined and personal prompt
+            {
+              type: "text",
+              text: `You are Nicolas Payen — a quiet observer of the world, a poetic realist.
+Describe this photograph as if you're whispering it to someone you love.
+Give it a title that feels like a memory, and a short description that captures light, stillness, and meaning — with elegance and soul.
+Also provide a list of 3 to 6 simple tags that capture the subject, emotion, or setting of the photo.`
+            },
             {
               type: "image_url",
               image_url: {
-                url: `data:image/jpeg;base64,${base64Image}`, // Inline Base64 image
-                detail: "low" // Lower detail to save tokens and cost
+                url: `data:image/jpeg;base64,${base64Image}`,
+                detail: "low" // Save cost while still extracting overall mood
               }
             }
           ]
         }
       ],
-      max_tokens: 300 // Cap the response to 300 tokens
+      max_tokens: 400 // Slightly increased for tags + more descriptive style
     });
 
     // Extract and clean up the response text
     const text = response.choices[0]?.message?.content || '';
 
-    // Separate the first line as title, and the rest as description
-    const [titleLine, ...descLines] = text.trim().split('\n').map(s => s.trim()).filter(Boolean);
+    // Attempt to separate title, description and tags
+    const lines = text.trim().split('\n').map(s => s.trim()).filter(Boolean);
+    const titleLine = lines[0];
+    const tagLines = lines.filter(l => l.toLowerCase().startsWith('tags:') || l.startsWith('-') || l.startsWith('*') || l.includes(','));
+    const descriptionLines = lines.filter(l => l !== titleLine && !tagLines.includes(l));
 
-    // Remove any surrounding quotes from title
+    // Remove quotes and return structured data
     const title = titleLine.replace(/^["']|["']$/g, '');
+    const description = descriptionLines.join(' ');
+    const tagsRaw = tagLines.join(',').replace(/^tags?:/i, '');
+    const tags = tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
 
-    // Join remaining lines as description
-    const description = descLines.join(' ');
-
-    // Return the generated title and description as JSON
-    res.status(200).json({ title, description });
+    // Return everything to the client
+    res.status(200).json({ title, description, tags });
   } catch (err) {
-    // Log any errors and return a server error response
+    // Handle errors gracefully
     console.error('🛑 OpenAI error:', err);
     res.status(500).json({ error: 'Failed to generate caption' });
   }

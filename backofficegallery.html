@@ -254,7 +254,7 @@
           <input type="text" value="${(photo.exhibitions || []).join(', ')}"
                  onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
 
-          <label><input type="checkbox" ${photo.visible ? 'checked' : ''} onchange="galleryData[${index}].visible = this.checked" /> Visible</label>
+        <label><input type="checkbox" ${photo.visible === false ? '' : 'checked'} onchange="galleryData[${index}].visible = this.checked" />Visible</label>
 
           <label>Sold (Gallery):</label>
           <input type="text" value="${photo.print_editions?.L?.sold || 0}" onchange="galleryData[${index}].print_editions.L.sold = parseInt(this.value) || 0" />

@@ -297,19 +297,7 @@
             const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
             const title = meta.title || 'Photo Request';
 
-            el.style.display = 'none';
-            el.style.backgroundColor = '#fff';
-            el.style.color = '#222';
-            el.style.padding = '1.4rem 1.6rem';
-            el.style.borderRadius = '12px';
-            el.style.maxWidth = '440px';
-            el.style.lineHeight = '1.7';
-            el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
-            el.style.position = 'absolute';
-            el.style.bottom = '80px';
-            el.style.left = '50%';
-            el.style.transform = 'translateX(-50%)';
-            el.style.zIndex = '100';
+            el.style.display = 'none'; // keep this to toggle visibility
 
             el.innerHTML = `
               <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>

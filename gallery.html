@@ -264,40 +264,37 @@
         });
       });
 
-      document.getElementById("format-filter").addEventListener("change", function () {
-      const selected = this.value;
-      const links = document.querySelectorAll("#gallery a");
+    document.getElementById("format-filter").addEventListener("change", function () {
+        const selected = this.value;
+        const gallery = document.getElementById("gallery");
+        const allLinks = Array.from(document.querySelectorAll("#gallery a"));
 
-      links.forEach(link => {
-        const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-        const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
+        // Remove all items first
+        gallery.innerHTML = "";
 
-        const show =
-          selected === "all" ||
-          (selected === "L" && formats.includes("L")) ||
-          (selected === "XL" && formats.includes("XL"));
+        // Re-append only matching ones
+        allLinks.forEach(link => {
+          const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
+          const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
 
-        link.style.display = show ? "" : "none";
-      });
+          const match =
+            selected === "all" ||
+            (selected === "L" && formats.includes("L")) ||
+            (selected === "XL" && formats.includes("XL"));
 
-      // Refresh the layout
-      // Wait for the DOM to settle before re-initializing layout
-      setTimeout(() => {
-        $('#gallery')
-          .justifiedGallery('norewind')
-          .justifiedGallery('destroy')
-          .justifiedGallery({
-            rowHeight: 250,
-            margins: 5,
-            lastRow: 'nojustify',
-            captions: false
-          });
-      }, 10); // small timeout is enough
+          if (match) gallery.appendChild(link);
+        });
 
-      });
+    // Refresh the JustifiedGallery layout
+    $('#gallery').justifiedGallery('norewind').justifiedGallery({
+      rowHeight: 250,
+      margins: 5,
+      lastRow: 'nojustify',
+      captions: false
+    });
 
     lightbox.init();
-  }
+  });
 
   loadGallery();
   </script>

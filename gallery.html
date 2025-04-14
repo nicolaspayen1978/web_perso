@@ -281,13 +281,20 @@
       });
 
       // Refresh the layout
-      $('#gallery').justifiedGallery('norewind').justifiedGallery('destroy').justifiedGallery({
-        rowHeight: 250,
-        margins: 5,
-        lastRow: 'nojustify',
-        captions: false
+      // Wait for the DOM to settle before re-initializing layout
+      setTimeout(() => {
+        $('#gallery')
+          .justifiedGallery('norewind')
+          .justifiedGallery('destroy')
+          .justifiedGallery({
+            rowHeight: 250,
+            margins: 5,
+            lastRow: 'nojustify',
+            captions: false
+          });
+      }, 10); // small timeout is enough
+
       });
-    });
 
     lightbox.init();
   }

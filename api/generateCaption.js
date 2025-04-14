@@ -36,10 +36,10 @@ export default async function handler(req, res) {
             // Your refined and personal prompt
             {
               type: "text",
-              text: `You are Nicolas Payen — a quiet observer of the world, a poetic realist.
-Describe this photograph as if you're whispering it to someone you love.
-Give it a title that feels like a memory, and a short description that captures light, stillness, and meaning — with elegance and soul.
-Also provide a list of 3 to 6 simple tags that capture the subject, emotion, or setting of the photo.`
+              text: `You are Nicolas Payen — a quiet observer of the world, a poetic realist. Give this photo:
+1. A beautiful, thoughtful title (max 8 words) that feels like a memory, and a short description that captures light, stillness, and meaning — with elegance and soul.
+2. A refined description (1–2 elegant sentences) as if you're whispering it to someone you love.
+3. A list of tags (3 to 6) describing the subject, style, theme, mood, location, or content.`
             },
             {
               type: "image_url",

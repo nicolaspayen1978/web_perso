@@ -125,36 +125,7 @@
     outline: none;
     border-color: #555;
   }
-  .pswp-info-panel {
-    position: absolute;
-    top: 50px;
-    right: 30px;
-    background: #fff;
-    color: #222;
-    padding: 1.4rem 1.6rem;
-    border-radius: 12px;
-    max-width: 440px;
-    line-height: 1.7;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    z-index: 1000;
-    font-size: 0.95rem;
-    word-break: break-word;
-  }
-  @media (max-width: 768px) {
-    .pswp-info-panel {
-      position: fixed !important;
-      bottom: 10vh !important;
-      left: 5vw !important;
-      width: 90vw !important;
-      max-height: 75vh;
-      padding: 1.2rem 1rem;
-      border-radius: 16px;
-      box-sizing: border-box;
-      overflow-y: auto;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-  }
+  
 </style>
 
 </head>
@@ -297,7 +268,34 @@
             const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
             const title = meta.title || 'Photo Request';
 
-            el.style.display = 'none'; // keep this to toggle visibility
+            el.style.display = 'none';
+            el.style.position = 'absolute';
+            el.style.top = '50px';
+            el.style.right = '30px';
+            el.style.left = 'auto';
+            el.style.bottom = 'auto';
+            el.style.transform = 'none';
+            el.style.backgroundColor = '#fff';
+            el.style.color = '#222';
+            el.style.padding = '1.4rem 1.6rem';
+            el.style.borderRadius = '12px';
+            el.style.maxWidth = '440px';
+            el.style.lineHeight = '1.7';
+            el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
+            el.style.zIndex = '1000';
+            el.style.fontSize = '0.95rem';
+            el.style.wordBreak = 'break-word';
+            el.style.overflowY = 'auto';
+
+            if (window.innerWidth < 768) {
+              el.style.position = 'fixed';
+              el.style.top = 'auto';
+              el.style.right = 'auto';
+              el.style.left = '5vw';
+              el.style.bottom = '10vh';
+              el.style.width = '90vw';
+              el.style.maxHeight = '75vh';
+            }
 
             el.innerHTML = `
               <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>

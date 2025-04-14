@@ -172,6 +172,17 @@
     if (!response.ok) return console.error("❌ Failed to load gallery:", response.statusText);
 
     const photos = (await response.json()).filter(p => p.visible !== false);
+
+    //we change the order of the photo at each loading to bring some freshness and highlight various work
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(photos);
+
     const gallery = document.getElementById('gallery');
     const exhibitionFilter = document.getElementById('exhibition-filter');
     const formatFilter = document.getElementById('format-filter');

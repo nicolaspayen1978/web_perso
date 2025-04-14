@@ -3,9 +3,9 @@
     "id": "2s9a3577",
     "filename": "2s9a3577.jpg",
     "thumbnail": "thumbs/2s9a3577.jpg",
-    "title": "2s9a3577",
+    "title": "Bali dream",
     "location": "",
-    "description": "",
+    "description": "North of Kuta in Bali, when the sun sets on the horizon, the earth and the sky merge in fire. ",
     "print_formats": [
       "XL",
       "L"
@@ -45,7 +45,16 @@
     "resolution_warnings": {
       "XL": false,
       "L": false
-    }
+    },
+    "tags": [
+      "reflection",
+      "sunset",
+      "landscape"
+    ],
+    "exhibitions": [
+      "reflection"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a1259",

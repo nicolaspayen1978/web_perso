@@ -125,13 +125,30 @@
     outline: none;
     border-color: #555;
   }
-  
+  @media (max-width: 768px) {
+    #filters-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #filters-wrapper label {
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    #filters-wrapper select {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
 </style>
 
 </head>
  <body>
   <h1>Photography by Nicolas Payen</h1>
-  <div style="text-align:center; margin-bottom: 2rem;">
+  <div id="filters-wrapper" style="text-align:center; margin-bottom: 2rem;">
     <label for="format-filter" style="font-weight:500; margin-right:10px;">Show only:</label>
     <select id="format-filter" style="font-size: 1rem; padding: 6px 12px; margin-right: 10px;">
       <option value="all">All Editions</option>

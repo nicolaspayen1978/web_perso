@@ -1,0 +1,423 @@
+[
+  {
+    "file": "2S9A1259.jpeg",
+    "width": 7360,
+    "height": 5520,
+    "sizeBytes": 27697711,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 75,
+        "shortCm": 56
+      },
+      "XL": {
+        "format": "XL",
+        "long": 75,
+        "short": 56,
+        "orientation": "landscape"
+      },
+      "L": {
+        "format": "L",
+        "long": 37.5,
+        "short": 28,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "2S9A3539.jpeg",
+    "width": 8688,
+    "height": 4887,
+    "sizeBytes": 34896254,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 88.5,
+        "shortCm": 49.5
+      },
+      "XL": {
+        "format": "XL",
+        "long": 88.5,
+        "short": 49.5,
+        "orientation": "landscape"
+      },
+      "L": {
+        "format": "L",
+        "long": 44,
+        "short": 25,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "2S9A5370.jpeg",
+    "width": 5792,
+    "height": 8688,
+    "sizeBytes": 19567368,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 88.5,
+        "shortCm": 59
+      },
+      "XL": {
+        "format": "XL",
+        "long": 88.5,
+        "short": 59,
+        "orientation": "portrait"
+      },
+      "L": {
+        "format": "L",
+        "long": 44,
+        "short": 29.5,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-05107 (1).jpeg",
+    "width": 3456,
+    "height": 5184,
+    "sizeBytes": 19001693,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-05107.jpeg",
+    "width": 3456,
+    "height": 5184,
+    "sizeBytes": 19001693,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-05155.jpeg",
+    "width": 3420,
+    "height": 5146,
+    "sizeBytes": 14227459,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 34.5
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 34.5,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-05211.jpeg",
+    "width": 3648,
+    "height": 5472,
+    "sizeBytes": 14514796,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 55.5,
+        "shortCm": 37
+      },
+      "L": {
+        "format": "L",
+        "long": 55.5,
+        "short": 37,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-05278.jpeg",
+    "width": 3456,
+    "height": 5184,
+    "sizeBytes": 16400455,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-0528.jpeg",
+    "width": 5552,
+    "height": 3696,
+    "sizeBytes": 13859506,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 56.5,
+        "shortCm": 37.5
+      },
+      "XL": {
+        "format": "XL",
+        "long": 56.5,
+        "short": 37.5,
+        "orientation": "landscape"
+      },
+      "L": {
+        "format": "L",
+        "long": 28,
+        "short": 19,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-0529.jpeg",
+    "width": 5792,
+    "height": 8688,
+    "sizeBytes": 33987555,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 88.5,
+        "shortCm": 59
+      },
+      "XL": {
+        "format": "XL",
+        "long": 88.5,
+        "short": 59,
+        "orientation": "portrait"
+      },
+      "L": {
+        "format": "L",
+        "long": 44,
+        "short": 29.5,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": false,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "BestOfMe 2016-08-0589.jpeg",
+    "width": 5184,
+    "height": 3456,
+    "sizeBytes": 13291448,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "DSC01409.jpeg",
+    "width": 3622,
+    "height": 4392,
+    "sizeBytes": 9044293,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 44.5,
+        "shortCm": 37
+      },
+      "L": {
+        "format": "L",
+        "long": 44.5,
+        "short": 37,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "IMG_2030.jpeg",
+    "width": 3394,
+    "height": 5091,
+    "sizeBytes": 10025706,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 51.5,
+        "shortCm": 34.5
+      },
+      "L": {
+        "format": "L",
+        "long": 51.5,
+        "short": 34.5,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "IMG_2679.jpeg",
+    "width": 3456,
+    "height": 5184,
+    "sizeBytes": 12515526,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "IMG_3710.jpeg",
+    "width": 2941,
+    "height": 4110,
+    "sizeBytes": 3884737,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 42,
+        "shortCm": 30
+      },
+      "L": {
+        "format": "L",
+        "long": 42,
+        "short": 30,
+        "orientation": "portrait"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "IMG_5899.jpeg",
+    "width": 5184,
+    "height": 3456,
+    "sizeBytes": 8989983,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52.5,
+        "shortCm": 35
+      },
+      "L": {
+        "format": "L",
+        "long": 52.5,
+        "short": 35,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  },
+  {
+    "file": "IMG_6289.jpeg",
+    "width": 5116,
+    "height": 3411,
+    "sizeBytes": 10092894,
+    "printSizes": {
+      "maxPrintCm": {
+        "longCm": 52,
+        "shortCm": 34.5
+      },
+      "L": {
+        "format": "L",
+        "long": 52,
+        "short": 34.5,
+        "orientation": "landscape"
+      }
+    },
+    "resolutionWarnings": {
+      "XL": true,
+      "L": false
+    },
+    "category": "printable"
+  }
+]

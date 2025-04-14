@@ -232,7 +232,7 @@
           'Content-Type': 'application/json',
           'Authorization': authHeader
         },
-        body: JSON.stringify({ filename: photo.thumbnail.replace(/^thumbs\\//, '') })
+        body: JSON.stringify({ filename: photo.thumbnail.replace(/^thumbs\//, '') })
       });
 
       const result = await res.json();

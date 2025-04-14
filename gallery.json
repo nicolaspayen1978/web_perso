@@ -765,7 +765,8 @@
     },
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": false
   },
   {
     "id": "dsc01409",

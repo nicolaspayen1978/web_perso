@@ -122,182 +122,174 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
   <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+  import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
 
-    //fonction to load the gallery
-    async function loadGallery() {
-      const response = await fetch('/api/gallery?action=public-load');
-      if (!response.ok) {
-        console.error("❌ Failed to load gallery:", response.statusText);
-        return;
-      }
-      const photos = await response.json();
+  async function loadGallery() {
+    const response = await fetch('/api/gallery?action=public-load');
+    if (!response.ok) {
+      console.error("❌ Failed to load gallery:", response.statusText);
+      return;
+    }
 
-      const gallery = document.getElementById('gallery');
+    const photos = await response.json();
+    const gallery = document.getElementById('gallery');
+    const allLinks = [];
 
-      for (const photo of photos) {
-        const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
-        const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
+    for (const photo of photos) {
+      const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
+      const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
 
-        const link = document.createElement('a');
-        link.href = fullSrc;
-        link.setAttribute('data-pswp-width', photo.width);
-        link.setAttribute('data-pswp-height', photo.height);
-        link.setAttribute('data-pswp-src', fullSrc);
-        link.setAttribute('data-title', photo.title);
+      const link = document.createElement('a');
+      link.href = fullSrc;
+      link.setAttribute('data-pswp-width', photo.width);
+      link.setAttribute('data-pswp-height', photo.height);
+      link.setAttribute('data-pswp-src', fullSrc);
+      link.setAttribute('data-title', photo.title);
 
-        link.setAttribute('data-meta', JSON.stringify({
-          title: photo.title,
-          location: photo.location,
-          description: photo.description,
-          dimensions: photo.dimensions,
-          format_labels: photo.format_labels,
-          print_editions: photo.print_editions,
-          price_details: photo.price_details,
-          print_formats: photo.print_formats  
-        }));
+      link.setAttribute('data-meta', JSON.stringify({
+        title: photo.title,
+        location: photo.location,
+        description: photo.description,
+        dimensions: photo.dimensions,
+        format_labels: photo.format_labels,
+        print_editions: photo.print_editions,
+        price_details: photo.price_details,
+        print_formats: photo.print_formats  
+      }));
 
-        const img = document.createElement('img');
-        img.src = thumbSrc;
-        img.alt = photo.title;
-        img.loading = 'lazy';
+      const img = document.createElement('img');
+      img.src = thumbSrc;
+      img.alt = photo.title;
+      img.loading = 'lazy';
 
-        link.appendChild(img);
-        gallery.appendChild(link);
-      }
+      link.appendChild(img);
+      allLinks.push(link);
+      gallery.appendChild(link);
+    }
 
-      $('#gallery').justifiedGallery({
-        rowHeight: 250,
-        margins: 5,
-        lastRow: 'nojustify',
-        captions: false
-      });
-
-      const lightbox = new PhotoSwipeLightbox({
-        gallery: '#gallery',
-        children: 'a',
-        pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
-      });
-
-      let infoPanelEl;
-
-      lightbox.on('uiRegister', function () {
-        lightbox.pswp.ui.registerElement({
-          name: 'info-button',
-          order: 8,
-          isButton: true,
-          html: '<div class="pswp-info-button">i</div>',
-          onClick: () => {
-            if (infoPanelEl) {
-              const isVisible = infoPanelEl.style.display === 'block';
-              infoPanelEl.style.display = isVisible ? 'none' : 'block';
-            }
-          }
-        });
-
-        lightbox.pswp.ui.registerElement({
-          name: 'info-panel',
-          order: 9,
-          isButton: false,
-          appendTo: 'root',
-          html: '<div class="pswp-info-panel"></div>',
-          onInit: (el, pswp) => {
-            infoPanelEl = el;
-            pswp.on('change', () => {
-              const currSlide = pswp.currSlide;
-              const elData = currSlide.data.element;
-              const metaRaw = elData?.getAttribute('data-meta') || '{}';
-              const meta = JSON.parse(metaRaw);
-              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-              const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
-              const title = meta.title || 'Photo Request';
-
-              el.style.display = 'none';
-              el.style.backgroundColor = '#fff';
-              el.style.color = '#222';
-              el.style.padding = '1.4rem 1.6rem';
-              el.style.borderRadius = '12px';
-              el.style.maxWidth = '440px';
-              el.style.lineHeight = '1.7';
-              el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
-              el.style.position = 'absolute';
-              el.style.bottom = '80px';
-              el.style.left = '50%';
-              el.style.transform = 'translateX(-50%)';
-              el.style.zIndex = '100';
-
-            el.innerHTML = `
-                <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
-                ${meta.location ? `${meta.location}<br>` : ''}
-                ${meta.description ? `${meta.description}<br><br>` : '<br>'}
-
-                <em style="color:#666;">Available formats & dimensions:</em><br>
-                &nbsp;&nbsp;<strong>${meta.format_labels?.L}:</strong> ${meta.dimensions?.L}<br>
-                ${meta.dimensions?.XL ? `&nbsp;&nbsp;<strong>${meta.format_labels?.XL}:</strong> ${meta.dimensions.XL}<br>` : ''}
-
-                <!-- Edition limits -->
-                <br><em style="color:#666;">Edition limits:</em><br>
-                &nbsp;&nbsp;• ${meta.format_labels?.L} — Limited to ${meta.print_editions?.L?.total} prints<br>
-                ${meta.dimensions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL} — Limited to ${meta.print_editions.XL.total} prints<br>` : ''}
-                &nbsp;&nbsp;• Artist’s proof — Limited to ${meta.print_editions?.artist?.total} artist copies<br>
-
-                <!-- Available copies -->
-                <br><em style="color:#666;">Available copies:</em><br>
-                &nbsp;&nbsp;• ${meta.format_labels?.L} — ${meta.print_editions?.L?.total - meta.print_editions?.L?.sold} available<br>
-                ${meta.dimensions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL} — ${meta.print_editions.XL.total - meta.print_editions.XL.sold} available<br>` : ''}
-                &nbsp;&nbsp;• Artist’s proof — ${meta.print_editions?.artist?.total - meta.print_editions?.artist?.sold} available<br>
-
-                <!-- Edition pricing -->
-                <br><em style="color:#666;">Edition pricing:</em><br>
-                &nbsp;&nbsp;• ${meta.format_labels?.L}: €${meta.price_details?.L?.replace(/[^\d]/g, '')} <small>(incl. VAT & shipping)</small><br>
-                ${meta.dimensions?.XL && meta.price_details?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL}: €${meta.price_details.XL.replace(/[^\d]/g, '')} <small>(incl. VAT & shipping)</small><br>` : ''}
-                &nbsp;&nbsp;• Artist’s proof: <em>price upon request</em><br>
-
-                <br><div style="font-size: 0.8rem; color: #777; margin-top: 6px;">
-                  <em>Note: Artist’s proofs may vary in format and support depending on availability and artistic discretion.</em>
-                </div>
-
-                <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
-              `;
-            });
-          }
-        });
-      });
-
-    document.getElementById("format-filter").addEventListener("change", function () {
-        const selected = this.value;
-        const gallery = document.getElementById("gallery");
-        const allLinks = Array.from(document.querySelectorAll("#gallery a"));
-
-        // Remove all items first
-        gallery.innerHTML = "";
-
-        // Re-append only matching ones
-        allLinks.forEach(link => {
-          const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-          const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
-
-          const match =
-            selected === "all" ||
-            (selected === "L" && formats.includes("L")) ||
-            (selected === "XL" && formats.includes("XL"));
-
-          if (match) gallery.appendChild(link);
-        });
-
-    // Refresh the JustifiedGallery layout
-    $('#gallery').justifiedGallery('norewind').justifiedGallery({
+    $('#gallery').justifiedGallery({
       rowHeight: 250,
       margins: 5,
       lastRow: 'nojustify',
       captions: false
     });
 
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#gallery',
+      children: 'a',
+      pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
+    });
+
+    let infoPanelEl;
+
+    lightbox.on('uiRegister', function () {
+      lightbox.pswp.ui.registerElement({
+        name: 'info-button',
+        order: 8,
+        isButton: true,
+        html: '<div class="pswp-info-button">i</div>',
+        onClick: () => {
+          if (infoPanelEl) {
+            const isVisible = infoPanelEl.style.display === 'block';
+            infoPanelEl.style.display = isVisible ? 'none' : 'block';
+          }
+        }
+      });
+
+      lightbox.pswp.ui.registerElement({
+        name: 'info-panel',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        html: '<div class="pswp-info-panel"></div>',
+        onInit: (el, pswp) => {
+          infoPanelEl = el;
+          pswp.on('change', () => {
+            const currSlide = pswp.currSlide;
+            const elData = currSlide.data.element;
+            const metaRaw = elData?.getAttribute('data-meta') || '{}';
+            const meta = JSON.parse(metaRaw);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
+            const title = meta.title || 'Photo Request';
+
+            el.style.display = 'none';
+            el.style.backgroundColor = '#fff';
+            el.style.color = '#222';
+            el.style.padding = '1.4rem 1.6rem';
+            el.style.borderRadius = '12px';
+            el.style.maxWidth = '440px';
+            el.style.lineHeight = '1.7';
+            el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
+            el.style.position = 'absolute';
+            el.style.bottom = '80px';
+            el.style.left = '50%';
+            el.style.transform = 'translateX(-50%)';
+            el.style.zIndex = '100';
+
+            el.innerHTML = `
+              <strong style="font-size:1.1rem; display:block; margin-bottom:0.5rem;">${meta.title}</strong>
+              ${meta.location ? `${meta.location}<br>` : ''}
+              ${meta.description ? `${meta.description}<br><br>` : '<br>'}
+
+              <em style="color:#666;">Available formats & dimensions:</em><br>
+              &nbsp;&nbsp;<strong>${meta.format_labels?.L}:</strong> ${meta.dimensions?.L}<br>
+              ${meta.dimensions?.XL ? `&nbsp;&nbsp;<strong>${meta.format_labels?.XL}:</strong> ${meta.dimensions.XL}<br>` : ''}
+
+              <br><em style="color:#666;">Edition limits:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L} — Limited to ${meta.print_editions?.L?.total} prints<br>
+              ${meta.dimensions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL} — Limited to ${meta.print_editions.XL.total} prints<br>` : ''}
+              &nbsp;&nbsp;• Artist’s proof — Limited to ${meta.print_editions?.artist?.total} artist copies<br>
+
+              <br><em style="color:#666;">Available copies:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L} — ${meta.print_editions?.L?.total - meta.print_editions?.L?.sold} available<br>
+              ${meta.dimensions?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL} — ${meta.print_editions.XL.total - meta.print_editions.XL.sold} available<br>` : ''}
+              &nbsp;&nbsp;• Artist’s proof — ${meta.print_editions?.artist?.total - meta.print_editions?.artist?.sold} available<br>
+
+              <br><em style="color:#666;">Edition pricing:</em><br>
+              &nbsp;&nbsp;• ${meta.format_labels?.L}: €${meta.price_details?.L?.replace(/[^\d]/g, '')} <small>(incl. VAT & shipping)</small><br>
+              ${meta.dimensions?.XL && meta.price_details?.XL ? `&nbsp;&nbsp;• ${meta.format_labels?.XL}: €${meta.price_details.XL.replace(/[^\d]/g, '')} <small>(incl. VAT & shipping)</small><br>` : ''}
+              &nbsp;&nbsp;• Artist’s proof: <em>price upon request</em><br>
+
+              <br><div style="font-size: 0.8rem; color: #777; margin-top: 6px;">
+                <em>Note: Artist’s proofs may vary in format and support depending on availability and artistic discretion.</em>
+              </div>
+
+              <br><a class='${buttonClass}' style="margin-top: 20px; display:inline-block" href='mailto:hello@nicolaspayen.com?subject=Print request: ${encodeURIComponent(title)}'>🖨️ Request a print</a>
+            `;
+          });
+        }
+      });
+    });
+
+    document.getElementById("format-filter").addEventListener("change", function () {
+      const selected = this.value;
+      const gallery = document.getElementById("gallery");
+      gallery.innerHTML = "";
+
+      const matching = allLinks.filter(link => {
+        const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
+        const formats = meta.print_formats?.map(f => f.toUpperCase()) || [];
+        return selected === "all" || formats.includes(selected);
+      });
+
+      matching.forEach(link => gallery.appendChild(link));
+
+      $('#gallery').justifiedGallery('norewind').justifiedGallery({
+        rowHeight: 250,
+        margins: 5,
+        lastRow: 'nojustify',
+        captions: false
+      });
+
+      lightbox.init();
+    });
+
     lightbox.init();
-  });
+  }
 
   loadGallery();
-  </script>
+</script>
 
   <footer>
     <div id="footer-title">

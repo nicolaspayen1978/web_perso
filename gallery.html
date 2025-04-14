@@ -104,7 +104,26 @@
       font-weight: 500;
       color: #444;
     }
-  </style>
+    select {
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      color: #333;
+      appearance: none;
+      background-image: url('data:image/svg+xml,%3Csvg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0l5 6 5-6H0z" fill="%23666"/%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 12px;
+      padding-right: 2rem;
+      transition: border 0.2s ease;
+    }
+    select:focus {
+      outline: none;
+      border-color: #555;
+    }
+</style>
 </head>
  <body>
   <h1>Photography by Nicolas Payen</h1>

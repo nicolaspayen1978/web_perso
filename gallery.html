@@ -181,7 +181,9 @@
       <option value="">All Exhibitions</option>
     </select>
   </div>
-  <div id="gallery" class="gallery"></div>
+  <div id="gallery" class="gallery">
+    <div id="gallery-photos"></div> <!-- NEW: this holds the shuffled links -->
+  </div>
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -205,7 +207,7 @@
 
     shuffle(photos);
 
-    const gallery = document.getElementById('gallery');
+    const gallery = document.getElementById('gallery-photos');
     const exhibitionFilter = document.getElementById('exhibition-filter');
     const formatFilter = document.getElementById('format-filter');
 

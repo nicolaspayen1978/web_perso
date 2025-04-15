@@ -1,145 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- ...head content unchanged... -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Strategic proposal to integrate the GreenFundEU impact platform and fund concept into Luxcara’s ESG and innovation strategy.">
+  <meta name="author" content="Nicolas Payen">
+  <meta property="og:title" content="GreenFundEU Strategic Memo – Nicolas Payen">
+  <meta property="og:description" content="An impact-driven proposal to support Luxcara’s ESG strategy through the integration of the GreenFundEU platform and fund structure.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://web-perso.vercel.app/images/digitalgreenfund.jpeg">
+  <meta property="og:url" content="https://web-perso.vercel.app/digitalEnabledGreenFund.html">
+  <title>Digital Enabled Green Fund Strategic Memo – Nicolas Payen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1em;
+      background: #f9f9f9;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2, h3, h4 {
+      color: #004080;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9em;
+      text-align: center;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-  <!-- ...top of body unchanged... -->
-  <script type="module">
-    import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+  <h1>Digital Enabled GreenFund Strategic Memo</h1>
+  <p><strong>Author:</strong> Nicolas Payen<br>
+     <strong>Date:</strong> April 2025</p>
 
-    async function loadGallery() {
-      const response = await fetch('/api/gallery?action=public-load');
-      if (!response.ok) {
-        console.error("❌ Failed to load gallery:", response.statusText);
-        return;
-      }
-      const photos = await response.json();
+  <section>
+    <h2>Context</h2>
+    <p><strong>Who I am:</strong> I’m Nicolas Payen, a strategist in the climate finance space. In 2017, I founded Positive Energy Ltd (PEL), a Dutch-based climate fintech company focused on digitizing origination and assessment of decentralized clean energy infrastructure projects.</p>
+    <p><strong>The original idea:</strong> Together with a Belgian impact fund manager, we designed GreenFundEU — a mission-driven fund aimed at addressing the “Double Missing Middle”: the lack of capital for SMEs and their limited access to climate finance.</p>
+    <p><strong>Where it stands:</strong> While the fund did not scale and is no longer staffed, the digital platform and strategic model remain fully functional — offering taxonomy-aligned sourcing, ESG tagging, and early-stage pipeline development.</p>
+  </section>
 
-      const gallery = document.getElementById('gallery');
+  <section>
+    <h2>Executive Summary</h2>
+    <p>Luxcara is already a leader in clean energy infrastructure. But the increasing demand for decentralized, high-impact investments aligned with Article 9 and EU Taxonomy opens new challenges around origination and ecosystem engagement.</p>
+    <p>This memo outlines how integrating the GreenFundEU model and platform could support Luxcara’s impact goals without the need to restart or manage a new fund.</p>
+    <ul>
+      <li>Enhance pipeline reach through digital, early-stage origination</li>
+      <li>Activate a proven ESG scoring and taxonomy-aligned framework</li>
+      <li>Use GreenFundEU as a sandbox to test digital + AI tools</li>
+      <li>Amplify Luxcara’s foundation or Article 9 strategies with low operational risk</li>
+    </ul>
+  </section>
 
-      for (const photo of photos) {
-        const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
-        const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
+  <section>
+    <h2>Strategic Integration Proposal</h2>
+    <h3>Why It Still Matters</h3>
+    <ul>
+      <li>Targets underserved SME project developers</li>
+      <li>Enables inclusive climate finance and early-stage support</li>
+      <li>Offers taxonomy-aligned ESG tagging and assessment logic</li>
+    </ul>
 
-        const link = document.createElement('a');
-        link.href = fullSrc;
-        link.setAttribute('data-pswp-width', photo.width);
-        link.setAttribute('data-pswp-height', photo.height);
-        link.setAttribute('data-pswp-src', fullSrc);
-        link.setAttribute('data-title', photo.title);
+    <h3>What the Platform Brings</h3>
+    <ul>
+      <li>Smart digital origination infrastructure</li>
+      <li>Pipeline of validated early-stage clean energy projects</li>
+      <li>Operational playbooks and structured scoring tools</li>
+    </ul>
 
-        link.setAttribute('data-meta', JSON.stringify({
-          title: photo.title,
-          location: photo.location,
-          description: photo.description,
-          dimensions: photo.dimensions,
-          format_labels: photo.format_labels,
-          print_editions: photo.print_editions,
-          price_details: photo.price_details,
-          print_formats: photo.print_formats
-        }));
+    <h3>What Luxcara Could Add</h3>
+    <ul>
+      <li>Executional strength and governance framework</li>
+      <li>Institutional capital and Article 9 alignment</li>
+      <li>Potential integration under its foundation or impact sleeve</li>
+    </ul>
+  </section>
 
-        const img = document.createElement('img');
-        img.src = thumbSrc;
-        img.alt = photo.title;
-        img.loading = 'lazy';
+  <section>
+    <h2>Innovation Strategy: Tiered by Design</h2>
+    <p>GreenFundEU could serve as a <strong>sandbox for innovation</strong>, allowing Luxcara to test digital scoring, ESG intelligence, and AI tools in a real but de-risked environment — before scaling it across broader portfolios.</p>
+    <p>This isn’t about managing a new fund — it’s about <strong>seeding digital infrastructure and insight</strong> into a larger institutional ecosystem.</p>
+  </section>
 
-        link.appendChild(img);
-        gallery.appendChild(link);
-      }
+  <section>
+    <h2>My Role and Expectations</h2>
+    <p>I’m not looking to manage a fund again. But I do want to ensure that the platform is integrated with intent, and that it delivers what it was built to do: support high-impact financing and modernize ESG workflows. That requires a degree of strategic alignment and involvement.</p>
+  </section>
 
-      $('#gallery').justifiedGallery({
-        rowHeight: 250,
-        margins: 5,
-        lastRow: 'nojustify',
-        captions: false
-      });
+  <section>
+    <h2>Notes</h2>
+    <p><strong>Positive Energy Ltd (PEL):</strong> A climate fintech founded in 2017 in the Netherlands, focused on clean energy project origination and taxonomy-driven investment enablement.</p>
+    <p><strong>GreenFundEU:</strong> An impact-first fund concept focused on SME-scale clean infrastructure. Though inactive, its assets and ecosystem logic remain relevant for scalable ESG integration.</p>
+  </section>
 
-      const lightbox = new PhotoSwipeLightbox({
-        gallery: '#gallery',
-        children: 'a',
-        pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
-      });
+  <section>
+    <h2>Contact</h2>
+    <p><strong>Nicolas Payen</strong><br>
+    Email: <a href="mailto:nicolas_payen@icloud.com">nicolas_payen@icloud.com</a><br>
+    LinkedIn: <a href="https://www.linkedin.com/in/nicolas-payen/">nicolas-payen</a></p>
+  </section>
 
-      let infoPanelEl;
-
-      lightbox.on('uiRegister', function () {
-        lightbox.pswp.ui.registerElement({
-          name: 'info-button',
-          order: 8,
-          isButton: true,
-          html: '<div class="pswp-info-button">i</div>',
-          onClick: () => {
-            if (infoPanelEl) {
-              const isVisible = infoPanelEl.style.display === 'block';
-              infoPanelEl.style.display = isVisible ? 'none' : 'block';
-            }
-          }
-        });
-
-        lightbox.pswp.ui.registerElement({
-          name: 'info-panel',
-          order: 9,
-          isButton: false,
-          appendTo: 'root',
-          html: '<div class="pswp-info-panel"></div>',
-          onInit: (el, pswp) => {
-            infoPanelEl = el;
-            pswp.on('change', () => {
-              const currSlide = pswp.currSlide;
-              const elData = currSlide.data.element;
-              const metaRaw = elData?.getAttribute('data-meta') || '{}';
-              const meta = JSON.parse(metaRaw);
-              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-              const buttonClass = prefersDark ? 'print-request light' : 'print-request dark';
-              const title = meta.title || 'Photo Request';
-
-              el.style.display = 'none';
-              el.style.backgroundColor = '#fff';
-              el.style.color = '#222';
-              el.style.padding = '1.4rem 1.6rem';
-              el.style.borderRadius = '12px';
-              el.style.maxWidth = '440px';
-              el.style.lineHeight = '1.7';
-              el.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
-              el.style.position = 'absolute';
-              el.style.bottom = '80px';
-              el.style.left = '50%';
-              el.style.transform = 'translateX(-50%)';
-              el.style.zIndex = '100';
-
-              el.innerHTML = `<strong style="font-size:1.1rem;">${meta.title}</strong>...`; // trimmed
-            });
-          }
-        });
-      });
-
-      // ✅ Corrected filtering logic
-      document.getElementById("format-filter").addEventListener("change", function () {
-        const selected = this.value;
-        const links = document.querySelectorAll("#gallery a");
-
-        links.forEach(link => {
-          const meta = JSON.parse(link.getAttribute("data-meta") || "{}");
-          const formats = (meta.print_formats || []).map(f => f.toUpperCase());
-
-          if (
-            selected === "all" ||
-            (selected === "L" && formats.includes("L")) ||
-            (selected === "XL" && formats.includes("XL"))
-          ) {
-            link.style.display = "";
-          } else {
-            link.style.display = "none";
-          }
-        });
-      });
-
-      lightbox.init();
-    }
-
-    loadGallery();
+  <footer>
+    <p><em>"In the midst of every crisis, lies great opportunity." — Albert Einstein</em></p>
+    <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
+  </footer>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

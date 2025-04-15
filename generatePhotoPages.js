@@ -16,8 +16,41 @@ const template = (photo) => {
   const dimensions = photo.dimensions || {};
   const prices = photo.price_details || {};
   const editions = photo.print_editions || {};
-
   const available = (e) => e?.total && e?.sold >= 0 ? `${e.total - e.sold}/${e.total}` : '';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    "name": title,
+    "creator": {
+      "@type": "Person",
+      "name": "Nicolas Payen"
+    },
+    "image": `https://web-perso.vercel.app/photos/${filename}`,
+    "description": description,
+    "artform": "Photography",
+    "artMedium": "Fine art print",
+    "artEdition": "Limited edition",
+    "productionDate": "2023",
+    "offers": []
+  };
+
+  if (prices.L) structuredData.offers.push({
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": prices.L,
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "name": "Gallery Edition (L)"
+  });
+  if (prices.XL) structuredData.offers.push({
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": prices.XL,
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "name": "Collector Edition (XL)"
+  });
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -43,6 +76,44 @@ const template = (photo) => {
       .photo-container img { max-width: 700px; }
     }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VisualArtwork",
+  "name": "Surf-Daydreams in Yellow",
+  "creator": {
+    "@type": "Person",
+    "name": "Nicolas Payen"
+  },
+  "image": "https://web-perso.vercel.app/photos/2s9a6657.jpg",
+  "description": "A soft moment of natural light breaking through the calmness of an urban setting — subtle, poetic, and timeless.",
+  "artform": "Photography",
+  "artMedium": "Fine art print",
+  "artEdition": "Limited edition",
+  "productionDate": "2023",
+  "offers": [
+    {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "290",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "name": "Gallery Edition (L)"
+    },
+    {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "490",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "name": "Collector Edition (XL)"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+${JSON.stringify(structuredData, null, 2)}
+</script>
 </head>
 <body>
   <header style="text-align: center; padding: 1.5rem 1rem 0.5rem;">

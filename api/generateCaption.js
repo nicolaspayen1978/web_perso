@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o", // Vision-capable model
+      model: "gpt-4o",
       messages: [
         {
           role: "user",
@@ -36,12 +36,12 @@ Please respond strictly in the following format:
 
 Title: [short poetic title, max 8 words]  
 Description: [1–2 elegant sentences]  
-Tags: [3–6 lowercase tags, comma-separated]
+Tags: [4–6 lowercase tags, comma-separated]
 
 Example:  
 Title: The Silence of Dusk  
 Description: A tree stands in the half-light, alone but proud. The wind knows its story.  
-Tags: solitude, nature, tree, twilight, poetry`
+Tags: blackandwhite, landscape, tree, twilight, solitude, poetry`
             },
             {
               type: "image_url",
@@ -58,13 +58,27 @@ Tags: solitude, nature, tree, twilight, poetry`
 
     const text = response.choices[0]?.message?.content || '';
 
-    // Parse the expected structure
+    // Extract structured parts
     const title = text.match(/Title:\s*(.*)/i)?.[1]?.trim() || '';
     const description = text.match(/Description:\s*(.*)/i)?.[1]?.trim() || '';
-    const tagsRaw = text.match(/Tags:\s*(.*)/i)?.[1] || '';
-    const tags = tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
 
-    res.status(200).json({ title, description, tags });
+    let tagLine = text.split('\n').find(line => line.toLowerCase().startsWith('tags:'));
+    if (!tagLine) {
+      tagLine = text.split('\n').find(line => (line.match(/,/g) || []).length >= 2) || '';
+    }
+    const tags = tagLine
+      .replace(/^tags:\s*/i, '')
+      .split(',')
+      .map(tag => tag.trim().toLowerCase().replace(/^[-*•]\s*/, ''))
+      .filter(Boolean);
+
+    // Return suggestions separately so user can approve or edit
+    res.status(200).json({
+      ai_title: title,
+      ai_description: description,
+      ai_tags: tags
+    });
+
   } catch (err) {
     console.error('🛑 OpenAI error:', err);
     res.status(500).json({ error: 'Failed to generate caption' });

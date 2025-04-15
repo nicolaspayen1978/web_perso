@@ -132,6 +132,13 @@
       border-radius: 6px;
       margin-bottom: 20px;
     }
+
+    .suggested-label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -224,22 +231,24 @@
     document.getElementById('tagSummary').innerHTML = html;
   }
 
-   async function suggestCaption(index) {
-      const photo = galleryData[index];
-      const res = await fetch('/api/generateCaption', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authHeader
-        },
-        body: JSON.stringify({ filename: photo.thumbnail.replace(/^thumbs\//, '') })
-      });
+  async function suggestCaption(index) {
+    const photo = galleryData[index];
+    const res = await fetch('/api/generateCaption', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authHeader
+      },
+      body: JSON.stringify({ filename: photo.thumbnail.replace(/^thumbs\//, '') })
+    });
 
-      const result = await res.json();
-      if (result.title) galleryData[index].title = result.title;
-      if (result.description) galleryData[index].description = result.description;
-      renderEditor();
-    }
+    const result = await res.json();
+    if (!photo.suggestions) photo.suggestions = {};
+    photo.suggestions.title = result.title;
+    photo.suggestions.description = result.description;
+    photo.suggestions.tags = result.tags;
+    renderEditor();
+  }
 
   function renderEditor() {
     const container = document.getElementById('editorContainer');
@@ -248,6 +257,11 @@
     galleryData.forEach((photo, index) => {
       const card = document.createElement('div');
       card.className = 'photo-card';
+
+      const suggestions = photo.suggestions || {};
+      const suggestedTitle = suggestions.title || '';
+      const suggestedDescription = suggestions.description || '';
+      const suggestedTags = Array.isArray(suggestions.tags) ? suggestions.tags.join(', ') : '';
 
       card.innerHTML = `
         <div class="photo-left">
@@ -260,18 +274,28 @@
           <label>Title:</label>
           <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
 
+          <label class="suggested-label">Suggested Title:</label>
+          <input type="text" value="${suggestedTitle}" onchange="galleryData[${index}].title = this.value" />
+
           <label>Description:</label>
           <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
 
+          <label class="suggested-label">Suggested Description:</label>
+          <textarea onchange="galleryData[${index}].description = this.value">${suggestedDescription}</textarea>
+
           <label>Tags (comma-separated):</label>
           <input type="text" value="${(photo.tags || []).join(', ')}"
+                 onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+
+          <label class="suggested-label">Suggested Tags:</label>
+          <input type="text" value="${suggestedTags}"
                  onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
 
           <label>Exhibition Tags (comma-separated):</label>
           <input type="text" value="${(photo.exhibitions || []).join(', ')}"
                  onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
 
-        <label><input type="checkbox" ${photo.visible === false ? '' : 'checked'} onchange="galleryData[${index}].visible = this.checked" />Visible</label>
+          <label><input type="checkbox" ${photo.visible === false ? '' : 'checked'} onchange="galleryData[${index}].visible = this.checked" />Visible</label>
 
           <label>Sold (Gallery):</label>
           <input type="text" value="${photo.print_editions?.L?.sold || 0}" onchange="galleryData[${index}].print_editions.L.sold = parseInt(this.value) || 0" />

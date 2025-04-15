@@ -149,6 +149,28 @@
  <body>
   <h1>Photography by Nicolas Payen</h1>
   <div id="filters-wrapper" style="text-align:center; margin-bottom: 2rem;">
+    <!-- ... (filter selectors) ... -->
+  </div>
+  <div id="gallery" class="gallery"></div>
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+  <!-- New: About toggle link -->
+  <p style="text-align: center; margin-top: 2rem;">
+    <a href="#" onclick="toggleAbout()" style="font-size: 0.95rem; text-decoration: underline; color: #333;">About / À propos</a>
+  </p>
+
+  <!-- New: About section EN -->
+  <div id="about-en" style="display: none; text-align: center; max-width: 680px; margin: 2rem auto; font-size: 0.95rem; line-height: 1.6;">
+    <p>I started photography as a young adult. The intersection of technology and art attracted me. Over time, photography changed the way I looked at the world. I began to see beauty everywhere; the lens revealed it more vividly. It trained my eyes and my brain to recognize stillness and emotion in ordinary scenes.</p>
+    <p>With age, memories fade — but photographs remain. I’ve practiced for over 25 years, across styles and subjects. Landscape, architecture, color — and above all, composition — have always inspired me. Early investments in professional gear now allow me to offer large fine art prints for most of my work.</p>
+  </div>
+
+  <!-- New: About section FR -->
+  <div id="about-fr" style="display: none; text-align: center; max-width: 680px; margin: 2rem auto; font-size: 0.95rem; line-height: 1.6;">
+    <p>J’ai commencé la photographie jeune adulte. Ce qui m’a séduit, c’est la rencontre entre la technologie et l’art. Peu à peu, la photographie a changé ma manière de regarder le monde. J’ai commencé à voir de la beauté partout, et l’objectif me la révélait avec encore plus de clarté. Elle a entraîné mes yeux et mon esprit à capter le calme et l’émotion dans l’ordinaire.</p>
+    <p>Avec l’âge, les souvenirs s’effacent — mais les images demeurent. Depuis plus de 25 ans, j’explore différents styles et sujets. Les paysages, l’architecture, les couleurs — et surtout la composition — nourrissent ma curiosité. Mes premiers investissements dans du matériel professionnel me permettent aujourd’hui de proposer des tirages d’art en grand format pour l’essentiel de mon travail.</p>
+  </div>
+  <div id="filters-wrapper" style="text-align:center; margin-bottom: 2rem;">
     <label for="format-filter" style="font-weight:500; margin-right:10px;">Show only:</label>
     <select id="format-filter" style="font-size: 1rem; padding: 6px 12px; margin-right: 10px;">
       <option value="all">All Editions</option>
@@ -366,7 +388,7 @@
   loadGallery();
   </script>
 
-  <footer>
+ <footer>
     <div id="footer-title">
       <p><i><strong>“In the midst of every crisis lies great opportunity”</strong> – Albert Einstein</i></p>
     </div>
@@ -374,6 +396,25 @@
   </footer>
   <script type="text/javascript">
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    function toggleAbout() {
+      const en = document.getElementById("about-en");
+      const fr = document.getElementById("about-fr");
+
+      const isVisible = en.style.display === "block" || fr.style.display === "block";
+      const preferred = navigator.language.startsWith("fr") ? fr : en;
+
+      // If hidden, show the preferred lang
+      if (!isVisible) {
+        en.style.display = preferred === en ? "block" : "none";
+        fr.style.display = preferred === fr ? "block" : "none";
+        return;
+      }
+
+      // Toggle both
+      en.style.display = en.style.display === "block" ? "none" : "block";
+      fr.style.display = fr.style.display === "block" ? "none" : "block";
+    }
   </script>
 </body>
 </html>

@@ -46,7 +46,7 @@
 
     textarea {
       width: 100%;
-      min-height: 60px;
+      min-height: 60px; /* was 300px */
       margin-top: 6px;
       font-family: monospace;
       font-size: 13px;
@@ -263,12 +263,12 @@
 
     const result = await res.json();
     if (!photo.suggestions) photo.suggestions = {};
-    photo.suggestions.title = result.title;
-    photo.suggestions.description = result.description;
-    photo.suggestions.tags = result.tags;
+    photo.suggestions.title = result.ai_title || '';
+    photo.suggestions.description = result.ai_description || '';
+    photo.suggestions.tags = result.ai_tags || [];
     renderEditor();
   }
-
+  
   function renderEditor() {
     const container = document.getElementById('editorContainer');
     container.innerHTML = '';

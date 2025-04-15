@@ -46,7 +46,7 @@
 
     textarea {
       width: 100%;
-      min-height: 60px; /* was 300px */
+      min-height: 60px;
       margin-top: 6px;
       font-family: monospace;
       font-size: 13px;
@@ -196,6 +196,7 @@
 <script>
   let authHeader = '';
   let galleryData = [];
+  let lastSavedScrollId = null;
 
   async function login() {
     const pwd = document.getElementById('password').value;
@@ -266,10 +267,10 @@
     photo.suggestions.title = result.ai_title || '';
     photo.suggestions.description = result.ai_description || '';
     photo.suggestions.tags = result.ai_tags || [];
-    renderEditor();
+    renderEditor(index);
   }
-  
-  function renderEditor() {
+
+  function renderEditor(scrollToIndex = null) {
     const container = document.getElementById('editorContainer');
     container.innerHTML = '';
 
@@ -280,6 +281,7 @@
 
       const card = document.createElement('div');
       card.className = 'photo-card';
+      card.id = `card-${photo.id}`;
       card.innerHTML = `
         <div class="photo-left">
           <img src="/photos/${photo.thumbnail}" alt="${photo.title}" />
@@ -292,26 +294,20 @@
           <label>Title:</label>
           <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
           ${suggestions.title ? `
-            <div class="suggestion-block">
-              <input type="text" value="${suggestions.title}" onchange="galleryData[${index}].suggestions.title = this.value" />
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>
-            </div>` : ''}
+            <input class="suggestion-input" type="text" value="${suggestions.title}" onchange="galleryData[${index}].suggestions.title = this.value" />
+            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>` : ''}
 
           <label>Description:</label>
           <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
           ${suggestions.description ? `
-            <div class="suggestion-block">
-              <textarea onchange="galleryData[${index}].suggestions.description = this.value">${suggestions.description}</textarea>
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>
-            </div>` : ''}
+            <textarea class="suggestion-input" onchange="galleryData[${index}].suggestions.description = this.value">${suggestions.description}</textarea>
+            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>` : ''}
 
           <label>Tags (comma-separated):</label>
           <input type="text" value="${tagsString}" onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
           ${suggTags ? `
-            <div class="suggestion-block">
-              <input type="text" value="${suggTags}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>
-            </div>` : ''}
+            <input class="suggestion-input" type="text" value="${suggTags}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>` : ''}
 
           <label>Exhibition Tags (comma-separated):</label>
           <input type="text" value="${(photo.exhibitions || []).join(', ')}" onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
@@ -326,16 +322,29 @@
 
           <label>Sold (Artist):</label>
           <input type="text" value="${photo.print_editions?.artist?.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
+
+          <button class="suggest-btn" onclick="suggestCaption(${index})">✨ Suggest Title & Description</button>
         </div>
-        <button onclick="suggestCaption(${index})">✨ Suggest Title & Description</button>
       `;
 
       container.appendChild(card);
     });
+
+    if (scrollToIndex !== null) {
+      const id = galleryData[scrollToIndex]?.id;
+      if (id) {
+        const el = document.getElementById(`card-${id}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }
 
   async function saveEditor() {
     try {
+      const cards = document.querySelectorAll('.photo-card');
+      const visibleTopCard = [...cards].find(card => card.getBoundingClientRect().top >= 0);
+      const visibleCardIndex = visibleTopCard ? [...cards].indexOf(visibleTopCard) : null;
+
       const res = await fetch('/api/gallery?action=save', {
         method: 'POST',
         headers: {
@@ -348,6 +357,7 @@
       const data = await res.json();
       alert(data.message || 'Saved successfully.');
       document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
+      renderEditor(visibleCardIndex);
     } catch (err) {
       alert("Save failed. Check console for details.");
       console.error(err);

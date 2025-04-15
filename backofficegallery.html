@@ -117,6 +117,12 @@
       margin-right: 6px;
     }
 
+    .progress {
+      margin-top: 10px;
+      font-style: italic;
+      color: #333;
+    }
+
     .save-btn {
       margin: 20px 0;
       background-color: #28a745;
@@ -133,33 +139,12 @@
       margin-bottom: 20px;
     }
 
-    .suggestion-input {
-      font-size: 13px;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      width: 100%;
-      padding: 4px;
-      border: 1px dashed #aaa;
-      background-color: #fdfdfd;
-    }
-
-    .suggestion-checkbox {
-      font-size: 13px;
-      margin-bottom: 8px;
-      display: block;
-      color: #444;
-    }
-
-    .suggest-btn {
-      float: right;
-      background-color: #eee;
-      color: #333;
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
-
-    .suggest-btn:hover {
-      background-color: #ddd;
+    .suggestion-block {
+      background-color: #f8f8f8;
+      border-left: 4px solid #aaa;
+      padding: 8px 12px;
+      margin-top: 6px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
@@ -179,6 +164,8 @@
   <button onclick="loadJSON()">📂 Load Gallery JSON</button>
   <button class="save-btn" onclick="saveEditor()">📀 Save All Changes</button>
   <button onclick="clearGallery()">🗑️ Clear Gallery</button>
+  <button onclick="suggestCaptionsForAll()">✨ AI Suggest All Missing</button>
+  <div id="progressIndicator" class="progress hidden"></div>
 
   <div class="tag-summary" id="tagSummary"></div>
   <div id="editorContainer"></div>
@@ -193,10 +180,10 @@
     <textarea id="previousJSON" readonly placeholder="Previous backup will load here..."></textarea>
   </div>
 </div>
+
 <script>
   let authHeader = '';
   let galleryData = [];
-  let lastSavedScrollId = null;
 
   async function login() {
     const pwd = document.getElementById('password').value;
@@ -264,13 +251,39 @@
 
     const result = await res.json();
     if (!photo.suggestions) photo.suggestions = {};
-    photo.suggestions.title = result.ai_title || '';
-    photo.suggestions.description = result.ai_description || '';
-    photo.suggestions.tags = result.ai_tags || [];
-    renderEditor(index);
+
+    // Fill main field if empty, otherwise store suggestion only
+    if (!photo.title) photo.title = result.ai_title;
+    else photo.suggestions.title = result.ai_title;
+
+    if (!photo.description) photo.description = result.ai_description;
+    else photo.suggestions.description = result.ai_description;
+
+    if (!photo.tags || photo.tags.length === 0) photo.tags = result.ai_tags;
+    else photo.suggestions.tags = result.ai_tags;
+
+    renderEditor();
   }
 
-  function renderEditor(scrollToIndex = null) {
+  async function suggestCaptionsForAll() {
+    const indicator = document.getElementById('progressIndicator');
+    indicator.classList.remove('hidden');
+
+    let count = 0;
+    for (let i = 0; i < galleryData.length; i++) {
+      const photo = galleryData[i];
+      if (!photo.title && !photo.description && (!photo.tags || photo.tags.length === 0)) {
+        indicator.textContent = `Generating captions... ${count + 1}/${galleryData.length}`;
+        await suggestCaption(i);
+        count++;
+      }
+    }
+
+    indicator.textContent = '✅ Finished generating captions';
+    setTimeout(() => indicator.classList.add('hidden'), 2500);
+  }
+
+  function renderEditor() {
     const container = document.getElementById('editorContainer');
     container.innerHTML = '';
 
@@ -281,7 +294,6 @@
 
       const card = document.createElement('div');
       card.className = 'photo-card';
-      card.id = `card-${photo.id}`;
       card.innerHTML = `
         <div class="photo-left">
           <img src="/photos/${photo.thumbnail}" alt="${photo.title}" />
@@ -294,20 +306,26 @@
           <label>Title:</label>
           <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
           ${suggestions.title ? `
-            <input class="suggestion-input" type="text" value="${suggestions.title}" onchange="galleryData[${index}].suggestions.title = this.value" />
-            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>` : ''}
+            <div class="suggestion-block">
+              <input type="text" value="${suggestions.title}" onchange="galleryData[${index}].suggestions.title = this.value" />
+              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>
+            </div>` : ''}
 
           <label>Description:</label>
           <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
           ${suggestions.description ? `
-            <textarea class="suggestion-input" onchange="galleryData[${index}].suggestions.description = this.value">${suggestions.description}</textarea>
-            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>` : ''}
+            <div class="suggestion-block">
+              <textarea onchange="galleryData[${index}].suggestions.description = this.value">${suggestions.description}</textarea>
+              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>
+            </div>` : ''}
 
           <label>Tags (comma-separated):</label>
           <input type="text" value="${tagsString}" onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
           ${suggTags ? `
-            <input class="suggestion-input" type="text" value="${suggTags}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
-            <label class="suggestion-checkbox"><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>` : ''}
+            <div class="suggestion-block">
+              <input type="text" value="${suggTags}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>
+            </div>` : ''}
 
           <label>Exhibition Tags (comma-separated):</label>
           <input type="text" value="${(photo.exhibitions || []).join(', ')}" onchange="galleryData[${index}].exhibitions = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
@@ -322,29 +340,16 @@
 
           <label>Sold (Artist):</label>
           <input type="text" value="${photo.print_editions?.artist?.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
-
-          <button class="suggest-btn" onclick="suggestCaption(${index})">✨ Suggest Title & Description</button>
         </div>
+        <button onclick="suggestCaption(${index})">✨ Suggest Title & Description</button>
       `;
 
       container.appendChild(card);
     });
-
-    if (scrollToIndex !== null) {
-      const id = galleryData[scrollToIndex]?.id;
-      if (id) {
-        const el = document.getElementById(`card-${id}`);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
   }
 
   async function saveEditor() {
     try {
-      const cards = document.querySelectorAll('.photo-card');
-      const visibleTopCard = [...cards].find(card => card.getBoundingClientRect().top >= 0);
-      const visibleCardIndex = visibleTopCard ? [...cards].indexOf(visibleTopCard) : null;
-
       const res = await fetch('/api/gallery?action=save', {
         method: 'POST',
         headers: {
@@ -357,7 +362,6 @@
       const data = await res.json();
       alert(data.message || 'Saved successfully.');
       document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
-      renderEditor(visibleCardIndex);
     } catch (err) {
       alert("Save failed. Check console for details.");
       console.error(err);

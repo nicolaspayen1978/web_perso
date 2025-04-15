@@ -3,9 +3,9 @@
     "id": "2s9a3577",
     "filename": "2s9a3577.jpg",
     "thumbnail": "thumbs/2s9a3577.jpg",
-    "title": "Bali dream",
+    "title": "Reflections of the Day's End",
     "location": "",
-    "description": "North of Kuta in Bali, when the sun sets on the horizon, the earth and the sky merge in fire. ",
+    "description": "Footsteps whisper across the mirrored sand, as night softly approaches.",
     "print_formats": [
       "XL",
       "L"
@@ -47,22 +47,37 @@
       "L": false
     },
     "tags": [
-      "reflection",
+      "ocean",
       "sunset",
-      "landscape"
+      "reflection",
+      "horizon",
+      "whispers",
+      "tranquility"
     ],
     "exhibitions": [
       "reflection"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Whispers of the Tide",
+      "description": "As the sun dips beneath the horizon, silhouettes dance on a mirrored shore; the ocean hums an age-old lullaby.",
+      "tags": [
+        "sunset",
+        "beach",
+        "silhouettes",
+        "reflection",
+        "tranquility",
+        "ocean"
+      ]
+    }
   },
   {
     "id": "2s9a1259",
     "filename": "2s9a1259.jpg",
     "thumbnail": "thumbs/2s9a1259.jpg",
-    "title": "2s9a1259",
+    "title": "Reflections of Innocence",
     "location": "",
-    "description": "",
+    "description": "A child peers into the glass, meeting his mirrored gaze with wonder. Dreams and reality fold into each other.",
     "print_formats": [
       "XL",
       "L"
@@ -103,17 +118,40 @@
       "XL": false,
       "L": false
     },
+    "tags": [
+      "child",
+      "reflection",
+      "innocence",
+      "raincoat",
+      "wonder",
+      "curiosity",
+      "portrait"
+    ],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Mirror of Innocence",
+      "description": "A child peers into glass, finding a quiet ally in his own reflection. Raindrops whisper tales of youthful wonder.",
+      "tags": [
+        "child",
+        "reflection",
+        "innocence",
+        "raincoat",
+        "wonder",
+        "curiosity",
+        "portrait"
+      ]
+    }
   },
   {
     "id": "2s9a3539",
     "filename": "2s9a3539.jpg",
     "thumbnail": "thumbs/2s9a3539.jpg",
-    "title": "2s9a3539",
+    "title": "Reflective Whispers of Still Waters",
     "location": "",
-    "description": "",
+    "description": "The river holds its breath, a perfect mirror for the sky's soft secrets. Bare branches etch poetry against the horizon.",
     "print_formats": [
       "XL",
       "L"
@@ -154,20 +192,21 @@
       "XL": false,
       "L": false
     },
+    "tags": [
+      "landscape"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "landscape"
-    ]
+    "visible": true
   },
   {
     "id": "2s9a5370",
     "filename": "2s9a5370.jpg",
     "thumbnail": "thumbs/2s9a5370.jpg",
-    "title": "2s9a5370",
+    "title": "Frozen Whispers of Light",
     "location": "",
-    "description": "",
+    "description": "Candles flicker softly atop sculpted ice, their glow a tender defiance against the chill. Silent tales linger in the frozen air.",
     "print_formats": [
       "XL",
       "L"
@@ -208,17 +247,19 @@
       "XL": false,
       "L": false
     },
+    "tags": [],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05104",
     "filename": "bestofme_2016-08-05104.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05104.jpg",
-    "title": "Bestofme 2016 08 05104",
+    "title": "Winter’s Quiet Embrace",
     "location": "",
-    "description": "",
+    "description": "The river whispers beneath a snowy cloak. A solitary figure communes with the crisp morning.",
     "print_formats": [
       "L"
     ],
@@ -256,22 +297,42 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "winter",
+      "river",
+      "solitude",
+      "nature",
+      "reflection",
+      "tranquility",
+      "france",
+      "landscape"
+    ],
     "exhibitions": [
       "reflection"
     ],
     "visible": false,
-    "tags": [
-      "france",
-      "landscape"
-    ]
+    "suggestions": {
+      "title": "Winter's Whispering Embrace",
+      "description": "Beneath the winter’s soft touch, the river whispers secrets to the silent reeds. A lone figure listens, wrapped in the season's embrace.",
+      "tags": [
+        "winter",
+        "river",
+        "solitude",
+        "nature",
+        "reflection",
+        "tranquility",
+        "france",
+        "landscape"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05153",
     "filename": "bestofme_2016-08-05153.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05153.jpg",
-    "title": "who are you?",
+    "title": "Reflections of Innocence II",
     "location": "",
-    "description": "",
+    "description": "A child's gaze meets its reflection, filled with curiosity and wonder. The world is yet a vast adventure waiting to unfold.",
     "print_formats": [
       "L"
     ],
@@ -309,17 +370,39 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "child",
+      "reflection",
+      "innocence",
+      "wonder",
+      "gaze",
+      "tenderness"
+    ],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Innocence",
+      "description": "A child's gaze meets the window, soft and curious. Worlds within worlds unfold in tender silence.",
+      "tags": [
+        "child",
+        "reflection",
+        "innocence",
+        "wonder",
+        "gaze",
+        "tenderness",
+        "portrait"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-0592",
     "filename": "bestofme_2016-08-0592.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0592.jpg",
-    "title": "Sit and relax",
+    "title": "Serenity's Silent Voyage",
     "location": "",
-    "description": "",
+    "description": "A lone rower glides through mirrored waters, embraced by dawn's gentle light. Tranquility whispers through the misty morning air.",
     "print_formats": [
       "L"
     ],
@@ -358,20 +441,37 @@
       "L": false
     },
     "tags": [
+      "tranquility",
       "reflection",
-      "france"
+      "solitude",
+      "dawn",
+      "nature",
+      "river"
     ],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Echoes on the Water",
+      "description": "A lone boat glides through stillness, painting ripples on the canvas of dawn. Nature whispers in soft hues.",
+      "tags": [
+        "tranquility",
+        "reflection",
+        "solitude",
+        "dawn",
+        "nature",
+        "river"
+      ]
+    }
   },
   {
     "id": "dsc01398",
     "filename": "dsc01398.jpg",
     "thumbnail": "thumbs/dsc01398.jpg",
-    "title": "Dramatic horizon",
+    "title": "Whispering Horizon",
     "location": "",
-    "description": "",
+    "description": "Sailboats rest beneath a tapestry of clouds, where sky kisses the sea. Silence holds the morning.",
     "print_formats": [
       "L"
     ],
@@ -409,20 +509,21 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "france"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "france"
-    ]
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05107",
     "filename": "bestofme_2016-08-05107.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05107.jpg",
-    "title": "First sun",
+    "title": "Reflections on a Winter's Breath",
     "location": "",
-    "description": "",
+    "description": "Bare trees whisper secrets to mirrored waters; the sun listens intently.",
     "print_formats": [
       "L"
     ],
@@ -460,20 +561,39 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "winter",
+      "reflection",
+      "nature",
+      "tranquility",
+      "serenity",
+      "sunlight"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "france"
-    ]
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Winter's Embrace",
+      "description": "Bare branches sketch stories on the water's surface, as the sun threads its light through the cold air.",
+      "tags": [
+        "winter",
+        "reflection",
+        "nature",
+        "tranquility",
+        "serenity",
+        "sunlight",
+        "landscape"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05155",
     "filename": "bestofme_2016-08-05155.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05155.jpg",
-    "title": "Bestofme 2016 08 05155",
+    "title": "Reflections of Forgotten Stories",
     "location": "",
-    "description": "",
+    "description": "Colorful whispers of old walls meet the river’s calm embrace. Life and water flow together, eternally intertwined.",
     "print_formats": [
       "L"
     ],
@@ -511,17 +631,38 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "river",
+      "reflections",
+      "architecture",
+      "colorful",
+      "serenity",
+      "history"
+    ],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Time",
+      "description": "Colored facades whisper stories along the quiet water's edge, holding the essence of a town's spirit.",
+      "tags": [
+        "river",
+        "reflections",
+        "architecture",
+        "colorful",
+        "serenity",
+        "history"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05211",
     "filename": "bestofme_2016-08-05211.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05211.jpg",
-    "title": "Bestofme 2016 08 05211",
+    "title": "Reflections at Dawn",
     "location": "",
-    "description": "",
+    "description": "The water whispers secrets to the sky, as palm trees watch in serenity.",
     "print_formats": [
       "L"
     ],
@@ -559,17 +700,19 @@
       "XL": true,
       "L": false
     },
+    "tags": [],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05278",
     "filename": "bestofme_2016-08-05278.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05278.jpg",
-    "title": "Bestofme 2016 08 05278",
+    "title": "Reflections of Quiet Woods",
     "location": "",
-    "description": "",
+    "description": "Bare trees mirror themselves in a still pond, whispering secrets to the sky. Nature's quietude reigns.",
     "print_formats": [
       "L"
     ],
@@ -607,17 +750,19 @@
       "XL": true,
       "L": false
     },
+    "tags": [],
     "exhibitions": [
       "reflection"
-    ]
+    ],
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-0528",
     "filename": "bestofme_2016-08-0528.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0528.jpg",
-    "title": "Glitch",
+    "title": "Mirror of Souls",
     "location": "",
-    "description": "",
+    "description": "Reflecting the cathedral's grandeur, a city's heart divides and unites in silence. The past and present walk hand in hand.",
     "print_formats": [
       "XL",
       "L"
@@ -658,20 +803,21 @@
       "XL": false,
       "L": false
     },
+    "tags": [
+      "france"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "france"
-    ]
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-0529",
     "filename": "bestofme_2016-08-0529.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0529.jpg",
-    "title": "Oscillations",
+    "title": "Reflections of Still Waters",
     "location": "",
-    "description": "La Ciotat early hours",
+    "description": "Sailboats rest with grace, mirroring the calmness of dawn. The world holds its breath.",
     "print_formats": [
       "XL",
       "L"
@@ -712,20 +858,21 @@
       "XL": false,
       "L": false
     },
+    "tags": [
+      "france"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "france"
-    ]
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-0589",
     "filename": "bestofme_2016-08-0589.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0589.jpg",
-    "title": "night reflections",
+    "title": "Whispers of Night Reflections",
     "location": "",
-    "description": "",
+    "description": "The canal mirrors ancient façades, a stillness wrapped in starlight. History breathes softly here.",
     "print_formats": [
       "L"
     ],
@@ -763,6 +910,7 @@
       "XL": true,
       "L": false
     },
+    "tags": [],
     "exhibitions": [
       "reflection"
     ],
@@ -772,9 +920,9 @@
     "id": "dsc01409",
     "filename": "dsc01409.jpg",
     "thumbnail": "thumbs/dsc01409.jpg",
-    "title": "upside down",
+    "title": "Reflections of Reality",
     "location": "",
-    "description": "",
+    "description": "In the heart of a bustling square, reflections dance like echoes of lives intertwined. The mirror reveals what the eye might miss.",
     "print_formats": [
       "L"
     ],
@@ -812,21 +960,39 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "reflection",
+      "urban",
+      "everyday",
+      "symmetry",
+      "life",
+      "dance"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "urban",
-      "france"
-    ]
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Everyday Symphony",
+      "description": "Life dances on a mirrored veil, an urban ballet of shadows and light.",
+      "tags": [
+        "reflection",
+        "urban",
+        "everyday",
+        "symmetry",
+        "life",
+        "dance",
+        "France"
+      ]
+    }
   },
   {
     "id": "img_2030",
     "filename": "img_2030.jpg",
     "thumbnail": "thumbs/img_2030.jpg",
-    "title": "Img 2030",
+    "title": "Reflections of a Sleeping City",
     "location": "",
-    "description": "",
+    "description": "In the embrace of the evening glow, the water mirrors tales unspoken, beneath a sky of whispers.",
     "print_formats": [
       "L"
     ],
@@ -864,20 +1030,38 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "twilight",
+      "reflections",
+      "urban",
+      "stillness",
+      "poetry",
+      "canal"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "urban"
-    ]
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Forgotten Whispers",
+      "description": "As day surrenders, buildings mirror their secrets on the water's gentle canvas. Stillness lingers, timeless and tender.",
+      "tags": [
+        "twilight",
+        "reflections",
+        "urban",
+        "stillness",
+        "poetry",
+        "canal"
+      ]
+    }
   },
   {
     "id": "img_2679",
     "filename": "img_2679.jpg",
     "thumbnail": "thumbs/img_2679.jpg",
-    "title": "Img 2679",
+    "title": "Quiet Waters Whisper",
     "location": "",
-    "description": "",
+    "description": "A lone rowboat glides across the lake as reflections dance in the soft morning glow. In the stillness, a journey begins anew.",
     "print_formats": [
       "L"
     ],
@@ -915,20 +1099,21 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "landscape"
+    ],
     "exhibitions": [
       "reflection"
     ],
-    "tags": [
-      "landscape"
-    ]
+    "visible": true
   },
   {
     "id": "img_3710",
     "filename": "img_3710.jpg",
     "thumbnail": "thumbs/img_3710.jpg",
-    "title": "Img 3710",
+    "title": "Reflections of Passing Lives",
     "location": "",
-    "description": "",
+    "description": "In mirrored glass, everyday journeys weave stories of fleeting connections. Moments captured, yet transient.",
     "print_formats": [
       "L"
     ],
@@ -966,22 +1151,39 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "city",
+      "reflections",
+      "urban",
+      "dance",
+      "monochrome",
+      "rhythm"
+    ],
     "exhibitions": [
       "reflection",
       "BlackandWhite"
     ],
-    "tags": [
-      "urban",
-      "BlackandWhite"
-    ]
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of Urban Choreography",
+      "description": "Amidst the city's hum, lives intersect like a living tapestry on mirrored glass. A moment of rhythm and pause.",
+      "tags": [
+        "city",
+        "reflections",
+        "urban",
+        "dance",
+        "monochrome",
+        "rhythm"
+      ]
+    }
   },
   {
     "id": "img_5899",
     "filename": "img_5899.jpg",
     "thumbnail": "thumbs/img_5899.jpg",
-    "title": "Img 5899",
+    "title": "Mirror of the City",
     "location": "",
-    "description": "",
+    "description": "Reflections capture the dance of life, weaving chaos and order. Every moment is a silent story written on the streets.",
     "print_formats": [
       "L"
     ],
@@ -1019,22 +1221,41 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "urban",
+      "reflection",
+      "cityscape",
+      "motion",
+      "monochrome",
+      "architecture",
+      "BlackandWhite"
+    ],
     "exhibitions": [
       "reflection",
       "BlackandWhite"
     ],
-    "tags": [
-      "urban",
-      "BlackandWhite"
-    ]
+    "visible": true,
+    "suggestions": {
+      "title": "Reflections of a City Pulse",
+      "description": "A mirrored world catches the city's ceaseless dance, blending movement and stillness in a timeless urban ballet.",
+      "tags": [
+        "urban",
+        "reflection",
+        "cityscape",
+        "motion",
+        "monochrome",
+        "architecture",
+        "BlackandWhite"
+      ]
+    }
   },
   {
     "id": "img_6289",
     "filename": "img_6289.jpg",
     "thumbnail": "thumbs/img_6289.jpg",
-    "title": "Img 6289",
+    "title": "Reflections of Ancient Majesty",
     "location": "",
-    "description": "",
+    "description": "A sacred echo whispers through time, mirrored in still waters. The past and present converge beneath the moon's gaze.",
     "print_formats": [
       "L"
     ],
@@ -1072,13 +1293,2487 @@
       "XL": true,
       "L": false
     },
+    "tags": [
+      "reflection",
+      "temple",
+      "history",
+      "moonlit",
+      "serenity",
+      "travel",
+      "landscape",
+      "sunset"
+    ],
     "exhibitions": [
       "reflection"
     ],
+    "visible": true,
+    "suggestions": {
+      "title": "Echoes of Ancient Stones",
+      "description": "Under a velvet sky, ancient towers whisper tales of time. The moon dances, casting shadows on tranquil waters.",
+      "tags": [
+        "reflection",
+        "temple",
+        "history",
+        "moonlit",
+        "serenity",
+        "travel",
+        "landscape",
+        "sunset"
+      ]
+    }
+  },
+  {
+    "id": "2s9a0143",
+    "filename": "2s9a0143.jpg",
+    "thumbnail": "thumbs/2s9a0143.jpg",
+    "title": "Whisper of Innocence",
+    "location": "",
+    "description": "A child's gaze holds the universe, full of wonder and dreams untold.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
     "tags": [
+      "child",
+      "wonder",
+      "innocence",
+      "curiosity",
+      "grayscale",
+      "portrait"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Wonder in Tiny Eyes",
+      "description": "Innocence gazes at a world of endless possibilities, where each moment paints a story.",
+      "tags": [
+        "child",
+        "wonder",
+        "innocence",
+        "curiosity",
+        "grayscale",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "2s9a0394",
+    "filename": "2s9a0394.jpg",
+    "thumbnail": "thumbs/2s9a0394.jpg",
+    "title": "Whispers in Monochrome",
+    "location": "",
+    "description": "Shadows dance as quiet stories linger in a city café. Light filters through memories etched in glass.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 26.5 cm — €427 incl. Collector edition (XL): 88 × 52.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.67,
+    "width": 8642,
+    "height": 5181,
+    "dimensions": {
+      "L": "44 × 26.5 cm",
+      "XL": "88 × 52.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "bar",
+      "morning",
+      "light",
+      "reflections",
+      "nostalgia"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Whispers of Morning at the Bar",
+      "description": "Sunlight filters through historic panes, tracing quiet conversations and daydreams. Life pauses in warm reflections.",
+      "tags": [
+        "blackandwhite",
+        "bar",
+        "morning",
+        "light",
+        "reflections",
+        "nostalgia"
+      ]
+    }
+  },
+  {
+    "id": "2s9a0598",
+    "filename": "2s9a0598.jpg",
+    "thumbnail": "thumbs/2s9a0598.jpg",
+    "title": "Serenity in Stone",
+    "location": "",
+    "description": "Carved with tranquility, the figure radiates peace from a timeless realm. Its silence speaks to the soul.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 37.5 × 28.5 cm — €427 incl. Collector edition (XL): 75.5 × 56.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.75,
+    "width": 5571,
+    "height": 7428,
+    "dimensions": {
+      "L": "37.5 × 28.5 cm",
+      "XL": "75.5 × 56.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "sculpture",
+      "tranquility",
+      "shadow",
+      "meditation",
+      "art",
+      "peace"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Serenity in Shadow",
+      "description": "The tranquil gaze of a silent form, amidst a halo of stillness. An eternal calm amidst ephemeral chaos.",
+      "tags": [
+        "sculpture",
+        "tranquility",
+        "shadow",
+        "meditation",
+        "art",
+        "peace"
+      ]
+    }
+  },
+  {
+    "id": "2s9a0710",
+    "filename": "2s9a0710.jpg",
+    "thumbnail": "thumbs/2s9a0710.jpg",
+    "title": "Guardian of Forgotten Play",
+    "location": "",
+    "description": "Amidst the rain, a child conquers history's shadow. Time halts, witnessing innocence reclaim the past.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29 cm — €427 incl. Collector edition (XL): 87.5 × 58.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8631,
+    "height": 5754,
+    "dimensions": {
+      "L": "44 × 29 cm",
+      "XL": "87.5 × 58.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "childhood",
+      "adventure",
+      "imagination",
+      "rain",
+      "blackandwhite",
+      "history"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "A Child's Voyage",
+      "description": "Amidst the rain and scaffolding rise dreams of adventure, where imagination sails time's vessel.",
+      "tags": [
+        "childhood",
+        "adventure",
+        "imagination",
+        "rain",
+        "blackandwhite",
+        "history"
+      ]
+    }
+  },
+  {
+    "id": "2s9a1111",
+    "filename": "2s9a1111.jpg",
+    "thumbnail": "thumbs/2s9a1111.jpg",
+    "title": "Joy's Unbridled Voyage",
+    "location": "",
+    "description": "In a small embrace of dreams, laughter steers the helm of innocence. The world awaits with open arms.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 38.5 × 27.5 cm — €427 incl. Collector edition (XL): 77.5 × 55 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.71,
+    "width": 5417,
+    "height": 7613,
+    "dimensions": {
+      "L": "38.5 × 27.5 cm",
+      "XL": "77.5 × 55 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "childhood",
+      "joy",
+      "laughter",
+      "innocence",
+      "blackandwhite",
+      "play"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Joyful Ride",
+      "description": "A child's laughter echoes, filling the air with pure delight. Innocence drives the journey through fleeting moments of freedom.",
+      "tags": [
+        "childhood",
+        "joy",
+        "laughter",
+        "innocence",
+        "blackandwhite",
+        "play",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "2s9a3738",
+    "filename": "2s9a3738.jpg",
+    "thumbnail": "thumbs/2s9a3738.jpg",
+    "title": "Conversations in Innocence",
+    "location": "",
+    "description": "Two children share a moment on a wooden bench, the forest their quiet audience. Their wonder is a language of its own.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "children",
+      "forest",
+      "innocence",
+      "wonder",
+      "storytelling"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Innocence in the Wild",
+      "description": "Two children share a silent story on a bench, surrounded by the whispering forest. Their eyes speak of wonder.",
+      "tags": [
+        "blackandwhite",
+        "children",
+        "forest",
+        "innocence",
+        "wonder",
+        "storytelling"
+      ]
+    }
+  },
+  {
+    "id": "2s9a4690",
+    "filename": "2s9a4690.jpg",
+    "thumbnail": "thumbs/2s9a4690.jpg",
+    "title": "Passage of Quiet Echoes",
+    "location": "",
+    "description": "Amidst the graceful curve of glass and steel, two figures wander in whispered contemplation.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "solitude",
+      "passageway",
+      "reflections",
+      "monochrome",
+      "tranquility"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Passage of Solitude",
+      "description": "Beneath the arched glass, time softly lingers. Footsteps echo the quiet rhythm of solitude.",
+      "tags": [
+        "architecture",
+        "solitude",
+        "passageway",
+        "reflections",
+        "monochrome",
+        "tranquility"
+      ]
+    }
+  },
+  {
+    "id": "2s9a5038",
+    "filename": "2s9a5038.jpg",
+    "thumbnail": "thumbs/2s9a5038.jpg",
+    "title": "A Child's Gaze",
+    "location": "",
+    "description": "Beneath oversized glasses, wonder fills her eyes. The world reflects in her innocent smile.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 35.5 × 26.5 cm — €427 incl. Collector edition (XL): 71 × 53.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.75,
+    "width": 5248,
+    "height": 6992,
+    "dimensions": {
+      "L": "35.5 × 26.5 cm",
+      "XL": "71 × 53.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "innocence",
+      "childhood",
+      "curiosity",
+      "blackandwhite",
+      "portrait"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Shades of Innocence",
+      "description": "A child peers through oversized glasses, embracing the world with wonder.",
+      "tags": [
+        "innocence",
+        "childhood",
+        "curiosity",
+        "blackandwhite",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "2s9a5491",
+    "filename": "2s9a5491.jpg",
+    "thumbnail": "thumbs/2s9a5491.jpg",
+    "title": "Laughter in the Web",
+    "location": "",
+    "description": "A child's joy threads through the woven ropes, carefree and unbound.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 34.5 × 24.5 cm — €427 incl. Collector edition (XL): 68.5 × 49 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.71,
+    "width": 4821,
+    "height": 6749,
+    "dimensions": {
+      "L": "34.5 × 24.5 cm",
+      "XL": "68.5 × 49 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "childhood",
+      "exploration",
+      "joy",
+      "wonder",
+      "play",
+      "discovery",
+      "portrait"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Journey Through Innocence",
+      "description": "A child ventures through woven paths, eyes bright with wonder. The world is a playground of endless possibilities.",
+      "tags": [
+        "childhood",
+        "exploration",
+        "joy",
+        "wonder",
+        "play",
+        "discovery",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "2s9a8901",
+    "filename": "2s9a8901.jpg",
+    "thumbnail": "thumbs/2s9a8901.jpg",
+    "title": "Towers Beneath Infinity",
+    "location": "",
+    "description": "Urban giants stretch towards the sky, converging in a dance with eternity. Their symmetry whispers to the clouds above.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 5792,
+    "height": 8688,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "urban",
+      "skyscrapers",
+      "geometry",
+      "monochrome",
+      "ascent"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Ascension of the Urban Towers",
+      "description": "Skyscrapers stretch toward the sky, seeking the whispers of the clouds. A labyrinth of ambition forged in steel.",
+      "tags": [
+        "architecture",
+        "urban",
+        "skyscrapers",
+        "geometry",
+        "monochrome",
+        "ascent"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9065",
+    "filename": "2s9a9065.jpg",
+    "thumbnail": "thumbs/2s9a9065.jpg",
+    "title": "Night Market Reverie",
+    "location": "",
+    "description": "Soft fluorescent glow frames a world of whispers and scents. A lone figure tends to a sanctuary of stories and wares.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 31.5 × 25.5 cm — €427 incl. Collector edition (XL): 63.5 × 50.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.8,
+    "width": 4985,
+    "height": 6231,
+    "dimensions": {
+      "L": "31.5 × 25.5 cm",
+      "XL": "63.5 × 50.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "monochrome",
+      "market",
+      "night",
+      "streetlife",
+      "mystery",
+      "nostalgia"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "The Whispering Market",
+      "description": "Amidst neon glow, an island of curiosities thrives, where stories hang in the air like whispers. The keeper tends his haven of treasures.",
+      "tags": [
+        "monochrome",
+        "market",
+        "night",
+        "streetlife",
+        "mystery",
+        "nostalgia"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9067",
+    "filename": "2s9a9067.jpg",
+    "thumbnail": "thumbs/2s9a9067.jpg",
+    "title": "Night Tram's Whisper",
+    "location": "",
+    "description": "A streetcar glides through sleeping streets, a silent guardian of the city's dreams.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 5792,
+    "height": 8688,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "cityscape",
+      "tram",
+      "night",
+      "nostalgia",
+      "journey"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Journey Through Neon Whispers",
+      "description": "Amidst a city's glow, a tram glides silently into memories yet to unfold.",
+      "tags": [
+        "blackandwhite",
+        "cityscape",
+        "tram",
+        "night",
+        "nostalgia",
+        "journey"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9138",
+    "filename": "2s9a9138.jpg",
+    "thumbnail": "thumbs/2s9a9138.jpg",
+    "title": "Night Whispers in Monochrome",
+    "location": "",
+    "description": "Under streetlights' glow, stories unfold in quiet conversation. The city listens with shadowed ears.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 39 × 29 cm — €427 incl. Collector edition (XL): 78 × 58.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.33,
+    "width": 7656,
+    "height": 5742,
+    "dimensions": {
+      "L": "39 × 29 cm",
+      "XL": "78 × 58.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "city",
+      "night",
+      "conversation",
+      "streetlight",
+      "whispers"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Midnight Conversations",
+      "description": "In the city's hushed glow, words become whispers in the dance of shadows.",
+      "tags": [
+        "blackandwhite",
+        "city",
+        "night",
+        "conversation",
+        "streetlight",
+        "whispers"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9396",
+    "filename": "2s9a9396.jpg",
+    "thumbnail": "thumbs/2s9a9396.jpg",
+    "title": "Souls in Motion, Silent Night",
+    "location": "",
+    "description": "City hustlers ascend as shadows dance on steel and glass, each lost in their whispering universe.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 28 × 28 cm — €427 incl. Collector edition (XL): 56 × 56 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1,
+    "width": 5520,
+    "height": 5520,
+    "dimensions": {
+      "L": "28 × 28 cm",
+      "XL": "56 × 56 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "urban",
       "reflection",
-      "landscape",
-      "sunset"
-    ]
+      "architecture",
+      "journey",
+      "silence"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Ascending Through Stillness",
+      "description": "On reflective steps, shadows of the city rise, serenaded by whispers of echoes.",
+      "tags": [
+        "blackandwhite",
+        "urban",
+        "reflection",
+        "architecture",
+        "journey",
+        "silence"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9408",
+    "filename": "2s9a9408.jpg",
+    "thumbnail": "thumbs/2s9a9408.jpg",
+    "title": "Tales from an Empty Market",
+    "location": "",
+    "description": "Stacked stools wait in silence, echoes of bustling days linger in the air. Shadows hold whispers of lives passing by.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 36.5 × 27 cm — €427 incl. Collector edition (XL): 72.5 × 54.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.75,
+    "width": 5354,
+    "height": 7140,
+    "dimensions": {
+      "L": "36.5 × 27 cm",
+      "XL": "72.5 × 54.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "urban",
+      "solitude",
+      "monochrome",
+      "nostalgia",
+      "quietude",
+      "streetlife"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Stillness of Forgotten Streets",
+      "description": "Chairs await stories untold in shadowed corners. Silence weaves through temporal whispers.",
+      "tags": [
+        "urban",
+        "solitude",
+        "monochrome",
+        "nostalgia",
+        "quietude",
+        "streetlife"
+      ]
+    }
+  },
+  {
+    "id": "2s9a9554",
+    "filename": "2s9a9554.jpg",
+    "thumbnail": "thumbs/2s9a9554.jpg",
+    "title": "Innocence Unveiled",
+    "location": "",
+    "description": "A tiny explorer dons wisdom’s disguise, eyes sparkling with untamed joy.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 38.5 × 27.5 cm — €427 incl. Collector edition (XL): 76.5 × 54.5 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.71,
+    "width": 5384,
+    "height": 7537,
+    "dimensions": {
+      "L": "38.5 × 27.5 cm",
+      "XL": "76.5 × 54.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "child",
+      "laughter",
+      "blackandwhite",
+      "innocence",
+      "joy",
+      "photography"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Laughter in Monochrome",
+      "description": "A child's smile lights up the moment, innocence captured in shades of grey.",
+      "tags": [
+        "child",
+        "laughter",
+        "blackandwhite",
+        "innocence",
+        "joy",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05126",
+    "filename": "bestofme_2016-08-05126.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05126.jpg",
+    "title": "Innocence in Motion",
+    "location": "",
+    "description": "Two children dance in fleeting shadows, laughter echoing with the breeze. They chase dreams through sunlit whispers.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 43 × 28.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 2820,
+    "height": 4230,
+    "dimensions": {
+      "L": "43 × 28.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "childhood",
+      "play",
+      "innocence",
+      "nature",
+      "blackandwhite",
+      "joy"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Whispers of Innocent Play",
+      "description": "In a sun-dappled field, children dance with laughter, crafting a fleeting, timeless world.",
+      "tags": [
+        "childhood",
+        "play",
+        "innocence",
+        "nature",
+        "blackandwhite",
+        "joy"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05160",
+    "filename": "bestofme_2016-08-05160.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05160.jpg",
+    "title": "Concrete Symphony",
+    "location": "",
+    "description": "Towers reach skyward, weaving human ambition with nature's embrace. The city whispers its tales to the sea.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 46.5 × 28.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.63,
+    "width": 4592,
+    "height": 2822,
+    "dimensions": {
+      "L": "46.5 × 28.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "cityscape",
+      "skyscrapers",
+      "harmony",
+      "urban",
+      "nature",
+      "monochrome"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Concrete Jungle's Whisper",
+      "description": "Towers rise amidst the foliage, a testament to humanity's reach. The city hums with dreams and echoes of nature.",
+      "tags": [
+        "cityscape",
+        "skyscrapers",
+        "harmony",
+        "urban",
+        "nature",
+        "monochrome"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05178",
+    "filename": "bestofme_2016-08-05178.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05178.jpg",
+    "title": "City Symphony",
+    "location": "",
+    "description": "A taxi glides through urban beats, captured in monochrome grace. The rhythm of the streets never falters.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 50 × 33.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3282,
+    "height": 4923,
+    "dimensions": {
+      "L": "50 × 33.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "urban",
+      "taxi",
+      "cityscape",
+      "blackandwhite",
+      "motion",
+      "architecture"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Urban Rhythms",
+      "description": "A taxi pauses amid towering concrete giants, capturing the pulse of a bustling city. Time flows in the shadows.",
+      "tags": [
+        "urban",
+        "taxi",
+        "cityscape",
+        "blackandwhite",
+        "motion",
+        "architecture"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05181",
+    "filename": "bestofme_2016-08-05181.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05181.jpg",
+    "title": "Shadows on the Field",
+    "location": "",
+    "description": "Under urban lights, dreams and defeats linger silently. A moment captured in stillness and motion.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "cityscape",
+      "youth",
+      "soccer",
+      "night",
+      "dreams"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Under the City's Glare",
+      "description": "Laughter echoes as dreams collide beneath the urban night. Shadows play on the fields of youthful ambition.",
+      "tags": [
+        "blackandwhite",
+        "cityscape",
+        "youth",
+        "soccer",
+        "night",
+        "dreams"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05235",
+    "filename": "bestofme_2016-08-05235.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05235.jpg",
+    "title": "Shadows of Geometric Grace",
+    "location": "",
+    "description": "Lines converge in rhythmic silence as figures pass through light and shadow, a dance of structure and soul.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 50.5 × 33.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3309,
+    "height": 4962,
+    "dimensions": {
+      "L": "50.5 × 33.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true
+  },
+  {
+    "id": "bestofme_2016-08-05250",
+    "filename": "bestofme_2016-08-05250.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05250.jpg",
+    "title": "Whispers Along the Canal",
+    "location": "",
+    "description": "Bicycles rest by the water's edge; stories flood past in silence.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 49 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.71,
+    "width": 3456,
+    "height": 4838,
+    "dimensions": {
+      "L": "49 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "bicycles",
+      "canal",
+      "cityscape",
+      "calm",
+      "monochrome",
+      "tranquility",
+      "Amsterdam"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Bikes Whisper by the Canal",
+      "description": "Two bicycles rest gently along the canal's edge, as clouds drift silently above the serene waterway. The city hums softly in the background.",
+      "tags": [
+        "bicycles",
+        "canal",
+        "cityscape",
+        "calm",
+        "monochrome",
+        "tranquility",
+        "Amsterdam"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05261",
+    "filename": "bestofme_2016-08-05261.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05261.jpg",
+    "title": "The Artisan's Sanctuary",
+    "location": "",
+    "description": "In a humble workshop, a craftsman shapes destiny with every chisel. Shadows dance to the rhythm of creation.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "artisan",
+      "workshop",
+      "tools",
+      "rest",
+      "craftsmanship"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "The Artisan's Pause",
+      "description": "In the workshop’s shadow, a craftsman rests as stories of labor weave through his thoughts. The tools await his seasoned hands.",
+      "tags": [
+        "blackandwhite",
+        "artisan",
+        "workshop",
+        "tools",
+        "rest",
+        "craftsmanship"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05267",
+    "filename": "bestofme_2016-08-05267.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05267.jpg",
+    "title": "Stillness in Stone",
+    "location": "",
+    "description": "The silent guardian gazes over the horizon, embracing eternity with grace. Shadows cast whispers of ancient wisdom.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5184,
+    "height": 3456,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "serenity",
+      "statue",
+      "tranquility",
+      "nature",
+      "wisdom",
+      "monochrome"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Whisper of Stillness",
+      "description": "A serene giant holds the secrets of the sky, wrapped in timeless silence.",
+      "tags": [
+        "serenity",
+        "statue",
+        "tranquility",
+        "nature",
+        "wisdom",
+        "monochrome"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05270",
+    "filename": "bestofme_2016-08-05270.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05270.jpg",
+    "title": "Vertical Dreamscape",
+    "location": "",
+    "description": "Towers rise like silent sentinels, sketching tales in the sky. Between concrete giants, whispers of dreams linger.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 40 × 32 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.25,
+    "width": 3931,
+    "height": 3143,
+    "dimensions": {
+      "L": "40 × 32 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "cityscape",
+      "architecture",
+      "monochrome",
+      "urban",
+      "contrast",
+      "harmony"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Concrete Serenade",
+      "description": "Towers rise in harmonious symphony, shadows weaving tales of life unseen.",
+      "tags": [
+        "cityscape",
+        "architecture",
+        "monochrome",
+        "urban",
+        "contrast",
+        "harmony"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0531",
+    "filename": "bestofme_2016-08-0531.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0531.jpg",
+    "title": "Whiskers and Weathered Signs",
+    "location": "",
+    "description": "A cat slumbers beside a rusted relic of the past, where dreams blend with faded echoes.",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "blackandwhite",
+      "cat",
+      "vintage",
+      "tranquility",
+      "dreams",
+      "serenity"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Whiskers and Weathered Letters",
+      "description": "Amidst the rusted relics, a feline rests, wrapped in silent dreams. Serenity finds a home.",
+      "tags": [
+        "blackandwhite",
+        "cat",
+        "vintage",
+        "tranquility",
+        "dreams",
+        "serenity"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0532",
+    "filename": "bestofme_2016-08-0532.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0532.jpg",
+    "title": "Thoughts Beneath the Brim",
+    "location": "",
+    "description": "Her eyes, a sea of contemplation, drift through time as the world whispers “seize the day.”",
+    "print_formats": [
+      "XL",
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 44 × 29.5 cm — €427 incl. Collector edition (XL): 88.5 × 59 cm — €965 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 8688,
+    "height": 5792,
+    "dimensions": {
+      "L": "44 × 29.5 cm",
+      "XL": "88.5 × 59 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "XL": "€965 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": false,
+      "L": false
+    },
+    "tags": [
+      "contemplation",
+      "blackandwhite",
+      "introspection",
+      "time",
+      "moment"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "The Weight of Thoughts",
+      "description": "A moment captured in grayscale, pondering time's relentless march. Embrace the fleeting now.",
+      "tags": [
+        "contemplation",
+        "blackandwhite",
+        "introspection",
+        "time",
+        "moment",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0540",
+    "filename": "bestofme_2016-08-0540.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0540.jpg",
+    "title": "Joy in Motion",
+    "location": "",
+    "description": "Pure laughter echoes as the world spins around innocent dreams. A child's happiness knows no bounds.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 50.5 × 44.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.14,
+    "width": 4992,
+    "height": 4360,
+    "dimensions": {
+      "L": "50.5 × 44.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "childhood",
+      "laughter",
+      "innocence",
+      "joy",
+      "blackandwhite",
+      "candid"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Joy's Pure Motion",
+      "description": "A child's laughter echoes, steering life's simple pleasures. In a fleeting moment, happiness finds its form.",
+      "tags": [
+        "childhood",
+        "laughter",
+        "innocence",
+        "joy",
+        "blackandwhite",
+        "candid",
+        "portrait"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-0591",
+    "filename": "bestofme_2016-08-0591.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-0591.jpg",
+    "title": "Beneath the Iron Giant",
+    "location": "",
+    "description": "A latticework of steel frames the sky's infinity. Silent strength, forged in dreams, stands the test of time.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 34 × 33 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.03,
+    "width": 3326,
+    "height": 3229,
+    "dimensions": {
+      "L": "34 × 33 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "perspective",
+      "steel",
+      "engineering",
+      "europe",
+      "history"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Beneath Iron Giants",
+      "description": "Steel weaves lace patterns against the sky, a marvel of human reach. The heart of an era beats quietly within.",
+      "tags": [
+        "architecture",
+        "perspective",
+        "steel",
+        "engineering",
+        "europe",
+        "history",
+        "France"
+      ]
+    }
+  },
+  {
+    "id": "img_0050_hdr",
+    "filename": "img_0050_hdr.jpg",
+    "thumbnail": "thumbs/img_0050_hdr.jpg",
+    "title": "Urban Canyons",
+    "location": "",
+    "description": "Skyscrapers reach for the clouds, towering guardians of the city. Between them, the sky is a distant dream.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3439,
+    "height": 5170,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "cityscape",
+      "blackandwhite",
+      "skyscrapers",
+      "perspective",
+      "poetry"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Urban Canyons",
+      "description": "Skyscrapers rise like ancient sentinels, framing the sky's embrace. Concrete majesty meets ethereal clouds.",
+      "tags": [
+        "architecture",
+        "cityscape",
+        "blackandwhite",
+        "skyscrapers",
+        "perspective",
+        "poetry"
+      ]
+    }
+  },
+  {
+    "id": "img_4039_hdr",
+    "filename": "img_4039_hdr.jpg",
+    "thumbnail": "thumbs/img_4039_hdr.jpg",
+    "title": "Concrete Symphony II",
+    "location": "",
+    "description": "Towers rise in rhythmic silence, their stories etched against the sky. The city breathes, alive yet composed.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 41 × 32.5 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.25,
+    "width": 4022,
+    "height": 3217,
+    "dimensions": {
+      "L": "41 × 32.5 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "cityscape",
+      "skyscrapers",
+      "monochrome",
+      "urban",
+      "skyline",
+      "architecture"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Urban Symphony in Monochrome",
+      "description": "Towers rise like solemn sentinels, holding stories of the city's dreams. In the silence, a bustling rhythm echoes.",
+      "tags": [
+        "cityscape",
+        "skyscrapers",
+        "monochrome",
+        "urban",
+        "skyline",
+        "architecture"
+      ]
+    }
+  },
+  {
+    "id": "img_4666",
+    "filename": "img_4666.jpg",
+    "thumbnail": "thumbs/img_4666.jpg",
+    "title": "Timeless Vessel Amid Urban Giants",
+    "location": "",
+    "description": "A majestic ship sails through a sea of skyscrapers, bridging history with modernity. Its sails whisper tales untold.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 47 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.75,
+    "width": 3455,
+    "height": 4631,
+    "dimensions": {
+      "L": "47 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "ship",
+      "cityscape",
+      "contrast",
+      "history",
+      "modernity",
+      "nostalgia"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "The Time Traveler's City",
+      "description": "A ship sails through modern giants, a whisper of the past against the skyline's roar.",
+      "tags": [
+        "ship",
+        "cityscape",
+        "contrast",
+        "history",
+        "modernity",
+        "nostalgia"
+      ]
+    }
+  },
+  {
+    "id": "img_5225",
+    "filename": "img_5225.jpg",
+    "thumbnail": "thumbs/img_5225.jpg",
+    "title": "Infinite Geometries",
+    "location": "",
+    "description": "Spirals of steel reach skyward, drawing dreams through angles and lines. The sky watches from above.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 1.5,
+    "width": 5184,
+    "height": 3456,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "geometry",
+      "skyward",
+      "symmetry",
+      "steel",
+      "dreams"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Symmetry's Dance in the Sky",
+      "description": "Steel beams intersect with precision, creating art against the canvas of the heavens. A testament to human dreams.",
+      "tags": [
+        "architecture",
+        "geometry",
+        "skyward",
+        "symmetry",
+        "steel",
+        "dreams"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05135",
+    "filename": "bestofme_2016-08-05135.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05135.jpg",
+    "title": "Threads of Nature’s Whisper",
+    "location": "",
+    "description": "Wrapped in colors, the tree breathes quiet warmth. Its tales brighten even the softest shadows.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3456,
+    "height": 5184,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "color",
+      "tree",
+      "whimsy",
+      "contrast",
+      "nature",
+      "creativity"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Stripes of Whimsy",
+      "description": "A tree dons a colorful coat, embracing vibrancy in a monochrome world. Joy sewn into nature's embrace.",
+      "tags": [
+        "color",
+        "tree",
+        "whimsy",
+        "contrast",
+        "nature",
+        "creativity"
+      ]
+    }
+  },
+  {
+    "id": "bestofme_2016-08-05156",
+    "filename": "bestofme_2016-08-05156.jpg",
+    "thumbnail": "thumbs/bestofme_2016-08-05156.jpg",
+    "title": "Crimson Passage",
+    "location": "",
+    "description": "A vivid red bridge captures footsteps and stories in motion. A moment of life in still frames.",
+    "print_formats": [
+      "L"
+    ],
+    "format_labels": {
+      "L": "Gallery (large)",
+      "XL": "Collector (extra large)"
+    },
+    "print_description": "Printed on Mat Hahnemühle FineArt Baryta Print on alu-Dibond with Art box & white rand (at the artist's discretion). Gallery edition (L): 52.5 × 35 cm — €427 incl. Artist’s proof: price upon request.",
+    "year": null,
+    "aspect_ratio": 0.67,
+    "width": 3448,
+    "height": 5174,
+    "dimensions": {
+      "L": "52.5 × 35 cm"
+    },
+    "price_details": {
+      "L": "€427 incl.",
+      "artist": null
+    },
+    "print_editions": {
+      "L": {
+        "total": 5,
+        "sold": 0
+      },
+      "XL": {
+        "total": 3,
+        "sold": 0
+      },
+      "artist": {
+        "total": 2,
+        "sold": 0
+      }
+    },
+    "resolution_warnings": {
+      "XL": true,
+      "L": false
+    },
+    "tags": [
+      "architecture",
+      "bridge",
+      "vivid",
+      "pathways",
+      "journey",
+      "red"
+    ],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "Scarlet Pathways",
+      "description": "A bridge of vivid hues stretches into whispers of tomorrow. Crossroads of stories linger in the steel and air.",
+      "tags": [
+        "architecture",
+        "bridge",
+        "vivid",
+        "pathways",
+        "journey",
+        "red"
+      ]
+    }
   }
 ]

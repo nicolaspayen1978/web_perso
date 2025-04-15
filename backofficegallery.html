@@ -253,8 +253,14 @@
     if (!photo.suggestions) photo.suggestions = {};
 
     // Fill main field if empty, otherwise store suggestion only
-    if (!photo.title) photo.title = result.ai_title;
-    else photo.suggestions.title = result.ai_title;
+    const rawTitle = photo.title?.trim().toLowerCase() || '';
+    const filenameBase = photo.thumbnail.split('/').pop().split('.')[0].toLowerCase();
+
+    if (!rawTitle || rawTitle === filenameBase) {
+      photo.title = result.ai_title;
+    } else {
+      photo.suggestions.title = result.ai_title;
+    }
 
     if (!photo.description) photo.description = result.ai_description;
     else photo.suggestions.description = result.ai_description;

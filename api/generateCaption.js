@@ -1,5 +1,4 @@
 // /api/generateCaption.js
-
 import fs from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';

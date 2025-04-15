@@ -104,14 +104,14 @@
       width: 100%;
       padding: 6px;
       margin-top: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       font-size: 14px;
     }
 
     .photo-card label {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .photo-card input[type="checkbox"] {
@@ -138,19 +138,19 @@
       background: #f1f1f1;
       padding: 6px;
       border-radius: 6px;
-      margin-top: 5px;
+      font-size: 13px;
+      margin-bottom: 8px;
     }
 
-    .suggestion-block input,
     .suggestion-block textarea {
-      margin-top: 4px;
+      min-height: 60px;
       font-size: 13px;
     }
   </style>
 </head>
 <body>
 
-<h1>🖼️ Gallery Backoffice</h1>
+<h1>🎼 Gallery Backoffice</h1>
 
 <div id="loginSection">
   <p>Enter password:</p>
@@ -160,10 +160,9 @@
 </div>
 
 <div id="adminTools" class="hidden">
-
   <button onclick="runScript()">🔄 Run Update Script</button>
   <button onclick="loadJSON()">📂 Load Gallery JSON</button>
-  <button class="save-btn" onclick="saveEditor()">💾 Save All Changes</button>
+  <button class="save-btn" onclick="saveEditor()">📀 Save All Changes</button>
   <button onclick="clearGallery()">🗑️ Clear Gallery</button>
 
   <div class="tag-summary" id="tagSummary"></div>
@@ -178,9 +177,7 @@
     <h3>Previous Backup</h3>
     <textarea id="previousJSON" readonly placeholder="Previous backup will load here..."></textarea>
   </div>
-
 </div>
-
 <script>
   let authHeader = '';
   let galleryData = [];

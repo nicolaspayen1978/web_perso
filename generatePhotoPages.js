@@ -1,31 +1,59 @@
 // generatePhotoPages.js
 const fs = require('fs');
+const readline = require('readline');
 const path = require('path');
-
+const slugify = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const galleryPath = path.join(__dirname, 'Gallery.json');
 const outputDir = path.join(__dirname, 'gallery', 'static');
 
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-const gallery = JSON.parse(fs.readFileSync(galleryPath, 'utf-8'));
+// Prompt before deleting old static pages
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const htmlFiles = fs.readdirSync(outputDir).filter(f => f.endsWith('.html'));
 
-const template = (photo) => {
+if (htmlFiles.length > 0) {
+  rl.question(`❓ Delete ${htmlFiles.length} existing HTML files in /gallery/static before regenerating? (yes/no): `, (answer) => {
+    if (answer.trim().toLowerCase() === 'yes') {
+      htmlFiles.forEach(file => fs.unlinkSync(path.join(outputDir, file)));
+      console.log(`🧹 Deleted ${htmlFiles.length} old HTML files.`);
+    } else {
+      console.log('⚠️ Skipping HTML cleanup. Existing files may be overwritten.');
+    }
+    rl.close();
+    run();
+  });
+} else {
+  run();
+}
+
+function run() {
+
+const galleryRaw = fs.readFileSync(galleryPath, 'utf-8');
+fs.writeFileSync(path.join(__dirname, 'Gallery.backup.json'), galleryRaw); // backup before changes
+const gallery = JSON.parse(galleryRaw);
+
+const updatedGallery = [];
+
+const template = (photo, slug) => {
   const title = photo.title || photo.filename;
-  const filename = photo.filename;
+  const filename = photo.filename.trim().replace(/[\\s_]+$/g, '');
   const description = photo.description || '';
   const dimensions = photo.dimensions || {};
   const prices = photo.price_details || {};
   const editions = photo.print_editions || {};
   const available = (e) => e?.total && e?.sold >= 0 ? `${e.total - e.sold}/${e.total}` : '';
 
+  const cleanPrice = (str) => {
+    const match = (str || '').match(/\d+(\.\d+)?/);
+    return match ? match[0] : '';
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
     "name": title,
-    "creator": {
-      "@type": "Person",
-      "name": "Nicolas Payen"
-    },
+    "creator": { "@type": "Person", "name": "Nicolas Payen" },
     "image": `https://web-perso.vercel.app/photos/${filename}`,
     "description": description,
     "artform": "Photography",
@@ -38,7 +66,7 @@ const template = (photo) => {
   if (prices.L) structuredData.offers.push({
     "@type": "Offer",
     "priceCurrency": "EUR",
-    "price": prices.L,
+    "price": cleanPrice(prices.L),
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition",
     "name": "Gallery Edition (L)"
@@ -46,7 +74,7 @@ const template = (photo) => {
   if (prices.XL) structuredData.offers.push({
     "@type": "Offer",
     "priceCurrency": "EUR",
-    "price": prices.XL,
+    "price": cleanPrice(prices.XL),
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition",
     "name": "Collector Edition (XL)"
@@ -60,11 +88,11 @@ const template = (photo) => {
   <meta name="description" content="${description.slice(0, 160)}">
   <meta name="author" content="Nicolas Payen">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://web-perso.vercel.app/gallery/static/${filename}.html">
+  <link rel="canonical" href="https://web-perso.vercel.app/gallery/static/${slug}.html">
   <meta property="og:title" content="${title} – Limited Edition Print by Nicolas Payen">
   <meta property="og:description" content="${description.slice(0, 160)}">
   <meta property="og:image" content="https://web-perso.vercel.app/photos/${filename}">
-  <meta property="og:url" content="https://web-perso.vercel.app/gallery/static/${filename}.html">
+  <meta property="og:url" content="https://web-perso.vercel.app/gallery/static/${slug}.html">
   <title>${title} | Limited Edition Print</title>
   <link rel="stylesheet" href="/gallery-styles.css">
   <link rel="stylesheet" href="/chatbot.css">
@@ -76,44 +104,9 @@ const template = (photo) => {
       .photo-container img { max-width: 700px; }
     }
   </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VisualArtwork",
-  "name": "Surf-Daydreams in Yellow",
-  "creator": {
-    "@type": "Person",
-    "name": "Nicolas Payen"
-  },
-  "image": "https://web-perso.vercel.app/photos/2s9a6657.jpg",
-  "description": "A soft moment of natural light breaking through the calmness of an urban setting — subtle, poetic, and timeless.",
-  "artform": "Photography",
-  "artMedium": "Fine art print",
-  "artEdition": "Limited edition",
-  "productionDate": "2023",
-  "offers": [
-    {
-      "@type": "Offer",
-      "priceCurrency": "EUR",
-      "price": "290",
-      "availability": "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition",
-      "name": "Gallery Edition (L)"
-    },
-    {
-      "@type": "Offer",
-      "priceCurrency": "EUR",
-      "price": "490",
-      "availability": "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition",
-      "name": "Collector Edition (XL)"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-${JSON.stringify(structuredData, null, 2)}
-</script>
+  <script type="application/ld+json">
+  ${JSON.stringify(structuredData, null, 2)}
+  </script>
 </head>
 <body>
   <header style="text-align: center; padding: 1.5rem 1rem 0.5rem;">
@@ -129,12 +122,12 @@ ${JSON.stringify(structuredData, null, 2)}
       ${description ? `<p><strong>Description:</strong> ${description}</p>` : ''}
       <h2 style="margin-top: 1.5rem;">Edition Details</h2>
       <ul style="list-style: none; padding-left: 0;">
-        <li><strong>Gallery Edition (L):</strong> ${dimensions.L || ''} – €${prices.L || ''} – ${available(editions.L)} available</li>
-        <li><strong>Collector Edition (XL):</strong> ${dimensions.XL || ''} – €${prices.XL || ''} – ${available(editions.XL)} available</li>
+        <li><strong>Gallery Edition (L):</strong> ${dimensions.L || ''} – ${prices.L || ''} – ${available(editions.L)} available</li>
+        <li><strong>Collector Edition (XL):</strong> ${dimensions.XL || ''} – ${prices.XL || ''} – ${available(editions.XL)} available</li>
         <li><strong>Artist’s Proof:</strong> ${available(editions.artist)} available</li>
       </ul>
       <p style="font-size: 0.85rem; color: #666; font-style: italic;">Note: Artist’s proofs may vary in format and support depending on availability and artistic discretion.</p>
-      <a href="mailto:nicolas_payen@icloud.com?subject=Print Request: ${encodeURIComponent(title)}" class="print-request dark" style="margin-top: 1rem; display: inline-block;">🖨️ Request a print</a>
+      <a href="mailto:hello@nicolaspayen.com?subject=Print Request: ${encodeURIComponent(title)}" class="print-request dark" style="margin-top: 1rem; display: inline-block;">🖨️ Request a print</a>
     </aside>
   </main>
   <div id="chatbot-icon" style="background: #333;"><img src="/images/NicoAvatar.png" alt="Chatbot"></div>
@@ -162,8 +155,17 @@ ${JSON.stringify(structuredData, null, 2)}
 
 gallery.forEach(photo => {
   if (photo.visible === false) return;
-  const html = template(photo);
-  fs.writeFileSync(path.join(outputDir, `${photo.filename}.html`), html, 'utf-8');
+  const html = template(photo, photo.id);
+  fs.writeFileSync(path.join(outputDir, `${photo.id}.html`), html, 'utf-8');
+  updatedGallery.push(photo);
 });
 
-console.log(`✅ Generated ${gallery.filter(p => p.visible !== false).length} photo pages.`);
+// Validate all entries before generating HTML
+const valid = gallery.every(p => p.filename && typeof p.filename === 'string' && p.id && typeof p.id === 'string');
+if (!valid) {
+  console.error('❌ Validation failed: missing filename or id in one or more entries.');
+  process.exit(1);
+}
+
+console.log(`✅ Generated ${updatedGallery.length} photo pages.`);
+} // ← closes run()

@@ -270,7 +270,7 @@
       });
 
       filtered.forEach(link => gallery.appendChild(link));
-      $('#gallery').justifiedGallery('norewind').justifiedGallery({
+      $('#gallery-photos').justifiedGallery('norewind').justifiedGallery({
         rowHeight: 250,
         margins: 5,
         lastRow: 'nojustify',
@@ -282,7 +282,7 @@
     formatFilter.addEventListener("change", applyFilters);
     exhibitionFilter.addEventListener("change", applyFilters);
 
-    $('#gallery').justifiedGallery({ rowHeight: 250, margins: 5, lastRow: 'nojustify', captions: false });
+    $('#gallery-photos').justifiedGallery({ rowHeight: 250, margins: 5, lastRow: 'nojustify', captions: false });
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: '#gallery',

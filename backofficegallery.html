@@ -30,9 +30,9 @@
     }
 
     button {
-      padding: 6px 12px;
-      font-size: 14px;
-      margin: 5px 5px 10px 0;
+      padding: 10px 16px;
+      font-size: 16px;
+      margin: 5px 5px 5px 0;
       border: none;
       background-color: #007bff;
       color: white;
@@ -46,14 +46,14 @@
 
     textarea {
       width: 100%;
-      min-height: 80px;
-      margin-top: 4px;
-      margin-bottom: 10px;
+      min-height: 60px;
+      margin-top: 6px;
       font-family: monospace;
-      font-size: 0.9rem;
+      font-size: 13px;
       padding: 6px;
       border: 1px solid #ccc;
       background-color: #fff;
+      line-height: 1.4;
     }
 
     .hidden {
@@ -99,12 +99,11 @@
       flex: 2 1 400px;
     }
 
-    .photo-card input[type="text"],
-    .photo-card textarea {
+    .photo-card input[type="text"] {
       width: 100%;
       padding: 6px;
       margin-top: 4px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-size: 14px;
     }
 
@@ -134,17 +133,33 @@
       margin-bottom: 20px;
     }
 
-    .suggestion-block {
-      background: #f1f1f1;
-      padding: 6px;
-      border-radius: 6px;
+    .suggestion-input {
       font-size: 13px;
-      margin-bottom: 8px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      width: 100%;
+      padding: 4px;
+      border: 1px dashed #aaa;
+      background-color: #fdfdfd;
     }
 
-    .suggestion-block textarea {
-      min-height: 60px;
+    .suggestion-checkbox {
       font-size: 13px;
+      margin-bottom: 8px;
+      display: block;
+      color: #444;
+    }
+
+    .suggest-btn {
+      float: right;
+      background-color: #eee;
+      color: #333;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    .suggest-btn:hover {
+      background-color: #ddd;
     }
   </style>
 </head>

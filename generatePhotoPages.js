@@ -155,6 +155,12 @@ const template = (photo, slug) => {
 
 gallery.forEach(photo => {
   if (photo.visible === false) return;
+
+  if (!photo.filename || !photo.id) {
+    console.warn("⚠️ Skipping invalid photo entry (missing filename or id):", photo);
+    return;
+  }
+
   const html = template(photo, photo.id);
   fs.writeFileSync(path.join(outputDir, `${photo.id}.html`), html, 'utf-8');
   updatedGallery.push(photo);

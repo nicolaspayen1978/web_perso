@@ -98,8 +98,13 @@
     const exhibitionsSet = new Set();
 
    for (const photo of photos) {
-      if (!photo.filename || !photo.thumbnail) {
-        console.warn("⛔ Skipping photo due to missing filename or thumbnail:", photo);
+      if (!photo.filename || !photo.thumbnail || !photo.width || !photo.height || !photo.id) {
+        console.warn("⛔ Skipping photo due to missing critical fields:", photo);
+        continue;
+      }
+
+      if (typeof photo.width !== "number" || typeof photo.height !== "number") {
+        console.warn("⚠️ Skipping photo with invalid dimensions:", photo);
         continue;
       }
 
@@ -108,6 +113,12 @@
       const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
       const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
       const link = document.createElement('a');
+
+      if (!photo.filename || typeof photo.filename !== "string") {
+        console.warn("⚠️ Skipping photo with invalid filename:", photo);
+        continue;
+      }
+      
       link.href = fullSrc;
       link.setAttribute('data-pswp-width', photo.width);
       link.setAttribute('data-pswp-height', photo.height);

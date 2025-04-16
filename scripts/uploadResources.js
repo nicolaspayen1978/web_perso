@@ -1,7 +1,6 @@
 // This scripts/uploadResources.js the script to deploy the resources in KV database
 
 const fs = require("fs");
-
 const KV_URL = process.env.KV_REST_API_URL;
 const KV_TOKEN = process.env.KV_REST_API_TOKEN;
 

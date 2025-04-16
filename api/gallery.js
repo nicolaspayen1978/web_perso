@@ -9,8 +9,21 @@ export default async function handler(req, res) {
   // Public load (no auth)
   if (req.method === 'GET' && action === 'public-load') {
     try {
-      const gallery = await kv.get('gallery:json');
-      return res.status(200).json(gallery || []);
+      const rawGallery = await kv.get('gallery:json');
+      const gallery = Array.isArray(rawGallery)
+        ? rawGallery.filter(p =>
+            p &&
+            typeof p.filename === 'string' &&
+            p.filename.trim() !== '' &&
+            typeof p.thumbnail === 'string' &&
+            typeof p.id === 'string' &&
+            p.id.trim() !== '' &&
+            typeof p.width === 'number' &&
+            typeof p.height === 'number'
+          )
+        : [];
+
+      return res.status(200).json(gallery);
     } catch (err) {
       console.error("❌ Failed to fetch gallery:", err);
       return res.status(500).json({ error: 'Unable to fetch gallery data.' });

@@ -97,12 +97,16 @@
     const allLinks = [];
     const exhibitionsSet = new Set();
 
-    for (const photo of photos) {
+   for (const photo of photos) {
+      if (!photo.filename || !photo.thumbnail) {
+        console.warn("⛔ Skipping photo due to missing filename or thumbnail:", photo);
+        continue;
+      }
+
       (photo.exhibitions || []).forEach(e => exhibitionsSet.add(e));
 
       const fullSrc = `photos/${encodeURIComponent(photo.filename)}`;
       const thumbSrc = `photos/${encodeURIComponent(photo.thumbnail)}`;
-
       const link = document.createElement('a');
       link.href = fullSrc;
       link.setAttribute('data-pswp-width', photo.width);

@@ -10,6 +10,8 @@ const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from ut
 const initApp = require("./init");  // import from init.js
 const { resources } = require("./init");  // import preloaded resources
 const notifyNicolas = require("../utils/notify"); // 🔔 Import the Pushover notification helper
+const contentPath = path.join(__dirname, "../resourcesContent.json");
+const { getRelevantResources } = require("../utils/resourceMatcher");
 
 const chatApp = express();
 
@@ -61,11 +63,22 @@ chatApp.post('/api/chatbot', async (req, res) => {
         }
     }
 
-    // System prompt with resources
-    const systemPrompt = {
-        role: "system",
-        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses. Keep answer in 100-125 words max. If you don't know yet the identity of this user please ask for it, ask for its contact details, and ask for the reason of his/her visit to the website. Never ask these information more than two times.`
-    };
+    const fullResourceContent = JSON.parse(fs.readFileSync(contentPath, "utf-8"));
+    const matchingContent = getRelevantResources(userInput, resources, fullResourceContent);
+
+    let systemPrompt;
+
+    if (!matchingContent.trim()) {
+        systemPrompt = {
+            role: "system",
+            content: "No direct matches found in Nicolas's resources. Please answer using general knowledge, or ask the visitor a clarifying question. Keep your response concise and engaging."
+        };
+    } else {
+        systemPrompt = {
+            role: "system",
+            content: `Here are some relevant resources:\n\n${matchingContent}\n\nUse them when answering. Keep your response concise and engaging.`
+        };
+    }
 
     // Generate OpenAI response using system + user message
     const aiResponse = await callOpenAI([

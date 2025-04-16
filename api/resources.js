@@ -5,6 +5,13 @@ const path = require("path");
 const KV_REST_API_URL = process.env.KV_REST_API_URL;
 const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN;
 const RESOURCES_PATH = path.join(__dirname, "../resources.json");
+//laod the file with the detailed content of the file listed in resources.json (fetched at build time)
+const contentPath = path.join(__dirname, "../resourcesContent.json");
+let fullResourceContent = {};
+
+if (fs.existsSync(contentPath)) {
+  fullResourceContent = JSON.parse(fs.readFileSync(contentPath, "utf-8"));
+}
 
 let resourceDescriptions = {};
 
@@ -179,31 +186,4 @@ async function generateResourceDescriptions(resources, updateProgress) {
     }
 
     return descriptions;
-}
-
-// generate a request to OpenAI that includes the user questions and the relevant resources
-//identify relevant resources
-function getRelevantResources(userMessage) {
-    const keywords = userMessage.toLowerCase().split(/\s+/); // Split message into words
-    let resourceMatches = [];
-
-    for (const [category, items] of Object.entries(resourceDescriptions)) {
-        if (Array.isArray(items)) {
-            for (const item of items) {
-                const titleLower = item.title.toLowerCase();
-                const descriptionLower = (item.description || "").toLowerCase();
-                
-                // Count keyword matches in title & description
-                let matchScore = keywords.filter(word => titleLower.includes(word) || descriptionLower.includes(word)).length;
-
-                if (matchScore > 0) {
-                    resourceMatches.push({ title: item.title, description: item.description, score: matchScore });
-                }
-            }
-        }
-    }
-
-    // Sort by relevance (higher match score first) and limit results
-    resourceMatches.sort((a, b) => b.score - a.score);
-    return resourceMatches.slice(0, 5).map(item => `${item.title}: ${item.description}`).join("\n");
 }

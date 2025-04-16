@@ -5,16 +5,18 @@
   "scripts": {
     "start": "vercel dev",
     "deploy": "vercel --prod",
-    "postinstall": "node scripts/uploadResources.js",
+    "postinstall": "if [ \"$VERCEL\" = \"1\" ]; then node scripts/uploadResources.js; fi",
+    "build": "node scripts/generateResourcesContent.js && next build",
     "update-gallery": "node scripts/runGalleryUpdate.js"
   },
   "dependencies": {
     "@vercel/kv": "latest",
+    "exif-parser": "^0.1.12",
     "express": "^4.18.2",
-    "node-fetch": "^3.3.1",
-    "exif-parser": "^0.1.12",        
-    "sharp": "^0.32.1",              
-    "uuid": "^9.0.0",
-    "openai": "^4.0.0"
+    "jsdom": "^26.1.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.0.0",
+    "sharp": "^0.32.1",
+    "uuid": "^9.0.0"
   }
 }

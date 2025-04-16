@@ -2,7 +2,7 @@
 // No need to manage tokens or regions manually!
 const { saveMessageInKV } = require('../utils/kvUtils');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');
   }

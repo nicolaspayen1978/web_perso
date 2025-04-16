@@ -14,7 +14,7 @@ const contentPath = path.join(__dirname, "../resourcesContent.json");
 const { getRelevantResources } = require("../utils/resourceMatcher");
 
 const chatApp = express();
-
+chatApp.post('/api/saveMessage', require('./saveMessage'));
 chatApp.use(express.json());
 
 // Handle CORS

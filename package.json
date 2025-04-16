@@ -6,7 +6,7 @@
     "start": "vercel dev",
     "deploy": "vercel --prod",
     "postinstall": "if [ \"$VERCEL\" = \"1\" ]; then node scripts/uploadResources.js; fi",
-    "build": "node scripts/generateResourcesContent.js && next build",
+    "build": "node scripts/generateResourcesContent.js",
     "update-gallery": "node scripts/runGalleryUpdate.js"
   },
   "dependencies": {

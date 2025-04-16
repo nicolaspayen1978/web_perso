@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
+
 const KV_URL = isDevEnv
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;

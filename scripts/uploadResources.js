@@ -1,8 +1,14 @@
 // This scripts/uploadResources.js the script to deploy the resources in KV database
 
 const fs = require("fs");
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+
+const KV_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
 
 if (!KV_URL || !KV_TOKEN) {
     console.error("Missing Vercel KV credentials.");

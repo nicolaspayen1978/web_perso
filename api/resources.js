@@ -2,8 +2,16 @@
 const fs = require("fs");
 const path = require("path");
 
-const KV_REST_API_URL = process.env.KV_REST_API_URL;
-const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN;
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
+
+const KV_REST_API_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_REST_API_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
+
 const RESOURCES_PATH = path.join(__dirname, "../resources.json");
 //laod the file with the detailed content of the file listed in resources.json (fetched at build time)
 const contentPath = path.join(__dirname, "../resourcesContent.json");

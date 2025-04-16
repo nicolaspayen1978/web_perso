@@ -2,10 +2,17 @@
 const fs = require("fs");
 const path = require("path");
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
 
-const KV_REST_API_URL = process.env.KV_REST_API_URL;  // KV database url
-const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN; // KV database KEY
+const KV_REST_API_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_REST_API_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Load visitor sessions from Vercel KV
 async function loadVisitorSessions() {

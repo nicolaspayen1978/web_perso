@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": ".",
   "functions": {
     "api/chatbot.js": { "maxDuration": 30 },
     "api/init.js": { "maxDuration": 30 },

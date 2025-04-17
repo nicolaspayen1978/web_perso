@@ -38,3 +38,27 @@ if (invalid.length > 0) {
 } else {
   console.log('✅ Gallery.json passed validation. All entries look good.');
 }
+
+// Additional check: Scan for non-ASCII characters in the raw JSON with line and column info
+const rawContent = fs.readFileSync(galleryPath, 'utf-8').split('\n');
+let unicodeWarnings = 0;
+
+rawContent.forEach((line, index) => {
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const code = char.charCodeAt(0);
+    if (code > 127) {
+      const hex = code.toString(16).toUpperCase().padStart(4, '0');
+      console.warn(
+        `❗ Unicode on line ${index + 1}, column ${i + 1}: '${char}' (U+${hex})\n  → ${line.trim()}`
+      );
+      unicodeWarnings++;
+    }
+  }
+});
+
+if (unicodeWarnings > 0) {
+  console.warn(`⚠️ Detected ${unicodeWarnings} non-ASCII characters in Gallery.json`);
+} else {
+  console.log('✅ No non-ASCII characters detected.');
+}

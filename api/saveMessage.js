@@ -6,6 +6,16 @@ import { saveMessageInKV } from '../utils/kvUtils.js';
 
 export default async function handler(req, res) {
 
+  // Allow CORS
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(200).end();
+  }
+  
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
   // Vercel only supports GET/POST by default — reject other methods
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');

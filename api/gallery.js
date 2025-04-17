@@ -3,10 +3,19 @@
 
 import { kv } from '@vercel/kv';
 import updateGallery from '../lib/updateGallery.js';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export default async function handler(req, res) {
+  // ✅ CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end(); // ✅ Preflight success
+  }
+  
   const action = req.query.action || req.body?.action;
 
   // ✅ Public GET route — loads only valid/visible photos for frontend

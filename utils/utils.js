@@ -153,7 +153,7 @@ async function callOpenAI(prompt, retryCount = 3) {
   }
 }
 
-function formatLinks(message) {
+async function formatLinks(message) {
   if (!message || typeof message !== "string") return message || "";
   return message.replace(
     /\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g,

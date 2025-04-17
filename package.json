@@ -1,6 +1,7 @@
 {
   "name": "nicoai-project",
   "version": "1.0.0",
+  "type": "module",
   "main": "api/chatbot.js",
   "scripts": {
     "start": "vercel dev",

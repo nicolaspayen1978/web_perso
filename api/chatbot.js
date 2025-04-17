@@ -2,8 +2,8 @@
 // This function handles incoming chat requests for NicoAI using OpenAI, dynamic content from resources,
 // and optional push notifications when users engage.
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { callOpenAI, formatLinks } from '../utils/utils.js';
 import notifyNicolas from '../utils/notify.js';
 import { resources } from './init.js';

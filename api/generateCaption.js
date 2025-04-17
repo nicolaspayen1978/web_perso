@@ -3,8 +3,8 @@
 // for a given photo based on its visual content.
 
 // Native Node.js and OpenAI modules
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { OpenAI } from 'openai';
 
 // 🔐 Initialize OpenAI with secret key (from .env or Vercel env variables)

@@ -3,8 +3,8 @@
 
 import { kv } from '@vercel/kv';
 import updateGallery from '../lib/updateGallery.js';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export default async function handler(req, res) {
   const action = req.query.action || req.body?.action;

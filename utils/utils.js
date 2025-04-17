@@ -153,11 +153,20 @@ async function callOpenAI(prompt, retryCount = 3) {
   }
 }
 
+function formatLinks(message) {
+  if (!message || typeof message !== "string") return message || "";
+  return message.replace(
+    /\[(.*?)\]\((https?:\/\/[^\s)]+)\)/g,
+    (match, title, url) => `🔗 <a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`
+  );
+}
+
 // ===================
 // Exported Functions
 // ===================
 export {
   isNicoAIInitialized,
   markNicoAIInitialized,
-  callOpenAI
+  callOpenAI,
+  formatLinks // ← now it's exported!
 };

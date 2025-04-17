@@ -215,7 +215,7 @@
     async function loadConversation(visitorID) {
       if (!visitorID) return console.error("❌ Missing visitorID");
 
-      const res = await fetch(`/api/conversation/${visitorID}`, {
+      const res = await fetch(`/pages/conversation/${visitorID}`, {
         headers: { 'Authorization': authHeader }
       });
 

@@ -1,14 +1,10 @@
 // /api/conversations.js
-// This API route returns a summary of all stored conversations in Vercel KV.
-// Each conversation is grouped by visitorID, showing the number of messages and the timestamp of the last message.
+// Lists all conversations from KV using raw REST API + SCAN, grouped by visitorID
 
-// /api/conversations.js
-import { kv } from '@vercel/kv';
-
-// 🌍 Determine environment
+// Determine the current environment (dev or production)
 const isDevEnv = process.env.VERCEL_ENV !== 'production';
 
-// 🔐 Load correct KV credentials based on environment
+// Choose the correct KV credentials based on environment
 const KV_REST_API_URL = isDevEnv
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;
@@ -16,6 +12,36 @@ const KV_REST_API_URL = isDevEnv
 const KV_REST_API_TOKEN = isDevEnv
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
+
+// 📡 SCAN helper using Upstash REST API
+async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
+  const keys = [];
+  let cursor = 0;
+  let rounds = 0;
+
+  try {
+    do {
+      const url = `${KV_REST_API_URL}/scan/${cursor}?match=${encodeURIComponent(prefix + '*')}&count=${batchSize}`;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
+      });
+
+      if (!res.ok) {
+        console.error("❌ KV SCAN failed:", await res.text());
+        break;
+      }
+
+      const [newCursor, batch] = await res.json();
+      cursor = newCursor;
+      keys.push(...batch);
+      rounds++;
+    } while (cursor !== 0 && rounds < maxRounds);
+  } catch (err) {
+    console.error("❌ scanKeys error:", err);
+  }
+
+  return keys;
+}
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,24 +55,6 @@ export default async function handler(req, res) {
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-
-  // ✅ Use SCAN instead of KEYS
-  const scanKeys = async (prefix = 'chat:', batchSize = 100) => {
-    const keys = [];
-    let cursor = 0;
-
-    do {
-      const result = await kv.scan(cursor, {
-        match: `${prefix}*`,
-        count: batchSize
-      });
-
-      cursor = result[0];
-      keys.push(...result[1]);
-    } while (cursor !== 0);
-
-    return keys;
-  };
 
   try {
     const keys = await scanKeys('chat:');

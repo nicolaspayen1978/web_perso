@@ -1,41 +1,83 @@
-// api/gallery.js
-// Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
-
-import { kv } from '@vercel/kv';
-import updateGallery from '../lib/updateGallery.js';
 import fs from 'node:fs';
 import path from 'node:path';
+import updateGallery from '../lib/updateGallery.js';
 
 // 🌍 Determine environment
-const isDevEnv = process.env.VERCEL_ENV !== 'production';
+const isDevKV = process.env.KV_MODE === 'dev';
 
-// 🔐 Load correct KV credentials based on environment
-const KV_REST_API_URL = isDevEnv
+const KV_REST_API_URL = isDevKV
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;
 
-const KV_REST_API_TOKEN = isDevEnv
+const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
 
+// KV helpers using fetch
+async function kvGet(key) {
+  const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
+    headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
+  });
+
+  if (!res.ok) {
+    console.warn(`⚠️ Failed to get ${key}:`, await res.text());
+    return null;
+  }
+
+  const result = await res.json();
+  return typeof result === 'string' ? JSON.parse(result) : result;
+}
+
+async function kvSet(key, value) {
+  const res = await fetch(`${KV_REST_API_URL}/set/${encodeURIComponent(key)}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${KV_REST_API_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(value)
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`❌ KV set failed for ${key}:`, err);
+  }
+}
+
+// Scan backup keys (sorted)
+async function kvScanBackups() {
+  let cursor = 0;
+  let allKeys = [];
+
+  do {
+    const res = await fetch(`${KV_REST_API_URL}/scan/${cursor}?match=gallery:backup:*&count=100`, {
+      headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
+    });
+
+    if (!res.ok) break;
+    const [next, keys] = await res.json();
+    cursor = next;
+    allKeys.push(...keys);
+  } while (cursor !== 0);
+
+  return allKeys.sort().reverse();
+}
+
+// Main API handler
 export default async function handler(req, res) {
-  // ✅ CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end(); // ✅ Preflight success
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
   
   const action = req.query.action || req.body?.action;
 
-  // ✅ Public GET route — loads only valid/visible photos for frontend
+  // ✅ Public load route
   if (req.method === 'GET' && action === 'public-load') {
     try {
-      const rawGallery = await kv.get('gallery:json');
+      const rawGallery = await kvGet('gallery:json');
 
-      // Filter for safe client-side usage (no corrupted entries)
       const gallery = Array.isArray(rawGallery)
         ? rawGallery.filter(p =>
             p &&
@@ -56,18 +98,16 @@ export default async function handler(req, res) {
     }
   }
 
-  // 🔐 Private routes — everything below requires authorization
+  // 🔐 Backoffice: protected routes
   const { authorization } = req.headers;
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
-    // 🔁 Load both current and latest backup from KV (for backoffice)
     if (req.method === 'GET' && action === 'load') {
-      const current = await kv.get('gallery:json');
+      const current = await kvGet('gallery:json');
 
-      // Fallback from local file if KV missing (only for editing view)
       let fallback = [];
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
@@ -75,42 +115,38 @@ export default async function handler(req, res) {
         fallback = JSON.parse(fallbackContent);
       } catch {}
 
-      const backupKeys = await kv.keys('gallery:backup:*');
-      const sorted = backupKeys.sort().reverse();
-      const previous = sorted.length ? await kv.get(sorted[0]) : [];
+      const backupKeys = await kvScanBackups();
+      const previous = backupKeys.length ? await kvGet(backupKeys[0]) : [];
 
       return res.status(200).json({ current: current || fallback, previous });
     }
 
-    // 💾 Save current gallery to KV, back up the existing one first
     if (req.method === 'POST' && action === 'save') {
       const { json } = req.body;
       if (!Array.isArray(json)) {
         return res.status(400).json({ error: 'Invalid gallery format. Must be an array.' });
       }
 
-      const existing = await kv.get('gallery:json');
+      const existing = await kvGet('gallery:json');
       if (existing) {
         const timestamp = Date.now();
-        await kv.set(`gallery:backup:${timestamp}`, existing);
+        await kvSet(`gallery:backup:${timestamp}`, existing);
       }
 
-      await kv.set('gallery:json', json);
+      await kvSet('gallery:json', json);
       return res.status(200).json({ message: 'Gallery updated successfully.' });
     }
 
-    // 🧹 Clear gallery.json (and backup current before doing so)
     if (req.method === 'POST' && action === 'clear') {
-      const currentGallery = await kv.get('gallery:json');
-      if (currentGallery) {
+      const current = await kvGet('gallery:json');
+      if (current) {
         const timestamp = Date.now();
-        await kv.set(`gallery:backup:${timestamp}`, currentGallery);
+        await kvSet(`gallery:backup:${timestamp}`, current);
       }
-      await kv.set('gallery:json', []);
+      await kvSet('gallery:json', []);
       return res.status(200).json({ message: 'Gallery cleared and backup saved.' });
     }
 
-    // 🔄 Run full update: merge local metadata with KV (via lib/updateGallery.js)
     if (req.method === 'POST' && action === 'run-update') {
       const count = await updateGallery();
       return res.status(200).json({ message: `Gallery updated with ${count} photos.` });

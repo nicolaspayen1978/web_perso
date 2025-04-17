@@ -1,3 +1,6 @@
+// api/gallery.js
+// Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
+
 import { kv } from '@vercel/kv';
 import updateGallery from '../lib/updateGallery.js';
 import fs from 'fs';
@@ -6,10 +9,12 @@ import path from 'path';
 export default async function handler(req, res) {
   const action = req.query.action || req.body?.action;
 
-  // Public load (no auth)
+  // ✅ Public GET route — loads only valid/visible photos for frontend
   if (req.method === 'GET' && action === 'public-load') {
     try {
       const rawGallery = await kv.get('gallery:json');
+
+      // Filter for safe client-side usage (no corrupted entries)
       const gallery = Array.isArray(rawGallery)
         ? rawGallery.filter(p =>
             p &&
@@ -30,17 +35,18 @@ export default async function handler(req, res) {
     }
   }
 
-  // Everything else requires auth
+  // 🔐 Private routes — everything below requires authorization
   const { authorization } = req.headers;
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
+    // 🔁 Load both current and latest backup from KV (for backoffice)
     if (req.method === 'GET' && action === 'load') {
       const current = await kv.get('gallery:json');
 
-      // Optional fallback to file
+      // Fallback from local file if KV missing (only for editing view)
       let fallback = [];
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
@@ -55,6 +61,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ current: current || fallback, previous });
     }
 
+    // 💾 Save current gallery to KV, back up the existing one first
     if (req.method === 'POST' && action === 'save') {
       const { json } = req.body;
       if (!Array.isArray(json)) {
@@ -71,6 +78,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'Gallery updated successfully.' });
     }
 
+    // 🧹 Clear gallery.json (and backup current before doing so)
     if (req.method === 'POST' && action === 'clear') {
       const currentGallery = await kv.get('gallery:json');
       if (currentGallery) {
@@ -81,12 +89,14 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'Gallery cleared and backup saved.' });
     }
 
+    // 🔄 Run full update: merge local metadata with KV (via lib/updateGallery.js)
     if (req.method === 'POST' && action === 'run-update') {
       const count = await updateGallery();
       return res.status(200).json({ message: `Gallery updated with ${count} photos.` });
     }
 
     return res.status(400).json({ error: 'Invalid action or method.' });
+
   } catch (err) {
     console.error("❌ Gallery API error:", err);
     return res.status(500).json({ error: 'Internal server error', details: err.message });

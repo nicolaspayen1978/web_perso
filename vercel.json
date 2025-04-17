@@ -25,6 +25,7 @@
     { "src": "/api/gallery", "dest": "/api/gallery.js" },
     { "src": "/api/generateCaption", "dest": "/api/generateCaption.js" },
     { "handle": "filesystem" },
-    { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1" }
+    { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1" },
+    { "src": "/.*", "dest": "/404.html" }
   ]
 }

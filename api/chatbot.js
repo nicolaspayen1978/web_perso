@@ -1,108 +1,72 @@
-// This api/chatbot.js is the API deployed and executed on Vercel
-// ENV variables are set-up in Vercel to not be publicly available 
+// api/chatbot.js (Vercel-compatible serverless function)
+// This function handles incoming chat requests for NicoAI using OpenAI, dynamic content from resources,
+// and optional push notifications when users engage.
 
-console.log("🔥 API chatbot is running");
+import fs from 'fs';
+import path from 'path';
+import { callOpenAI, formatLinks } from '../utils/utils.js';
+import notifyNicolas from '../utils/notify.js';
+import { resources } from './init.js';
+import { getRelevantResources } from '../utils/resourceMatcher.js';
 
-const fs = require("fs");
-const path = require("path");
-const express = require('express');
-const { callOpenAI, formatLinks } = require("../utils/utils"); // Import from utils.js
-const initApp = require("./init");  // import from init.js
-const { resources } = require("./init");  // import preloaded resources
-const notifyNicolas = require("../utils/notify"); // 🔔 Import the Pushover notification helper
-const contentPath = path.join(__dirname, "../resourcesContent.json");
-const { getRelevantResources } = require("../utils/resourceMatcher");
+// Path to the preprocessed full content from resources.json
+const contentPath = path.join(process.cwd(), 'resourcesContent.json');
 
-const chatApp = express();
-chatApp.use(express.json());
+// The main API handler function for Vercel serverless
+export default async function handler(req, res) {
+  // Vercel requires explicit handling of allowed HTTP methods
+  if (req.method !== 'POST') {
+    return res.status(405).send('Method Not Allowed');
+  }
 
-// Handle CORS
-chatApp.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  // Extract fields from incoming JSON request body
+  const {
+    visitorID,
+    userInput,
+    previousMessages = [],
+    notifyToday
+  } = req.body;
 
-    if (req.method === "OPTIONS") {
-        return res.status(200).end();
+  // Validate essential input
+  if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
+  if (!userInput) return res.status(400).json({ error: "No user input provided." });
+
+  console.log(`🚀 /api/chatbot executed for visitor ${visitorID}`);
+  console.log(`🧭 Visitor agent: ${req.headers['user-agent'] || 'unknown'}`);
+
+  // Optional: Send push notification if requested
+  if (notifyToday === true) {
+    try {
+      await notifyNicolas(`📬 Visitor ${visitorID} is engaging with NicoAI today.`);
+    } catch (err) {
+      console.error("❌ Failed to notify:", err);
+      // Note: This doesn't block the rest of the response
     }
+  }
 
-    next();
-});
+  // Load the full resource content (with text and summaries) from disk
+  const fullResourceContent = JSON.parse(fs.readFileSync(contentPath, "utf-8"));
 
-// API Endpoint to Handle Chat
-chatApp.post('/api/chatbot', async (req, res) => {
-    // Destructure and assign request fields with fallback values
-    const {
-        visitorID,
-        userInput,
-        previousMessages = [],
-        notifyToday
-    } = req.body;
+  // Try to match the user's input with relevant resources
+  const matchingContent = getRelevantResources(userInput, resources, fullResourceContent);
 
-    // Basic validation
-    if (!visitorID) return res.status(400).json({ error: "Missing visitorID." });
-    if (!userInput) return res.status(400).json({ error: "No user input provided." });
-
-    console.log(`🚀 /api/chatbot executed for visitor ${visitorID}`);
-
-    // Optional: log visitor's user agent (helps with context or abuse debugging)
-    const userAgent = req.headers['user-agent'] || 'unknown';
-    console.log(`🧭 Visitor agent: ${userAgent}`);
-
-    // Strict boolean check to avoid unwanted notification triggers
-    const shouldNotify = notifyToday === true;
-
-    // Robust push notification with fail-safe
-    if (shouldNotify) {
-        try {
-            await notifyNicolas(`📬 Visitor ${visitorID} is engaging with NicoAI today.`);
-        } catch (error) {
-            console.error("❌ Failed to send Pushover notification:", error);
-            // Don't block the response to the user
-        }
-    }
-
-    const fullResourceContent = JSON.parse(fs.readFileSync(contentPath, "utf-8"));
-    const matchingContent = getRelevantResources(userInput, resources, fullResourceContent);
-
-    let systemPrompt;
-
-    if (!matchingContent.trim()) {
-        systemPrompt = {
-            role: "system",
-            content: "No direct matches found in Nicolas's resources. Please answer using general knowledge, or ask the visitor a clarifying question. Keep your response concise and engaging."
-        };
-    } else {
-        systemPrompt = {
-            role: "system",
-            content: `Here are some relevant resources:\n\n${matchingContent}\n\nUse them when answering. Keep your response concise and engaging.`
-        };
-    }
-
-    // Generate OpenAI response using system + user message
-    const aiResponse = await callOpenAI([
-        systemPrompt,
-        { role: "user", content: userInput }
-    ]);
-
-    // Return response to frontend
-    res.json({ response: aiResponse });
-});
-
-// Optional: helper function (unused for now)
-async function generateChatResponse(userMessages) {
-    console.log("🔍 Using preloaded resources from init.js before generating response...");
-    
-    const systemMessage = {
+  // Craft the system prompt depending on whether any matches were found
+  const systemPrompt = matchingContent.trim()
+    ? {
         role: "system",
-        content: `Here are Nicolas's key resources: ${JSON.stringify(resources)}. Use them when relevant in responses. Keep answer in 100 words max (excluding links). If you don't know yet the identity of this user please ask for it, ask for its contact details, and ask for the reason of his/her visit to the website.`
-    };
+        content: `Here are some relevant resources:\n\n${matchingContent}\n\nUse them when answering. Keep your response concise and engaging.`
+      }
+    : {
+        role: "system",
+        content: "No direct matches found in Nicolas's resources. Please answer using general knowledge, or ask the visitor a clarifying question. Keep your response concise and engaging."
+      };
 
-    const fullUserMessages = [systemMessage, { role: "user", content: userMessages }];
-    console.log("📚 Sending prompt to OpenAI:\n", fullUserMessages);
+  // Call OpenAI with the constructed prompt + user input
+  const aiResponse = await callOpenAI([
+    systemPrompt,
+    { role: "user", content: userInput }
+  ]);
 
-    return await callOpenAI(fullUserMessages);
+  // Return the AI's response to the frontend
+  res.status(200).json({ response: aiResponse });
 }
-
-// Export the app for Vercel deployment
-module.exports = chatApp;

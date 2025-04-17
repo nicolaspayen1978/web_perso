@@ -6,8 +6,6 @@ import { saveMessageInKV } from '../utils/kvUtils.js';
 
 export default async function handler(req, res) {
 
-  console.log('💾 saveMessage called:', { visitorID, sender, snippet: message?.slice(0, 30), timestamp });
-
   // Vercel only supports GET/POST by default — reject other methods
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');
@@ -20,6 +18,8 @@ export default async function handler(req, res) {
   if (!visitorID || !sender || !message || !timestamp) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
+
+  console.log('💾 saveMessage called:', { visitorID, sender, snippet: message?.slice(0, 30), timestamp });
 
   // Save the message in KV using a helper utility
   try {

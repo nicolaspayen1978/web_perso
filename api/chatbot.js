@@ -61,6 +61,16 @@ export default async function handler(req, res) {
   // Load the full resource content (with text and summaries) from disk
   const fullResourceContent = JSON.parse(fs.readFileSync(contentPath, "utf-8"));
 
+  if (!resources || typeof resources !== 'object') {
+    console.error("❌ Missing or invalid resources object");
+    return res.status(500).json({ error: "Internal server error: Resources not loaded." });
+  }
+
+  if (!fullResourceContent || typeof fullResourceContent !== 'object') {
+    console.error("❌ Missing or invalid fullResourceContent");
+    return res.status(500).json({ error: "Internal server error: Content not loaded." });
+  }
+
   // Try to match the user's input with relevant resources
   const matchingContent = getRelevantResources(userInput, resources, fullResourceContent);
 

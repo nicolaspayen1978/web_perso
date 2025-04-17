@@ -54,9 +54,11 @@ rawContent.forEach((line, index) => {
     const code = char.charCodeAt(0);
     if (code > 127) {
       const hex = code.toString(16).toUpperCase().padStart(4, '0');
+      /*
       console.warn(
         `❗ Unicode on line ${index + 1}, column ${i + 1}: '${char}' (U+${hex})\n  → ${line.trim()}`
       );
+      */
       unicodeWarnings++;
     }
   }

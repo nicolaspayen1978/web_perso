@@ -6,9 +6,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { callOpenAI, formatLinks } from '../utils/utils.js';
 import notifyNicolas from '../utils/notify.js';
-import { resources } from './init.js';
+import { loadResources } from '../utils/loadResources.js';
 import { getRelevantResources } from '../utils/resourceMatcher.js';
 
+const resources = loadResources();
 // Path to the preprocessed full content from resources.json
 const contentPath = path.join(process.cwd(), 'resourcesContent.json');
 

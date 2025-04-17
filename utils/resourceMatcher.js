@@ -1,7 +1,7 @@
 /**
  * Match user input against detailed resource content and summaries.
  * Prioritizes deep matches from `fullResourceContent`, then fills in from `resourceDescriptions`.
- * Returns up to 3 top-matching items as formatted snippets.
+ * Returns up to 3 top-matching items as formatted snippets..
  *
  * @param {string} userMessage - The user's question or input.
  * @param {object} resourceDescriptions - The summary-level resources (typically from KV).

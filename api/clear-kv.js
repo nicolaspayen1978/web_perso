@@ -4,6 +4,18 @@
 
 import { kv } from "@vercel/kv";
 
+// 🌍 Determine environment
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
+
+// 🔐 Load correct KV credentials based on environment
+const KV_REST_API_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_REST_API_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
+
 export default async function handler(req, res) {
   const auth = req.headers.authorization;
 

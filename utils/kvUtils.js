@@ -3,6 +3,18 @@
 
 import { kv } from '@vercel/kv';
 
+// 🌍 Determine environment
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
+
+// 🔐 Load correct KV credentials based on environment
+const KV_REST_API_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_REST_API_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
+
 /**
  * 📝 Save a chat message to Vercel KV under a unique key.
  * The key is structured as `chat:<visitorID>:<timestamp>`.
@@ -14,6 +26,9 @@ import { kv } from '@vercel/kv';
  *   - timestamp {number} (Unix epoch in ms)
  */
 export async function saveMessageInKV(visitorID, messageObj) {
+
+  console.log("🔍 Using KV URL:", KV_REST_API_URL);
+
   if (!visitorID || !messageObj || typeof messageObj.timestamp !== 'number') {
     console.warn("⚠️ Invalid input: visitorID or timestamp missing");
     return;

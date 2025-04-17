@@ -2,65 +2,75 @@
 // This API route returns a summary of all stored conversations in Vercel KV.
 // Each conversation is grouped by visitorID, showing the number of messages and the timestamp of the last message.
 
+// /api/conversations.js
 import { kv } from '@vercel/kv';
 
-export default async function handler(req, res) {
-  const { authorization } = req.headers;
+// 🌍 Determine environment
+const isDevEnv = process.env.VERCEL_ENV !== 'production';
 
-  // 🔐 Require correct BACKOFFICE_PASSWORD
+// 🔐 Load correct KV credentials based on environment
+const KV_REST_API_URL = isDevEnv
+  ? process.env.DEV_KV_REST_API_URL
+  : process.env.KV_REST_API_URL;
+
+const KV_REST_API_TOKEN = isDevEnv
+  ? process.env.DEV_KV_REST_API_TOKEN
+  : process.env.KV_REST_API_TOKEN;
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'GET') return res.status(405).send('Method Not Allowed');
+
+  const { authorization } = req.headers;
   if (authorization !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  // ✅ Use SCAN instead of KEYS
+  const scanKeys = async (prefix = 'chat:', batchSize = 100) => {
+    const keys = [];
+    let cursor = 0;
+
+    do {
+      const result = await kv.scan(cursor, {
+        match: `${prefix}*`,
+        count: batchSize
+      });
+
+      cursor = result[0];
+      keys.push(...result[1]);
+    } while (cursor !== 0);
+
+    return keys;
+  };
+
   try {
-    // 📥 Retrieve all conversation keys (format: chat:<visitorID>:<timestamp>)
-    const keys = await kv.keys("chat:*");
+    const keys = await scanKeys('chat:');
+    const visitorMap = new Map();
 
-    const grouped = {};
-
-    // 🔁 Process each key and group by visitorID
     for (const key of keys) {
-      const parts = key.split(":");
+      const match = key.match(/^chat:([^:]+):(\d+)$/);
+      if (!match) continue;
 
-      // Skip keys not matching expected format
-      if (parts.length !== 3) {
-        console.warn(`⚠️ Skipping malformed key: ${key}`);
-        continue;
-      }
+      const [, visitorID, timestamp] = match;
+      const ts = parseInt(timestamp, 10);
 
-      const [, visitorID, timestamp] = parts;
-
-      // Skip entries with missing/invalid data
-      if (!visitorID || isNaN(parseInt(timestamp))) {
-        console.warn(`⚠️ Invalid visitorID or timestamp in key: ${key}`);
-        continue;
-      }
-
-      if (!grouped[visitorID]) {
-        grouped[visitorID] = [];
-      }
-
-      grouped[visitorID].push(parseInt(timestamp));
+      const existing = visitorMap.get(visitorID) || { visitorID, lastMessage: 0, messages: 0 };
+      existing.messages += 1;
+      existing.lastMessage = Math.max(existing.lastMessage, ts);
+      visitorMap.set(visitorID, existing);
     }
 
-    // 📊 Prepare summary: total messages and most recent message per visitor
-    const summary = Object.entries(grouped).map(([visitorID, timestamps]) => ({
-      visitorID,
-      messages: timestamps.length,
-      lastMessage: Math.max(...timestamps)
-    }));
+    const visitors = Array.from(visitorMap.values());
+    visitors.sort((a, b) => b.lastMessage - a.lastMessage); // Latest first
 
-    // 🔽 Sort summaries by most recent activity
-    summary.sort((a, b) => b.lastMessage - a.lastMessage);
-
-    console.log("📊 Visitor summary:", summary);
-
-    // ✅ Return structured and sorted data
-    res.status(200).json(summary);
-
+    res.status(200).json(visitors);
   } catch (err) {
-    // 🧯 Handle unexpected KV errors
     console.error("❌ Error reading from KV:", err);
-    res.status(500).json({ error: "KV read failed", details: err.message });
+    res.status(500).json({ error: "Failed to read conversations." });
   }
 }

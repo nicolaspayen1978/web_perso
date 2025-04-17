@@ -66,3 +66,5 @@ function getRelevantResources(userMessage, resourceDescriptions, fullResourceCon
     `From "${match.title}":\n${match.excerpt}`
   ).join("\n\n");
 }
+
+export { getRelevantResources };

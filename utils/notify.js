@@ -27,4 +27,4 @@ async function notifyNicolas(message = "🚀 Someone just messaged NicoAI!") {
   }
 }
 
-module.exports = notifyNicolas;
+export default notifyNicolas;

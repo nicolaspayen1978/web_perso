@@ -1,8 +1,16 @@
-// generatePhotoPages.js
-const fs = require('fs');
-const readline = require('readline');
-const path = require('path');
-const slugify = (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+// scripts/generatePhotoPages.js
+import fs from 'node:fs';
+import path from 'node:path';
+import readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
+
+// Required to emulate __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const slugify = (str) =>
+  str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
 const galleryPath = path.join(__dirname, 'Gallery.json');
 const outputDir = path.join(__dirname, 'gallery', 'static');
 
@@ -13,74 +21,83 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const htmlFiles = fs.readdirSync(outputDir).filter(f => f.endsWith('.html'));
 
 if (htmlFiles.length > 0) {
-  rl.question(`❓ Delete ${htmlFiles.length} existing HTML files in /gallery/static before regenerating? (yes/no): `, (answer) => {
-    if (answer.trim().toLowerCase() === 'yes') {
-      htmlFiles.forEach(file => fs.unlinkSync(path.join(outputDir, file)));
-      console.log(`🧹 Deleted ${htmlFiles.length} old HTML files.`);
-    } else {
-      console.log('⚠️ Skipping HTML cleanup. Existing files may be overwritten.');
+  rl.question(
+    `❓ Delete ${htmlFiles.length} existing HTML files in /gallery/static before regenerating? (yes/no): `,
+    (answer) => {
+      if (answer.trim().toLowerCase() === 'yes') {
+        htmlFiles.forEach(file => fs.unlinkSync(path.join(outputDir, file)));
+        console.log(`🧹 Deleted ${htmlFiles.length} old HTML files.`);
+      } else {
+        console.log('⚠️ Skipping HTML cleanup. Existing files may be overwritten.');
+      }
+      rl.close();
+      run();
     }
-    rl.close();
-    run();
-  });
+  );
 } else {
   run();
 }
 
 function run() {
+  const galleryRaw = fs.readFileSync(galleryPath, 'utf-8');
+  fs.writeFileSync(path.join(__dirname, 'Gallery.backup.json'), galleryRaw); // backup
+  const gallery = JSON.parse(galleryRaw);
 
-const galleryRaw = fs.readFileSync(galleryPath, 'utf-8');
-fs.writeFileSync(path.join(__dirname, 'Gallery.backup.json'), galleryRaw); // backup before changes
-const gallery = JSON.parse(galleryRaw);
+  const updatedGallery = [];
 
-const updatedGallery = [];
+  const template = (photo, slug) => {
+    const title = photo.title || photo.filename;
+    const filename = photo.filename.trim().replace(/[\\s_]+$/g, '');
+    const description = photo.description || '';
+    const dimensions = photo.dimensions || {};
+    const prices = photo.price_details || {};
+    const editions = photo.print_editions || {};
+    const available = (e) =>
+      e?.total && e?.sold >= 0 ? `${e.total - e.sold}/${e.total}` : '';
 
-const template = (photo, slug) => {
-  const title = photo.title || photo.filename;
-  const filename = photo.filename.trim().replace(/[\\s_]+$/g, '');
-  const description = photo.description || '';
-  const dimensions = photo.dimensions || {};
-  const prices = photo.price_details || {};
-  const editions = photo.print_editions || {};
-  const available = (e) => e?.total && e?.sold >= 0 ? `${e.total - e.sold}/${e.total}` : '';
+    const cleanPrice = (str) => {
+      const match = (str || '').match(/\d+(\.\d+)?/);
+      return match ? match[0] : '';
+    };
 
-  const cleanPrice = (str) => {
-    const match = (str || '').match(/\d+(\.\d+)?/);
-    return match ? match[0] : '';
-  };
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "VisualArtwork",
+      "name": title,
+      "creator": { "@type": "Person", "name": "Nicolas Payen" },
+      "image": `https://web-perso.vercel.app/photos/${filename}`,
+      "description": description,
+      "artform": "Photography",
+      "artMedium": "Fine art print",
+      "artEdition": "Limited edition",
+      "productionDate": "2023",
+      "offers": []
+    };
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "VisualArtwork",
-    "name": title,
-    "creator": { "@type": "Person", "name": "Nicolas Payen" },
-    "image": `https://web-perso.vercel.app/photos/${filename}`,
-    "description": description,
-    "artform": "Photography",
-    "artMedium": "Fine art print",
-    "artEdition": "Limited edition",
-    "productionDate": "2023",
-    "offers": []
-  };
+    if (prices.L) {
+      structuredData.offers.push({
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": cleanPrice(prices.L),
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition",
+        "name": "Gallery Edition (L)"
+      });
+    }
 
-  if (prices.L) structuredData.offers.push({
-    "@type": "Offer",
-    "priceCurrency": "EUR",
-    "price": cleanPrice(prices.L),
-    "availability": "https://schema.org/InStock",
-    "itemCondition": "https://schema.org/NewCondition",
-    "name": "Gallery Edition (L)"
-  });
-  if (prices.XL) structuredData.offers.push({
-    "@type": "Offer",
-    "priceCurrency": "EUR",
-    "price": cleanPrice(prices.XL),
-    "availability": "https://schema.org/InStock",
-    "itemCondition": "https://schema.org/NewCondition",
-    "name": "Collector Edition (XL)"
-  });
+    if (prices.XL) {
+      structuredData.offers.push({
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": cleanPrice(prices.XL),
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition",
+        "name": "Collector Edition (XL)"
+      });
+    }
 
-  return `<!DOCTYPE html>
+    // [Same HTML template continues unchanged...]
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -109,6 +126,7 @@ const template = (photo, slug) => {
   </script>
 </head>
 <body>
+  <!-- [Same body as before, unchanged] -->
   <header style="text-align: center; padding: 1.5rem 1rem 0.5rem;">
     <nav><a href="/gallery.html" style="text-decoration: none; font-size: 0.95rem;">← Back to Gallery</a></nav>
     <h1 style="margin-top: 1rem; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.4rem; letter-spacing: 0.03em;">${title}</h1>
@@ -151,27 +169,26 @@ const template = (photo, slug) => {
   <script src="/chatbot.js"></script>
 </body>
 </html>`;
-};
+  };
 
-gallery.forEach(photo => {
-  if (photo.visible === false) return;
+  gallery.forEach(photo => {
+    if (photo.visible === false) return;
 
-  if (!photo.filename || !photo.id) {
-    console.warn("⚠️ Skipping invalid photo entry (missing filename or id):", photo);
-    return;
+    if (!photo.filename || !photo.id) {
+      console.warn("⚠️ Skipping invalid photo entry (missing filename or id):", photo);
+      return;
+    }
+
+    const html = template(photo, photo.id);
+    fs.writeFileSync(path.join(outputDir, `${photo.id}.html`), html, 'utf-8');
+    updatedGallery.push(photo);
+  });
+
+  const valid = gallery.every(p => p.filename && typeof p.filename === 'string' && p.id && typeof p.id === 'string');
+  if (!valid) {
+    console.error('❌ Validation failed: missing filename or id in one or more entries.');
+    process.exit(1);
   }
 
-  const html = template(photo, photo.id);
-  fs.writeFileSync(path.join(outputDir, `${photo.id}.html`), html, 'utf-8');
-  updatedGallery.push(photo);
-});
-
-// Validate all entries before generating HTML
-const valid = gallery.every(p => p.filename && typeof p.filename === 'string' && p.id && typeof p.id === 'string');
-if (!valid) {
-  console.error('❌ Validation failed: missing filename or id in one or more entries.');
-  process.exit(1);
+  console.log(`✅ Generated ${updatedGallery.length} photo pages.`);
 }
-
-console.log(`✅ Generated ${updatedGallery.length} photo pages.`);
-} // ← closes run()

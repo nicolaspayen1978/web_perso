@@ -1,8 +1,13 @@
 // scripts/validateGallery.js
 // This script validates Gallery.json for missing or malformed fields before upload
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Emulate __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const galleryPath = path.join(__dirname, '../gallery.json');
 

@@ -5,6 +5,9 @@
 import { saveMessageInKV } from '../utils/kvUtils.js';
 
 export default async function handler(req, res) {
+
+  console.log('💾 saveMessage called:', { visitorID, sender, snippet: message?.slice(0, 30), timestamp });
+
   // Vercel only supports GET/POST by default — reject other methods
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');

@@ -1,9 +1,8 @@
 // utils/utils.js
 // This utility manages visitor sessions and OpenAI requests for the NicoAI chatbot.
-// It supports both production and development environments and persists visitor session state in Vercel KV.
 
-const fs = require("fs");
-const path = require("path");
+import fs from 'node:fs';
+import path from 'node:path';
 
 // 🌍 Determine environment
 const isDevEnv = process.env.VERCEL_ENV !== 'production';
@@ -25,14 +24,13 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 /**
  * Load the current visitorSessions object from KV.
- * This object holds which visitors have already initialized NicoAI.
  */
 async function loadVisitorSessions() {
   try {
     console.log("📥 Loading visitor sessions from Vercel KV...");
     const response = await fetch(`${KV_REST_API_URL}/get/visitorSessions`, {
       method: "GET",
-      headers: { "Authorization": `Bearer ${KV_REST_API_TOKEN}` }
+      headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
     });
 
     if (!response.ok) throw new Error(`KV fetch failed: ${response.status}`);
@@ -45,7 +43,6 @@ async function loadVisitorSessions() {
 
 /**
  * Save the visitorSessions object back to KV.
- * Called when a visitor initializes NicoAI for the first time.
  */
 async function saveVisitorSessions(visitorSessions) {
   try {
@@ -53,7 +50,7 @@ async function saveVisitorSessions(visitorSessions) {
     await fetch(`${KV_REST_API_URL}/set/visitorSessions`, {
       method: "PUT",
       headers: {
-        "Authorization": `Bearer ${KV_REST_API_TOKEN}`,
+        Authorization: `Bearer ${KV_REST_API_TOKEN}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(visitorSessions)
@@ -64,7 +61,7 @@ async function saveVisitorSessions(visitorSessions) {
   }
 }
 
-// 🧠 In-memory visitor session cache (loaded at startup)
+// 🧠 In-memory visitor session cache
 let visitorSessions = {};
 loadVisitorSessions().then(data => visitorSessions = data);
 
@@ -88,12 +85,7 @@ async function markNicoAIInitialized(visitorID) {
 // ======================
 
 /**
- * Call OpenAI (GPT or OAI API) with retry, error handling, and dynamic token limit.
- * This uses o3-mini or compatible models and assumes a completion-style API.
- * 
- * @param {Array|Object} prompt - A prompt array (preferred) or single prompt.
- * @param {number} retryCount - Number of retries on failure.
- * @returns {Promise<string>} - The generated message content, or error fallback.
+ * Call OpenAI with retries and dynamic token control.
  */
 async function callOpenAI(prompt, retryCount = 3) {
   let attempts = 0;
@@ -103,21 +95,19 @@ async function callOpenAI(prompt, retryCount = 3) {
       console.log(`🟢 Attempt ${attempts + 1}: Sending request to OpenAI...`);
       console.log("🔍 Full OpenAI Prompt:\n", prompt);
 
-      // Set timeout controller
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 20000); // ⏳ 20s timeout
+      const timeout = setTimeout(() => controller.abort(), 20000);
 
-      // Dynamically adjust max tokens based on prompt size
-      let maxTokens = Math.min(700, Math.max(700, prompt.length / 3));
+      const maxTokens = Math.min(700, Math.max(700, prompt.length / 3));
 
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENAI_API_KEY}`
+          Authorization: `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: "o3-mini",  // or "gpt-4-turbo" if available
+          model: "o3-mini",
           messages: Array.isArray(prompt) ? prompt : [{ role: "user", content: prompt }],
           max_completion_tokens: Math.floor(maxTokens),
           reasoning_effort: "low",
@@ -127,7 +117,7 @@ async function callOpenAI(prompt, retryCount = 3) {
         signal: controller.signal
       });
 
-      clearTimeout(timeout); // Clear timeout on success
+      clearTimeout(timeout);
 
       if (!response.ok) {
         const errorMessage = await response.text();
@@ -135,11 +125,11 @@ async function callOpenAI(prompt, retryCount = 3) {
 
         if (response.status === 429 && errorMessage.includes("TPM")) {
           console.log("🔽 Reducing token count and retrying...");
-          prompt = prompt.substring(0, prompt.length * 0.7); // reduce prompt size
+          prompt = prompt.substring(0, prompt.length * 0.7);
         }
 
         if (++attempts < retryCount) {
-          await new Promise(r => setTimeout(r, 2000 * attempts)); // exponential backoff
+          await new Promise(r => setTimeout(r, 2000 * attempts));
           continue;
         }
 
@@ -163,8 +153,10 @@ async function callOpenAI(prompt, retryCount = 3) {
   }
 }
 
-// Export all functions for other modules
-module.exports = {
+// ===================
+// Exported Functions
+// ===================
+export {
   isNicoAIInitialized,
   markNicoAIInitialized,
   callOpenAI

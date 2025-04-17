@@ -1,29 +1,36 @@
-// generateResourcesContent.js
-// This script reads resources.json and extracts full text content from pages considered "trusted"
-// (either internal or from whitelisted external domains). The extracted content is saved to
-// resourcesContent.json and used to improve NicoAI's context when answering questions.
+// scripts/generateResourcesContent.js
+// This script reads resources.json and extracts full text content from trusted pages.
+// The result is saved to resourcesContent.json for use by NicoAI.
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { JSDOM } from 'jsdom';
+
+// Polyfill fetch if needed (for Node <18)
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const fs = require('fs');
-const path = require('path');
-const { JSDOM } = require('jsdom');
+
+// Resolve __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // File paths
 const RESOURCES_PATH = path.join(__dirname, '../resources.json');
 const OUTPUT_PATH = path.join(__dirname, '../resourcesContent.json');
 
-// List of trusted sources to be fetched at build time
+// Trusted domains for static fetch
 const TRUSTED_DOMAINS = [
   '/',
   'https://nicolaspayen1978.github.io/Resumes/',
   'https://nicolaspayen1978.github.io/Articles/'
 ];
 
-// Check if the URL is trusted based on prefix
+// Check if a URL is from a trusted source
 function isTrusted(url) {
   return TRUSTED_DOMAINS.some(prefix => url.startsWith(prefix));
 }
 
-// Convert relative URLs to full URLs for fetch
+// Convert relative paths to full URLs
 function resolveUrl(url) {
   if (url.startsWith('/')) {
     return `https://web-perso.vercel.app${url}`;
@@ -31,7 +38,7 @@ function resolveUrl(url) {
   return url;
 }
 
-// Fetch HTML and extract readable text content from <main> or fallback to <body>
+// Fetch HTML and extract content from <main> or <body>
 async function fetchHtmlContent(url) {
   try {
     const res = await fetch(url);
@@ -41,13 +48,12 @@ async function fetchHtmlContent(url) {
     const dom = new JSDOM(html);
     const doc = dom.window.document;
 
-    // Try to extract meaningful content
     let main = doc.querySelector('main') || doc.body;
     if (!main) return '';
 
     let text = main.textContent.trim();
 
-    // Extract <img> alt and src info if present
+    // Include image alt+src for context
     const images = [...main.querySelectorAll('img')].map(img => {
       const alt = img.getAttribute('alt') || '';
       const src = img.src || '';
@@ -61,7 +67,7 @@ async function fetchHtmlContent(url) {
   }
 }
 
-// Main process
+// Main script
 async function main() {
   console.log('📚 Starting resource content generation...');
   const raw = fs.readFileSync(RESOURCES_PATH, 'utf-8');

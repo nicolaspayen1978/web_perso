@@ -24,6 +24,7 @@ web_perso/
 │
 ├── utils/                 # folder used for tools 
 │   ├── kvUtils.js         # functions usefull to manage the KV database in the backoffice
+│   ├── loadresources.js   # return resources.json  
 │   ├── notify.js          # pushover service to send live Notification to Nicolas 
 │   ├── resourceMatcher.js # Match user question against both deep content and summaries.
 │   ├── utils.js           $ the API to initiate NicoAI 
@@ -107,11 +108,13 @@ npm run deploy    # Deploys to Vercel prod
 
 ```env
 # Common
+KV_MODE = prod
 KV_REST_API_URL=
 KV_REST_API_TOKEN=
 BACKOFFICE_PASSWORD=
 
 # Dev (if separate KV used)
+KV_MODE = dev
 DEV_KV_REST_API_URL=
 DEV_KV_REST_API_TOKEN=
 ```

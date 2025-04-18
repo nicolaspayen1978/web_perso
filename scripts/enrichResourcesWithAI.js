@@ -3,7 +3,12 @@
 
 import fs from 'fs';
 import path from 'path';
-import { config } from 'dotenv';
+
+if (process.env.VERCEL !== '1') {
+  const { config } = await import('dotenv');
+  config();
+}
+
 import { OpenAI } from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });

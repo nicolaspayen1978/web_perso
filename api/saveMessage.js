@@ -24,6 +24,7 @@ export default async function handler(req, res) {
   });
 
   try {
+    console.print('Calling save message to KV:');
     await saveMessageInKV(visitorID, { sender, message, timestamp });
     res.status(200).json({ success: true });
   } catch (err) {

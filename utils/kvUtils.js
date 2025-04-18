@@ -19,6 +19,9 @@ const KV_REST_API_TOKEN = isDevEnv
  * @param {object} messageObj { sender, message, timestamp }
  */
 export async function saveMessageInKV(visitorID, messageObj) {
+
+  console.log("🔍 Enter saveMessageInKV:", KV_REST_API_URL);
+
   if (!visitorID || !messageObj || typeof messageObj.timestamp !== 'number') {
     console.warn("⚠️ Invalid input: visitorID or timestamp missing");
     return;

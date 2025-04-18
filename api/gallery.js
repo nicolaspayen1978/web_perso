@@ -124,6 +124,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST' && action === 'save') {
       const { json } = req.body;
       if (!Array.isArray(json)) {
+        console.print('❌ Error: Invalid gallery format. Must be an array.');
         return res.status(400).json({ error: 'Invalid gallery format. Must be an array.' });
       }
 
@@ -151,7 +152,7 @@ export default async function handler(req, res) {
       const count = await updateGallery();
       return res.status(200).json({ message: `Gallery updated with ${count} photos.` });
     }
-
+    console.print('❌ Error: Invalid action or method.');
     return res.status(400).json({ error: 'Invalid action or method.' });
 
   } catch (err) {

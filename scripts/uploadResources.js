@@ -15,7 +15,7 @@ const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
 
-if (!KV_URL || !KV_TOKEN) {
+if (!KV_REST_API_URL || !KV_REST_API_TOKEN) {
   console.error("❌ Missing Vercel KV credentials.");
   process.exit(1);
 }

@@ -2,7 +2,6 @@
 // 📦 Utility functions to manage the Vercel KV database (chat history, safe retrieval)
 
 // 🌍 Determine environment
-// 🌍 Determine environment
 const isDevKV = process.env.KV_MODE === 'dev';
 
 const KV_REST_API_URL = isDevKV

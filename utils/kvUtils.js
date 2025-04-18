@@ -2,14 +2,14 @@
 // 📦 Utility functions to manage the Vercel KV database (chat history, safe retrieval)
 
 // 🌍 Determine environment
-const isDevEnv = process.env.VERCEL_ENV !== 'production';
+// 🌍 Determine environment
+const isDevKV = process.env.KV_MODE === 'dev';
 
-// 🔐 Load correct KV credentials based on environment
-const KV_REST_API_URL = isDevEnv
+const KV_REST_API_URL = isDevKV
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;
 
-const KV_REST_API_TOKEN = isDevEnv
+const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
 

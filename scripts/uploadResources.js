@@ -4,13 +4,14 @@
 import fs from 'node:fs';
 //import fetch from 'node-fetch'; // Only if you're running locally on Node <18 — see note below
 
-const isDevEnv = process.env.VERCEL_ENV !== 'production';
+// 🌍 Determine environment
+const isDevKV = process.env.KV_MODE === 'dev';
 
-const KV_URL = isDevEnv
+const KV_REST_API_URL = isDevKV
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;
 
-const KV_TOKEN = isDevEnv
+const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
 

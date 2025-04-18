@@ -1,45 +1,68 @@
 // /api/clear-kv.js
-// This API route clears all stored chat messages from Vercel KV using the @vercel/kv SDK.
-// Only accessible with a valid Authorization header using BACKOFFICE_PASSWORD.
+// Clears all chat messages from Upstash KV using fetch (no @vercel/kv)
 
-import { kv } from "@vercel/kv";
+const isDevKV = process.env.KV_MODE === 'dev';
 
-// 🌍 Determine environment
-const isDevEnv = process.env.VERCEL_ENV !== 'production';
-
-// 🔐 Load correct KV credentials based on environment
-const KV_REST_API_URL = isDevEnv
+const KV_REST_API_URL = isDevKV
   ? process.env.DEV_KV_REST_API_URL
   : process.env.KV_REST_API_URL;
 
-const KV_REST_API_TOKEN = isDevEnv
+const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
+
+// 🔍 SCAN all chat keys with pagination
+async function scanChatKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
+  const keys = [];
+  let cursor = 0;
+  let rounds = 0;
+
+  do {
+    const url = `${KV_REST_API_URL}/scan/${cursor}?match=${encodeURIComponent(prefix + '*')}&count=${batchSize}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
+    });
+
+    if (!res.ok) break;
+    const [next, batch] = await res.json();
+    cursor = next;
+    keys.push(...batch);
+    rounds++;
+  } while (cursor !== 0 && rounds < maxRounds);
+
+  return keys;
+}
+
+// 🧽 Bulk delete using REST API
+async function deleteKey(key) {
+  const res = await fetch(`${KV_REST_API_URL}/del/${encodeURIComponent(key)}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
+  });
+
+  return res.ok;
+}
 
 export default async function handler(req, res) {
   const auth = req.headers.authorization;
 
-  // 🔐 Validate Authorization header
   if (auth !== `Bearer ${process.env.BACKOFFICE_PASSWORD}`) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    // 📥 Fetch all chat-related keys (format: chat:<visitorID>:<timestamp>)
-    const keys = await kv.keys("chat:*");
+    const keys = await scanChatKeys();
     const deleted = [];
 
-    // 🗑 Delete each key one by one and track
     for (const key of keys) {
-      await kv.del(key);
-      deleted.push(key);
+      const success = await deleteKey(key);
+      if (success) deleted.push(key);
+      else console.warn(`⚠️ Failed to delete key: ${key}`);
     }
 
-    // ✅ Respond with success and list of deleted keys
     res.status(200).json({ success: true, deleted });
 
   } catch (err) {
-    // 🧯 Handle unexpected KV errors
     console.error("❌ Failed to clear KV:", err);
     res.status(500).json({ error: "Failed to clear KV", details: err.message });
   }

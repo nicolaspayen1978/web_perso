@@ -82,12 +82,20 @@ export default async function handler(req, res) {
     : '';
 
   // 📚 Include all summary entries from resources.json
-  const baseSummaries = Object.entries(resources)
-    .flatMap(([category, items]) =>
-      Array.isArray(items)
-        ? items.map(entry => `• ${entry.title}: ${entry.description || '(no description)'}`)
-        : []
-    ).join('\n');
+  //flatten resources.family, resources.friends, etc. into bullet summaries and append them to the system prompt
+  const baseSummaries = [
+    ...Object.entries(resources)
+      .flatMap(([category, items]) =>
+        Array.isArray(items)
+          ? items.map(entry => `• ${entry.title}: ${entry.description || '(no description)'}`)
+          : []),
+    ...Object.entries(resources.family || {}).map(
+      ([relation, text]) => `• ${relation}: ${text}`
+    ),
+    ...Object.entries(resources.friends || {}).map(
+      ([name, text]) => `• ${name}: ${text}`
+    )
+  ].join('\n');
 
   const systemPrompt = {
     role: 'system',

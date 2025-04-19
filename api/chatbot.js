@@ -48,16 +48,17 @@ export default async function handler(req, res) {
     }
   }
 
-  const fullResourceContent = JSON.parse(fs.readFileSync(contentPath, 'utf-8'));
+  let fullResourceContent;
+  try {
+    fullResourceContent = JSON.parse(fs.readFileSync(contentPath, 'utf-8'));
+  } catch (e) {
+    console.error("❌ Failed to load fullResourceContent:", e.message);
+    return res.status(500).json({ error: "Internal error loading enriched resources" });
+  }
 
   if (!resources || typeof resources !== 'object') {
     console.error('❌ Missing or invalid resources object');
     return res.status(500).json({ error: 'Internal server error: Resources not loaded.' });
-  }
-
-  if (!fullResourceContent || typeof fullResourceContent !== 'object') {
-    console.error('❌ Missing or invalid fullResourceContent');
-    return res.status(500).json({ error: 'Internal server error: Content not loaded.' });
   }
 
   // 🧠 Use matcher to get top 5 resources
@@ -80,6 +81,7 @@ export default async function handler(req, res) {
     ? `\n\nHere are some resource-specific highlights:\n\n${topSnippets.join('\n\n')}`
     : '';
 
+  // 📚 Include all summary entries from resources.json
   const baseSummaries = Object.entries(resources)
     .flatMap(([category, items]) =>
       Array.isArray(items)
@@ -89,7 +91,13 @@ export default async function handler(req, res) {
 
   const systemPrompt = {
     role: 'system',
-    content: `You are NicoAI, an assistant for Nicolas Payen. Use the following resources to help answer the user's question.\n\nAvailable summaries:\n${baseSummaries}${dynamicContext}\n\nRespond in a clear, helpful, and engaging tone. If the answer is not found in the resources, say so or ask a clarifying question.`
+    content: `You are NicoAI, an assistant for Nicolas Payen. Use the following resources to help answer the user's question.
+
+Available summaries:
+${baseSummaries}
+${dynamicContext}
+
+Respond in a clear, helpful, and engaging tone. If the answer is not found in the resources, say so or ask a clarifying question.`
   };
 
   const aiResponse = await callOpenAI([

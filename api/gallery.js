@@ -1,6 +1,11 @@
+// api/gallery.js
+// Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
+
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
+
+const fetch = globalThis.fetch || (await import('node-fetch')).default;
 
 // 🌍 Determine environment
 const isDevKV = process.env.KV_MODE === 'dev';
@@ -55,7 +60,7 @@ async function kvScanBackups() {
     });
 
     if (!res.ok) break;
-    const [next, keys] = await res.json();
+    const { cursor: next, keys } = await res.json();
     cursor = next;
     allKeys.push(...keys);
   } while (cursor !== 0);
@@ -70,7 +75,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  
+
   const action = req.query.action || req.body?.action;
 
   // ✅ Public load route
@@ -94,6 +99,7 @@ export default async function handler(req, res) {
       return res.status(200).json(gallery);
     } catch (err) {
       console.error("❌ Failed to fetch gallery:", err);
+      res.setHeader('Access-Control-Allow-Origin', '*');
       return res.status(500).json({ error: 'Unable to fetch gallery data.' });
     }
   }
@@ -113,7 +119,10 @@ export default async function handler(req, res) {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
         const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8');
         fallback = JSON.parse(fallbackContent);
-      } catch {}
+        console.warn("⚠️ Using fallback gallery.json instead of KV");
+      } catch (err) {
+        console.warn("⚠️ Failed to load local gallery.json fallback:", err.message);
+      }
 
       const backupKeys = await kvScanBackups();
       const previous = backupKeys.length ? await kvGet(backupKeys[0]) : [];
@@ -150,10 +159,11 @@ export default async function handler(req, res) {
       const count = await updateGallery();
       return res.status(200).json({ message: `Gallery updated with ${count} photos.` });
     }
-    return res.status(400).json({ error: 'Invalid action or method.' });
 
+    return res.status(400).json({ error: 'Invalid action or method.' });
   } catch (err) {
     console.error("❌ Gallery API error:", err);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(500).json({ error: 'Internal server error', details: err.message });
   }
 }

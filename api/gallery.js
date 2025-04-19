@@ -59,11 +59,22 @@ async function kvScanBackups() {
       headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
     });
 
-    if (!res.ok) break;
-    const { cursor: next, keys } = await res.json();
-    cursor = next;
+    if (!res.ok) {
+      console.warn("⚠️ Failed to scan gallery backups:", await res.text());
+      break;
+    }
+
+    const json = await res.json();
+    const nextCursor = json?.cursor ?? 0;
+    const keys = Array.isArray(json?.keys) ? json.keys : [];
+
+    cursor = nextCursor;
     allKeys.push(...keys);
   } while (cursor !== 0);
+
+  if (allKeys.length === 0) {
+    console.warn("⚠️ No gallery backups found in KV.");
+  }
 
   return allKeys.sort().reverse();
 }

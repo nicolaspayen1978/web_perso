@@ -4,6 +4,12 @@ import { loadResources } from '../utils/loadResources.js';
 
 const resources = loadResources();
 
+// Load personality profile from markdown file
+const personalityPath = path.join(process.cwd(), 'personalityProfile.md');
+const personalityProfile = fs.existsSync(personalityPath)
+  ? fs.readFileSync(personalityPath, 'utf-8')
+  : 'No profile available.';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

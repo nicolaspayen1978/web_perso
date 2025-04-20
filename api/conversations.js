@@ -29,7 +29,7 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
         break;
       }
 
-      const [newCursor, batch] = await res.json();
+      const { cursor: newCursor, keys: batch = [] } = await res.json();
       cursor = newCursor;
       keys.push(...batch);
       rounds++;

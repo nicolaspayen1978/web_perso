@@ -1,4 +1,4 @@
-// api/gallery.js
+// /api/gallery.js
 // Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,6 +17,19 @@ const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
 
+// Helper: safe recursive parse
+function safeParse(value) {
+  try {
+    while (typeof value === 'string') {
+      value = JSON.parse(value);
+    }
+  } catch (err) {
+    console.warn('❌ Failed recursive parse:', err.message);
+    return null;
+  }
+  return value;
+}
+
 // KV helpers using fetch
 async function kvGet(key) {
   const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
@@ -29,7 +42,7 @@ async function kvGet(key) {
   }
 
   const result = await res.json();
-  return typeof result === 'string' ? JSON.parse(result) : result;
+  return safeParse(result);
 }
 
 async function kvSet(key, value) {
@@ -123,16 +136,8 @@ export default async function handler(req, res) {
   try {
     if (req.method === 'GET' && action === 'load') {
       let current = await kvGet('gallery:json');
-      if (typeof current === 'string') {
-        try {
-          current = JSON.parse(current);
-        } catch (err) {
-          console.warn("⚠️ Failed to parse gallery:json as array:", err.message);
-          current = [];
-        }
-      }
-
       let fallback = [];
+
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
         const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8');
@@ -153,7 +158,7 @@ export default async function handler(req, res) {
         }
       }
 
-      return res.status(200).json({ current: current || fallback, previous });
+      return res.status(200).json({ current: Array.isArray(current) ? current : fallback, previous });
     }
 
     if (req.method === 'POST' && action === 'save') {
@@ -163,19 +168,24 @@ export default async function handler(req, res) {
       }
 
       const existing = await kvGet('gallery:json');
-      if (existing) {
+      if (Array.isArray(existing) && existing.length > 0) {
         const timestamp = Date.now();
         await kvSet(`gallery:backup:${timestamp}`, existing);
+        console.log(`💾 Backup saved as gallery:backup:${timestamp}`);
+      } else {
+        console.log("ℹ️ No backup created — existing gallery was empty or missing.");
       }
+
       await kvSet('gallery:json', json);
       return res.status(200).json({ message: 'Gallery updated successfully.' });
     }
 
     if (req.method === 'POST' && action === 'clear') {
       const current = await kvGet('gallery:json');
-      if (current) {
+      if (Array.isArray(current) && current.length > 0) {
         const timestamp = Date.now();
         await kvSet(`gallery:backup:${timestamp}`, current);
+        console.log(`💾 Backup saved as gallery:backup:${timestamp}`);
       }
       await kvSet('gallery:json', []);
       return res.status(200).json({ message: 'Gallery cleared and backup saved.' });

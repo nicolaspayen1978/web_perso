@@ -1,6 +1,5 @@
 // /api/debug-chatkv.js
 // Lists all KV entries starting with "chat:*" using Upstash REST API
-
 const isDevKV = process.env.KV_MODE === 'dev';
 
 const KV_REST_API_URL = isDevKV

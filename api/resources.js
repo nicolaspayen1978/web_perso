@@ -1,9 +1,13 @@
 // api/resources.js
 // This API manages access to resources used by the NicoAI assistant.
 // Resources are pulled from Vercel KV, enriched with summaries using OpenAI, and saved back to KV.
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { callOpenAI } from '../utils/utils.js';
 
-const fs = require("fs");
-const path = require("path");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Determine the current environment (dev or production)
 const isDevEnv = process.env.VERCEL_ENV !== 'production';

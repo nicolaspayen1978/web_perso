@@ -1,6 +1,5 @@
 // /api/conversations.js
 // Lists all conversations from KV using raw REST API + SCAN, grouped by visitorID
-
 // 🌍 Determine environment
 const isDevKV = process.env.KV_MODE === 'dev';
 

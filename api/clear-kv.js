@@ -1,6 +1,5 @@
 // /api/clear-kv.js
 // Clears all chat messages from Upstash KV using fetch (no @vercel/kv)
-
 const isDevKV = process.env.KV_MODE === 'dev';
 
 const KV_REST_API_URL = isDevKV

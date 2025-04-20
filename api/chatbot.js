@@ -1,7 +1,6 @@
 // api/chatbot.js (Vercel-compatible serverless function)
 // Handles incoming chat requests for NicoAI using OpenAI, static summaries, enriched snippets, and push notification support.
 // version 0.4 hybrid context
-
 import fs from 'node:fs';
 import path from 'node:path';
 import { callOpenAI } from '../utils/utils.js';

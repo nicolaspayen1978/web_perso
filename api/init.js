@@ -1,8 +1,14 @@
 // api/init.js
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { isNicoAIInitialized, markNicoAIInitialized, callOpenAI } from '../utils/utils.js';
 import { loadResources } from '../utils/loadResources.js';
 
 const resources = loadResources();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load personality profile from markdown file
 const personalityPath = path.join(process.cwd(), 'personalityProfile.md');

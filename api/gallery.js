@@ -1,6 +1,5 @@
 // api/gallery.js
 // Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
-
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
@@ -123,7 +122,15 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET' && action === 'load') {
-      const current = await kvGet('gallery:json');
+      let current = await kvGet('gallery:json');
+      if (typeof current === 'string') {
+        try {
+          current = JSON.parse(current);
+        } catch (err) {
+          console.warn("⚠️ Failed to parse gallery:json as array:", err.message);
+          current = [];
+        }
+      }
 
       let fallback = [];
       try {
@@ -136,7 +143,15 @@ export default async function handler(req, res) {
       }
 
       const backupKeys = await kvScanBackups();
-      const previous = backupKeys.length ? await kvGet(backupKeys[0]) : [];
+      let previous = backupKeys.length ? await kvGet(backupKeys[0]) : [];
+      if (typeof previous === 'string') {
+        try {
+          previous = JSON.parse(previous);
+        } catch (err) {
+          console.warn("⚠️ Failed to parse previous backup as array:", err.message);
+          previous = [];
+        }
+      }
 
       return res.status(200).json({ current: current || fallback, previous });
     }

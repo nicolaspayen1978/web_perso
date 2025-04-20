@@ -217,7 +217,7 @@
       headers: { 'Authorization': authHeader }
     });
     const data = await res.json();
-    galleryData = data.current;
+    galleryData = Array.isArray(data.current) ? data.current : [];
     document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
     document.getElementById('previousJSON').value = JSON.stringify(data.previous, null, 2);
     renderTagSummary();

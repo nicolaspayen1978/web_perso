@@ -6,7 +6,6 @@
   <meta name="description" content="Discover the photography of Nicolas Payen – a curated gallery of fine art prints capturing light, emotion, and timeless landscapes. Order limited editions by email.">
   <meta name="author" content="Nicolas Payen">
   <meta name="robots" content="index, follow">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://web-perso.vercel.app/gallery.html">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -78,7 +77,8 @@
     const response = await fetch('/api/gallery?action=public-load');
     if (!response.ok) return console.error("❌ Failed to load gallery:", response.statusText);
 
-    const photos = (await response.json()).filter(p => p.visible !== false);
+    const raw = await response.json();
+    const photos = Array.isArray(raw) ? raw.filter(p => p.visible !== false) : [];
 
     //we change the order of the photo at each loading to bring some freshness and highlight various work
     function shuffle(array) {
@@ -179,6 +179,11 @@
 
     formatFilter.addEventListener("change", applyFilters);
     exhibitionFilter.addEventListener("change", applyFilters);
+
+    if (photos.length === 0) {
+      gallery.innerHTML = '<p style="text-align:center; margin-top:2rem;">No photos available at the moment.</p>';
+      return;
+    }
 
     $('#gallery-photos').justifiedGallery({ rowHeight: 250, margins: 5, lastRow: 'nojustify', captions: false });
 

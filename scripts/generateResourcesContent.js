@@ -117,10 +117,26 @@ async function main() {
       const url = item.url;
       if (!url || !isTrusted(url)) continue;
 
-      const resolved = resolveUrl(url);
-      console.log(`📥 Fetching content from: ${resolved}`);
-      const content = await fetchHtmlContent(resolved);
-
+      //we try to access the file localy first, if not we fetch the url
+      let content = '';
+      if (url.startsWith('/')) {
+        const localPath = path.join(ROOT_DIR, url);
+        try {
+          const html = fs.readFileSync(localPath, 'utf-8');
+          const dom = new JSDOM(html);
+          const doc = dom.window.document;
+          const main = doc.querySelector('main') || doc.body;
+          content = main?.textContent.trim() || '';
+          console.log(`📖 Read local file: ${url}`);
+        } catch (e) {
+          console.warn(`⚠️ Failed to read local file ${url}:`, e.message);
+          continue;
+        }
+      } else {
+        const resolved = resolveUrl(url);
+        console.log(`📥 Fetching content from: ${resolved}`);
+        content = await fetchHtmlContent(resolved);
+      }
       if (content) {
         output[url] = {
           title: item.title,

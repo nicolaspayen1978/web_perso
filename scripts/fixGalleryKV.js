@@ -64,7 +64,7 @@ async function kvSet(key, value) {
       Authorization: `Bearer ${KV_REST_API_TOKEN}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(value)
+    body: typeof value === 'string' ? value : JSON.stringify(value)
   });
 
   const out = await res.json();
@@ -100,11 +100,11 @@ async function main() {
   const existing = await kvGet('gallery:json');
   if (Array.isArray(existing) && existing.length > 0) {
     const timestamp = Date.now();
-    await kvSet(`gallery:backup:${timestamp}`, existing);
+    await kvSet(`gallery:backup:${timestamp}`, JSON.stringify(existing));
     console.log(`💾 Existing KV gallery backed up as gallery:backup:${timestamp}`);
   }
 
-  const success = await kvSet('gallery:json', gallery);
+  const success = await kvSet('gallery:json', JSON.stringify(gallery));
   if (success) {
     console.log('✅ KV repaired: gallery.json restored to KV.');
   } else {

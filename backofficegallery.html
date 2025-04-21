@@ -164,7 +164,7 @@
   <button onclick="loadJSON()">📂 Load Gallery JSON</button>
   <button class="save-btn" onclick="saveEditor()">📀 Save All Changes</button>
   <button onclick="clearGallery()">🗑️ Clear Gallery</button>
-  <button onclick="suggestCaptionsForAll()">✨ AI Suggest All Missing</button>
+  <button id="suggestAllBtn" onclick="suggestCaptionsForAll()">✨ AI Suggest All Missing</button>
   <div id="progressIndicator" class="progress hidden"></div>
 
   <div class="tag-summary" id="tagSummary"></div>
@@ -184,6 +184,17 @@
 <script>
   let authHeader = '';
   let galleryData = [];
+
+  function escapeHtml(str) {
+    return (str || '').replace(/&/g, "&amp;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;");
+  }
+
+  document.getElementById('password').addEventListener('keypress', e => {
+    if (e.key === 'Enter') login();
+  });
 
   async function login() {
     const pwd = document.getElementById('password').value;
@@ -219,15 +230,10 @@
         headers: { 'Authorization': authHeader }
       });
 
-      if (!res.ok) {
-        throw new Error(`❌ HTTP error ${res.status} – ${res.statusText}`);
-      }
+      if (!res.ok) throw new Error(`❌ HTTP error ${res.status} – ${res.statusText}`);
 
       const data = await res.json();
-
-      if (!Array.isArray(data.current)) {
-        throw new Error("❌ Invalid format: 'current' is not an array.");
-      }
+      if (!Array.isArray(data.current)) throw new Error("❌ Invalid format: 'current' is not an array.");
 
       galleryData = data.current;
       document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
@@ -268,15 +274,11 @@
     const result = await res.json();
     if (!photo.suggestions) photo.suggestions = {};
 
-    // Fill main field if empty, otherwise store suggestion only
     const rawTitle = photo.title?.trim().toLowerCase() || '';
     const filenameBase = photo.thumbnail.split('/').pop().split('.')[0].toLowerCase();
 
-    if (!rawTitle || rawTitle === filenameBase) {
-      photo.title = result.ai_title;
-    } else {
-      photo.suggestions.title = result.ai_title;
-    }
+    if (!rawTitle || rawTitle === filenameBase) photo.title = result.ai_title;
+    else photo.suggestions.title = result.ai_title;
 
     if (!photo.description) photo.description = result.ai_description;
     else photo.suggestions.description = result.ai_description;
@@ -288,7 +290,9 @@
   }
 
   async function suggestCaptionsForAll() {
+    const btn = document.getElementById('suggestAllBtn');
     const indicator = document.getElementById('progressIndicator');
+    btn.disabled = true;
     indicator.classList.remove('hidden');
 
     let count = 0;
@@ -303,6 +307,7 @@
 
     indicator.textContent = '✅ Finished generating captions';
     setTimeout(() => indicator.classList.add('hidden'), 2500);
+    btn.disabled = false;
   }
 
   function renderEditor() {
@@ -310,6 +315,7 @@
     container.innerHTML = '';
 
     galleryData.forEach((photo, index) => {
+      photo.print_editions ??= { L: {}, XL: {}, artist: {} };
       const suggestions = photo.suggestions || {};
       const tagsString = (photo.tags || []).join(', ');
       const suggTags = (suggestions.tags || []).join(', ');
@@ -318,7 +324,7 @@
       card.className = 'photo-card';
       card.innerHTML = `
         <div class="photo-left">
-          <img src="/photos/${photo.thumbnail}" alt="${photo.title}" />
+          <img src="/photos/${photo.thumbnail}" onerror="this.src='/photos/thumbs/default.jpg'" alt="${escapeHtml(photo.title)}" />
           <p><strong>Gallery:</strong> ${photo.dimensions?.L || '-'}<br>Price: ${photo.price_details?.L || '-'}</p>
           <p><strong>Collector:</strong> ${photo.dimensions?.XL || '-'}<br>Price: ${photo.price_details?.XL || '-'}</p>
         </div>
@@ -326,26 +332,26 @@
           <h4>${photo.id}</h4>
 
           <label>Title:</label>
-          <input type="text" value="${photo.title || ''}" onchange="galleryData[${index}].title = this.value" />
+          <input type="text" value="${escapeHtml(photo.title)}" onchange="galleryData[${index}].title = this.value" />
           ${suggestions.title ? `
             <div class="suggestion-block">
-              <input type="text" value="${suggestions.title}" onchange="galleryData[${index}].suggestions.title = this.value" />
+              <input type="text" value="${escapeHtml(suggestions.title)}" onchange="galleryData[${index}].suggestions.title = this.value" />
               <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>
             </div>` : ''}
 
           <label>Description:</label>
-          <textarea onchange="galleryData[${index}].description = this.value">${photo.description || ''}</textarea>
+          <textarea onchange="galleryData[${index}].description = this.value">${escapeHtml(photo.description)}</textarea>
           ${suggestions.description ? `
             <div class="suggestion-block">
-              <textarea onchange="galleryData[${index}].suggestions.description = this.value">${suggestions.description}</textarea>
+              <textarea onchange="galleryData[${index}].suggestions.description = this.value">${escapeHtml(suggestions.description)}</textarea>
               <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>
             </div>` : ''}
 
           <label>Tags (comma-separated):</label>
-          <input type="text" value="${tagsString}" onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+          <input type="text" value="${escapeHtml(tagsString)}" onchange="galleryData[${index}].tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
           ${suggTags ? `
             <div class="suggestion-block">
-              <input type="text" value="${suggTags}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
+              <input type="text" value="${escapeHtml(suggTags)}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
               <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>
             </div>` : ''}
 
@@ -355,13 +361,13 @@
           <label><input type="checkbox" ${photo.visible === false ? '' : 'checked'} onchange="galleryData[${index}].visible = this.checked" />Visible</label>
 
           <label>Sold (Gallery):</label>
-          <input type="text" value="${photo.print_editions?.L?.sold || 0}" onchange="galleryData[${index}].print_editions.L.sold = parseInt(this.value) || 0" />
+          <input type="text" value="${photo.print_editions.L.sold || 0}" onchange="galleryData[${index}].print_editions.L.sold = parseInt(this.value) || 0" />
 
           <label>Sold (Collector):</label>
-          <input type="text" value="${photo.print_editions?.XL?.sold || 0}" onchange="galleryData[${index}].print_editions.XL.sold = parseInt(this.value) || 0" />
+          <input type="text" value="${photo.print_editions.XL.sold || 0}" onchange="galleryData[${index}].print_editions.XL.sold = parseInt(this.value) || 0" />
 
           <label>Sold (Artist):</label>
-          <input type="text" value="${photo.print_editions?.artist?.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
+          <input type="text" value="${photo.print_editions.artist.sold || 0}" onchange="galleryData[${index}].print_editions.artist.sold = parseInt(this.value) || 0" />
         </div>
         <button onclick="suggestCaption(${index})">✨ Suggest Title & Description</button>
       `;

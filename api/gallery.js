@@ -136,31 +136,43 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET' && action === 'load') {
-      console.log("API/gallery.js - load gallery from KV");
+      console.warn("📡 [API/gallery] Load request received - trying to load gallery from KV");
+
       let current = await kvGet('gallery:json');
+      console.warn("📦 KV loaded. Is current an array? ", Array.isArray(current));
+
       let fallback = [];
 
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
         const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8');
         fallback = JSON.parse(fallbackContent);
-        console.warn("⚠️ Using fallback gallery.json instead of KV");
-      } catch (err) {
-        console.warn("⚠️ Failed to load local gallery.json fallback:", err.message);
-      }
-
-      const backupKeys = await kvScanBackups();
-      let previous = backupKeys.length ? await kvGet(backupKeys[0]) : [];
-      if (typeof previous === 'string') {
-        try {
-          previous = JSON.parse(previous);
-        } catch (err) {
-          console.warn("⚠️ Failed to parse previous backup as array:", err.message);
-          previous = [];
+        if (!Array.isArray(current)) {
+          console.warn("⚠️ Using fallback gallery.json instead of KV");
         }
+      } catch (err) {
+        console.warn("❌ Failed to load local fallback gallery.json:", err.message);
       }
 
-      return res.status(200).json({ current: Array.isArray(current) ? current : fallback, previous });
+      // Load previous backup if any
+      let previous = [];
+      try {
+        const backupKeys = await kvScanBackups();
+        if (backupKeys.length) {
+          previous = await kvGet(backupKeys[0]);
+          if (typeof previous === 'string') {
+            previous = JSON.parse(previous);
+          }
+        }
+      } catch (err) {
+        console.warn("⚠️ Failed to load or parse previous backup:", err.message);
+        previous = [];
+      }
+
+      return res.status(200).json({
+        current: Array.isArray(current) ? current : fallback,
+        previous
+      });
     }
 
     if (req.method === 'POST' && action === 'save') {

@@ -4,50 +4,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
-import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js'; 
+import { kvGetGallery, kvSetGallery, kvScanBackups } from '../lib/kvGalleryHelpers.js';
 
 const fetch = globalThis.fetch || (await import('node-fetch')).default;
-
-// 🌍 Determine environment
-const isDevKV = process.env.KV_MODE === 'dev';
-
-const KV_REST_API_URL = isDevKV
-  ? process.env.DEV_KV_REST_API_URL
-  : process.env.KV_REST_API_URL;
-
-const KV_REST_API_TOKEN = isDevKV
-  ? process.env.DEV_KV_REST_API_TOKEN
-  : process.env.KV_REST_API_TOKEN;
-
-// Scan backup keys (sorted)
-async function kvScanBackups() {
-  let cursor = 0;
-  let allKeys = [];
-
-  do {
-    const res = await fetch(`${KV_REST_API_URL}/scan/${cursor}?match=gallery:backup:*&count=100`, {
-      headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
-    });
-
-    if (!res.ok) {
-      console.warn("⚠️ Failed to scan gallery backups:", await res.text());
-      break;
-    }
-
-    const json = await res.json();
-    const nextCursor = json?.cursor ?? 0;
-    const keys = Array.isArray(json?.keys) ? json.keys : [];
-
-    cursor = nextCursor;
-    allKeys.push(...keys);
-  } while (cursor !== 0);
-
-  if (allKeys.length === 0) {
-    console.warn("⚠️ No gallery backups found in KV.");
-  }
-
-  return allKeys.sort().reverse();
-}
 
 // Main API handler
 export default async function handler(req, res) {

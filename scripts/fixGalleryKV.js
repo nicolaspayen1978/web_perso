@@ -34,6 +34,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import fetch from 'node-fetch';
+import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js'; 
 
 const isDevKV = process.env.KV_MODE === 'dev';
 
@@ -46,31 +47,6 @@ const KV_REST_API_TOKEN = isDevKV
   : process.env.KV_REST_API_TOKEN;
 
 const GALLERY_FILE = path.join(process.cwd(), 'gallery.json');
-
-// KV fetch helpers
-async function kvGet(key) {
-  const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
-    headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
-  });
-  if (!res.ok) return null;
-  const json = await res.json();
-  return typeof json === 'string' ? JSON.parse(json) : json;
-}
-
-async function kvSet(key, value) {
-  const res = await fetch(`${KV_REST_API_URL}/set/${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${KV_REST_API_TOKEN}`,
-      'Content-Type': 'application/json'
-    },
-    body: typeof value === 'string' ? value : JSON.stringify(value)
-  });
-
-  const out = await res.json();
-  if (!res.ok) console.error(`❌ Failed to set ${key}:`, out);
-  return res.ok;
-}
 
 async function main() {
   console.log('🔧 Starting fixGalleryKV.js...');
@@ -97,14 +73,14 @@ async function main() {
   console.log(`📥 Parsed gallery.json with ${gallery.length} items.`);
 
   // Check if KV already has gallery data
-  const existing = await kvGet('gallery:json');
+  const existing = await kvGetGallery('gallery:json');
   if (Array.isArray(existing) && existing.length > 0) {
     const timestamp = Date.now();
-    await kvSet(`gallery:backup:${timestamp}`, JSON.stringify(existing));
+    await kvSetGallery(`gallery:backup:${timestamp}`, JSON.stringify(existing));
     console.log(`💾 Existing KV gallery backed up as gallery:backup:${timestamp}`);
   }
 
-  const success = await kvSet('gallery:json', JSON.stringify(gallery));
+  const success = await kvSet('gallery:json', gallery);
   if (success) {
     console.log('✅ KV repaired: gallery.json restored to KV.');
   } else {

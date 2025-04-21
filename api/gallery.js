@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
+import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js'; 
 
 const fetch = globalThis.fetch || (await import('node-fetch')).default;
 
@@ -17,52 +18,6 @@ const KV_REST_API_URL = isDevKV
 const KV_REST_API_TOKEN = isDevKV
   ? process.env.DEV_KV_REST_API_TOKEN
   : process.env.KV_REST_API_TOKEN;
-
-// Helper: safe recursive parse
-//safeParse() is useful only if you’re unsure whether the KV returns strings or parsed objects —
-//but that can be avoided if you’re consistent in how you store data. I keep it to be more robust in case wrong format would be stored.
-function safeParse(value) {
-  if (typeof value === 'string') {
-    try {
-      return JSON.parse(value);
-    } catch (err) {
-      console.warn('❌ Failed to parse string:', err.message);
-      return null;
-    }
-  }
-  return value;
-}
-
-// KV helpers using fetch
-async function kvGet(key) {
-  const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
-    headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }
-  });
-
-  if (!res.ok) {
-    console.warn(`⚠️ Failed to get ${key}:`, await res.text());
-    return null;
-  }
-
-  const result = await res.json();
-  return safeParse(result);
-}
-
-async function kvSet(key, value) {
-  const res = await fetch(`${KV_REST_API_URL}/set/${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${KV_REST_API_TOKEN}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(value)
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error(`❌ KV set failed for ${key}:`, err);
-  }
-}
 
 // Scan backup keys (sorted)
 async function kvScanBackups() {
@@ -108,10 +63,10 @@ export default async function handler(req, res) {
   if (req.method === 'GET' && action === 'public-load') {
     try {
       console.log("API/gallery.js - public-load gallery from KV");
-      const rawGallery = await kvGet('gallery:json');
+      const kvGallery = await kvGetGallery('gallery:json');
 
-      const gallery = Array.isArray(rawGallery)
-        ? rawGallery.filter(p =>
+      const gallery = Array.isArray(kvGallery)
+        ? kvGallery.filter(p =>
             p &&
             typeof p.filename === 'string' &&
             p.filename.trim() !== '' &&
@@ -122,7 +77,7 @@ export default async function handler(req, res) {
             typeof p.height === 'number'
           )
         : [];
-
+      console.log(`✅ Public load: returned ${gallery.length} photos.`);
       return res.status(200).json(gallery);
     } catch (err) {
       console.error("❌ Failed to fetch gallery:", err);
@@ -141,7 +96,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET' && action === 'load') {
       console.warn("📡 [API/gallery] Load request received - trying to load gallery from KV");
 
-      let current = await kvGet('gallery:json');
+      let current = await kvGetGallery('gallery:json');
       console.warn("📦 KV loaded. Is current an array? ", Array.isArray(current));
 
       let fallback = [];
@@ -162,10 +117,7 @@ export default async function handler(req, res) {
       try {
         const backupKeys = await kvScanBackups();
         if (backupKeys.length) {
-          previous = await kvGet(backupKeys[0]);
-          if (typeof previous === 'string') {
-            previous = JSON.parse(previous);
-          }
+          previous = await kvGetGallery(backupKeys[0]);
         }
       } catch (err) {
         console.warn("⚠️ Failed to load or parse previous backup:", err.message);
@@ -184,27 +136,27 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Invalid gallery format. Must be an array.' });
       }
 
-      const existing = await kvGet('gallery:json');
+      const existing = await kvGetGallery('gallery:json');
       if (Array.isArray(existing) && existing.length > 0) {
         const timestamp = Date.now();
-        await kvSet(`gallery:backup:${timestamp}`, existing);
+        await kvSetGallery(`gallery:backup:${timestamp}`, existing);
         console.log(`💾 Backup saved as gallery:backup:${timestamp}`);
       } else {
         console.log("ℹ️ No backup created — existing gallery was empty or missing.");
       }
 
-      await kvSet('gallery:json', json);
+      await kvSetGallery('gallery:json', json);
       return res.status(200).json({ message: 'Gallery updated successfully.' });
     }
 
     if (req.method === 'POST' && action === 'clear') {
-      const current = await kvGet('gallery:json');
+      const current = await kvGetGallery('gallery:json');
       if (Array.isArray(current) && current.length > 0) {
         const timestamp = Date.now();
-        await kvSet(`gallery:backup:${timestamp}`, current);
+        await kvSetGallery(`gallery:backup:${timestamp}`, current);
         console.log(`💾 Backup saved as gallery:backup:${timestamp}`);
       }
-      await kvSet('gallery:json', []);
+      await kvSetGallery('gallery:json', []);
       return res.status(200).json({ message: 'Gallery cleared and backup saved.' });
     }
 

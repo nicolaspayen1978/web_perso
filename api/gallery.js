@@ -23,19 +23,9 @@ export default async function handler(req, res) {
       console.log("API/gallery.js - public-load gallery from KV");
       let kvGallery = await kvGetGallery('gallery:json');
 
-      //Unwrap logic
-      if (kvGallery && Array.isArray(kvGallery.result)) {
-        console.warn('⚠️ public-load: unwrapping result array from object');
-        kvGallery = kvGallery.result;
-      }
-
-      // Attempt rehydration if stored as object with numeric keys
-      if (kvGallery && typeof kvGallery === 'object' && !Array.isArray(kvGallery)) {
-        const maybeArray = Object.values(kvGallery);
-        if (maybeArray.every(p => typeof p === 'object')) {
-          console.warn('⚠️ KV data looks like objectified array. Rehydrating...');
-          kvGallery = maybeArray;
-        }
+      if (!Array.isArray(kvGallery)) {
+        console.warn("❌ Gallery is not an array. Returning empty list.");
+        return res.status(200).json([]);
       }
 
       console.log("🧪 typeof kvGallery:", typeof kvGallery);
@@ -74,15 +64,12 @@ export default async function handler(req, res) {
       console.warn("📡 [API/gallery] Load request received - trying to load gallery from KV");
 
       let current = await kvGetGallery('gallery:json');
-      if (current && typeof current === 'object' && !Array.isArray(current)) {
-        const maybeArray = Object.values(current);
-        if (maybeArray.every(p => typeof p === 'object')) {
-          console.warn('⚠️ KV data looks like objectified array. Rehydrating...');
-          current = maybeArray;
-        }
-      }
       console.warn("📦 KV loaded. Is current an array? ", Array.isArray(current));
-
+      if (!Array.isArray(current)) {
+        console.warn("❌ Gallery is not an array. Returning empty list.");
+        return res.status(200).json([]);
+      }
+      
       let fallback = [];
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');

@@ -213,16 +213,31 @@
   }
 
   async function loadJSON() {
-    console.log("LoadingJSON from KV, calling API gallery key gallery:json");
-    const res = await fetch('/api/gallery?action=load', {
-      headers: { 'Authorization': authHeader }
-    });
-    const data = await res.json();
-    galleryData = Array.isArray(data.current) ? data.current : [];
-    document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
-    document.getElementById('previousJSON').value = JSON.stringify(data.previous, null, 2);
-    renderTagSummary();
-    renderEditor();
+    console.log("Loading JSON from KV, calling API gallery key gallery:json");
+    try {
+      const res = await fetch('/api/gallery?action=load', {
+        headers: { 'Authorization': authHeader }
+      });
+
+      if (!res.ok) {
+        throw new Error(`❌ HTTP error ${res.status} – ${res.statusText}`);
+      }
+
+      const data = await res.json();
+
+      if (!Array.isArray(data.current)) {
+        throw new Error("❌ Invalid format: 'current' is not an array.");
+      }
+
+      galleryData = data.current;
+      document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
+      document.getElementById('previousJSON').value = JSON.stringify(data.previous || [], null, 2);
+      renderTagSummary();
+      renderEditor();
+    } catch (err) {
+      console.error("⚠️ Error loading gallery data:", err);
+      alert("Erreur lors du chargement de la galerie. Vérifie ta connexion et les logs serveur.");
+    }
   }
 
   function renderTagSummary() {

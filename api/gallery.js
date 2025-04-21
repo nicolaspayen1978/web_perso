@@ -1,5 +1,6 @@
 // /api/gallery.js
 // Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
+//debug 21 april
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
@@ -18,19 +19,21 @@ const KV_REST_API_TOKEN = isDevKV
   : process.env.KV_REST_API_TOKEN;
 
 // Helper: safe recursive parse
-function safeParse(value) {
-  try {
-    while (typeof value === 'string') {
-      value = JSON.parse(value);
+function safeParseOnce(value) {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch (err) {
+      console.warn('❌ Failed to parse string:', err.message);
+      return null;
     }
-  } catch (err) {
-    console.warn('❌ Failed recursive parse:', err.message);
-    return null;
   }
   return value;
 }
 
 // KV helpers using fetch
+//safeParse() is useful only if you’re unsure whether the KV returns strings or parsed objects —
+//but that can be avoided if you’re consistent in how you store data. I keep it to be more robust in case wrong format would be stored.
 async function kvGet(key) {
   const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
     headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }

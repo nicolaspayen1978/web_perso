@@ -70,7 +70,7 @@ async function main() {
     console.log(`💾 Existing KV gallery backed up as gallery:backup:${timestamp}`);
   }
 
-  const success = await kvSet('gallery:json', gallery);
+  const success = await kvSetGallery('gallery:json', gallery);
   if (success) {
     console.log('✅ KV repaired: gallery.json restored to KV.');
   } else {

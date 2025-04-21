@@ -19,7 +19,9 @@ const KV_REST_API_TOKEN = isDevKV
   : process.env.KV_REST_API_TOKEN;
 
 // Helper: safe recursive parse
-function safeParseOnce(value) {
+//safeParse() is useful only if you’re unsure whether the KV returns strings or parsed objects —
+//but that can be avoided if you’re consistent in how you store data. I keep it to be more robust in case wrong format would be stored.
+function safeParse(value) {
   if (typeof value === 'string') {
     try {
       return JSON.parse(value);
@@ -32,8 +34,6 @@ function safeParseOnce(value) {
 }
 
 // KV helpers using fetch
-//safeParse() is useful only if you’re unsure whether the KV returns strings or parsed objects —
-//but that can be avoided if you’re consistent in how you store data. I keep it to be more robust in case wrong format would be stored.
 async function kvGet(key) {
   const res = await fetch(`${KV_REST_API_URL}/get/${encodeURIComponent(key)}`, {
     headers: { Authorization: `Bearer ${KV_REST_API_TOKEN}` }

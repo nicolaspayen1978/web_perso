@@ -1,6 +1,5 @@
 // /api/gallery.js
 // Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
-//debug 21 april
 import fs from 'node:fs';
 import path from 'node:path';
 import updateGallery from '../lib/updateGallery.js';
@@ -22,11 +21,22 @@ export default async function handler(req, res) {
   if (req.method === 'GET' && action === 'public-load') {
     try {
       console.log("API/gallery.js - public-load gallery from KV");
-      const kvGallery = await kvGetGallery('gallery:json');
+      let kvGallery = await kvGetGallery('gallery:json');
+
+      // Attempt rehydration if stored as object with numeric keys
+      if (kvGallery && typeof kvGallery === 'object' && !Array.isArray(kvGallery)) {
+        const maybeArray = Object.values(kvGallery);
+        if (maybeArray.every(p => typeof p === 'object')) {
+          console.warn('⚠️ KV data looks like objectified array. Rehydrating...');
+          kvGallery = maybeArray;
+        }
+      }
+
       console.log("🧪 typeof kvGallery:", typeof kvGallery);
       console.log("🔍 Top-level keys in kvGallery:", kvGallery && Object.keys(kvGallery));
       console.log("🧪 first entry:", kvGallery?.[0]);
       console.log(`📦 Total from KV before filter: ${kvGallery.length}`);
+
       const gallery = Array.isArray(kvGallery)
         ? kvGallery.filter(p =>
             p &&
@@ -43,7 +53,6 @@ export default async function handler(req, res) {
       return res.status(200).json(gallery);
     } catch (err) {
       console.error("❌ Failed to fetch gallery:", err);
-      res.setHeader('Access-Control-Allow-Origin', '*');
       return res.status(500).json({ error: 'Unable to fetch gallery data.' });
     }
   }
@@ -59,10 +68,16 @@ export default async function handler(req, res) {
       console.warn("📡 [API/gallery] Load request received - trying to load gallery from KV");
 
       let current = await kvGetGallery('gallery:json');
+      if (current && typeof current === 'object' && !Array.isArray(current)) {
+        const maybeArray = Object.values(current);
+        if (maybeArray.every(p => typeof p === 'object')) {
+          console.warn('⚠️ KV data looks like objectified array. Rehydrating...');
+          current = maybeArray;
+        }
+      }
       console.warn("📦 KV loaded. Is current an array? ", Array.isArray(current));
 
       let fallback = [];
-
       try {
         const fallbackPath = path.join(process.cwd(), 'gallery.json');
         const fallbackContent = fs.readFileSync(fallbackPath, 'utf-8');
@@ -74,7 +89,6 @@ export default async function handler(req, res) {
         console.warn("❌ Failed to load local fallback gallery.json:", err.message);
       }
 
-      // Load previous backup if any
       let previous = [];
       try {
         const backupKeys = await kvScanBackups();
@@ -130,7 +144,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid action or method.' });
   } catch (err) {
     console.error("❌ Gallery API error:", err);
-    res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(500).json({ error: 'Internal server error', details: err.message });
   }
 }

@@ -1,5 +1,4 @@
 // scripts/fixGalleryKV.js
-// One-time safe repair script to restore gallery.json in KV
 /**
  * fixGalleryKV.js — One-time gallery repair and seed script for Vercel KV
  *
@@ -14,27 +13,12 @@
  * - If `gallery:json` already exists, a timestamped backup is saved automatically to `gallery:backup:<timestamp>`
  * - The new value is only set after validation — ensures clean, expected format
  * - Running this script multiple times will NOT cause harm or data loss
- *
- * 🔧 HOW IT WORKS
- * 1. Loads and parses local `gallery.json`
- * 2. If KV already has a gallery, creates a backup snapshot
- * 3. Uploads the local `gallery.json` as the new value for `gallery:json`
- * 4. Logs progress clearly (success, backups, errors)
- *
- * ✅ RECOMMENDED USAGE
- * - Run manually once per environment after deploying your site to Vercel
- * - Can be used as a fallback when `runGalleryUpdate.js` or `updateGallery()` fail
- *
- * 🛑 CAUTION
- * - Ensure `gallery.json` is up-to-date before running
- * - This script does NOT regenerate metadata — it uses what's already in `gallery.json`
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import fetch from 'node-fetch';
-import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js'; 
+import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js';
 
 const GALLERY_FILE = path.join(process.cwd(), 'gallery.json');
 
@@ -62,19 +46,22 @@ async function main() {
 
   console.log(`📥 Parsed gallery.json with ${gallery.length} items.`);
 
-  // Check if KV already has gallery data
-  const existing = await kvGetGallery('gallery:json');
-  if (Array.isArray(existing) && existing.length > 0) {
+  // Load existing KV state and check for corrupt wrapping
+  const rawKV = await kvGetGallery('gallery:json');
+
+  if (Array.isArray(rawKV) && rawKV.length > 0) {
     const timestamp = Date.now();
-    await kvSetGallery(`gallery:backup:${timestamp}`, existing);
+    await kvSetGallery(`gallery:backup:${timestamp}`, rawKV);
     console.log(`💾 Existing KV gallery backed up as gallery:backup:${timestamp}`);
+  } else {
+    console.warn(`⚠️ KV gallery:json was empty or unreadable. No backup saved.`);
   }
 
-  const success = await kvSetGallery('gallery:json', gallery);
-  if (success) {
-    console.log('✅ KV repaired: gallery.json restored to KV.');
-  } else {
+  const ok = await kvSetGallery('gallery:json', gallery);
+  if (ok === false) {
     console.error('❌ Failed to update KV.');
+  } else {
+    console.log(`✅ KV repaired with ${gallery.length} photos.`);
   }
 }
 

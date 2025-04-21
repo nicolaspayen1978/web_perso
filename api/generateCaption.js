@@ -1,7 +1,6 @@
 // /api/generateCaption.js
 // This API endpoint uses OpenAI's GPT-4o model to generate a poetic title, description, and tags
 // for a given photo based on its visual content.
-
 // Native Node.js and OpenAI modules
 import fs from 'node:fs';
 import path from 'node:path';

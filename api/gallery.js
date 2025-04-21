@@ -23,6 +23,8 @@ export default async function handler(req, res) {
     try {
       console.log("API/gallery.js - public-load gallery from KV");
       const kvGallery = await kvGetGallery('gallery:json');
+      console.log("🧪 typeof kvGallery:", typeof kvGallery);
+      console.log("🧪 first entry:", kvGallery?.[0]);
       console.log(`📦 Total from KV before filter: ${kvGallery.length}`);
       const gallery = Array.isArray(kvGallery)
         ? kvGallery.filter(p =>

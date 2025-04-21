@@ -66,7 +66,7 @@ async function main() {
   const existing = await kvGetGallery('gallery:json');
   if (Array.isArray(existing) && existing.length > 0) {
     const timestamp = Date.now();
-    await kvSetGallery(`gallery:backup:${timestamp}`, JSON.stringify(existing));
+    await kvSetGallery(`gallery:backup:${timestamp}`, existing);
     console.log(`💾 Existing KV gallery backed up as gallery:backup:${timestamp}`);
   }
 

@@ -23,6 +23,12 @@ export default async function handler(req, res) {
       console.log("API/gallery.js - public-load gallery from KV");
       let kvGallery = await kvGetGallery('gallery:json');
 
+      //Unwrap logic
+      if (kvGallery && Array.isArray(kvGallery.result)) {
+        console.warn('⚠️ public-load: unwrapping result array from object');
+        kvGallery = kvGallery.result;
+      }
+
       // Attempt rehydration if stored as object with numeric keys
       if (kvGallery && typeof kvGallery === 'object' && !Array.isArray(kvGallery)) {
         const maybeArray = Object.values(kvGallery);

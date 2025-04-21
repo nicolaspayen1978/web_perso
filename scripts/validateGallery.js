@@ -1,5 +1,6 @@
 // scripts/validateGallery.js
 // This script validates gallery.json for missing or malformed fields before upload
+
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

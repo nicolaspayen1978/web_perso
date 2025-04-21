@@ -23,9 +23,12 @@ async function scanChatKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
     });
 
     if (!res.ok) break;
-    const [next, batch] = await res.json();
-    cursor = next;
+
+    const json = await res.json();
+    cursor = json?.cursor ?? 0;
+    const batch = Array.isArray(json?.keys) ? json.keys : [];
     keys.push(...batch);
+
     rounds++;
   } while (cursor !== 0 && rounds < maxRounds);
 

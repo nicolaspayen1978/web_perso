@@ -213,6 +213,7 @@
   }
 
   async function loadJSON() {
+    console.log("LoadingJSON from KV, calling API gallery key gallery:json");
     const res = await fetch('/api/gallery?action=load', {
       headers: { 'Authorization': authHeader }
     });

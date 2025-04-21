@@ -104,6 +104,7 @@ export default async function handler(req, res) {
   // ✅ Public load route
   if (req.method === 'GET' && action === 'public-load') {
     try {
+      console.log("API/gallery.js - public-load gallery from KV");
       const rawGallery = await kvGet('gallery:json');
 
       const gallery = Array.isArray(rawGallery)
@@ -135,6 +136,7 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET' && action === 'load') {
+      console.log("API/gallery.js - load gallery from KV");
       let current = await kvGet('gallery:json');
       let fallback = [];
 

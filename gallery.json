@@ -5075,19 +5075,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Serenity by the Harbor",
-      "description": "Boats sway gently, cradled by the tranquil sea, beneath the watchful gaze of a timeless city.",
-      "tags": [
-        "harbor",
-        "boats",
-        "cityscape",
-        "tranquility",
-        "maritime",
-        "reflection"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05119",
@@ -5142,19 +5130,7 @@
       "tranquility"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "The Beach's Sleeping Soldiers",
-      "description": "Stubborn against the wind, they stand wrapped in vibrant hues, waiting for the sun's return.",
-      "tags": [
-        "umbrellas",
-        "beach",
-        "color",
-        "stillness",
-        "anticipation",
-        "quiet"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05120",
@@ -5209,18 +5185,7 @@
       "tranquility"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Reflective Stroll by the Sea",
-      "description": "An old soul wanders with time, tethered by companionship. Waves whisper forgotten tales.",
-      "tags": [
-        "contemplation",
-        "beach",
-        "companionship",
-        "serenity",
-        "nostalgia"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05122",
@@ -5277,18 +5242,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Balcony of Blossoms",
-      "description": "A vibrant path of green invites footfalls, kissed by florals overhead. Where dreams dance among petals.",
-      "tags": [
-        "balcony",
-        "flowers",
-        "color",
-        "dreamscape",
-        "serenity"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05125",
@@ -5343,19 +5297,7 @@
       "whimsy"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Whispers in the Sky",
-      "description": "Suspended in flight, laughter dances with the clouds. A carousel of dreams against an azure canvas.",
-      "tags": [
-        "amusement",
-        "sky",
-        "joy",
-        "clouds",
-        "childhood",
-        "dreams"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05143",
@@ -5812,19 +5754,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Vibrant Midday Repose",
-      "description": "Beneath a kaleidoscope of umbrellas, time pauses as laughter mingles with the sea breeze.",
-      "tags": [
-        "beach",
-        "summer",
-        "umbrellas",
-        "leisure",
-        "colorful",
-        "seaside"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05186",
@@ -5879,19 +5809,7 @@
       "timeless"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Serenity's Flowing Path",
-      "description": "Rivers carve through ancient giants, whispering secrets of time. The world pauses to breathe.",
-      "tags": [
-        "nature",
-        "mountains",
-        "river",
-        "tranquility",
-        "landscape",
-        "ethereal"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05187",
@@ -5947,19 +5865,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Echoes of Simple Days",
-      "description": "A quiet room whispers tales of history and home. The colors of time softly paint its stories.",
-      "tags": [
-        "nostalgia",
-        "history",
-        "everydaylife",
-        "simplicity",
-        "home",
-        "culture"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05188",
@@ -6017,19 +5923,7 @@
       "ModernPainting",
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Steps of Verdant Whispers",
-      "description": "Like waves frozen in time, they traverse emerald waves. Quiet footsteps trace the earth's gentle breath.",
-      "tags": [
-        "rice terraces",
-        "journey",
-        "nature",
-        "verdant",
-        "tranquility",
-        "whispers"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05189",
@@ -6084,19 +5978,7 @@
       "sea"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Whisper of Painted Sails",
-      "description": "Colorful boats rest on the shore, dreaming of distant seas. Their stories echo in the gentle waves.",
-      "tags": [
-        "boats",
-        "seaside",
-        "colorful",
-        "tranquility",
-        "dreams",
-        "ocean"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05194",
@@ -6151,18 +6033,7 @@
       "rocks"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Rhythms of the Sea",
-      "description": "On rust-red rocks, a dance unfolds between land and ocean, guided by whispers of the tide.",
-      "tags": [
-        "seascape",
-        "nature",
-        "tranquility",
-        "rocks",
-        "ocean dance"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05196",
@@ -6219,19 +6090,7 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Neon Giants in the Night",
-      "description": "Towers rise into the infinite, their neon veins glowing against the night's velvet. A silent symphony of lights and lines.",
-      "tags": [
-        "architecture",
-        "neon",
-        "cityscape",
-        "night",
-        "modern",
-        "urban"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05213",
@@ -6286,19 +6145,7 @@
       "red"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Floating Dreams",
-      "description": "A crimson raft holds laughter above the gentle sea. Time drifts, anchored by sunlit joy.",
-      "tags": [
-        "sea",
-        "raft",
-        "hammock",
-        "tranquility",
-        "summer",
-        "leisure"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05214",
@@ -6353,25 +6200,13 @@
       "cultural-heritage"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "The Guardian's Laughter",
-      "description": "Bathed in golden hues, the statue watches joyfully. Its serene presence whispers timeless wisdom.",
-      "tags": [
-        "statue",
-        "serenity",
-        "laughter",
-        "wisdom",
-        "vibrant",
-        "tranquil"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05218",
     "filename": "bestofme_2016-08-05218.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05218.jpg",
-    "title": "Bestofme 2016 08 05218",
+    "title": "Urban Galaxy",
     "location": "",
     "description": "These towers reach for the night sky, framing voids where dreams might drift. A quiet pursuit of infinity echoes in the urban canyon.",
     "print_formats": [
@@ -6423,13 +6258,25 @@
       "BlackandWhite",
       "Geometry"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Urban Galaxy",
+      "description": "An architectural corridor reaches into the night, a celestial path of steel and dreams. Stars whisper ancient secrets.",
+      "tags": [
+        "urban",
+        "architecture",
+        "night",
+        "perspective",
+        "cityscape",
+        "dreams"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05223",
     "filename": "bestofme_2016-08-05223.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05223.jpg",
-    "title": "Bestofme 2016 08 05223",
+    "title": "Echoes of Time and Texture",
     "location": "",
     "description": "A vibrant door whispers tales of color in a forgotten street. The walls keep their metallic secrets.",
     "print_formats": [
@@ -6479,13 +6326,25 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Echoes of Time and Texture",
+      "description": "An orange door disrupts the muted wall, revealing whispers of craft and color. Beneath the industrial patina lies a vibrant story.",
+      "tags": [
+        "architecture",
+        "urban",
+        "texture",
+        "color",
+        "artistry",
+        "contrast"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05226",
     "filename": "bestofme_2016-08-05226.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05226.jpg",
-    "title": "Bestofme 2016 08 05226",
+    "title": "Whispering Signs of Summer",
     "location": "",
     "description": "Signs and silhouettes blend beneath a vibrant sky, as stories wander softly through the air.",
     "print_formats": [
@@ -6534,13 +6393,25 @@
       "story"
     ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Whispering Signs of Summer",
+      "description": "Wooden posts guide stories of fleeting footsteps beneath a blue sky. Life moves quietly in the warmth.",
+      "tags": [
+        "summer",
+        "signs",
+        "journey",
+        "nature",
+        "tranquility",
+        "passage"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05229",
     "filename": "bestofme_2016-08-05229.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05229.jpg",
-    "title": "Bestofme 2016 08 05229",
+    "title": "Busy Corners of Quiet Stories",
     "location": "",
     "description": "Bustling whispers of commerce flow beneath vibrant signs. Lives intertwine in a dance of colors and dreams.",
     "print_formats": [
@@ -6591,13 +6462,25 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Busy Corners of Quiet Stories",
+      "description": "A tapestry of goods and lives interwoven beneath a city's vast embrace. The market hums with whispered tales.",
+      "tags": [
+        "market",
+        "city",
+        "daily life",
+        "vivid",
+        "urban stories",
+        "culture"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05239",
     "filename": "bestofme_2016-08-05239.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05239.jpg",
-    "title": "Bestofme 2016 08 05239",
+    "title": "Serenade of Stillness",
     "location": "",
     "description": "Sunlight dances on ancient walls, guiding footsteps through whispered histories. A journey both peaceful and profound.",
     "print_formats": [
@@ -6648,7 +6531,19 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Serenade of Stillness",
+      "description": "Sunlit whispers grace the ancient stones. Time passes as shadows stretch.",
+      "tags": [
+        "architecture",
+        "quiet",
+        "sunlight",
+        "street",
+        "history",
+        "tranquility"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05247",
@@ -6705,25 +6600,13 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Whispering Echoes of Knowledge",
-      "description": "Books reach into arches of light, embracing timeless thoughts. In this sacred stillness, wisdom breathes.",
-      "tags": [
-        "library",
-        "architecture",
-        "books",
-        "light",
-        "wisdom",
-        "history"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05249",
     "filename": "bestofme_2016-08-05249.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05249.jpg",
-    "title": "Bestofme 2016 08 05249",
+    "title": "Bicycle in the Sky",
     "location": "",
     "description": "A bicycle ascends the brick horizon, defying gravity's call. It whispers tales to the sky.",
     "print_formats": [
@@ -6774,13 +6657,25 @@
     "exhibitions": [
       "BlackandWhite"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Bicycle in the Sky",
+      "description": "A bicycle ascends the vertical facade, defying tradition. Dreams tethered to possibility.",
+      "tags": [
+        "surreal",
+        "urban",
+        "architecture",
+        "bicycle",
+        "dreams",
+        "minimalism"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05255",
     "filename": "bestofme_2016-08-05255.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05255.jpg",
-    "title": "Bestofme 2016 08 05255",
+    "title": "Tempest Over Ancient Temples",
     "location": "",
     "description": "Under gathering clouds, ancient stones speak of timeless watches. The earth listens in silence.",
     "print_formats": [
@@ -6831,13 +6726,25 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Tempest Over Ancient Temples",
+      "description": "Under the brooding sky, time whispers through stone spires. The storm promises stories untold.",
+      "tags": [
+        "temples",
+        "stormy",
+        "landscape",
+        "history",
+        "mystery",
+        "poetry"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05264",
     "filename": "bestofme_2016-08-05264.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05264.jpg",
-    "title": "Bestofme 2016 08 05264",
+    "title": "Whisper of Dissent",
     "location": "",
     "description": "A young soul traces the path of silent words, each sign a call for the future.",
     "print_formats": [
@@ -6888,13 +6795,25 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Whisper of Dissent",
+      "description": "A child's touch grazes the voices of protest, gentle yet resolute. Hope weaves through the city streets.",
+      "tags": [
+        "protest",
+        "democracy",
+        "child",
+        "urban",
+        "hope",
+        "freedom"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05265",
     "filename": "bestofme_2016-08-05265.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05265.jpg",
-    "title": "Bestofme 2016 08 05265",
+    "title": "Umbrella Symphony",
     "location": "",
     "description": "A vibrant canopy of umbrellas, sheltering dreams underneath. Each color, a secret moment held in time.",
     "print_formats": [
@@ -6945,13 +6864,24 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Umbrella Symphony",
+      "description": "A cascade of colors dances above, turning raindrops into a playful waltz. Each hue whispers its own tale.",
+      "tags": [
+        "umbrellas",
+        "colors",
+        "rain",
+        "harmony",
+        "symmetry"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05268",
     "filename": "bestofme_2016-08-05268.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05268.jpg",
-    "title": "Bestofme 2016 08 05268",
+    "title": "Doorway of Dreams",
     "location": "",
     "description": "A child reaches for the secrets behind ancient doors. The world of wonder awaits.",
     "print_formats": [
@@ -7000,13 +6930,25 @@
       "innocence"
     ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Doorway of Dreams",
+      "description": "A child, bathed in colors, reaches for the secrets beyond the vermilion gate. Curiosity knows no bounds.",
+      "tags": [
+        "exploration",
+        "childhood",
+        "curiosity",
+        "colors",
+        "architecture",
+        "mystery"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-05272",
     "filename": "bestofme_2016-08-05272.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05272.jpg",
-    "title": "Bestofme 2016 08 05272",
+    "title": "Hope",
     "location": "",
     "description": "A tapestry of hope unfurls beneath the urban sky. Silence speaks louder than the crowd.",
     "print_formats": [
@@ -7110,13 +7052,18 @@
     "exhibitions": [
       "Reflections"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "",
+      "description": "",
+      "tags": []
+    }
   },
   {
     "id": "bestofme_2016-08-05282",
     "filename": "bestofme_2016-08-05282.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-05282.jpg",
-    "title": "Bestofme 2016 08 05282",
+    "title": "Echoes in Stone",
     "location": "",
     "description": "Shrouded in saffron robes, they traverse the echoes of time. Each step a silent prayer.",
     "print_formats": [
@@ -7167,13 +7114,25 @@
     "exhibitions": [
       "BlackandWhite"
     ],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Echoes in Stone",
+      "description": "Monks drift through ancient corridors, their whispers intertwined with history. Time pauses beneath their saffron robes.",
+      "tags": [
+        "monks",
+        "ancient",
+        "history",
+        "serenity",
+        "architecture",
+        "stone"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-0533_",
     "filename": "bestofme_2016-08-0533_.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0533_.jpg",
-    "title": "Bestofme 2016 08 0533 ",
+    "title": "Whispered Walls",
     "location": "",
     "description": "An old wooden door quietly holds tales of time, framed by potted trees of resilience.",
     "print_formats": [
@@ -7224,13 +7183,24 @@
       "solitude"
     ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Whispered Walls",
+      "description": "A rustic door waits between silent guardians, as whispers of time coat the stones.",
+      "tags": [
+        "rustic",
+        "architecture",
+        "stillness",
+        "timeworn",
+        "serene"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-0534",
     "filename": "bestofme_2016-08-0534.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0534.jpg",
-    "title": "Bestofme 2016 08 0534",
+    "title": "Whispers of Forgotten Joy",
     "location": "",
     "description": "The carousel spins, weaving tales of joy and faded laughter. Under a blue sky, memories linger in painted horses.",
     "print_formats": [
@@ -7282,7 +7252,18 @@
       "whimsy"
     ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Whispers of Forgotten Joy",
+      "description": "Painted horses prance in circles, dreams caught on a gentle breeze. The past echoes with laughter.",
+      "tags": [
+        "carousel",
+        "nostalgia",
+        "childhood",
+        "dreams",
+        "whimsy"
+      ]
+    }
   },
   {
     "id": "bestofme_2016-08-0543",
@@ -7342,10 +7323,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Whispers of an Endless City"
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-0547",
@@ -7400,19 +7378,7 @@
       "journey"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Colors of Conviction",
-      "description": "The mural whispers tales of unity and resolve, as a solitary figure silently walks the path of reflection.",
-      "tags": [
-        "mural",
-        "resolve",
-        "solitude",
-        "reflection",
-        "unity",
-        "observation"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-057",
@@ -7469,25 +7435,13 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Infinity's Blue Embrace",
-      "description": "Two chairs whisper secrets beneath the vast sky, kissed by a boundless horizon.",
-      "tags": [
-        "ocean",
-        "blue",
-        "serenity",
-        "horizon",
-        "calm",
-        "nature"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-0599",
     "filename": "bestofme_2016-08-0599.jpg",
     "thumbnail": "thumbs/bestofme_2016-08-0599.jpg",
-    "title": "Bestofme 2016 08 0599",
+    "title": "The Word Against the Sky",
     "location": "",
     "description": "Bold letters rise against the pastel sky, mirroring a world turned upside down. Silence contemplates their red whispers.",
     "print_formats": [
@@ -7535,8 +7489,22 @@
       "reflection",
       "art"
     ],
-    "exhibitions": [],
-    "visible": true
+    "exhibitions": [
+      "Cities"
+    ],
+    "visible": true,
+    "suggestions": {
+      "title": "The Word Against the Sky",
+      "description": "Letters stand bold against the evening's gentle sigh. Silent, yet they command a conversation.",
+      "tags": [
+        "sign",
+        "sunset",
+        "urban",
+        "conversation",
+        "solitude",
+        "contrast"
+      ]
+    }
   },
   {
     "id": "dsc00741",
@@ -7828,9 +7796,9 @@
     "id": "img_1502",
     "filename": "img_1502.jpg",
     "thumbnail": "thumbs/img_1502.jpg",
-    "title": "Img 1502",
+    "title": "Reflections in the Waiting",
     "location": "",
-    "description": "",
+    "description": "Faces turned towards the horizon, etched with patience and tales untold. Together in solitude, they watch time dance by.",
     "print_formats": [
       "L"
     ],
@@ -7868,11 +7836,20 @@
       "XL": true,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
+    "tags": [
+      "crowd",
+      "anticipation",
+      "urban",
+      "age",
+      "contemplation",
+      "gathering"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
     "visible": true,
     "suggestions": {
-      "title": ""
+      "title": "Reflections in the Waiting"
     }
   },
   {
@@ -7930,18 +7907,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Collective Anticipation",
-      "description": "In the crowd's hush, stories intertwine as eyes meet the unseen stage. Nature balances the spectacle.",
-      "tags": [
-        "crowd",
-        "anticipation",
-        "nature",
-        "stories",
-        "performance"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "img_2260",
@@ -7998,19 +7964,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "City of Reflected Dreams",
-      "description": "Towers rise against the sky, embracing the sun's gentle farewell. A city reflects its hopes in shimmering glass.",
-      "tags": [
-        "cityscape",
-        "sunset",
-        "skyscrapers",
-        "reflection",
-        "dreams",
-        "urban"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "img_2554",
@@ -8124,10 +8078,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Echoes of a Silent Shrine"
-    }
+    "visible": true
   },
   {
     "id": "img_3463",
@@ -8184,18 +8135,13 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "",
-      "description": "",
-      "tags": []
-    }
+    "visible": true
   },
   {
     "id": "img_4223",
     "filename": "img_4223.jpg",
     "thumbnail": "thumbs/img_4223.jpg",
-    "title": "Img 4223",
+    "title": "fueling the city",
     "location": "",
     "description": "",
     "print_formats": [
@@ -8237,7 +8183,7 @@
     },
     "tags": [],
     "exhibitions": [],
-    "visible": true,
+    "visible": false,
     "suggestions": {
       "title": ""
     }
@@ -8246,7 +8192,7 @@
     "id": "img_6064",
     "filename": "img_6064.jpg",
     "thumbnail": "thumbs/img_6064.jpg",
-    "title": "Img 6064",
+    "title": "Aura",
     "location": "",
     "description": "A serene sentinel, with hands weaving divine tales, watches over those who seek wisdom. The sun bathes its form in a celestial glow.",
     "print_formats": [
@@ -8294,14 +8240,16 @@
       "culture",
       "architecture"
     ],
-    "exhibitions": [],
+    "exhibitions": [
+      "Faces"
+    ],
     "visible": true
   },
   {
     "id": "img_6182",
     "filename": "img_6182.jpg",
     "thumbnail": "thumbs/img_6182.jpg",
-    "title": "Img 6182",
+    "title": "Divide",
     "location": "",
     "description": "Stones whisper tales of ancient realms as wanderers tread their timeless path. The sky holds secrets yet to be told.",
     "print_formats": [
@@ -8349,7 +8297,9 @@
       "clouds",
       "mystery"
     ],
-    "exhibitions": [],
+    "exhibitions": [
+      "BlackandWhite"
+    ],
     "visible": true
   },
   {
@@ -8462,19 +8412,7 @@
       "journey"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Solitude by the Sea",
-      "description": "By the water's edge, time whispers secrets to the lone soul. A distant temple listens, unwavering.",
-      "tags": [
-        "solitude",
-        "sea",
-        "contemplation",
-        "temple",
-        "serenity",
-        "reflection"
-      ]
-    }
+    "visible": true
   },
   {
     "id": "img_7001_hdr",
@@ -8528,20 +8466,10 @@
       "perspective",
       "modern"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "A City’s Breath Above",
-      "description": "Urban spires stretch skyward, whispering tales of steel and sky. Shadows dance on rooftops, narrating their ancient stories.",
-      "tags": [
-        "urban",
-        "architecture",
-        "skyline",
-        "reflections",
-        "modernity",
-        "perspective"
-      ]
-    }
+    "exhibitions": [
+      "Cities"
+    ],
+    "visible": true
   },
   {
     "id": "img_9448",
@@ -8595,20 +8523,10 @@
       "nostalgia",
       "movement"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Child's Journey in Sunlit Halls",
-      "description": "A child runs through wooden whispers and sunlit patterns. The corridor dreams of endless stories.",
-      "tags": [
-        "childhood",
-        "architecture",
-        "sunlight",
-        "play",
-        "exploration",
-        "nostalgia"
-      ]
-    }
+    "exhibitions": [
+      "Geometry"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a0145",
@@ -8665,9 +8583,10 @@
       "horizon",
       "wind"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "ModernPainting"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a0528",
@@ -8723,9 +8642,10 @@
       "everydaylife",
       "storytelling"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a0593",
@@ -8782,9 +8702,10 @@
       "culture",
       "depth"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a0648",
@@ -8841,9 +8762,10 @@
       "serenity",
       "reflection"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "Cities"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a0760",
@@ -8900,7 +8822,9 @@
       "horizon",
       "peace"
     ],
-    "exhibitions": [],
+    "exhibitions": [
+      "Cities"
+    ],
     "visible": true
   },
   {
@@ -8958,7 +8882,9 @@
       "path",
       "poetry"
     ],
-    "exhibitions": [],
+    "exhibitions": [
+      "ModernPainting"
+    ],
     "visible": true
   },
   {
@@ -9075,8 +9001,7 @@
       "nature"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a1620",
@@ -9132,9 +9057,11 @@
       "juxtaposition",
       "movement"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "Cities",
+      "BlackandWhite"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a1654",
@@ -9191,9 +9118,11 @@
       "serenity",
       "lights"
     ],
-    "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "exhibitions": [
+      "Cities",
+      "BlackandWhite"
+    ],
+    "visible": true
   },
   {
     "id": "2s9a1704",
@@ -9253,8 +9182,7 @@
       "BlackandWhite",
       "Faces"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a1723",
@@ -9315,8 +9243,7 @@
       "Faces",
       "BlackandWhite"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a1983",
@@ -9376,16 +9303,15 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a2134",
     "filename": "2s9a2134.jpg",
     "thumbnail": "thumbs/2s9a2134.jpg",
-    "title": "2s9a2134",
+    "title": "Echoes in the Mist",
     "location": "",
-    "description": "",
+    "description": "Enshrouded by gentle fog, trees whisper secrets to the wind. Their shadows dance in hidden harmony.",
     "print_formats": [
       "XL",
       "L"
@@ -9426,17 +9352,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "mist",
+      "trees",
+      "mystery",
+      "serenity",
+      "whispers",
+      "nature"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2329",
     "filename": "2s9a2329.jpg",
     "thumbnail": "thumbs/2s9a2329.jpg",
-    "title": "2s9a2329",
+    "title": "Sailors’ Dawn Chorus",
     "location": "",
-    "description": "",
+    "description": "Masts reach skyward, mirrored in gentle waters. The harbor whispers of journeys yet to embark.",
     "print_formats": [
       "XL",
       "L"
@@ -9477,17 +9411,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "marina",
+      "sunrise",
+      "reflection",
+      "journey",
+      "tranquility",
+      "boats"
+    ],
+    "exhibitions": [
+      "Reflections"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2367",
     "filename": "2s9a2367.jpg",
     "thumbnail": "thumbs/2s9a2367.jpg",
-    "title": "2s9a2367",
+    "title": "Whispering Coastline",
     "location": "",
-    "description": "",
+    "description": "Mist embraces the rugged cliffs, where earth and sea share secrets. The horizon fades into dreams.",
     "print_formats": [
       "XL",
       "L"
@@ -9528,17 +9472,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "coastal",
+      "mist",
+      "cliffs",
+      "nature",
+      "tranquility",
+      "dreams"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2371",
     "filename": "2s9a2371.jpg",
     "thumbnail": "thumbs/2s9a2371.jpg",
-    "title": "2s9a2371",
+    "title": "Whispers Along the Coast",
     "location": "",
-    "description": "",
+    "description": "The road bends with the earth's gentle sway, guiding travelers between sky and sea. Clouds dance like whispers over waves.",
     "print_formats": [
       "XL",
       "L"
@@ -9579,17 +9531,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "coastline",
+      "journey",
+      "nature",
+      "roadtrip",
+      "clouds",
+      "ocean"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2412",
     "filename": "2s9a2412.jpg",
     "thumbnail": "thumbs/2s9a2412.jpg",
-    "title": "2s9a2412",
+    "title": "Whispering Hills of Freedom",
     "location": "",
-    "description": "",
+    "description": "A lone flag catches the wind's embrace as hills stand timeless in the summer sun. The road stretches towards quiet secrets.",
     "print_formats": [
       "XL",
       "L"
@@ -9630,17 +9590,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "landscape",
+      "countryside",
+      "freedom",
+      "journey",
+      "summer",
+      "hills"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2472",
     "filename": "2s9a2472.jpg",
     "thumbnail": "thumbs/2s9a2472.jpg",
-    "title": "2s9a2472",
+    "title": "Elegance in Motion",
     "location": "",
-    "description": "",
+    "description": "A timeless ride glides through whispers of the past. The chrome shines like echoes of old dreams.",
     "print_formats": [
       "XL",
       "L"
@@ -9681,17 +9649,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "classic",
+      "car",
+      "nostalgia",
+      "elegance",
+      "journey",
+      "timeless"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2482",
     "filename": "2s9a2482.jpg",
     "thumbnail": "thumbs/2s9a2482.jpg",
-    "title": "2s9a2482",
+    "title": "Flag at Eventide",
     "location": "",
-    "description": "",
+    "description": "As the sun bows low, flags dance in silent harmony; the evening whispers tales of freedom.",
     "print_formats": [
       "XL",
       "L"
@@ -9732,9 +9710,17 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "sunset",
+      "flag",
+      "silhouette",
+      "serenity",
+      "harmony",
+      "freedom"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2509",
@@ -9794,16 +9780,15 @@
     "exhibitions": [
       "BlackandWhite"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a2576",
     "filename": "2s9a2576.jpg",
     "thumbnail": "thumbs/2s9a2576.jpg",
-    "title": "2s9a2576",
+    "title": "Flight Among Palms",
     "location": "",
-    "description": "",
+    "description": "A skater defies gravity, soaring past palm trees under the sun. Laughter ripples through the onlookers like waves.",
     "print_formats": [
       "XL",
       "L"
@@ -9844,17 +9829,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "skateboarding",
+      "palm trees",
+      "crowd",
+      "sunlight",
+      "motion",
+      "joy"
+    ],
+    "exhibitions": [
+      "Cities"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2655",
     "filename": "2s9a2655.jpg",
     "thumbnail": "thumbs/2s9a2655.jpg",
-    "title": "",
+    "title": "Embrace of the Golden Horizon",
     "location": "",
-    "description": "",
+    "description": "The sun whispers farewell as it dips below the horizon, enveloping the beach in its golden glow. Shadows stretch, capturing fleeting moments of tranquility.",
     "print_formats": [
       "XL",
       "L"
@@ -9895,7 +9890,14 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "sunset",
+      "beach",
+      "silhouettes",
+      "tranquility",
+      "goldenhour",
+      "horizon"
+    ],
     "exhibitions": [],
     "visible": true,
     "suggestions": {}
@@ -9904,9 +9906,9 @@
     "id": "2s9a2664",
     "filename": "2s9a2664.jpg",
     "thumbnail": "thumbs/2s9a2664.jpg",
-    "title": "2s9a2664",
+    "title": "Digital Daydreams",
     "location": "",
-    "description": "",
+    "description": "Young explorers navigate unseen worlds, their gazes filled with wonder. The soft glow of screens reveals infinite possibilities.",
     "print_formats": [
       "XL",
       "L"
@@ -9947,17 +9949,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "childhood",
+      "technology",
+      "game",
+      "exploration",
+      "nostalgia",
+      "cozy"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": false,
+    "suggestions": {}
   },
   {
     "id": "2s9a2790",
     "filename": "2s9a2790.jpg",
     "thumbnail": "thumbs/2s9a2790.jpg",
-    "title": "2s9a2790",
+    "title": "Innocence in the Afternoon",
     "location": "",
-    "description": "",
+    "description": "Eyes wide with curiosity, a child savors the moment. The world waits in patient awe.",
     "print_formats": [
       "XL",
       "L"
@@ -9998,17 +10010,28 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "innocence",
+      "blackandwhite",
+      "child",
+      "curiosity",
+      "simplicity",
+      "moment"
+    ],
+    "exhibitions": [
+      "Faces",
+      "BlackandWhite"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2843",
     "filename": "2s9a2843.jpg",
     "thumbnail": "thumbs/2s9a2843.jpg",
-    "title": "2s9a2843",
+    "title": "Flight in the Golden Hour",
     "location": "",
-    "description": "",
+    "description": "Beneath the sun's descent, silhouettes dance in gravity's grasp, defying the earth's pull.",
     "print_formats": [
       "XL",
       "L"
@@ -10049,17 +10072,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "skatepark",
+      "sunset",
+      "silhouette",
+      "freedom",
+      "flight",
+      "movement"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a2981",
     "filename": "2s9a2981.jpg",
     "thumbnail": "thumbs/2s9a2981.jpg",
-    "title": "2s9a2981",
+    "title": "Whispering Hills at Dawn",
     "location": "",
-    "description": "",
+    "description": "The ridges glow softly, whispering ancient tales as morning's blush touches the land.",
     "print_formats": [
       "XL",
       "L"
@@ -10100,17 +10131,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "sunrise",
+      "hills",
+      "serenity",
+      "nature",
+      "whispers",
+      "earlylight"
+    ],
+    "exhibitions": [
+      "Cities"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a3077",
     "filename": "2s9a3077.jpg",
     "thumbnail": "thumbs/2s9a3077.jpg",
-    "title": "2s9a3077",
+    "title": "Faces of Silent Memories",
     "location": "",
-    "description": "",
+    "description": "On a city wall, a classic visage emerges, whispers of history painted with care. The past and present blend in tranquil conversation.",
     "print_formats": [
       "XL",
       "L"
@@ -10151,17 +10192,27 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "mural",
+      "streetart",
+      "nostalgia",
+      "urban",
+      "history",
+      "visualpoetry"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a3140",
     "filename": "2s9a3140.jpg",
     "thumbnail": "thumbs/2s9a3140.jpg",
-    "title": "2s9a3140",
+    "title": "Whispers in the Wind",
     "location": "",
-    "description": "",
+    "description": "The old windmills dance lightly over fields of memory. Time turns slowly here.",
     "print_formats": [
       "XL",
       "L"
@@ -10202,17 +10253,25 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "windmills",
+      "landscape",
+      "tranquility",
+      "nostalgia",
+      "sky",
+      "reflection"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a3292",
     "filename": "2s9a3292.jpg",
     "thumbnail": "thumbs/2s9a3292.jpg",
-    "title": "2s9a3292",
+    "title": "Flight of Innocence",
     "location": "",
-    "description": "",
+    "description": "Boundless dreams take flight in a cabin of wonder. Laughter and curiosity pilot the sky.",
     "print_formats": [
       "XL",
       "L"
@@ -10253,17 +10312,26 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "childhood",
+      "aviation",
+      "adventure",
+      "joy",
+      "exploration"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a3296",
     "filename": "2s9a3296.jpg",
     "thumbnail": "thumbs/2s9a3296.jpg",
-    "title": "2s9a3296",
+    "title": "Whisper of a Seaside Sunset",
     "location": "",
-    "description": "",
+    "description": "A child plays as the sky blazes with colors, the day unwinding gently into tomorrow.",
     "print_formats": [
       "XL",
       "L"
@@ -10304,9 +10372,19 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
-    "exhibitions": [],
-    "visible": true
+    "tags": [
+      "childhood",
+      "sunset",
+      "beach",
+      "serenity",
+      "play",
+      "contemplation"
+    ],
+    "exhibitions": [
+      "Faces"
+    ],
+    "visible": true,
+    "suggestions": {}
   },
   {
     "id": "2s9a3391",
@@ -10365,8 +10443,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3392",
@@ -10426,8 +10503,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3450",
@@ -10485,8 +10561,7 @@
       "nature"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3586",
@@ -10546,8 +10621,7 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3632",
@@ -10607,8 +10681,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3896",
@@ -10666,8 +10739,7 @@
       "sunlight"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a3932",
@@ -10727,16 +10799,15 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4058",
     "filename": "2s9a4058.jpg",
     "thumbnail": "thumbs/2s9a4058.jpg",
-    "title": "2s9a4058",
+    "title": "Journey's Endless Horizon",
     "location": "",
-    "description": "",
+    "description": "A lone rider navigates the sunlit road, embraced by whispering trees. The horizon stretches dreams beyond sight.",
     "print_formats": [
       "XL",
       "L"
@@ -10777,9 +10848,28 @@
       "XL": false,
       "L": false
     },
-    "tags": [],
+    "tags": [
+      "road",
+      "motorcycle",
+      "journey",
+      "solitude",
+      "landscape",
+      "adventure"
+    ],
     "exhibitions": [],
-    "visible": true
+    "visible": true,
+    "suggestions": {
+      "title": "Road to Nowhere",
+      "description": "The lone rider cuts through the endless road, embraced by whispers of dusty trees.",
+      "tags": [
+        "journey",
+        "solitude",
+        "road",
+        "nature",
+        "motorcycle",
+        "adventure"
+      ]
+    }
   },
   {
     "id": "2s9a4123",
@@ -10839,8 +10929,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4131",
@@ -10898,11 +10987,10 @@
       "tranquility"
     ],
     "exhibitions": [
-      "BlackAndWhite",
+      "BlackandWhite",
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4236",
@@ -10962,8 +11050,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4297",
@@ -11021,8 +11108,7 @@
       "poetry"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4448",
@@ -11080,8 +11166,7 @@
       "stillness"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a4724",
@@ -11141,8 +11226,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a5141",
@@ -11200,8 +11284,7 @@
       "color"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a5264",
@@ -11261,8 +11344,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a6044",
@@ -11320,8 +11402,7 @@
       "heritage"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a6741",
@@ -11380,8 +11461,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a7466",
@@ -11436,8 +11516,7 @@
       "tranquility"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a7584",
@@ -11495,8 +11574,7 @@
       "sky"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a7634",
@@ -11556,8 +11634,7 @@
     "exhibitions": [
       "ModernPainting"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a7772",
@@ -11617,8 +11694,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a8979",
@@ -11675,8 +11751,7 @@
       "tranquility"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a9016",
@@ -11737,8 +11812,7 @@
       "ModernPainting",
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a9329",
@@ -11797,8 +11871,7 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a9649",
@@ -11855,8 +11928,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a9758",
@@ -11916,8 +11988,7 @@
     "exhibitions": [
       "Geometry"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "2s9a9999",
@@ -11977,8 +12048,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {}
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05138",
@@ -12033,10 +12103,7 @@
       "family"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Innocence in the Afternoon"
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05177",
@@ -12091,10 +12158,7 @@
       "sunlight"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Ascend to Serenity"
-    }
+    "visible": true
   },
   {
     "id": "bestofme_2016-08-05206",
@@ -12149,10 +12213,7 @@
       "urban"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Nightfall's Warm Embrace"
-    }
+    "visible": true
   },
   {
     "id": "img_2946",
@@ -12209,10 +12270,7 @@
     "exhibitions": [
       "Faces"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Whispers of Timeless Stories"
-    }
+    "visible": true
   },
   {
     "id": "img_3035",
@@ -12267,10 +12325,7 @@
       "urban"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Neon Whispers in the Dark"
-    }
+    "visible": true
   },
   {
     "id": "img_4889",
@@ -12327,10 +12382,7 @@
     "exhibitions": [
       "Faces"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Reverie in Stillness"
-    }
+    "visible": true
   },
   {
     "id": "img_6310",
@@ -12387,10 +12439,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Innocence at Angkor Wat"
-    }
+    "visible": true
   },
   {
     "id": "img_6504",
@@ -12445,10 +12494,7 @@
       "smiles"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Joy's Gentle Dawn"
-    }
+    "visible": true
   },
   {
     "id": "img_7407",
@@ -12505,10 +12551,7 @@
     "exhibitions": [
       "Cities"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Neon Symphony"
-    }
+    "visible": true
   },
   {
     "id": "img_7760",
@@ -12565,10 +12608,7 @@
     "exhibitions": [
       "Faces"
     ],
-    "visible": true,
-    "suggestions": {
-      "title": "Wonder in New Eyes"
-    }
+    "visible": true
   },
   {
     "id": "img_8903",
@@ -12623,9 +12663,6 @@
       "simplicity"
     ],
     "exhibitions": [],
-    "visible": true,
-    "suggestions": {
-      "title": "Hues of Stillness"
-    }
+    "visible": true
   }
 ]

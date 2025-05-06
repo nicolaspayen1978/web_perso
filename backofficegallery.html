@@ -273,8 +273,10 @@
     document.getElementById('tagSummary').innerHTML = html;
   }
 
-  async function suggestCaption(index) {
-    await saveEditor(); // 🔒 Ensure all user edits are saved first
+  async function suggestCaption(index, save=true) {
+    if(save){ 
+      await saveEditor(); // 🔒 Ensure all user edits are saved first
+    }
 
     const photo = galleryData[index];
     const res = await fetch('/api/generateCaption', {
@@ -305,6 +307,8 @@
   }
 
   async function suggestCaptionsForAll() {
+    await saveEditor(); // 🔒 Ensure all user edits are saved first
+
     const btn = document.getElementById('suggestAllBtn');
     const indicator = document.getElementById('progressIndicator');
     btn.disabled = true;
@@ -315,7 +319,7 @@
       const photo = galleryData[i];
       if (!photo.title && !photo.description && (!photo.tags || photo.tags.length === 0)) {
         indicator.textContent = `Generating captions... ${count + 1}/${galleryData.length}`;
-        await suggestCaption(i);
+        await suggestCaption(i, false);
         count++;
       }
     }

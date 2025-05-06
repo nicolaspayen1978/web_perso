@@ -147,6 +147,15 @@
       margin-top: 6px;
       margin-bottom: 12px;
     }
+
+    .sticky-toolbar {
+      position: sticky;
+      top: 0;
+      background: #f9f9f9;
+      padding: 10px 0;
+      z-index: 1000;
+      border-bottom: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -161,11 +170,14 @@
 </div>
 
 <div id="adminTools" class="hidden">
-  <button onclick="runScript()">🔄 Run Update Script</button>
-  <button onclick="loadJSON()">📂 Load Gallery JSON</button>
-  <button class="save-btn" onclick="saveEditor()">📀 Save All Changes</button>
-  <button onclick="clearGallery()">🗑️ Clear Gallery</button>
-  <button id="suggestAllBtn" onclick="suggestCaptionsForAll()">✨ AI Suggest All Missing</button>
+  <div id="toolbar" class="sticky-toolbar">
+      <button onclick="runScript()">🔄 Run Update Script</button>
+      <button onclick="loadJSON()">📂 Load Gallery JSON</button>
+      <button class="save-btn" onclick="saveEditor()">📀 Save All Changes</button>
+      <button onclick="clearGallery()">🗑️ Clear Gallery</button>
+      <button id="suggestAllBtn" onclick="suggestCaptionsForAll()">✨ AI Suggest All Missing</button>
+      <div id="saveStatus">💾 Not saved yet.</div>
+  </div>
   <div id="progressIndicator" class="progress hidden"></div>
 
   <div class="tag-summary" id="tagSummary"></div>
@@ -393,7 +405,8 @@
       });
 
       const data = await res.json();
-      alert(data.message || 'Saved successfully.');
+      const now = new Date().toLocaleString();
+      document.getElementById('saveStatus').textContent = `✅ Last saved: ${now}`;
       document.getElementById('currentJSON').value = JSON.stringify(galleryData, null, 2);
     } catch (err) {
       alert("Save failed. Check console for details.");

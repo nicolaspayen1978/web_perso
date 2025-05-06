@@ -262,6 +262,8 @@
   }
 
   async function suggestCaption(index) {
+    await saveEditor(); // 🔒 Ensure all user edits are saved first
+
     const photo = galleryData[index];
     const res = await fetch('/api/generateCaption', {
       method: 'POST',
@@ -337,7 +339,9 @@
           ${suggestions.title ? `
             <div class="suggestion-block">
               <input type="text" value="${escapeHtml(suggestions.title)}" onchange="galleryData[${index}].suggestions.title = this.value" />
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].title = galleryData[${index}].suggestions.title" /> Use suggestion</label>
+              <label>
+                <input type="checkbox"
+                       onchange="if(this.checked){galleryData[${index}].title = galleryData[${index}].suggestions.title; saveEditor();}" />Use suggestion</label>
             </div>` : ''}
 
           <label>Description:</label>
@@ -345,7 +349,7 @@
           ${suggestions.description ? `
             <div class="suggestion-block">
               <textarea onchange="galleryData[${index}].suggestions.description = this.value">${escapeHtml(suggestions.description)}</textarea>
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].description = galleryData[${index}].suggestions.description" /> Use suggestion</label>
+              <label><input type="checkbox" onchange="if(this.checked){galleryData[${index}].description = galleryData[${index}].suggestions.description, saveEditor();}" /> Use suggestion</label>
             </div>` : ''}
 
           <label>Tags (comma-separated):</label>
@@ -353,7 +357,7 @@
           ${suggTags ? `
             <div class="suggestion-block">
               <input type="text" value="${escapeHtml(suggTags)}" onchange="galleryData[${index}].suggestions.tags = this.value.split(',').map(t => t.trim()).filter(Boolean)" />
-              <label><input type="checkbox" onchange="if(this.checked) galleryData[${index}].tags = galleryData[${index}].suggestions.tags" /> Use suggestion</label>
+              <label><input type="checkbox" onchange="if(this.checked) {galleryData[${index}].tags = galleryData[${index}].suggestions.tags; saveEditor();}" /> Use suggestion</label>
             </div>` : ''}
 
           <label>Exhibition Tags (comma-separated):</label>

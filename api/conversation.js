@@ -1,4 +1,4 @@
-// /api/conversation/[visitorID]/index.js
+// /api/conversation.js
 // Returns all chat messages for a given visitorID using REST API (no @vercel/kv)
 const isDevKV = process.env.KV_MODE === 'dev';
 

@@ -215,31 +215,37 @@
     async function loadConversation(visitorID) {
       if (!visitorID) return console.error("❌ Missing visitorID");
 
-      const res = await fetch(`/api/conversation/${visitorID}`, {
-        headers: { 'Authorization': authHeader }
-      });
+      try {
+        const encodedID = encodeURIComponent(visitorID); // ✅ fix for special characters in UUID
+        const res = await fetch(`/api/conversation/${encodedID}`, {
+          headers: { 'Authorization': authHeader }
+        });
 
-      if (!res.ok) {
-        console.error(`❌ Failed to fetch conversation for ${visitorID}`);
-        return;
+        if (!res.ok) {
+          console.error(`❌ Failed to fetch conversation for ${visitorID}`);
+          return;
+        }
+
+        const data = await res.json();
+
+        document.getElementById('activeVisitor').textContent = visitorID;
+        document.getElementById('chatViewer').classList.remove('hidden');
+
+        const chatBox = document.getElementById('chatMessages');
+        chatBox.innerHTML = '';
+
+        (data.messages || []).forEach(m => {
+          const el = document.createElement('div');
+          const who = m.sender === 'user' ? 'user' : 'nicoAI';
+          const time = new Date(m.timestamp).toLocaleTimeString();
+          el.className = `message ${who}`;
+          el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
+          chatBox.appendChild(el);
+        });
+
+      } catch (err) {
+        console.error("❌ Error in loadConversation:", err);
       }
-
-      const data = await res.json();
-
-      document.getElementById('activeVisitor').textContent = visitorID;
-      document.getElementById('chatViewer').classList.remove('hidden');
-
-      const chatBox = document.getElementById('chatMessages');
-      chatBox.innerHTML = '';
-
-      (data.messages || []).forEach(m => {
-        const el = document.createElement('div');
-        const who = m.sender === 'user' ? 'user' : 'nicoAI';
-        const time = new Date(m.timestamp).toLocaleTimeString();
-        el.className = `message ${who}`;
-        el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
-        chatBox.appendChild(el);
-      });
     }
   </script>
 </body>

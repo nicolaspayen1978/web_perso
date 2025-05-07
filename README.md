@@ -9,28 +9,31 @@ This project powers the personal website of Nicolas Payen, including AI chatbot 
 ```
 web_perso/
 │
-├── api/                    # Serverless API endpoints for Vercel
-│   ├── chatbot.js         # Handle NicoAI chatbot for a visitor
-│   ├── init.js            # Initialise NicoAI chatbot
-│   ├── gallery.js         # Function to manage the gallery
-│   ├── resources.js       # Manage access to the resources made available to NicoAI
-│   ├── generateCaption.js # Ask openAI to return title, description, tags for a picture
-│   ├── conversations.js   # Returns a summary of all stored conversations in Vercel KV.
-│   └── conversation       # used by chatbot backoffice
-│        └── [visitorID]   # Folder to store the generated page for visitor conversations history.
+├── api/                         # Serverless API endpoints for Vercel
+│   ├── chatbot.js               # Handle NicoAI chatbot for a visitor
+│   ├── init.js                  # Initialise NicoAI chatbot
+│   ├── gallery.js               # Function to manage the gallery
+│   ├── resources.js             # Manage access to the resources made available to NicoAI
+│   ├── generateCaption.js       # Ask openAI to return title, description, tags for a picture
+│   ├── conversations.js         # Returns a summary of all stored conversations in Vercel KV.
+│   └── conversation             # used by chatbot backoffice
+│        └── [visitorID]         # Folder to store the generated page for visitor conversations history.
 │
-├── lib/                   # folder used for libraries 
-│   └──  updateGallery.js  # Manage change in the gallery.json and synchronisation with KV database 
+├── lib/                            # folder used for libraries 
+│   └──  gallery_KVHelpers.js       # Manage change in the gallery.json and synchronisation with KV database 
+│   └──  gallery_updateFromJson.js  # Manage change in the gallery.json and synchronisation with KV database 
 │
-├── utils/                 # folder used for tools 
-│   ├── kvUtils.js         # functions usefull to manage the KV database in the backoffice
-│   ├── loadresources.js   # return resources.json  
-│   ├── notify.js          # pushover service to send live Notification to Nicolas 
-│   ├── resourceMatcher.js # Match user question against both deep content and summaries.
-│   ├── utils.js           $ the API to initiate NicoAI 
+├── utils/                          # folder used for tools 
+│   ├── chatAI_extractRelevantSummaries.js         # functions usefull to generate context aware summaries for selected resources for chatI to reply for a given question
+│   ├── chatAI_KVHelpers.js         # functions usefull to manage the KV database in the backoffice
+│   ├── chatAI_loadresources.js     # return resources.json  
+│   ├── chatAI_notify.js            # pushover service to send live Notification to Nicolas 
+│   ├── chatAI_resourceMatcher.js   # Match user question against both deep content and summaries.
+│   ├── chatAI_utils.js             # the API to initiate NicoAI 
 │
 ├── scripts/                        # Local/Build-time scripts
 │   ├── generatePhotoPages.js       # Builds static HTML pages per photo 
+│   ├── enrichResourcesWithAI.js    # Generate additional information for ChatAI for every entry/links included in resources.json 
 │   ├── generateResourcesContent.js # Scrapes trusted URLs into `resourcesContent.json
 │   ├── validateGallery.js          # validates Gallery.json for missing or malformed fields before upload
 │   ├── uploadResources.js          # script to deploy the resources in KV database

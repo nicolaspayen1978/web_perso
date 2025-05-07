@@ -1,7 +1,7 @@
 // scripts/runGalleryUpdate.js
 // This script runs the gallery update logic and logs the result
 
-import updateGallery from '../lib/updateGallery.js';
+import updateGallery from '../lib/gallery_updateFromJson.js';
 
 async function main() {
   try {

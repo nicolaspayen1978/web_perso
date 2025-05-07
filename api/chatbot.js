@@ -3,11 +3,11 @@
 // version 0.4 hybrid context
 import fs from 'node:fs';
 import path from 'node:path';
-import { callOpenAI } from '../utils/utils.js';
-import notifyNicolas from '../utils/notify.js';
-import { loadResources } from '../utils/loadResources.js';
-import { getRelevantResources } from '../utils/resourceMatcher.js';
-import { extractRelevantSummaries } from '../utils/extractRelevantSummaries.js';
+import { callOpenAI } from '../utils/chatAI_utils.js';
+import notifyNicolas from '../utils/chatAI_notify.js';
+import { loadResources } from '../utils/chatAI_loadResources.js';
+import { getRelevantResources } from '../utils/chatAI_resourceMatcher.js';
+import { extractRelevantSummaries } from '../utils/chatAI_extractRelevantSummaries.js';
 
 const resources = loadResources();
 const contentPath = path.join(process.cwd(), 'resourcesContent.json');

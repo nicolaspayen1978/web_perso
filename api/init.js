@@ -2,8 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isNicoAIInitialized, markNicoAIInitialized, callOpenAI } from '../utils/utils.js';
-import { loadResources } from '../utils/loadResources.js';
+import { isNicoAIInitialized, markNicoAIInitialized, callOpenAI } from '../utils/chatAI_utils.js';
+import { loadResources } from '../utils/chatAI_loadResources.js';
 
 const resources = loadResources();
 

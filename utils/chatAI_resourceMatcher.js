@@ -1,4 +1,5 @@
 /**
+ * chatAI_resourceMatchers.js
  * Match user input against detailed resource content and summaries.
  * Prioritizes deep matches from `fullResourceContent`, then fills in from `resourceDescriptions`.
  * Returns up to 3 top-matching items as formatted snippets.

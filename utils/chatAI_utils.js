@@ -1,4 +1,4 @@
-// utils/utils.js
+// utils/chatAI_utils.js
 // This utility manages visitor sessions and OpenAI requests for the NicoAI chatbot.
 
 import fs from 'node:fs';

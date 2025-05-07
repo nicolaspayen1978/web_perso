@@ -2,8 +2,8 @@
 // Handles photo gallery operations via Vercel KV: public loading, secure editing, and updates
 import fs from 'node:fs';
 import path from 'node:path';
-import updateGallery from '../lib/updateGallery.js';
-import { kvGetGallery, kvSetGallery, kvScanBackups } from '../lib/kvGalleryHelpers.js';
+import updateGallery from '../lib/gallery_updatedFromJson.js';
+import { kvGetGallery, kvSetGallery, kvScanBackups } from '../lib/gallery_KVHelpers.js';
 
 const fetch = globalThis.fetch || (await import('node-fetch')).default;
 

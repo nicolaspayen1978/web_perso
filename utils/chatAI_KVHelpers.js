@@ -1,4 +1,4 @@
-// utils/kvUtils.js
+// utils/chatAI_KVHelpers.js
 // 📦 Utility functions to manage the Vercel KV database (chat history, safe retrieval)
 
 // 🌍 Determine environment

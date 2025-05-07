@@ -1,4 +1,4 @@
-// utils/extractRelevantSummaries.js
+// utils/chatAI_extractRelevantSummaries.js
 // Given a user question and a matched resource, generates 2 short, relevant bullet summaries using OpenAI
 
 import { OpenAI } from 'openai';

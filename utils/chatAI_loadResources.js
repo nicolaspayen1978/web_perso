@@ -1,4 +1,4 @@
-// utils/loadResources.js
+// utils/chatAI_loadResources.js
 import fs from 'node:fs';
 import path from 'node:path';
 

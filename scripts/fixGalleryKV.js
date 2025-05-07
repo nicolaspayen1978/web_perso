@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import { kvGetGallery, kvSetGallery } from '../lib/kvGalleryHelpers.js';
+import { kvGetGallery, kvSetGallery } from '../lib/gallery_KVHelpers.js';
 
 const GALLERY_FILE = path.join(process.cwd(), 'gallery.json');
 

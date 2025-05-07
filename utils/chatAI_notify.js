@@ -1,4 +1,4 @@
-// utils/notify.js
+// utils/chatAI_notify.js
 // 📢 Sends live Pushover notifications to Nicolas when a visitor interacts with NicoAI
 
 /**

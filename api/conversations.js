@@ -1,5 +1,6 @@
 // /api/conversations.js
 // Lists all conversations from KV using raw REST API + SCAN, grouped by visitorID
+
 // 🌍 Determine environment
 const isDevKV = process.env.KV_MODE === 'dev';
 
@@ -38,10 +39,13 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
     console.error("❌ scanKeys error:", err);
   }
 
+  console.log(`🔍 scanKeys found ${keys.length} keys`);
+  console.log("🔑 Sample keys:", keys.slice(0, 5));
   return keys;
 }
 
 export default async function handler(req, res) {
+  // 🛡️ Allow CORS for testing/debug
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -60,10 +64,17 @@ export default async function handler(req, res) {
 
     for (const key of keys) {
       const match = key.match(/^chat:([^:]+):(\d+)$/);
-      if (!match) continue;
+      if (!match) {
+        console.warn("⛔️ Key skipped (no match):", key);
+        continue;
+      }
 
       const [, visitorID, timestamp] = match;
       const ts = parseInt(timestamp, 10);
+      if (isNaN(ts)) {
+        console.warn("⚠️ Invalid timestamp in key:", key);
+        continue;
+      }
 
       const existing = visitorMap.get(visitorID) || { visitorID, lastMessage: 0, messages: 0 };
       existing.messages += 1;
@@ -74,6 +85,7 @@ export default async function handler(req, res) {
     const visitors = Array.from(visitorMap.values());
     visitors.sort((a, b) => b.lastMessage - a.lastMessage); // Latest first
 
+    console.log(`✅ Returning ${visitors.length} visitors`);
     res.status(200).json(visitors);
   } catch (err) {
     console.error("❌ Error reading from KV:", err);

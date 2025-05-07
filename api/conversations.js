@@ -15,7 +15,7 @@ const KV_REST_API_TOKEN = isDevKV
 // 📡 SCAN helper using Upstash REST API
 async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
   const keys = [];
-  let cursor = '0'; // ✅ must be a string!
+  let cursor = '0';
   let rounds = 0;
 
   try {
@@ -30,7 +30,8 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
         break;
       }
 
-      const { cursor: newCursor, keys: batch = [] } = await res.json();
+      // 🛠 Fix: Upstash returns a JSON array: [cursor, keys]
+      const [newCursor, batch] = await res.json();
       cursor = newCursor;
       keys.push(...batch);
       rounds++;
@@ -39,11 +40,11 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
     console.error("❌ scanKeys error:", err);
   }
 
+  console.log(`🔍 scanKeys found ${keys.length} keys`);
   return keys;
 }
 
 export default async function handler(req, res) {
-  // 🛡️ Allow CORS for testing/debug
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');

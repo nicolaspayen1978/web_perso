@@ -204,11 +204,19 @@
           const date = new Date(v.lastMessage).toLocaleString();
           li.innerHTML = `
             <code>${v.visitorID}</code><br>${v.messages} messages<br>Last: ${date}
-            <br><button onclick='loadConversation(${JSON.stringify(v.visitorID)})'>View</button>
+            <br><button class="viewBtn" data-id="${v.visitorID}">View</button>
           `;
           list.appendChild(li);
         }
       }
+
+      // ✅ Safely attach event listeners to all 'View' buttons
+      document.querySelectorAll('.viewBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const visitorID = btn.getAttribute('data-id');
+          loadConversation(visitorID);
+        });
+      });
     }
 
     // 💬 Load a single visitor conversation

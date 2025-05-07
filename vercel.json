@@ -7,7 +7,7 @@
     "api/resources.js": { "maxDuration": 30 },
     "api/saveMessage.js": { "maxDuration": 10 },
     "api/conversations.js": { "maxDuration": 30 },
-    "api/conversation/[visitorID]/index.js": { "maxDuration": 25 },
+    "api/conversation.js": { "maxDuration": 25 },
     "api/debug-kv.js": { "maxDuration": 15 },
     "api/clear-kv.js": { "maxDuration": 15 },
     "api/gallery.js": { "maxDuration": 60 },

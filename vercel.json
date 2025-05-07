@@ -15,7 +15,7 @@
   },
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/api/conversation/(.*)", "dest": "/api/conversation/$1/index.js" },
+    { "src": "/api/conversation/(.*)", "dest": "/api/conversation/$1/index" },
     { "src": "/articles/(.*)", "dest": "https://nicolaspayen1978.github.io/Articles/$1" },
     { "src": "/.*", "dest": "/404.html" }
   ]

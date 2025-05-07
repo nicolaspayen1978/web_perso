@@ -15,7 +15,7 @@ const KV_REST_API_TOKEN = isDevKV
 // 📡 SCAN helper using Upstash REST API
 async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
   const keys = [];
-  let cursor = '0';
+  let cursor = '0'; // ✅ must be a string!
   let rounds = 0;
 
   try {
@@ -26,12 +26,24 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
       });
 
       if (!res.ok) {
-        console.error("❌ KV SCAN failed:", await res.text());
+        const errorText = await res.text();
+        console.error("❌ KV SCAN failed:", errorText);
         break;
       }
 
-      // 🛠 Fix: Upstash returns a JSON array: [cursor, keys]
-      const [newCursor, batch] = await res.json();
+      let json;
+      try {
+        json = await res.json();
+      } catch (e) {
+        console.error("❌ Failed to parse KV SCAN response as JSON:", e);
+        break;
+      }
+
+      console.log("🔎 Raw scan response:", json);
+
+      const newCursor = json?.cursor ?? '0';
+      const batch = Array.isArray(json?.keys) ? json.keys : [];
+
       cursor = newCursor;
       keys.push(...batch);
       rounds++;
@@ -45,6 +57,7 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
 }
 
 export default async function handler(req, res) {
+  // 🛡️ Allow CORS for testing/debug
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');

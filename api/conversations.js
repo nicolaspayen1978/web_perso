@@ -15,7 +15,7 @@ const KV_REST_API_TOKEN = isDevKV
 // 📡 SCAN helper using Upstash REST API
 async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
   const keys = [];
-  let cursor = 0;
+  let cursor = '0'; // ✅ must be a string!
   let rounds = 0;
 
   try {
@@ -34,13 +34,11 @@ async function scanKeys(prefix = 'chat:', batchSize = 100, maxRounds = 30) {
       cursor = newCursor;
       keys.push(...batch);
       rounds++;
-    } while (cursor !== 0 && rounds < maxRounds);
+    } while (cursor !== '0' && rounds < maxRounds);
   } catch (err) {
     console.error("❌ scanKeys error:", err);
   }
 
-  console.log(`🔍 scanKeys found ${keys.length} keys`);
-  console.log("🔑 Sample keys:", keys.slice(0, 5));
   return keys;
 }
 

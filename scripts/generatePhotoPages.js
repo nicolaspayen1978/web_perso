@@ -35,6 +35,7 @@ if (htmlFiles.length > 0) {
     }
   );
 } else {
+  rl.close();  // Prevents script from hanging
   run();
 }
 

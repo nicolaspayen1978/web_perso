@@ -1,29 +1,34 @@
-// generateResourcesContent.js
-// This script reads resources.json and extracts full text content from pages considered "trusted"
-// (either internal or from whitelisted external domains). The extracted content is saved to
-// resourcesContent.json and used to improve NicoAI's context when answering questions.
+// scripts/generateResourcesContent.js
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { JSDOM } from 'jsdom';
+
+// Polyfill fetch (for Node <18)
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const fs = require('fs');
-const path = require('path');
-const { JSDOM } = require('jsdom');
+
+// ESM __dirname workaround
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // File paths
 const RESOURCES_PATH = path.join(__dirname, '../resources.json');
 const OUTPUT_PATH = path.join(__dirname, '../resourcesContent.json');
+const ROOT_DIR = path.join(__dirname, '../');
 
-// List of trusted sources to be fetched at build time
+// Trusted sources (relative or remote)
 const TRUSTED_DOMAINS = [
   '/',
   'https://nicolaspayen1978.github.io/Resumes/',
   'https://nicolaspayen1978.github.io/Articles/'
 ];
 
-// Check if the URL is trusted based on prefix
+// Check if a URL is trusted
 function isTrusted(url) {
   return TRUSTED_DOMAINS.some(prefix => url.startsWith(prefix));
 }
 
-// Convert relative URLs to full URLs for fetch
+// Convert /about.html → full web URL
 function resolveUrl(url) {
   if (url.startsWith('/')) {
     return `https://web-perso.vercel.app${url}`;
@@ -31,7 +36,7 @@ function resolveUrl(url) {
   return url;
 }
 
-// Fetch HTML and extract readable text content from <main> or fallback to <body>
+// Read <main> or <body> and extract clean text
 async function fetchHtmlContent(url) {
   try {
     const res = await fetch(url);
@@ -41,13 +46,11 @@ async function fetchHtmlContent(url) {
     const dom = new JSDOM(html);
     const doc = dom.window.document;
 
-    // Try to extract meaningful content
-    let main = doc.querySelector('main') || doc.body;
+    const main = doc.querySelector('main') || doc.body;
     if (!main) return '';
 
-    let text = main.textContent.trim();
+    const text = main.textContent.trim();
 
-    // Extract <img> alt and src info if present
     const images = [...main.querySelectorAll('img')].map(img => {
       const alt = img.getAttribute('alt') || '';
       const src = img.src || '';
@@ -61,14 +64,51 @@ async function fetchHtmlContent(url) {
   }
 }
 
-// Main process
+// Try to extract the <title> from an HTML page
+async function fetchTitleFromUrl(url) {
+  try {
+    const res = await fetch(url);
+    const html = await res.text();
+    const dom = new JSDOM(html);
+    const title = dom.window.document.querySelector('title')?.textContent?.trim();
+    return title || null;
+  } catch {
+    return null;
+  }
+}
+
+// Auto-detect all .html pages in root
+async function getLocalRootHtmlPages() {
+  const filenames = fs.readdirSync(ROOT_DIR)
+    .filter(name => name.endsWith('.html') && !name.startsWith('_'));
+
+  const entries = [];
+
+  for (const file of filenames) {
+    const relativeUrl = '/' + file;
+    const fullUrl = resolveUrl(relativeUrl);
+    const title = await fetchTitleFromUrl(fullUrl) || file.replace(/\.html$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    entries.push({ title, url: relativeUrl });
+  }
+
+  return entries;
+}
+
+// Main script
 async function main() {
   console.log('📚 Starting resource content generation...');
   const raw = fs.readFileSync(RESOURCES_PATH, 'utf-8');
-  const resources = JSON.parse(raw);
+  const userResources = JSON.parse(raw);
   const output = {};
 
-  for (const [category, items] of Object.entries(resources)) {
+  const localRootPages = await getLocalRootHtmlPages();
+
+  const mergedResources = {
+    ...userResources,
+    rootHtml: localRootPages  // Add new pseudo-category
+  };
+
+  for (const [category, items] of Object.entries(mergedResources)) {
     const list = Array.isArray(items)
       ? items
       : Object.entries(items).map(([title, url]) => ({ title, url }));
@@ -77,10 +117,26 @@ async function main() {
       const url = item.url;
       if (!url || !isTrusted(url)) continue;
 
-      const resolved = resolveUrl(url);
-      console.log(`📥 Fetching content from: ${resolved}`);
-      const content = await fetchHtmlContent(resolved);
-
+      //we try to access the file localy first, if not we fetch the url
+      let content = '';
+      if (url.startsWith('/')) {
+        const localPath = path.join(ROOT_DIR, url);
+        try {
+          const html = fs.readFileSync(localPath, 'utf-8');
+          const dom = new JSDOM(html);
+          const doc = dom.window.document;
+          const main = doc.querySelector('main') || doc.body;
+          content = main?.textContent.trim() || '';
+          console.log(`📖 Read local file: ${url}`);
+        } catch (e) {
+          console.warn(`⚠️ Failed to read local file ${url}:`, e.message);
+          continue;
+        }
+      } else {
+        const resolved = resolveUrl(url);
+        console.log(`📥 Fetching content from: ${resolved}`);
+        content = await fetchHtmlContent(resolved);
+      }
       if (content) {
         output[url] = {
           title: item.title,

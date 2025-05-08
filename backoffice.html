@@ -204,18 +204,28 @@
           const date = new Date(v.lastMessage).toLocaleString();
           li.innerHTML = `
             <code>${v.visitorID}</code><br>${v.messages} messages<br>Last: ${date}
-            <br><button onclick='loadConversation(${JSON.stringify(v.visitorID)})'>View</button>
+            <br><button class="viewBtn" data-id="${v.visitorID}">View</button>
           `;
           list.appendChild(li);
         }
       }
+
+      // ✅ Safely attach event listeners to all 'View' buttons
+      document.querySelectorAll('.viewBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const visitorID = btn.getAttribute('data-id');
+          loadConversation(visitorID);
+        });
+      });
     }
 
-    // 💬 Load a single visitor conversation
-    async function loadConversation(visitorID) {
-      if (!visitorID) return console.error("❌ Missing visitorID");
+   // 💬 Load a single visitor conversation
+  async function loadConversation(visitorID) {
+    if (!visitorID) return console.error("❌ Missing visitorID");
 
-      const res = await fetch(`/api/conversation/${visitorID}`, {
+    try {
+      const encodedID = encodeURIComponent(visitorID); // still needed for safety
+      const res = await fetch(`/api/conversation?visitorID=${encodedID}`, {
         headers: { 'Authorization': authHeader }
       });
 
@@ -240,7 +250,11 @@
         el.innerHTML = `<strong>${m.sender}</strong> [${time}]: ${m.message}`;
         chatBox.appendChild(el);
       });
+
+    } catch (err) {
+      console.error("❌ Error in loadConversation:", err);
     }
+  }
   </script>
 </body>
 </html>

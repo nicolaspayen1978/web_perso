@@ -1,0 +1,114 @@
+🧠 NicoAI Engine Overview
+
+This document outlines the hybrid architecture behind NicoAI's reasoning engine — combining static knowledge with dynamic query-aware enrichment.
+
+📦 Static Knowledge Layer
+
+1. resources.json
+
+Contains short, ~50-word summaries of all known articles
+
+Organized by category
+
+Loaded at build time using loadResources()
+
+Purpose: broad awareness across all topics
+
+2. resourcesContent.enriched.json
+
+Generated at build time via scripts/enrichResourcesWithAI.js
+
+Enriches each resource with:
+
+summary
+
+keywords
+
+entities
+
+Purpose: searchable deep content for matching and summarization
+
+🔍 Query-Aware Runtime Logic (API)
+
+/api/chatbot.js
+
+Handles incoming user requests and performs these steps:
+
+Load resources.json and resourcesContent.enriched.json
+
+Run getRelevantResources(userInput, resources, enrichedContent, { debug: true })
+
+Returns top N matches + excerpts + titles
+
+For top 3 matches:
+
+Run extractRelevantSummaries(userInput, resourceEntry)
+
+Produces two ~50-word bullets tailored to the query
+
+Compose final OpenAI prompt:
+
+Original 50-word summaries from resources.json
+
+
+
+Enriched dynamic bullets from top matches
+
+Send to callOpenAI() with structured format
+
+Return reply to frontend
+
+✨ Summary of Benefits
+
+🔍 Precision: Only most relevant content is injected per question
+
+🧠 Recall: All resources are pre-summarized for high coverage
+
+📏 Compact: Final prompt remains concise (<1,500 tokens)
+
+⚡ Fast: No full-document context passed at runtime
+
+📐 Modular: Easily extendable with bio.json, userPrefs.json, etc.
+
+💡 Future Extensions
+
+Support fallback to description when summary is missing
+
+Add bio or profile block to prompt for persistent facts
+
+Inject public vs private resources conditionally
+
+Auto-translate selected dynamic entries into other languages
+
+📂 Files and Scripts Involved
+
+File
+
+Purpose
+
+resources.json
+
+Short general summaries
+
+resourcesContent.enriched.json
+
+Rich data per article
+
+scripts/enrichResourcesWithAI.js
+
+Enriches resourceContent with summary, keywords, entities
+
+utils/resourceMatcher.js
+
+Matches relevant resources for a question
+
+utils/extractRelevantSummaries.js
+
+Gets dynamic bullets tailored to the question
+
+api/chatbot.js
+
+Main query handler with prompt composition logic
+
+NicoAI now blends structured knowledge with natural language awareness — making it smart, efficient, and delightful to interact with.
+

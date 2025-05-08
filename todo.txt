@@ -1,0 +1,31 @@
+ Refactor: Backend vs Frontend Responsibilities
+
+This checklist helps streamline logic, reduce duplication, and align chat + enrichment flow.
+
+⸻
+
+✅ Backend
+	•	Move token truncation logic to backend
+Shift truncateChatHistory() from chatbot.js into api/chatbot.js to centralize prompt control.
+	•	Add /api/debug-match?query= endpoint
+Returns getRelevantResources(..., { debug: true }) with title, url, score, and reasons[].
+🔐 Protect with BACKOFFICE_PASSWORD.
+	•	(Optional) Include matchedUrls in /api/chatbot response
+Helps surface relevant links or articles directly in frontend UI.
+
+⸻
+
+🖥️ Frontend
+	•	Remove frontend-side prompt trimming
+Let backend handle context sizing for OpenAI token safety.
+	•	(Optional) Load chat history from backend
+On startup, use /api/conversation/[visitorID] to prefill messages.
+Enables cross-tab history + persistence across reloads.
+
+⸻
+
+🗂️ Infra / Data
+	•	Ignore resourcesContent.enriched.json in dev .gitignore
+Prevents accidentally pushing large, AI-enriched content to GitHub.
+	•	Support resourcesContent.dev.json (optional)
+Provide smaller local/dev version to reduce token usage on preview builds.

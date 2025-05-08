@@ -299,6 +299,11 @@
       "description": ""
     },
     {
+      "title": "NicoAI, smart chatbot",
+      "url": "/chat.html",
+      "description": "NicoAI is a personalized AI assistant modeled after Nicolas Payen. It combines background knowledge, dynamic content, and memory to deliver smart, context-aware answers. Designed with architectural clarity, it’s a sophisticated and adaptable proof of concept — ideal for personalized, brand-aligned AI experiences."
+    },
+    {
       "title": "Photography and Gallery",
       "url": "/gallery.html",
       "description": "Nicolas is also a digital photographer. He built his own digital gallery to expose his artworks."

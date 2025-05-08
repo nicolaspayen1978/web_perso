@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const slugify = (str) =>
   str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-const galleryPath = path.join(__dirname, 'Gallery.json');
+const galleryPath = path.join(__dirname, '..', 'gallery.json');
 const outputDir = path.join(__dirname, 'gallery', 'static');
 
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });

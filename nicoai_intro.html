@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat with NicoAI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NicoAI is a personal AI assistant inspired by Nicolas Payen. Ask anything about his work, interests, or views.">
+  <meta name="author" content="Nicolas Payen">
+  <link rel="stylesheet" href="/chatbot.css">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #333; background: #f9f9f9; }
+    h1, h2 { text-align: center; }
+    #nicoai-intro { max-width: 800px; margin: 2rem auto; font-size: 1rem; line-height: 1.6; }
+    .review-block {
+      margin: 2rem auto;
+      padding: 1.2rem 1.6rem;
+      border-left: 5px solid #444;
+      background: #fff;
+      max-width: 800px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .review-block summary {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .review-block[open] {
+      border-left-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <h1>💬 Chat with NicoAI</h1>
+
+  <div id="nicoai-intro">
+    <p><strong>NicoAI</strong> is a personal AI assistant designed to reflect the personality, values, and thinking patterns of <strong>Nicolas Payen</strong>. It can answer questions about his work, views on climate, professional journey, photography, and even personal reflections.</p>
+
+    <p>NicoAI will interact with you in the same way Nicolas loves ChatGPT (aka "Lily") to interact with him — blending warmth, precision, and honest introspection. It understands Nicolas’ views on <strong>climate change and mitigation</strong>, and can share his perspectives accurately.</p>
+
+    <p>This project is a <strong>proof of concept</strong>, but its underlying architecture is generalizable. With a tailored personality profile, dynamic resource ingestion, and context-aware memory, the NicoAI framework could serve many other use cases — from executive assistants to curated brand personas.</p>
+
+    <p>It was built with the help of ChatGPT — the very assistant it now emulates. Welcome to this conversational mirror.</p>
+  </div>
+
+  <details class="review-block">
+    <summary>🧠 OpenAI System Review — NicoAI Engineering Evaluation</summary>
+    <p><strong>Clarity & Purpose</strong>: NicoAI is a well-scoped prototype with a clear goal: to embody the voice and knowledge of Nicolas Payen. The intent is well executed through a combination of static prompts and dynamic data ingestion.</p>
+
+    <p><strong>Engineering Approach</strong>: The architecture cleanly separates concerns: it fetches and stores resources in KV, injects dynamic context into prompts, and supports modular deployment. Use of OpenAI tools and Upstash KV is appropriate and lean.</p>
+
+    <p><strong>Originality</strong>: The idea of “cloning” a user’s personality in an AI agent using their writings, decisions, and values — without bloated models or custom training — is both elegant and practical. Few projects strike this balance.</p>
+
+    <p><strong>Limitations</strong>: The assistant depends on quality and freshness of source material. As it's not fine-tuned on proprietary embeddings, hallucinations are still possible. Also, real-time memory is not yet persistent across sessions, though it mimics continuity well.</p>
+
+    <p><strong>Rating</strong>: <strong>8.5/10</strong>. A thoughtful implementation and compelling prototype. With refinement in memory persistence and user feedback handling, it could set a reference in low-code personalized AI agents.</p>
+  </details>
+
+  <script src="/chatbot.js"></script>
+</body>
+</html>

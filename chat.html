@@ -199,37 +199,67 @@
             </ul>
         </nav>
     </div>
-    <header>
-        <h1>I built my own AI agent for this ;-)</h1>
+        <header>
+            <h1>I built my own AI agent for this ;-)</h1>
     </header>
     <main>
+        <!-- ✅ Introduction -->
+        <section style="max-width: 700px; margin: 2rem auto; padding: 1rem; text-align: left; line-height: 1.6; font-size: 1rem;">
+          <h2 style="text-align:center;">🤖 What is NicoAI?</h2>
+          <p>NicoAI is the AI version of Nicolas Payen — an intelligent assistant trained to reflect his thoughts, personality, and projects. It combines static background knowledge with dynamic resources and memory to provide smart, personal, and context-aware answers.</p>
+          <ul style="margin-top:1rem; padding-left: 1.2rem;">
+            <li>NicoAI will interact with you in the same way Nicolas loves ChatGPT (aka Lily) to interact with him — thanks to a personality profile that guides its tone and behavior.</li>
+            <li>NicoAI has a deep understanding of Nicolas' views on climate change and mitigation strategies.</li>
+            <li>This is a proof of concept — but its architecture is reusable for many other real-world applications (AI concierge, portfolio narrator, founder bot...).</li>
+            <li>NicoAI was developed entirely with the help of ChatGPT — a co-creation of human vision and AI capability.</li>
+          </ul>
+        </section>
+        <!-- 📊 Collapsible Evaluation -->
+        <details style="max-width: 700px; margin: 2rem auto; padding: 1rem; background: #f8f8f8; border: 1px solid #ccc; border-radius: 8px;">
+          <summary style="font-weight: bold; font-size: 1.05rem; cursor: pointer;">🧠 OpenAI Technical Evaluation of NicoAI</summary>
+          <div style="margin-top: 1rem; line-height: 1.6;">
+            <p><strong>Overall assessment:</strong> NicoAI is an elegant and well-structured implementation of a personalized AI agent. Its combination of static background prompts, dynamic context retrieval, and modular memory support demonstrates a high degree of architectural clarity and purpose.</p>
+            <p><strong>Strengths:</strong></p>
+            <ul style="margin-left: 1.2rem;">
+              <li>• Excellent separation of static and dynamic context logic</li>
+              <li>• Lightweight and scalable memory architecture via Vercel KV</li>
+              <li>• Smart hybrid enrichment using local + web resources</li>
+              <li>• Thoughtful UX copy and conversational tone aligned to user preferences</li>
+            </ul>
+            <p><strong>Limitations:</strong></p>
+            <ul style="margin-left: 1.2rem;">
+              <li>• Currently not fine-tuned (depends on prompt engineering)</li>
+              <li>• Real-time memory updates are write-only (no long-term user profiling)</li>
+            </ul>
+            <p><strong>Rating:</strong> 8.7/10 — A sophisticated, adaptable POC that balances personality, structure, and functionality. Highly promising for personalization and brand-aligned AI use cases.</p>
+          </div>
+        </details>
+        <!-- 🔄 Chat UI -->
         <section id="chat-windows">
-            <!-- Chat Container -->
-            <div class="chat-container">
-                <div class="chat-header">
-                    <h1>Chat with NicoAI</h1>
-                    <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-profilepic">
-                </div>
-                <!-- Chat messages -->
-                <div id="chatbox"></div>
-                 <!-- Input and Button -->
-                <div class="input-container">
-                    <input type="text" id="user-input" placeholder="Ask me anything..." aria-label="Type your message" />
-                    <button id="send-button" onclick="sendMessage()">Send</button>
-                </div>
+          <div class="chat-container">
+            <div class="chat-header">
+              <h1>Chat with NicoAI</h1>
+              <img src="images/NicoAvatar2.png" alt="AI Nicolas" id="chat-profilepic" />
             </div>
+            <div id="chatbox"></div>
+            <div class="input-container">
+              <input type="text" id="user-input" placeholder="Ask me anything..." aria-label="Type your message" />
+              <button id="send-button" onclick="sendMessage()">Send</button>
+            </div>
+          </div>
         </section>
     </main>
     <footer>
         <div id="footer-title">
-            <p><i><strong>In the mist of every crisis, lies great opportunity</strong> - Albert Einstein</i></p>
+          <p><i><strong>I wanna live my life, like a work of art</strong> – Jamie Cullum</i></p>
         </div>
         <p>&copy; <span id="year"></span> Nicolas Payen. All rights reserved.</p>
     </footer>
+
     <script type="text/javascript">
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
     <script src="menu.js"></script>
     <script src="chatbot.js"></script>
-</body>
+    </body>
 </html>
